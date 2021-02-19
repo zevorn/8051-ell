@@ -130,14 +130,36 @@ sfr VOCTRL = VOCTRL_ADDRESS;
 --------------------------------------------------------*/
 
 /* ISR base address */
-#define    IE_ADDRESS          0xA8U
-#define    IE2_ADDRESS         0xAFU
-#define    IP_ADDRESS          0xB8U
-#define    IP2_ADDRESS         0xB5U
-#define    IPH_ADDRESS         0xB7U
-#define    IP2H_ADDRESS        0xB6U
-#define    INTCLKO_ADDRESS     0x8FU
-#define    AUXINTIF_ADDRESS    0xEFU
+#define    IE_ADDRESS            0xA8U
+#define    IE2_ADDRESS           0xAFU
+#define    IP_ADDRESS            0xB8U
+#define    IP2_ADDRESS           0xB5U
+#define    IPH_ADDRESS           0xB7U
+#define    IP2H_ADDRESS          0xB6U
+#define    INTCLKO_ADDRESS       0x8FU
+#define    AUXINTIF_ADDRESS      0xEFU
+#define    INTE_GPIO_ADDRESS   0xFD00U
+#define    INTF_GPIO_ADDRESS   0xFD10U
+
+/* GPIO */
+
+#define P0INTE_ADDRESS              INTE_GPIO_ADDRESS
+#define P1INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0001U)
+#define P2INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0002U)
+#define P3INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0003U)
+#define P4INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0004U)
+#define P5INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0005U)
+#define P6INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0006U)
+#define P7INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0007U)
+
+#define P0INTF_ADDRESS              INTF_GPIO_ADDRESS
+#define P1INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0001U)
+#define P2INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0002U)
+#define P3INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0003U)
+#define P4INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0004U)
+#define P5INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0005U)
+#define P6INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0006U)
+#define P7INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0007U)
 
 /* IE2 */
 #define ET4         0x40
@@ -219,6 +241,24 @@ sbit PT1  = IP^3;
 sbit PX1  = IP^2;
 sbit PT0  = IP^1;
 sbit PX0  = IP^0;
+
+#define    P0INTE    ( *(__IO uint8_t xdata *)   P0INTE_ADDRESS)
+#define    P1INTE    ( *(__IO uint8_t xdata *)   P1INTE_ADDRESS)
+#define    P2INTE    ( *(__IO uint8_t xdata *)   P2INTE_ADDRESS)
+#define    P3INTE    ( *(__IO uint8_t xdata *)   P3INTE_ADDRESS)
+#define    P4INTE    ( *(__IO uint8_t xdata *)   P4INTE_ADDRESS)
+#define    P5INTE    ( *(__IO uint8_t xdata *)   P5INTE_ADDRESS)
+#define    P6INTE    ( *(__IO uint8_t xdata *)   P6INTE_ADDRESS)
+#define    P7INTE    ( *(__IO uint8_t xdata *)   P7INTE_ADDRESS)
+
+#define    P0INTF    ( *(__IO uint8_t xdata *)   P0INTF_ADDRESS)
+#define    P1INTF    ( *(__IO uint8_t xdata *)   P1INTF_ADDRESS)
+#define    P2INTF    ( *(__IO uint8_t xdata *)   P2INTF_ADDRESS)
+#define    P3INTF    ( *(__IO uint8_t xdata *)   P3INTF_ADDRESS)
+#define    P4INTF    ( *(__IO uint8_t xdata *)   P4INTF_ADDRESS)
+#define    P5INTF    ( *(__IO uint8_t xdata *)   P5INTF_ADDRESS)
+#define    P6INTF    ( *(__IO uint8_t xdata *)   P6INTF_ADDRESS)
+#define    P7INTF    ( *(__IO uint8_t xdata *)   P7INTF_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: GPIO peripherals                         |

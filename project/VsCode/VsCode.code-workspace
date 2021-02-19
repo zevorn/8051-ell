@@ -6,7 +6,11 @@
     ],
     "settings": {
         "files.associations": {
-            ".eideignore": "ignore"
+            ".eideignore": "ignore",
+            "main.h": "c",
+            "8051_ell_lib.h": "c",
+            "perlist.h": "c",
+            "stc8hx_reg.h": "c"
         },
         "C_Cpp.default.intelliSenseMode": "gcc-arm",
         "files.autoGuessEncoding": true,
