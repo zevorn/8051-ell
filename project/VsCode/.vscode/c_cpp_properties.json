@@ -1,0 +1,54 @@
+{
+    "configurations": [
+        {
+            "name": "win32",
+            "includePath": [
+                "E:\\Keil5\\C51\\INC\\STC",
+                ".\\..\\..\\libraries",
+                ".\\..\\..\\libraries\\core",
+                ".\\..\\..\\libraries\\drives",
+                ".\\..\\..\\libraries\\drives\\KeyScan",
+                ".\\..\\..\\libraries\\peripherals",
+                ".\\..\\..\\libraries\\peripherals\\STC8x\\inc",
+                ".\\..\\..\\libraries\\peripherals\\STC8x\\src",
+                ".\\..\\..\\libraries\\components",
+                ".\\..\\..\\libraries\\components\\TMT",
+                ".\\..\\..\\libraries\\components\\PrintfRed",
+                ".\\..\\..\\libraries\\components\\PreDelay",
+                ".\\main",
+                ".\\application",
+                "E:\\Keil5\\C51\\INC"
+            ],
+            "defines": [
+                "__UVISION_VERSION=526",
+                "__C51__",
+                "__VSCODE_CPPTOOL"
+            ],
+            "intelliSenseMode": "${default}",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "E:\\Keil5\\C51\\INC\\STC\\*",
+                    ".\\..\\..\\libraries\\*",
+                    ".\\..\\..\\libraries\\core\\*",
+                    ".\\..\\..\\libraries\\drives\\*",
+                    ".\\..\\..\\libraries\\drives\\KeyScan\\*",
+                    ".\\..\\..\\libraries\\peripherals\\*",
+                    ".\\..\\..\\libraries\\peripherals\\STC8x\\inc\\*",
+                    ".\\..\\..\\libraries\\peripherals\\STC8x\\src\\*",
+                    ".\\..\\..\\libraries\\components\\*",
+                    ".\\..\\..\\libraries\\components\\TMT\\*",
+                    ".\\..\\..\\libraries\\components\\PrintfRed\\*",
+                    ".\\..\\..\\libraries\\components\\PreDelay\\*",
+                    ".\\main\\*",
+                    ".\\application\\*",
+                    "E:\\Keil5\\C51\\INC\\*"
+                ]
+            },
+            "forcedInclude": [
+                "c:\\Users\\Administrator\\.vscode\\extensions\\cl.eide-2.2.0\\bin\\include\\internal_headers\\c51_intr.h"
+            ]
+        }
+    ],
+    "version": 4
+}
