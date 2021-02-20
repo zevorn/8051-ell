@@ -99,44 +99,44 @@ typedef enum
 | @Description: GPIO control define function             |
 --------------------------------------------------------*/
 
-#define  GPIO_MODE_WEAK_PULL(GPIO_x,Pin)    do{ ##GPIO_x##M1 &= ~(Pin), ##GPIO_x##M0 &= ~(Pin); }while(0)
-#define  GPIO_MODE_IN_FLOATING(GPIO_x,Pin)  do{ ##GPIO_x##M1 |=  (Pin), ##GPIO_x##M0 &= ~(Pin); }while(0)
-#define  GPIO_MODE_OUT_OD(GPIO_x,Pin)       do{ ##GPIO_x##M1 |=  (Pin), ##GPIO_x##M0 |=  (Pin); }while(0)
-#define  GPIO_MODE_OUT_PP(GPIO_x,Pin)       do{ ##GPIO_x##M1 &= ~(Pin), ##GPIO_x##M0 |=  (Pin); }while(0)
+#define  GPIO_MODE_WEAK_PULL(GPIO_x,Pin)    do{ GPIO_x##M1 &= ~(Pin), GPIO_x##M0 &= ~(Pin); }while(0)
+#define  GPIO_MODE_IN_FLOATING(GPIO_x,Pin)  do{ GPIO_x##M1 |=  (Pin), GPIO_x##M0 &= ~(Pin); }while(0)
+#define  GPIO_MODE_OUT_OD(GPIO_x,Pin)       do{ GPIO_x##M1 |=  (Pin), GPIO_x##M0 |=  (Pin); }while(0)
+#define  GPIO_MODE_OUT_PP(GPIO_x,Pin)       do{ GPIO_x##M1 &= ~(Pin), GPIO_x##M0 |=  (Pin); }while(0)
 
 /*--------------------------------------------------------
 | @Description: GPIO toggel pin control define function  |
 --------------------------------------------------------*/
 
-#define  GPIO_TOGGLE_PIN(GPIO_x,Pin)    {##GPIO_x##_IO ^= Pin;}
+#define  GPIO_TOGGLE_PIN(GPIO_x,Pin)    {GPIO_x##_IO ^= Pin;}
 
 /*--------------------------------------------------------
 | @Description: GPIO pull up control define              |
 --------------------------------------------------------*/
 
-#define GPIO_PULL_UP_ENABLE(GPIO_x,Pin)    do{EAXFR_ENABLE(); PxPU(##GPIO_x##PU_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
-#define GPIO_PULL_UP_DISABLE(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxPU(##GPIO_x##PU_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_PULL_UP_ENABLE(GPIO_x,Pin)    do{EAXFR_ENABLE(); PxPU(GPIO_x##PU_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_PULL_UP_DISABLE(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxPU(GPIO_x##PU_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
 																	
 /*--------------------------------------------------------
 | @Description: GPIO schmidt trigger control define      |
 --------------------------------------------------------*/
 
-#define GPIO_ST_ENABLE(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxNCS(##GPIO_x##NCS_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
-#define GPIO_ST_DISABLE(GPIO_x,Pin)    do{EAXFR_ENABLE(); PxNCS(##GPIO_x##NCS_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_ST_ENABLE(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxNCS(GPIO_x##NCS_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_ST_DISABLE(GPIO_x,Pin)    do{EAXFR_ENABLE(); PxNCS(GPIO_x##NCS_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
 
 /*--------------------------------------------------------
 | @Description: GPIO level conversion speed define       |
 --------------------------------------------------------*/
 
-#define GPIO_SPEED_LOW(GPIO_x,Pin)      do{EAXFR_ENABLE(); PxSR(##GPIO_x##SR_ADDRESS) |= (Pin);  EAXFR_DISABLE();}while(0)
-#define GPIO_SPEED_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxSR(##GPIO_x##SR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_SPEED_LOW(GPIO_x,Pin)      do{EAXFR_ENABLE(); PxSR(GPIO_x##SR_ADDRESS) |= (Pin);  EAXFR_DISABLE();}while(0)
+#define GPIO_SPEED_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxSR(GPIO_x##SR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
 
 /*--------------------------------------------------------
 | @Description: GPIO drive current control define        |
 --------------------------------------------------------*/
 
-#define GPIO_DRIVE_MEDIUM(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxDR(##GPIO_x##DR_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
-#define GPIO_DRIVE_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxDR(##GPIO_x##DR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_DRIVE_MEDIUM(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxDR(GPIO_x##DR_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
+#define GPIO_DRIVE_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxDR(GPIO_x##DR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
 
 /*--------------------------------------------------------
 | @Description: GPIO Pin switching function              |
