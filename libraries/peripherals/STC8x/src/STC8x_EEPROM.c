@@ -40,18 +40,22 @@ static void nop(void)
 static void EEPROM_WT_Time(void)
 {	
 	extern uint32 Get_Sysclk_FRE(void);
-    uint32 SYSCLK_FRE;
+    uint32 sysClk_FRE;
 	/* Get system clock frequency */
-	SYSCLK_FRE = Get_Sysclk_FRE();
-	IAP_CONTR &= 0xF8;
-	if (SYSCLK_FRE >= 30000000UL) IAP_CONTR |= 0x00;	
-	else if ((SYSCLK_FRE >= 24000000UL) && (SYSCLK_FRE < 30000000UL)) IAP_CONTR |= 0x01;
-	else if ((SYSCLK_FRE >= 20000000UL) && (SYSCLK_FRE < 24000000UL)) IAP_CONTR |= 0x02;
-	else if ((SYSCLK_FRE >= 12000000UL) && (SYSCLK_FRE < 20000000UL)) IAP_CONTR |= 0x03;
-	else if ((SYSCLK_FRE >=  6000000UL) && (SYSCLK_FRE < 12000000UL)) IAP_CONTR |= 0x04;
-	else if ((SYSCLK_FRE >=  3000000UL) && (SYSCLK_FRE <  6000000UL)) IAP_CONTR |= 0x05;
-	else if ((SYSCLK_FRE >=  2000000UL) && (SYSCLK_FRE <  3000000UL)) IAP_CONTR |= 0x06;
-	else if ((SYSCLK_FRE >=  1000000UL) && (SYSCLK_FRE <  2000000UL)) IAP_CONTR |= 0x07;
+	sysClk_FRE = Get_Sysclk_FRE();
+    #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
+        IAP_CONTR &= 0xF8;
+        if (sysClk_FRE >= 30000000UL) IAP_CONTR |= 0x00;	
+        else if ((sysClk_FRE >= 24000000UL) && (sysClk_FRE < 30000000UL)) IAP_CONTR |= 0x01;
+        else if ((sysClk_FRE >= 20000000UL) && (sysClk_FRE < 24000000UL)) IAP_CONTR |= 0x02;
+        else if ((sysClk_FRE >= 12000000UL) && (sysClk_FRE < 20000000UL)) IAP_CONTR |= 0x03;
+        else if ((sysClk_FRE >=  6000000UL) && (sysClk_FRE < 12000000UL)) IAP_CONTR |= 0x04;
+        else if ((sysClk_FRE >=  3000000UL) && (sysClk_FRE <  6000000UL)) IAP_CONTR |= 0x05;
+        else if ((sysClk_FRE >=  2000000UL) && (sysClk_FRE <  3000000UL)) IAP_CONTR |= 0x06;
+        else if ((sysClk_FRE >=  1000000UL) && (sysClk_FRE <  2000000UL)) IAP_CONTR |= 0x07;
+    #elif (PER_LIB_MCU_MUODEL == STC8Hx || PER_LIB_MCU_MUODEL == STC8Gx)
+        IAP_TPS = (0xC0 & IAP_TPS) | (sysClk_FRE/1000000UL);
+    #endif
 }
 
 /**
