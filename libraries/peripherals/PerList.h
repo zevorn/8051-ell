@@ -62,6 +62,7 @@
 #include "STC8x_PWM.h"
 #include "STC8x_SPI.h"
 #include "STC8x_I2C.h"
+#include "STC8x_MDU16.h"
 
 #endif
 /*-----------------------------------------------------------------------

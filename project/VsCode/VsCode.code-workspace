@@ -10,7 +10,13 @@
             "main.h": "c",
             "8051_ell_lib.h": "c",
             "perlist.h": "c",
-            "stc8hx_reg.h": "c"
+            "stc8hx_reg.h": "c",
+            "stc8ax_reg.h": "c",
+            "stc8x_adc.h": "c",
+            "stc8fx_reg.h": "c",
+            "stc8cx_reg.h": "c",
+            "stc8gx_reg.h": "c",
+            "stc8x_gpio.h": "c"
         },
         "C_Cpp.default.intelliSenseMode": "gcc-arm",
         "files.autoGuessEncoding": true,

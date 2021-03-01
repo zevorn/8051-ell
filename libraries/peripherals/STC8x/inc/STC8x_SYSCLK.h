@@ -105,12 +105,12 @@ typedef enum
 	HIRC = 0x01,   /* High internal 4MHz~24MHz oscillator */
 	LIRC = 0x02,   /* Internal 32KHz oscillator */
     XOSC = 0x03,   /* External oscillator control */
-#if (PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
     X32KSC = 0x04  /* External  32KHzoscillator control */
 #endif
 }   MCLKSrc_Type;
 
-#if (PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
 /*--------------------------------------------------------
 | @Description: External crystal filter enum type        |
@@ -160,7 +160,7 @@ typedef struct
 
     SCLKOut_Type SCLKOutPin; /* Select system clock output pin */
     
-#if (PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     XOSCFilter_Type XOSCFilter; 
 

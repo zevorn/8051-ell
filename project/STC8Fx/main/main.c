@@ -30,7 +30,7 @@ int main(void)
 
 	for(;;)
 	{
-		printf("111\r\n");
+		printf("Hello World\r\n");
 		delay_ms(500);
 	}
 

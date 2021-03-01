@@ -254,3 +254,7 @@ Error: Command failed: null\bin\arm-none-eabi-gcc.exe -xc++ -E -v - <nul 2>&1
 	at async Promise.all (index 0)
 
 
+
+[2021/3/1 17:2:42 GMT+0800] : launched
+
+

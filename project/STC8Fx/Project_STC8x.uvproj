@@ -382,11 +382,6 @@
               <FilePath>..\..\libraries\peripherals\PerList.h</FilePath>
             </File>
             <File>
-              <FileName>STC8x_ADC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_ADC.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_COMP.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_COMP.c</FilePath>
@@ -412,19 +407,9 @@
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_PCA.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_PCA.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_POWER.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_POWER.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_PWM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_PWM.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_RST.c</FileName>

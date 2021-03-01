@@ -68,14 +68,24 @@ typedef enum
     ADC_Road_P15 = 0x05, 
     ADC_Road_P16 = 0x06, 
     ADC_Road_P17 = 0x07, 
-		  
-    ADC_Road_P00 = 0x08, 
-    ADC_Road_P01 = 0x09, 
-    ADC_Road_P02 = 0x0A, 
-    ADC_Road_P03 = 0x0B, 
-    ADC_Road_P04 = 0x0C, 
-    ADC_Road_P05 = 0x0D, 
-    ADC_Road_P06 = 0x0E, 
+
+    #if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)		  
+        ADC_Road_P00 = 0x08, 
+        ADC_Road_P01 = 0x09, 
+        ADC_Road_P02 = 0x0A, 
+        ADC_Road_P03 = 0x0B, 
+        ADC_Road_P04 = 0x0C, 
+        ADC_Road_P05 = 0x0D, 
+        ADC_Road_P06 = 0x0E, 
+    #elif  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx )
+        ADC_Road_P30 = 0x08, 
+        ADC_Road_P31 = 0x09, 
+        ADC_Road_P32 = 0x0A, 
+        ADC_Road_P33 = 0x0B, 
+        ADC_Road_P34 = 0x0C, 
+        ADC_Road_P35 = 0x0D, 
+        ADC_Road_P36 = 0x0E, 
+    #endif
     ADC_Road_REV = 0x0F	//Test the internal 1.344v refv voltage
 }   ADCRoad_Type;
 

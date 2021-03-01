@@ -34,7 +34,7 @@ static void nop(void)
 /**
   * @name    ADC_Init
   * @brief   ADC peripheral init function
-  * @param   *adcx: ADC_InitType
+  * @param   *adcx  ADC_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
 FSCSTATE ADC_Init(const ADC_InitType *adcx)
@@ -78,8 +78,8 @@ uint16_t ADC_Get_Sample(ADCRoad_Type road, ADCAcc_Type acc)
 /**
   * @name    ADC_Get_Sample_interrupt
   * @brief   ADC get sample in interrupt function
-  * @param   road: ADCRoad_Type
-  * @param   acc : ADCAcc_Type
+  * @param   road  ADCRoad_Type
+  * @param   acc   ADCAcc_Type
   * @return  Value of adc sample (uint16_t)
 ***/
 uint16_t ADC_Get_Sample_interrupt(ADCRoad_Type road, ADCAcc_Type acc)

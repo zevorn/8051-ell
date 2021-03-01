@@ -29,7 +29,7 @@
 FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
 {
 		EAXFR_ENABLE(); /* Enable access to the internal extended RAM area */
-#if    (PER_LIB_MCU_MUODEL == STC8Ax ||PER_LIB_MCU_MUODEL == STC8Fx )
+#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
 
 		    if(sysClkn -> MCLKSrc != AUTO)
 		    {
@@ -61,7 +61,7 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKDiv;   /* System clock frequency division */
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKOutPin << 3;
 
-#elif ( PER_LIB_MCU_MUODEL == STC8Hx ) 		
+#elif ( PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx ) 		
 		
 		    if(sysClkn -> MCLKSrc != AUTO)
 		    {
