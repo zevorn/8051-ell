@@ -59,20 +59,20 @@ FSCSTATE ADC_Init(const ADC_InitType *adcx)
   * @brief   ADC get sample function
   * @param   road  ADCRoad_Type
   * @param   acc   ADCAcc_Type
-  * @return  Value of adc sample (uint16_t)
+  * @return  value of adc sample (uint16_t)
 ***/
 uint16_t ADC_Get_Sample(ADCRoad_Type road, ADCAcc_Type acc)
 {	
-    uint16_t Value;
+    uint16_t value;
     ADC_RES = 0;
     ADC_RESL = 0;
     ADC_CONTR = (ADC_CONTR & 0xF0) | ADC_POWER | (road);
     while (!(ADC_CONTR & 0x20));  //Query ADC completion flag
     ADC_CONTR &= 0xDF;  //Completion mark
-    Value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
-    Value >>= acc; //Selection accuracy
+    value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
+    value >>= acc; //Selection accuracy
     ADC_CONTR |= 0x40; //Restart
-    return Value;
+    return value;
 }
 
 /**
@@ -80,19 +80,19 @@ uint16_t ADC_Get_Sample(ADCRoad_Type road, ADCAcc_Type acc)
   * @brief   ADC get sample in interrupt function
   * @param   road  ADCRoad_Type
   * @param   acc   ADCAcc_Type
-  * @return  Value of adc sample (uint16_t)
+  * @return  value of adc sample (uint16_t)
 ***/
 uint16_t ADC_Get_Sample_interrupt(ADCRoad_Type road, ADCAcc_Type acc)
 {	
-    uint16_t Value;
+    uint16_t value;
     ADC_RES = 0;
     ADC_RESL = 0;
     ADC_CONTR = (ADC_CONTR & 0xF0) | (road);
     ADC_CONTR &= 0xDF;  //Completion mark
-    Value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
-    Value >>= acc; //Selection accuracy
+    value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
+    value >>= acc; //Selection accuracy
     ADC_CONTR |= 0x40; //Restart
-    return Value;
+    return value;
 }
 #endif
 /*-----------------------------------------------------------------------
