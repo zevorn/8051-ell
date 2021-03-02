@@ -57,8 +57,8 @@ static void STC8x_SYSCLK_Config(void)
 
 	SYSCLK_InitStruct.MCLKSrc = HIRC;
 	SYSCLK_InitStruct.IRCBand = IRC_Band_20MHz;
-	SYSCLK_InitStruct.IRCTRIM = 150;
-    SYSCLK_InitStruct.LIRCTRIM = TRIM1;
+	SYSCLK_InitStruct.IRCTRIM = 200;
+    SYSCLK_InitStruct.LIRCTRIM = TRIM0;
 	SYSCLK_InitStruct.MCLKDiv = 0;
 	SYSCLK_InitStruct.SCLKDiv = 0; /* if SCLKDiv = 0, Not output */
 	SYSCLK_InitStruct.SCLKOutPin = SCLK_OUT_P16;

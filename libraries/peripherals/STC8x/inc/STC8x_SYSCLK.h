@@ -122,7 +122,7 @@ typedef enum
 #if   (PER_LIB_MCU_MUODEL == STC8Gx)
         IRC_Band_33MHz = 0x01
 #elif (PER_LIB_MCU_MUODEL == STC8Hx)
-        IRC_Band_35MHz = 0x01,
+        IRC_Band_35MHz = 0x01
 #endif
 
     }   IRCBand_Type;
