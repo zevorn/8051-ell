@@ -134,7 +134,7 @@ typedef struct
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 /*--------------------------------------------------------
 | @Description: ADC get Sample (Query mode)              |
 --------------------------------------------------------*/

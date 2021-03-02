@@ -225,7 +225,7 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
 /*--------------------------------------------------------
 | @Description: ADC ISR define                           |
 --------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     #define ADC_ISRQ_Handler(void)  ADC_ISR(void) interrupt  5
 
@@ -249,7 +249,7 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
 /*--------------------------------------------------------
 | @Description: PCA ISR define                           |
 --------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx)
 
     #define PCA_ISRQ_Handler(void)  PCA_ISR(void) interrupt  7
     
@@ -282,7 +282,7 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
 /*--------------------------------------------------------
 | @Description: PWM ISR define                           |
 --------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax )
 
     #define PWM_ISRQ_Handler(void)          PWM_ISR(void) interrupt 22
     #define PWM_ABD_ISRQ_Handler(void)  PWM_ABD_ISR(void) interrupt 23
@@ -323,6 +323,7 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
     FSCSTATE NVIC_PWM7_Init(PWMFlip_Type flipMode);
 	
 #endif
+
 /*--------------------------------------------------------
 | @Description: SPI ISR define                           |
 --------------------------------------------------------*/

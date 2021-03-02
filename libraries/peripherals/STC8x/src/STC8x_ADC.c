@@ -18,7 +18,7 @@
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 /**
   * @name    nop
   * @brief   working wait nop function

@@ -338,7 +338,9 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode)
 	COMP_NVIC_PRI(priority);
 	return FSC_SUCCESS;
 }
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
 /**
   * @name    NVIC_ADC_Init
   * @brief   ADC NVIC function
@@ -352,6 +354,7 @@ FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,FUNSTATE run)
 	ADC_NVIC_PRI(priority);
 	return FSC_SUCCESS;
 }
+
 #endif
 /**
   * @name    NVIC_LVD_Init
@@ -496,7 +499,8 @@ FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run)
 #endif
 
 #endif
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    NVIC_PWM_CNT_Init
   * @brief   PWM CNT return to zero NVIC function 
