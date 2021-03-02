@@ -53,7 +53,7 @@ static void EEPROM_WT_Time(void)
         else if ((sysClk_FRE >=  3000000UL) && (sysClk_FRE <  6000000UL)) IAP_CONTR |= 0x05;
         else if ((sysClk_FRE >=  2000000UL) && (sysClk_FRE <  3000000UL)) IAP_CONTR |= 0x06;
         else if ((sysClk_FRE >=  1000000UL) && (sysClk_FRE <  2000000UL)) IAP_CONTR |= 0x07;
-    #elif (PER_LIB_MCU_MUODEL == STC8Hx || PER_LIB_MCU_MUODEL == STC8Gx)
+    #elif (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
         IAP_TPS = (0xC0 & IAP_TPS) | (sysClk_FRE/1000000UL);
     #endif
 }
