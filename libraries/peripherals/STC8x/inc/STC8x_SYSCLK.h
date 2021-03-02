@@ -94,7 +94,6 @@ typedef enum
 }   SCLKOut_Type;
 
 
-
 /*--------------------------------------------------------
 | @Description: Master clock source enum type            |
 --------------------------------------------------------*/
@@ -104,13 +103,32 @@ typedef enum
 	AUTO = 0x00,   /* stc -isp toll control */
 	HIRC = 0x01,   /* High internal 4MHz~24MHz oscillator */
 	LIRC = 0x02,   /* Internal 32KHz oscillator */
-    XOSC = 0x03,   /* External oscillator control */
-#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || \
+     PER_LIB_MCU_MUODEL == STC8Fx || PER_LIB_MCU_MUODEL == STC8Gx)
+    XOSC = 0x03    /* External oscillator control */
+#elif (PER_LIB_MCU_MUODEL == STC8Hx)
     X32KSC = 0x04  /* External  32KHzoscillator control */
 #endif
 }   MCLKSrc_Type;
 
 #if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+/*--------------------------------------------------------
+| @Description: IRC band selector enum type              |
+--------------------------------------------------------*/
+    typedef enum
+    {
+        IRC_Band_20MHz = 0x00,
+#if   (PER_LIB_MCU_MUODEL == STC8Gx)
+        IRC_Band_33MHz = 0x01
+#elif (PER_LIB_MCU_MUODEL == STC8Hx)
+        IRC_Band_35MHz = 0x01,
+#endif
+
+    }   IRCBand_Type;
+#endif
+
+#if (PER_LIB_MCU_MUODEL == STC8Hx)
 
 /*--------------------------------------------------------
 | @Description: External crystal filter enum type        |
@@ -123,17 +141,7 @@ typedef enum
         XOSC_Filter_Null   = 0x03
     }   XOSCFilter_Type;
 
-/*--------------------------------------------------------
-| @Description: IRC band selector enum type              |
---------------------------------------------------------*/
-    typedef enum
-    {
-        IRC_Band_20MHz = 0x00,
-        IRC_Band_35MHz = 0x01
-    }   IRCBand_Type;
-
 #endif
-
 
 /**
   * @name    SYSCLK_InitType
@@ -161,11 +169,11 @@ typedef struct
     SCLKOut_Type SCLKOutPin; /* Select system clock output pin */
     
 #if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-
-    XOSCFilter_Type XOSCFilter; 
-
     IRCBand_Type  IRCBand;
-    
+#endif
+
+#if (PER_LIB_MCU_MUODEL == STC8Hx)
+    XOSCFilter_Type XOSCFilter; 
 #endif
 
 }   SYSCLK_InitType;

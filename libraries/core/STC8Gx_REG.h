@@ -67,8 +67,6 @@ typedef struct
 
     __IO uint8_t MCLKOCR_REG;  /*----Master clock output control register */ 
 
-    __IO uint8_t X32KCR_REG;   /*----External 32KHz oscillator control register */
-
 }   SYSCLK_TypeDef;
 
 
@@ -91,7 +89,6 @@ internal expansion RAM area */
 #define    XOSCCR_ADDRESS     (SYSCLK_BASE + 0x0003U)
 #define    IRC32KCR_ADDRESS   (SYSCLK_BASE + 0x0004U)
 #define    MCLKOCR_ADDRESS    (SYSCLK_BASE + 0x0005U)
-#define    X32KCR_ADDRESS     (SYSCLK_BASE + 0x0006U)
 /* Define type of SYSCLK */
 
 #define    SYSCLK     (* (SYSCLK_TypeDef  xdata *) SYSCLK_BASE)
@@ -104,7 +101,6 @@ internal expansion RAM area */
 #define    XOSCCR      ( *(__IO uint8_t xdata *)   XOSCCR_ADDRESS)
 #define    IRC32KCR    ( *(__IO uint8_t xdata *) IRC32KCR_ADDRESS)
 #define    MCLKOCR     ( *(__IO uint8_t xdata *)  MCLKOCR_ADDRESS)
-#define    X32KCR      ( *(__IO uint8_t xdata *)   X32KCR_ADDRESS)
 
 /* IRC frequency adjustment register */
 

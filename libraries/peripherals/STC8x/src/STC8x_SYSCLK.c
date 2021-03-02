@@ -41,8 +41,8 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
 		        switch(sysClkn -> MCLKSrc) /* Select master clock source */
 		        {
 			    	case HIRC: SYSCLK.CKSEL_REG = 0x00; SYSCLK.IRC24MCR_REG |= 0x80; break;
-			    	case LIRC: SYSCLK.CKSEL_REG = 0x01; SYSCLK.IRC32KCR_REG |= 0x80; break;
-			    	case XOSC: SYSCLK.CKSEL_REG = 0x03; SYSCLK.XOSCCR_REG |= 0xC0;   break;
+                    case XOSC: SYSCLK.CKSEL_REG = 0x01; SYSCLK.XOSCCR_REG |= 0xC0;   break;
+			    	case LIRC: SYSCLK.CKSEL_REG = 0x03; SYSCLK.IRC32KCR_REG |= 0x80; break;
 		        }
 			
 			    /* Wait for the clock source switch to complete */
@@ -60,8 +60,39 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
 		
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKDiv;   /* System clock frequency division */
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKOutPin << 3;
+#elif ( PER_LIB_MCU_MUODEL == STC8Gx ) 		
+		
+		    if(sysClkn -> MCLKSrc != AUTO)
+		    {
+				SYSCLK.HIRCCR_REG &= 0xFE; /* Since power on defaults to internal HIRC,
+				                              the control bit (the highest bit) cannot be cleared */
+			    SYSCLK.IRC32KCR_REG &= 0x7E;
+			    SYSCLK.XOSCCR_REG &= 0x1E;
 
-#elif ( PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx ) 		
+		        switch(sysClkn -> MCLKSrc) /* Select master clock source */
+		        {
+			    	case HIRC:   SYSCLK.CKSEL_REG = 0x00; SYSCLK.HIRCCR_REG |= 0x80;   break;
+                    case XOSC:   SYSCLK.CKSEL_REG = 0x01; SYSCLK.XOSCCR_REG |= 0xC0;   break;
+			    	case LIRC:   SYSCLK.CKSEL_REG = 0x03; SYSCLK.IRC32KCR_REG |= 0x80; break;
+		        }
+			
+			    /* Wait for the clock source switch to complete */
+			    	while(!( (SYSCLK.HIRCCR_REG & 0x01)   || 
+							 (SYSCLK.IRC32KCR_REG & 0x01) || 
+							 (SYSCLK.XOSCCR_REG   & 0x01)));
+
+				IRCBAND =  sysClkn -> IRCBand; /* Internal IRC adjust frequency band */
+			    IRTRIM = sysClkn -> IRCTRIM;  /* Internal IRC adjust frequency IRTRIM  */
+                LIRTRIM = sysClkn -> LIRCTRIM; /* Internal IRC adjust frequency LIRTRIM */
+			    
+			    if(sysClkn -> MCLKDiv == 0) SYSCLK.CLKDIV_REG = sysClkn -> MCLKDiv + 1;  /* Master clock frequency division */
+				else SYSCLK.CLKDIV_REG = sysClkn -> MCLKDiv;
+	        }
+		
+		    SYSCLK.MCLKOCR_REG |= sysClkn -> SCLKDiv;   /* System clock frequency division */
+		    SYSCLK.MCLKOCR_REG |= sysClkn -> SCLKOutPin << 7;
+
+#elif ( PER_LIB_MCU_MUODEL == STC8Hx ) 		
 		
 		    if(sysClkn -> MCLKSrc != AUTO)
 		    {
@@ -73,9 +104,9 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
 		        switch(sysClkn -> MCLKSrc) /* Select master clock source */
 		        {
 			    	case HIRC:   SYSCLK.CKSEL_REG = 0x00; SYSCLK.HIRCCR_REG |= 0x80;   break;
-			    	case LIRC:   SYSCLK.CKSEL_REG = 0x01; SYSCLK.IRC32KCR_REG |= 0x80; break;
-			    	case XOSC:   SYSCLK.CKSEL_REG = 0x03; SYSCLK.XOSCCR_REG |= 0xC0;   break;
-					case X32KSC: SYSCLK.CKSEL_REG = 0x03; SYSCLK.X32KCR_REG |= 0xC0;   break;
+                    case XOSC:   SYSCLK.CKSEL_REG = 0x01; SYSCLK.XOSCCR_REG |= 0xC0;   break;
+					case X32KSC: SYSCLK.CKSEL_REG = 0x02; SYSCLK.X32KCR_REG |= 0xC0;   break;
+			    	case LIRC:   SYSCLK.CKSEL_REG = 0x03; SYSCLK.IRC32KCR_REG |= 0x80; break;
 		        }
 			
 			    /* Wait for the clock source switch to complete */
