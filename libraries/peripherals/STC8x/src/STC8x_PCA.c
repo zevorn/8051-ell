@@ -19,7 +19,7 @@ static vuint16_t PCA_Rvalue[4];
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx )
 /**
   * @name    PCA_CNT_Init
   * @brief   PCA0 counter init function,It must be initialized last
@@ -176,6 +176,7 @@ FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
     return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    PCA3_PWM_Init
   * @brief   PCA3 PWM init function,it must first is initialized
@@ -221,6 +222,7 @@ FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 
     return FSC_SUCCESS;
 }
+#endif
 
 /**
   * @name    PCA0_TIM_Init
@@ -285,6 +287,7 @@ FSCSTATE PCA2_TIM_Init(uint16_t value)
     return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    PCA3_TIM_Init
   * @brief   PCA3 TIMER init function,it must first is initialized
@@ -305,6 +308,7 @@ FSCSTATE PCA3_TIM_Init(uint16_t value)
     CCAP3H = value >> 8;
     return FSC_SUCCESS;
 }
+#endif
 
 /**
   * @name    PCA0_POP_Init
@@ -368,6 +372,7 @@ FSCSTATE PCA2_POP_Init(uint16_t value)
     return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    PCA3_POP_Init
   * @brief   PCA3 POP init function,it must first is initialized
@@ -388,6 +393,7 @@ FSCSTATE PCA3_POP_Init(uint16_t value)
     CCAP3H = value >> 8;
     return FSC_SUCCESS;
 }
+#endif
 
 /**
   * @name    PCA0_CAP_Init
@@ -434,6 +440,7 @@ FSCSTATE PCA2_CAP_Init(CAPMode_Type mode)
     return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    PCA3_CAP_Init
   * @brief   PCA3 CAP init function,it must first is initialized
@@ -448,6 +455,7 @@ FSCSTATE PCA3_CAP_Init(CAPMode_Type mode)
     CCAP3H = 0;
     return FSC_SUCCESS;
 }
+#endif
 
 /**
   * @name    PCA0_TIM_POP_ReValue
@@ -488,6 +496,7 @@ void PCA2_TIM_POP_ReValue(void)
     CCAP2H = PCA_Rvalue[2] >> 8;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    PCA3_TIM_POP_ReValue
   * @brief   PCA3 TIM and POP reload value function
@@ -500,6 +509,7 @@ void PCA3_TIM_POP_ReValue(void)
     CCAP3L = PCA_Rvalue[3];
     CCAP3H = PCA_Rvalue[3] >> 8;
 }
+#endif
 
 #endif
 

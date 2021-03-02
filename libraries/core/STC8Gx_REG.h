@@ -857,19 +857,15 @@ sfr ISP_CONTR   =   ISP_CONTR_ADDRESS;
 #define    CCAPM0_ADDRESS    0xDAU
 #define    CCAPM1_ADDRESS    0xDBU
 #define    CCAPM2_ADDRESS    0xDCU
-#define    CCAPM3_ADDRESS    0xDDU
 #define    CCAP0L_ADDRESS    0xEAU
 #define    CCAP1L_ADDRESS    0xEBU
 #define    CCAP2L_ADDRESS    0xECU
-#define    CCAP3L_ADDRESS    0xEDU
 #define    CCAP0H_ADDRESS    0xFAU
 #define    CCAP1H_ADDRESS    0xFBU
 #define    CCAP2H_ADDRESS    0xFCU
-#define    CCAP3H_ADDRESS    0xFDU
 #define    PCA_PWM0_ADDRESS  0xF2U
 #define    PCA_PWM1_ADDRESS  0xF3U
 #define    PCA_PWM2_ADDRESS  0xF4U
-#define    PCA_PWM3_ADDRESS  0xF5U
 
 /* CMOD */
 #define CIDL        0x80
@@ -902,15 +898,6 @@ sfr ISP_CONTR   =   ISP_CONTR_ADDRESS;
 #define PWM2        0x02
 #define ECCF2       0x01
 
-/* CCAPM3 */
-#define ECOM3       0x40
-#define CCAPP3      0x20
-#define CCAPN3      0x10
-#define MAT3        0x08
-#define TOG3        0x04
-#define PWM3        0x02
-#define ECCF3       0x01
-
 /* PCA register */
 sfr CCON      =   CCON_ADDRESS;
 sfr CMOD      =   CMOD_ADDRESS;
@@ -919,20 +906,16 @@ sfr CH        =   CH_ADDRESS;
 sfr CCAPM0    =   CCAPM0_ADDRESS;
 sfr CCAPM1    =   CCAPM1_ADDRESS;
 sfr CCAPM2    =   CCAPM2_ADDRESS;
-sfr CCAPM3    =   CCAPM3_ADDRESS;
 sfr CCAP0L    =   CCAP0L_ADDRESS;
 sfr CCAP1L    =   CCAP1L_ADDRESS;
 sfr CCAP2L    =   CCAP2L_ADDRESS;
-sfr CCAP3L    =   CCAP3L_ADDRESS;
 
 sfr CCAP0H    =   CCAP0H_ADDRESS;
 sfr CCAP1H    =   CCAP1H_ADDRESS;
 sfr CCAP2H    =   CCAP2H_ADDRESS;
-sfr CCAP3H    =   CCAP3H_ADDRESS;
 sfr PCA_PWM0  =   PCA_PWM0_ADDRESS;
 sfr PCA_PWM1  =   PCA_PWM1_ADDRESS;
 sfr PCA_PWM2  =   PCA_PWM2_ADDRESS;
-sfr PCA_PWM3  =   PCA_PWM3_ADDRESS;
 
 sbit CF    =  CCON ^ 7;
 sbit CR    =  CCON ^ 6;

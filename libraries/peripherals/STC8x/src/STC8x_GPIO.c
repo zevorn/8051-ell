@@ -102,8 +102,9 @@ FSCSTATE GPIO_COMP_SWPort(GPIOSWPort_Type port)
 	else return FSC_FAIL;
 }
 
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
+#if(PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    GPIO_PCA_SWPort
   * @brief   PCA switch port control function  
@@ -113,12 +114,27 @@ FSCSTATE GPIO_COMP_SWPort(GPIOSWPort_Type port)
   *                  SW_Port4: ECI/P3.5 CCP0/P3.3 CCP1/P3.2 CCP2/P3.1 CCP3/P3.0
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
+#elif (PER_LIB_MCU_MUODEL == STC8Gx)
+/**
+  * @name    GPIO_PCA_SWPort
+  * @brief   PCA switch port control function  
+  * @param   port    SW_Port1: ECI/P1.2 CCP0/P1.1 CCP1/P1.0 CCP2/P3.7 
+  *                  SW_Port2: ECI/P3.4 CCP0/P3.5 CCP1/P3.6 CCP2/P3.7 
+  *                  SW_Port3: ECI/P2.4 CCP0/P2.5 CCP1/P2.6 CCP2/P2.7 
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+#endif
 FSCSTATE GPIO_PCA_SWPort(GPIOSWPort_Type port)
 {
+    #if (PER_LIB_MCU_MUODEL == STC8Gx)
+    if(port > SW_Port3) return FSC_FAIL;
+    #endif
 	P_SW1 = (P_SW1 & 0xCF) | (port << 4);
 	return FSC_SUCCESS;
 }
+#endif
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    GPIO_PWM0_SWPort
   * @brief   PWM0 switch port control function 

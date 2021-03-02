@@ -367,7 +367,8 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run)
 	return FSC_SUCCESS;
 }
 
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
+
 /**
   * @name    NVIC_PCA_CNT_Init
   * @brief   PCA Counter NVIC function
@@ -418,6 +419,8 @@ FSCSTATE NVIC_PCA2_TIM_POP_Init(FUNSTATE run)
 	return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+
 /**
   * @name    NVIC_PCA3_TIM_POP_Init
   * @brief   PCA3 Timer and POP NVIC function  
@@ -429,6 +432,8 @@ FSCSTATE NVIC_PCA3_TIM_POP_Init(FUNSTATE run)
 	CCAPM3 = (CCAPM3 & 0xFE) | (run);
 	return FSC_SUCCESS;
 }
+
+#endif
 
 /**
   * @name    NVIC_PCA0_PWM_CAP_Init
@@ -472,6 +477,8 @@ FSCSTATE NVIC_PCA2_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run)
 	return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+
 /**
   * @name    NVIC_PCA3_PWM_CAP_Init
   * @brief   PCA3 Timer and POP NVIC function  
@@ -485,8 +492,11 @@ FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run)
 	CCAPM3 = (CCAPM3 & 0xCE) | (triMode) | (run);
 	return FSC_SUCCESS;
 }
+
 #endif
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+
+#endif
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 /**
   * @name    NVIC_PWM_CNT_Init
   * @brief   PWM CNT return to zero NVIC function 

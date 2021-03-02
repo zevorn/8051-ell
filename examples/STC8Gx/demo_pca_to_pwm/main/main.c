@@ -14,10 +14,22 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-
+extern bit Time500MsFlag;
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
+
+/**
+  * @name    LOGO
+  * @brief   printf logo
+  * @param   None
+  * @return  None
+***/
+void LOGO(void)
+{
+	printf("Timer0 500MS \r\n");
+  UART1_Send_String("Uart1\r\n");
+}
 
 /**
   * @name    main
@@ -27,15 +39,18 @@
 ***/
 int main(void)
 {
-    STC8x_System_Init();
-	printf("Hello,world\r\n");
-    for(;;)
-    {
+	STC8x_System_Init();
 
-    }
+	for(;;)
+	{
+      if(Time500MsFlag == 1)
+      {
+        Time500MsFlag = 0;
+        LOGO();
+      }
+	}
 
 }
-
 
 
 

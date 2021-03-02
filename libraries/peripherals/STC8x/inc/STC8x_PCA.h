@@ -106,7 +106,7 @@ typedef enum
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 /*--------------------------------------------------------
 | @Description: PCA Counter working function             |
 --------------------------------------------------------*/
@@ -120,7 +120,10 @@ FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,FUNSTATE run);
 FSCSTATE PCA0_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 FSCSTATE PCA1_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
+#endif
 
 /*--------------------------------------------------------
 | @Description: PCA CAP mode working function            |
@@ -129,7 +132,10 @@ FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 FSCSTATE PCA0_CAP_Init(CAPMode_Type mode);
 FSCSTATE PCA1_CAP_Init(CAPMode_Type mode);
 FSCSTATE PCA2_CAP_Init(CAPMode_Type mode);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 FSCSTATE PCA3_CAP_Init(CAPMode_Type mode);
+#endif
 
 /*--------------------------------------------------------
 | @Description: PCA TIMER mode working function          |
@@ -138,7 +144,10 @@ FSCSTATE PCA3_CAP_Init(CAPMode_Type mode);
 FSCSTATE PCA0_TIM_Init(uint16_t value);
 FSCSTATE PCA1_TIM_Init(uint16_t value);
 FSCSTATE PCA2_TIM_Init(uint16_t value);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 FSCSTATE PCA3_TIM_Init(uint16_t value);
+#endif
 
 /*--------------------------------------------------------
 | @Description: PCA POP mode working function            |
@@ -147,7 +156,10 @@ FSCSTATE PCA3_TIM_Init(uint16_t value);
 FSCSTATE PCA0_POP_Init(uint16_t value);
 FSCSTATE PCA1_POP_Init(uint16_t value);
 FSCSTATE PCA2_POP_Init(uint16_t value);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 FSCSTATE PCA3_POP_Init(uint16_t value);
+#endif
 
 /*--------------------------------------------------------
 | @Description: PCA PWM and POP reload value function    |
@@ -156,7 +168,10 @@ FSCSTATE PCA3_POP_Init(uint16_t value);
 void PCA0_TIM_POP_ReValue(void);
 void PCA1_TIM_POP_ReValue(void);
 void PCA2_TIM_POP_ReValue(void);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 void PCA3_TIM_POP_ReValue(void);
+#endif
 
 /*--------------------------------------------------------
 | @Description: PCA control define function              |
@@ -165,7 +180,10 @@ void PCA3_TIM_POP_ReValue(void);
 #define    PCA0_WORK_STOP()   CCAPM0 = 0
 #define    PCA1_WORK_STOP()   CCAPM1 = 0
 #define    PCA2_WORK_STOP()   CCAPM2 = 0
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 #define    PCA3_WORK_STOP()   CCAPM3 = 0
+#endif
 
 #endif
 #endif

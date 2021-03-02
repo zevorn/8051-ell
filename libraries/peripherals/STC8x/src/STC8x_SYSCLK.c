@@ -145,7 +145,6 @@ uint32_t Get_SysClk_FRE(void)
 	/* Frequency deviation, calculate the approximate data */
 	Count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL);
 	Count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
-
 	return Count;
 }
 

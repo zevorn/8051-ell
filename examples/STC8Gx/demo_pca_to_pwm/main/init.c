@@ -19,10 +19,10 @@
 | @Description: MCU peripheral initialization function   |
 --------------------------------------------------------*/
 
-static void STC8x_SYSCLK_Config(void);
 static void STC8x_UART_Config(void);
 static void STC8x_GPIO_Config(void);
 static void STC8x_TIMER_Config(void);
+static void STC8x_PCA_Config(void);
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
@@ -37,38 +37,73 @@ static void STC8x_TIMER_Config(void);
 void STC8x_System_Init(void)
 {
 	DELAY_POS(); /* Power on stability delay */	
-	STC8x_SYSCLK_Config(); /* Initialize system clock */
-	delay_init();
-	
-	STC8x_GPIO_Config();
+	delay_init(); /* Initialization delay function */
+
 	STC8x_UART_Config();
-	STC8x_TIMER_Config();
-	
-	/*
-		Add hardware driver initialization code here.
-	*/
+	STC8x_GPIO_Config();
+	STC8x_PCA_Config();
 	
 	NVIC_GLOBAL_ENABLE();
+	
+	STC8x_TIMER_Config();
 }
 
 /**
-  * @name    STC8x_SYSCLK_Config
-  * @brief   MCU SYSCLK initialization function
+  * @name    STC8x_PCA_Config
+  * @brief   MCU PCA initialization function
   * @param   None
   * @return  None
 ***/
-static void STC8x_SYSCLK_Config(void)
+static void STC8x_PCA_Config(void)
 {
-	SYSCLK_InitType SYSCLK_InitStruct={0}; /* Declare structure */
+   TIMER_InitType TIMER_InitStruct={0};
+    /*
+     * PCA to PWM frequency:
+     * If system clock frequency == 24Mhz,
+     * to configure PCA clock source = Timer0 overflow pulse,
+     * to configure timer0 = 19 us
+     * to configure PCA  bits = 10 bits
+     * so pca of clock source = 52.6KHZ
+     * so, PCA to PWM frequency = 52.6 / 1024 Hz = 51Hz
+     */
+	TIMER_InitStruct.Mode = TIMER_16BitAutoReload;
+	TIMER_InitStruct.Value = 19;     //19us
+	TIMER_InitStruct.Run = ENABLE;
+	TIMER0_Init(&TIMER_InitStruct);
+    
+    /*
+     * duty:
+     * to configure PCA  bits = 10 bits
+     * to  value = 0x200
+     * so, duty = (0x400 - 0x200) / 0x400 = 50%
+     */
+     PCA0_PWM_Init(PCA_PWM_10Bit,0x200);
+     PCA_CNT_Init(PCA_TIMER0,ENABLE);
+}
 
-	SYSCLK_InitStruct.MCLKSrc = AUTO;
-	// SYSCLK_InitStruct.IRCBand = IRC_Band_20MHz;
-	// SYSCLK_InitStruct.IRCTRIM = 150;
-    // SYSCLK_InitStruct.LIRCTRIM = TRIM1;
-	// SYSCLK_InitStruct.MCLKDiv = 0;
-	SYSCLK_InitStruct.SCLKDiv = 0; /* if SCLKDiv = 0, Not output */
-	SYSCLK_InitStruct.SCLKOutPin = SCLK_OUT_P16;
-	SYSCLK_Init(&SYSCLK_InitStruct);
+/**
+  * @name    STC8x_UART_Config
+  * @brief   MCU UART initialization function
+  * @param   None
+  * @return  None
+***/
+static void STC8x_UART_Config(void)
+{
+	UART_InitType UART_InitStruct={0};	
+
+	/* UART1 TXD */
+	GPIO_MODE_OUT_PP(GPIO_P3,Pin_1);
+	/* UART1 RXD */
+	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_0); 
+
+	UART_InitStruct.Mode = UART_8bit_BRTx;
+	UART_InitStruct.BRTGen = UART_BRT_TIM1;
+	UART_InitStruct.BRTMode = UART_BRT_1T;
+	UART_InitStruct.BaudRate = 115200;
+	UART_InitStruct.RxEnable = ENABLE;
+
+	UART1_Init(&UART_InitStruct);
+	NVIC_UART1_Init(NVIC_PR3,ENABLE);
 }
 
 /**
@@ -84,11 +119,8 @@ static void STC8x_GPIO_Config(void)
 	GPIO_MODE_WEAK_PULL(GPIO_P2,Pin_All);
 	GPIO_MODE_WEAK_PULL(GPIO_P3,Pin_All);
 	GPIO_MODE_WEAK_PULL(GPIO_P4,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P5,Pin_All);
-	RST_P54_ENABLE();
-	
-    /* Run lamp */
-	GPIO_MODE_OUT_PP(GPIO_P2,Pin_0);  //P20
+
+	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);
 }
 
 /**
@@ -97,41 +129,29 @@ static void STC8x_GPIO_Config(void)
   * @param   None
   * @return  None
 ***/
-static void STC8x_TIMER_Config(void)
+void STC8x_TIMER_Config(void)
 {
-	TIMER_InitType TIMER_InitStruct={0};
+	TIMER_InitType  TIMER_InitStruct = {0};
 	
-	TIMER_InitStruct.Mode = TIMER_16BitAutoReload;
-	TIMER_InitStruct.Value = 1000;     //1ms
-	TIMER_InitStruct.Run = ENABLE;
-	TIMER0_Init(&TIMER_InitStruct);
-	NVIC_TIMER0_Init(NVIC_PR0,ENABLE);
-}
-
-/**
-  * @name    STC8x_UART_Config
-  * @brief   MCU UART initialization function
-  * @param   None
-  * @return  None
-***/
-static void STC8x_UART_Config(void)
-{
-	UART_InitType UART_InitStruct = {0};
+    TIMER_InitStruct.Type = TIMER_Type_Timer;       //timer type
+    TIMER_InitStruct.Mode = TIMER_16BitAutoReload;       //Working mode
+    TIMER_InitStruct.TCycle = TIMER_TCY_1T;   //Instruction cycle
+    TIMER_InitStruct.ClkOut = DISABLE;           //Programmable clock output
+    TIMER_InitStruct.Value = 1000;              //Loading initial value
+    TIMER_InitStruct.Run = ENABLE;              //Operation control bit
 	
-	/* UART1 TXD */
-	GPIO_MODE_OUT_PP(GPIO_P3,Pin_1);
-	/* UART1 RXD */
-	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_0); 
+	if(TIMER0_Init(&TIMER_InitStruct) != FSC_SUCCESS)
+	{
+		printf("Timer0 init erro! \r\n");
+	}
+	else
+	{
+		printf("Timer0 init success! \r\n");
+	}
+	
+	NVIC_TIMER0_Init(NVIC_PR1,ENABLE);
 
-	UART_InitStruct.Mode = UART_8bit_BRTx;
-	UART_InitStruct.BRTGen = UART_BRT_TIM1;
-	UART_InitStruct.BRTMode = UART_BRT_1T;
-	UART_InitStruct.BaudRate = 9600;
-	UART_InitStruct.RxEnable = ENABLE;
-	UART1_Init(&UART_InitStruct);
-	NVIC_UART1_Init(NVIC_PR0,ENABLE);
 }
-
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
