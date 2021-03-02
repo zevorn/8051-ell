@@ -16,7 +16,8 @@
 
 ****
 
-[下载连接(最新版)](https://gitee.com/zeweni/ELL-8051-LIB)
+[下载连接(gitee)](https://gitee.com/zeweni/ELL-8051-LIB)
+[下载连接(github)](https://github.com/zewen-i/8051-ELL-LIB)
 
 [开发指南视频链接](https://www.bilibili.com/video/BV1EU4y1s736?from=search&seid=5098754810768350553)
 
