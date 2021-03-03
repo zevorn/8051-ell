@@ -246,8 +246,6 @@ sbit PX0  = IP^0;
 #define    P3INTE    ( *(__IO uint8_t xdata *)   P3INTE_ADDRESS)
 #define    P4INTE    ( *(__IO uint8_t xdata *)   P4INTE_ADDRESS)
 #define    P5INTE    ( *(__IO uint8_t xdata *)   P5INTE_ADDRESS)
-#define    P6INTE    ( *(__IO uint8_t xdata *)   P6INTE_ADDRESS)
-#define    P7INTE    ( *(__IO uint8_t xdata *)   P7INTE_ADDRESS)
 
 #define    P0INTF    ( *(__IO uint8_t xdata *)   P0INTF_ADDRESS)
 #define    P1INTF    ( *(__IO uint8_t xdata *)   P1INTF_ADDRESS)
@@ -255,8 +253,6 @@ sbit PX0  = IP^0;
 #define    P3INTF    ( *(__IO uint8_t xdata *)   P3INTF_ADDRESS)
 #define    P4INTF    ( *(__IO uint8_t xdata *)   P4INTF_ADDRESS)
 #define    P5INTF    ( *(__IO uint8_t xdata *)   P5INTF_ADDRESS)
-#define    P6INTF    ( *(__IO uint8_t xdata *)   P6INTF_ADDRESS)
-#define    P7INTF    ( *(__IO uint8_t xdata *)   P7INTF_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: GPIO peripherals                         |
@@ -283,8 +279,6 @@ ram areas below */
 #define    GPIO_P3_ADDRESS      0xB0U 
 #define    GPIO_P4_ADDRESS      0xC0U
 #define    GPIO_P5_ADDRESS      0xC8U 
-#define    GPIO_P6_ADDRESS      0xE8U 
-#define    GPIO_P7_ADDRESS      0xF8U 
 
 /*PxMx address define*/
 #define    P0M1_ADDRESS  PxM1_BASE
@@ -293,8 +287,6 @@ ram areas below */
 #define    P3M1_ADDRESS      0xB1U
 #define    P4M1_ADDRESS      0xB3U
 #define    P5M1_ADDRESS      0xC9U
-#define    P6M1_ADDRESS      0xCBU
-#define    P7M1_ADDRESS      0xE1U
 				 							    
 #define    P0M0_ADDRESS  PxM0_BASE
 #define    P1M0_ADDRESS      0x92U
@@ -302,8 +294,6 @@ ram areas below */
 #define    P3M0_ADDRESS      0xB2U
 #define    P4M0_ADDRESS      0xB4U
 #define    P5M0_ADDRESS      0xCAU
-#define    P6M0_ADDRESS      0xCCU
-#define    P7M0_ADDRESS      0xE2U
 
 /*GPIO pull up address */
 #define    P0PU_ADDRESS    (PxPU_BASE + 0x00U)
@@ -312,8 +302,6 @@ ram areas below */
 #define    P3PU_ADDRESS    (PxPU_BASE + 0x03U)
 #define    P4PU_ADDRESS    (PxPU_BASE + 0x04U)
 #define    P5PU_ADDRESS    (PxPU_BASE + 0x05U)
-#define    P6PU_ADDRESS    (PxPU_BASE + 0x06U)
-#define    P7PU_ADDRESS    (PxPU_BASE + 0x07U)
 
 #define    GPIO_P0PU_ADDRESS    (PxPU_BASE + 0x00U)
 #define    GPIO_P1PU_ADDRESS    (PxPU_BASE + 0x01U)
@@ -321,8 +309,6 @@ ram areas below */
 #define    GPIO_P3PU_ADDRESS    (PxPU_BASE + 0x03U)
 #define    GPIO_P4PU_ADDRESS    (PxPU_BASE + 0x04U)
 #define    GPIO_P5PU_ADDRESS    (PxPU_BASE + 0x05U)
-#define    GPIO_P6PU_ADDRESS    (PxPU_BASE + 0x06U)
-#define    GPIO_P7PU_ADDRESS    (PxPU_BASE + 0x07U)
 
 /*GPIO schmidt trigger address */
 #define    P0NCS_ADDRESS   (PxNCS_BASE + 0x00U)
@@ -331,8 +317,6 @@ ram areas below */
 #define    P3NCS_ADDRESS   (PxNCS_BASE + 0x03U)
 #define    P4NCS_ADDRESS   (PxNCS_BASE + 0x04U)
 #define    P5NCS_ADDRESS   (PxNCS_BASE + 0x05U)
-#define    P6NCS_ADDRESS   (PxNCS_BASE + 0x06U)
-#define    P7NCS_ADDRESS   (PxNCS_BASE + 0x07U)
 
 #define    GPIO_P0NCS_ADDRESS   (PxNCS_BASE + 0x00U)
 #define    GPIO_P1NCS_ADDRESS   (PxNCS_BASE + 0x01U)
@@ -340,8 +324,6 @@ ram areas below */
 #define    GPIO_P3NCS_ADDRESS   (PxNCS_BASE + 0x03U)
 #define    GPIO_P4NCS_ADDRESS   (PxNCS_BASE + 0x04U)
 #define    GPIO_P5NCS_ADDRESS   (PxNCS_BASE + 0x05U)
-#define    GPIO_P6NCS_ADDRESS   (PxNCS_BASE + 0x06U)
-#define    GPIO_P7NCS_ADDRESS   (PxNCS_BASE + 0x07U)
 
 /* GPIO level conversion address */
 #define    P0SR_ADDRESS    (PxSR_BASE + 0x00U)
@@ -350,8 +332,6 @@ ram areas below */
 #define    P3SR_ADDRESS    (PxSR_BASE + 0x03U)
 #define    P4SR_ADDRESS    (PxSR_BASE + 0x04U)
 #define    P5SR_ADDRESS    (PxSR_BASE + 0x05U)
-#define    P6SR_ADDRESS    (PxSR_BASE + 0x06U)
-#define    P7SR_ADDRESS    (PxSR_BASE + 0x07U)
 
 #define    GPIO_P0SR_ADDRESS    (PxSR_BASE + 0x00U)
 #define    GPIO_P1SR_ADDRESS    (PxSR_BASE + 0x01U)
@@ -359,8 +339,6 @@ ram areas below */
 #define    GPIO_P3SR_ADDRESS    (PxSR_BASE + 0x03U)
 #define    GPIO_P4SR_ADDRESS    (PxSR_BASE + 0x04U)
 #define    GPIO_P5SR_ADDRESS    (PxSR_BASE + 0x05U)
-#define    GPIO_P6SR_ADDRESS    (PxSR_BASE + 0x06U)
-#define    GPIO_P7SR_ADDRESS    (PxSR_BASE + 0x07U)
 
 /* GPIO drive current address */
 #define    P0DR_ADDRESS    (PxDR_BASE + 0x00U)
@@ -369,8 +347,6 @@ ram areas below */
 #define    P3DR_ADDRESS    (PxDR_BASE + 0x03U)
 #define    P4DR_ADDRESS    (PxDR_BASE + 0x04U)
 #define    P5DR_ADDRESS    (PxDR_BASE + 0x05U)
-#define    P6DR_ADDRESS    (PxDR_BASE + 0x06U)
-#define    P7DR_ADDRESS    (PxDR_BASE + 0x07U)
 
 #define    GPIO_P0DR_ADDRESS    (PxDR_BASE + 0x00U)
 #define    GPIO_P1DR_ADDRESS    (PxDR_BASE + 0x01U)
@@ -378,8 +354,7 @@ ram areas below */
 #define    GPIO_P3DR_ADDRESS    (PxDR_BASE + 0x03U)
 #define    GPIO_P4DR_ADDRESS    (PxDR_BASE + 0x04U)
 #define    GPIO_P5DR_ADDRESS    (PxDR_BASE + 0x05U)
-#define    GPIO_P6DR_ADDRESS    (PxDR_BASE + 0x06U)
-#define    GPIO_P7DR_ADDRESS    (PxDR_BASE + 0x07U)
+
 
 /* GPIO intput enable address*/
 #define    P0IE_ADDRESS    (PxIE_BASE + 0x00U)
@@ -393,8 +368,7 @@ sfr P2 = GPIO_P2_ADDRESS;
 sfr P3 = GPIO_P3_ADDRESS;
 sfr P4 = GPIO_P4_ADDRESS;
 sfr P5 = GPIO_P5_ADDRESS;
-sfr P6 = GPIO_P6_ADDRESS;
-sfr P7 = GPIO_P7_ADDRESS;
+
 
 sfr GPIO_P0_IO = GPIO_P0_ADDRESS;
 sfr GPIO_P1_IO = GPIO_P1_ADDRESS;
@@ -402,8 +376,6 @@ sfr GPIO_P2_IO = GPIO_P2_ADDRESS;
 sfr GPIO_P3_IO = GPIO_P3_ADDRESS;
 sfr GPIO_P4_IO = GPIO_P4_ADDRESS;
 sfr GPIO_P5_IO = GPIO_P5_ADDRESS;
-sfr GPIO_P6_IO = GPIO_P6_ADDRESS;
-sfr GPIO_P7_IO = GPIO_P7_ADDRESS;
 
 /* GPIO register */
 sbit P00 = P0^0;
@@ -458,24 +430,6 @@ sbit P55 = P5^5;
 sbit P56 = P5^6;
 sbit P57 = P5^7;
 
-sbit P60 = P6^0;
-sbit P61 = P6^1;
-sbit P62 = P6^2;
-sbit P63 = P6^3;
-sbit P64 = P6^4;
-sbit P65 = P6^5;
-sbit P66 = P6^6;
-sbit P67 = P6^7;
-						
-sbit P70 = P7^0;
-sbit P71 = P7^1;
-sbit P72 = P7^2;
-sbit P73 = P7^3;
-sbit P74 = P7^4;
-sbit P75 = P7^5;
-sbit P76 = P7^6;
-sbit P77 = P7^7;
-
 /* GPIO mode register  */
 sfr P0M1 = P0M1_ADDRESS;
 sfr P1M1 = P1M1_ADDRESS;
@@ -483,8 +437,6 @@ sfr P2M1 = P2M1_ADDRESS;
 sfr P3M1 = P3M1_ADDRESS;
 sfr P4M1 = P4M1_ADDRESS;
 sfr P5M1 = P5M1_ADDRESS;
-sfr P6M1 = P6M1_ADDRESS;
-sfr P7M1 = P7M1_ADDRESS;
 
 sfr GPIO_P0M1 = P0M1_ADDRESS;
 sfr GPIO_P1M1 = P1M1_ADDRESS;
@@ -492,8 +444,6 @@ sfr GPIO_P2M1 = P2M1_ADDRESS;
 sfr GPIO_P3M1 = P3M1_ADDRESS;
 sfr GPIO_P4M1 = P4M1_ADDRESS;
 sfr GPIO_P5M1 = P5M1_ADDRESS;
-sfr GPIO_P6M1 = P6M1_ADDRESS;
-sfr GPIO_P7M1 = P7M1_ADDRESS;
 
 /* GPIO mode register  */
 sfr P0M0 = P0M0_ADDRESS;
@@ -502,8 +452,6 @@ sfr P2M0 = P2M0_ADDRESS;
 sfr P3M0 = P3M0_ADDRESS;
 sfr P4M0 = P4M0_ADDRESS;
 sfr P5M0 = P5M0_ADDRESS;
-sfr P6M0 = P6M0_ADDRESS;
-sfr P7M0 = P7M0_ADDRESS;
 
 sfr GPIO_P0M0 = P0M0_ADDRESS;
 sfr GPIO_P1M0 = P1M0_ADDRESS;
@@ -511,8 +459,6 @@ sfr GPIO_P2M0 = P2M0_ADDRESS;
 sfr GPIO_P3M0 = P3M0_ADDRESS;
 sfr GPIO_P4M0 = P4M0_ADDRESS;
 sfr GPIO_P5M0 = P5M0_ADDRESS;
-sfr GPIO_P6M0 = P6M0_ADDRESS;
-sfr GPIO_P7M0 = P7M0_ADDRESS;
 
 /* Bus speed control register  */
 sfr BUS_SPEED = BUS_SPEED_ADDRESS;
@@ -530,8 +476,6 @@ sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 #define    P3PU    ( *(__IO uint8_t xdata *) P3PU_ADDRESS)
 #define    P4PU    ( *(__IO uint8_t xdata *) P4PU_ADDRESS)
 #define    P5PU    ( *(__IO uint8_t xdata *) P5PU_ADDRESS)
-#define    P6PU    ( *(__IO uint8_t xdata *) P6PU_ADDRESS)
-#define    P7PU    ( *(__IO uint8_t xdata *) P7PU_ADDRESS)
 								   
 #define    P0SR    ( *(__IO uint8_t xdata *) P0SR_ADDRESS)
 #define    P1SR    ( *(__IO uint8_t xdata *) P1SR_ADDRESS)
@@ -539,17 +483,13 @@ sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 #define    P3SR    ( *(__IO uint8_t xdata *) P3SR_ADDRESS)
 #define    P4SR    ( *(__IO uint8_t xdata *) P4SR_ADDRESS)
 #define    P5SR    ( *(__IO uint8_t xdata *) P5SR_ADDRESS)
-#define    P6SR    ( *(__IO uint8_t xdata *) P6SR_ADDRESS)
-#define    P7SR    ( *(__IO uint8_t xdata *) P7SR_ADDRESS)
-								   
+
 #define    P0DR    ( *(__IO uint8_t xdata *) P0DR_ADDRESS)
 #define    P1DR    ( *(__IO uint8_t xdata *) P1DR_ADDRESS)
 #define    P2DR    ( *(__IO uint8_t xdata *) P2DR_ADDRESS)
 #define    P3DR    ( *(__IO uint8_t xdata *) P3DR_ADDRESS)
 #define    P4DR    ( *(__IO uint8_t xdata *) P4DR_ADDRESS)
 #define    P5DR    ( *(__IO uint8_t xdata *) P5DR_ADDRESS)
-#define    P6DR    ( *(__IO uint8_t xdata *) P6DR_ADDRESS)
-#define    P7DR    ( *(__IO uint8_t xdata *) P7DR_ADDRESS)
 								   
 #define    P0IE    ( *(__IO uint8_t xdata *) P0IE_ADDRESS)
 #define    P1IE    ( *(__IO uint8_t xdata *) P1IE_ADDRESS)
@@ -566,8 +506,6 @@ sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 #define    P3NCS  ( *(__IO uint8_t xdata *) P3NCS_ADDRESS)
 #define    P4NCS  ( *(__IO uint8_t xdata *) P4NCS_ADDRESS)
 #define    P5NCS  ( *(__IO uint8_t xdata *) P5NCS_ADDRESS)
-#define    P6NCS  ( *(__IO uint8_t xdata *) P6NCS_ADDRESS)
-#define    P7NCS  ( *(__IO uint8_t xdata *) P7NCS_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: WDT peripherals                          |
@@ -603,6 +541,10 @@ sfr   RSTCFG = RSTCFG_ADDRESS;
 #define   T2L_ADDRESS     0xD7U
 #define   WKTCL_ADDRESS   0xAAU
 #define   WKTCH_ADDRESS   0xABU
+
+#define   TM2PS_ADDRESS   0xFEA2U
+#define   TM3PS_ADDRESS   0xFEA3U
+#define   TM4PS_ADDRESS   0xFEA4U
 
 /* TMOD */
 #define T1_GATE     0x80
@@ -660,6 +602,10 @@ sbit TF0  =  TCON^5;
 sbit TR0  =  TCON^4;
 sbit IE1  =  TCON^3;
 sbit IE0  =  TCON^1;
+
+#define TM2PS    (*(__IO uint8_t xdata *)TM2PS_ADDRESS)
+#define TM3PS    (*(__IO uint8_t xdata *)TM3PS_ADDRESS)
+#define TM4PS    (*(__IO uint8_t xdata *)TM4PS_ADDRESS)
 
 /* Clock frequency address of timer5 */
 

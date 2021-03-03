@@ -608,6 +608,10 @@ sfr   RSTCFG = RSTCFG_ADDRESS;
 #define   WKTCL_ADDRESS   0xAAU
 #define   WKTCH_ADDRESS   0xABU
 
+#define   TM2PS_ADDRESS   0xFEA2U
+#define   TM3PS_ADDRESS   0xFEA3U
+#define   TM4PS_ADDRESS   0xFEA4U
+
 /* TMOD */
 #define T1_GATE     0x80
 #define T1_CT       0x40
@@ -664,6 +668,10 @@ sbit TF0  =  TCON^5;
 sbit TR0  =  TCON^4;
 sbit IE1  =  TCON^3;
 sbit IE0  =  TCON^1;
+
+#define TM2PS    (*(__IO uint8_t xdata *)TM2PS_ADDRESS)
+#define TM3PS    (*(__IO uint8_t xdata *)TM3PS_ADDRESS)
+#define TM4PS    (*(__IO uint8_t xdata *)TM4PS_ADDRESS)
 
 /* Clock frequency address of timer5 */
 

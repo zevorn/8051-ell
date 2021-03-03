@@ -29,6 +29,7 @@ int main(void)
 {
     STC8x_System_Init();
 	printf("Hello,world\r\n");
+    
     for(;;)
     {
 

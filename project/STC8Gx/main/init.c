@@ -80,16 +80,9 @@ static void STC8x_SYSCLK_Config(void)
 ***/
 static void STC8x_GPIO_Config(void)
 {
-	GPIO_MODE_WEAK_PULL(GPIO_P0,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P1,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P2,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P3,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P4,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P5,Pin_All);
-	RST_P54_ENABLE();
-	
     /* Run lamp */
-	GPIO_MODE_OUT_PP(GPIO_P2,Pin_0);  //P20
+	GPIO_MODE_OUT_PP(GPIO_P5,Pin_5);  //P55
+    P55 = 1;
 }
 
 /**
@@ -127,7 +120,7 @@ static void STC8x_UART_Config(void)
 	UART_InitStruct.Mode = UART_8bit_BRTx;
 	UART_InitStruct.BRTGen = UART_BRT_TIM1;
 	UART_InitStruct.BRTMode = UART_BRT_1T;
-	UART_InitStruct.BaudRate = 9600;
+	UART_InitStruct.BaudRate = 115200;
 	UART_InitStruct.RxEnable = ENABLE;
 	UART1_Init(&UART_InitStruct);
 	NVIC_UART1_Init(NVIC_PR0,ENABLE);

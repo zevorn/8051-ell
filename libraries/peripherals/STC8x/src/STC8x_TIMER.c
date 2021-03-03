@@ -44,18 +44,35 @@ value = (65536UL - (sysClk_FRE / (1000000UL /  value \
 value = (65536UL - (sysClk_FRE / (1000000UL /  value \
 	         * (11 * (!(AUXR & 0x40)) + 1)) ) );}while(0)
 
-#define TIMER2_VALUE_CFG(value) do{ \
-value = (65536UL - (sysClk_FRE / (1000000UL /  value \
-	         * (11 * (!(AUXR & 0x04)) + 1)) ) );}while(0)
+#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
+    
+    #define TIMER2_VALUE_CFG(value) do{ \
+    value = (65536UL - (sysClk_FRE / (1000000UL /  value \
+    	         * (11 * (!(AUXR & 0x04)) + 1)) ) );}while(0)
 
-#define TIMER3_VALUE_CFG(value) do{ \
-value = (65536UL - (sysClk_FRE / (1000000UL /  value \
-	        * (11 * (!(T4T3M & 0x02)) + 1)) ) );}while(0)
+    #define TIMER3_VALUE_CFG(value) do{ \
+    value = (65536UL - (sysClk_FRE / (1000000UL /  value \
+    	        * (11 * (!(T4T3M & 0x02)) + 1)) ) );}while(0)
 
-#define TIMER4_VALUE_CFG(value) do{ \
-value = (65536UL - (sysClk_FRE / (1000000UL /  value \
-	      * (11 * (!(T4T3M & 0x20)) + 1)) ) );}while(0)	
-             
+    #define TIMER4_VALUE_CFG(value) do{ \
+    value = (65536UL - (sysClk_FRE / (1000000UL /  value \
+	          * (11 * (!(T4T3M & 0x20)) + 1)) ) );}while(0)	
+              
+#elif  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+    #define TIMER2_VALUE_CFG(value) do{ \
+    value = (65536UL - ( (sysClk_FRE / (TM2PS + 1) ) / (1000000UL /  value \
+    	         * (11 * (!(AUXR & 0x04)) + 1)) ) );}while(0)
+
+    #define TIMER3_VALUE_CFG(value) do{ \
+    value = (65536UL - ( (sysClk_FRE / (TM3PS + 1) ) / (1000000UL /  value \
+    	        * (11 * (!(T4T3M & 0x02)) + 1)) ) );}while(0)
+
+    #define TIMER4_VALUE_CFG(value) do{ \
+    value = (65536UL - ( (sysClk_FRE / (TM2PS + 1) ) / (1000000UL /  value \
+	          * (11 * (!(T4T3M & 0x20)) + 1)) ) );}while(0)	
+    
+#endif             
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -80,7 +97,7 @@ FSCSTATE TIMER0_Init(const TIMER_InitType *timerx)
 	if(timerx -> Mode == TIMER_8BitAutoReload) T0L = (uint8_t)(timerx -> Value), T0H = (uint8_t)(timerx -> Value); 
 	else                                       T0L = (uint8_t)(timerx -> Value), T0H = (uint8_t)(timerx -> Value >> 8);
 	INTCLKO = (INTCLKO & 0xFE) | (timerx -> ClkOut);
-	TR0 = timerx -> Run; 
+	TR0 = timerx -> Run;
 	return FSC_SUCCESS;
 }
 
@@ -120,6 +137,11 @@ FSCSTATE TIMER2_Init(const TIMER_InitType *timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
 	uint32_t sysClk_FRE;
+    #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+        EAXFR_ENABLE();
+        TM2PS = timerx -> SysClkDiv;
+        EAXFR_DISABLE();
+    #endif
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	AUXR &= 0xEF; //Turn off timer2
@@ -143,6 +165,11 @@ FSCSTATE TIMER3_Init(const TIMER_InitType *timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
+    #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+        EAXFR_ENABLE();
+        TM3PS = timerx -> SysClkDiv;
+        EAXFR_DISABLE();
+    #endif
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	T4T3M &= 0XF7;//Turn off timer3
@@ -166,6 +193,11 @@ FSCSTATE TIMER4_Init(const TIMER_InitType *timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
+    #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+        EAXFR_ENABLE();
+        TM4PS = timerx -> SysClkDiv;
+        EAXFR_DISABLE();
+    #endif
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	T4T3M &= 0X7F; //Turn off timer4

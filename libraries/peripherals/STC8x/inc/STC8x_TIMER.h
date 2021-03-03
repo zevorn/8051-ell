@@ -108,20 +108,24 @@ typedef enum
 /**
   * @name    TIMER_InitType
   * @brief   TIME Init structure
-  * @param   Type    timer type
-  * @param   Mode    Working mode
-  * @param   TCycle  Instruction cycle
-  * @param   ClkOut  Programmable clock output
-  * @param   Value   Loading initial value
-  * @param   Run     Operation control bit
+  * @param   SysClokDiv  system clock division to timer use
+  * @param   Type        timer type
+  * @param   Mode        Working mode
+  * @param   TCycle      Instruction cycle
+  * @param   ClkOut      Programmable clock output
+  * @param   Value       Loading initial value
+  * @param   Run         Operation control bit
 ***/
 typedef struct 
 {
+#if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Gx)
+    uint8_t SysClkDiv;   /* just STC8G、STC8H */
+#endif
     TIMERType_Type Type;       
-    TIMERMode_Type Mode;       
+    TIMERMode_Type Mode;
     TIMERTCycle_Type TCycle;   
     FUNSTATE ClkOut;           
-    uint16 Value;              
+    uint16_t Value;              
     FUNSTATE Run;              
 }   TIMER_InitType;
 

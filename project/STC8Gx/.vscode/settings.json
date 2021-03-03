@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "stc8x_timer.h": "c",
+        "stc8gx_reg.h": "c",
+        "stc8x_gpio.h": "c",
+        "stc8hx_reg.h": "c"
+    }
+}
