@@ -62,6 +62,7 @@
 
 #define    ADC_Road_REV    0x0F	   //Test the internal refv voltage
 
+/* STC8Ax */
 #define    ADC_Road_P10_8Ax    0x00
 #define    ADC_Road_P11_8Ax    0x01
 #define    ADC_Road_P12_8Ax    0x02

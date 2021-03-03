@@ -62,22 +62,120 @@
 /* PEPin */
 #define  COMP_PE_P37     0xF7
 
-#define  COMP_PE_P10     0x00	   
-#define  COMP_PE_P11     0x01
-#define  COMP_PE_P12     0x02
-#define  COMP_PE_P13     0x03
-#define  COMP_PE_P14     0x04
-#define  COMP_PE_P15     0x05
-#define  COMP_PE_P16     0x06
-#define  COMP_PE_P17     0x07
-	   
-#define	 COMP_PE_P00     0x08
-#define	 COMP_PE_P01     0x09
-#define	 COMP_PE_P02     0x0A
-#define	 COMP_PE_P03     0x0B
-#define	 COMP_PE_P04     0x0C
-#define	 COMP_PE_P05     0x0D
-#define	 COMP_PE_P06     0x0E
+/* STC8Ax */
+#define    COMP_PE_P10_8Ax    0x00
+#define    COMP_PE_P11_8Ax    0x01
+#define    COMP_PE_P12_8Ax    0x02
+#define    COMP_PE_P13_8Ax    0x03
+#define    COMP_PE_P14_8Ax    0x04
+#define    COMP_PE_P15_8Ax    0x05
+#define    COMP_PE_P16_8Ax    0x06
+#define    COMP_PE_P17_8Ax    0x07
+#define    COMP_PE_P00_8Ax    0x08
+#define    COMP_PE_P01_8Ax    0x09
+#define    COMP_PE_P02_8Ax    0x0A
+#define    COMP_PE_P03_8Ax    0x0B
+#define    COMP_PE_P04_8Ax    0x0C
+#define    COMP_PE_P05_8Ax    0x0D
+#define    COMP_PE_P06_8Ax    0x0E
+
+/* STC8G1K08A 8Pin */
+#define    COMP_PE_P30_8G1K08A    0x00
+#define    COMP_PE_P31_8G1K08A    0x01
+#define    COMP_PE_P32_8G1K08A    0x02
+#define    COMP_PE_P33_8G1K08A    0x03        
+#define    COMP_PE_P54_8G1K08A    0x04
+#define    COMP_PE_P55_8G1K08A    0x05
+
+/* STC8G1K08 16Pin and 20Pin / STC8G1K08T 20Pin */
+#define    COMP_PE_P10_8G1K08_T    0x00
+#define    COMP_PE_P11_8G1K08_T    0x01
+#define    COMP_PE_P12_8G1K08_T    0x02
+#define    COMP_PE_P13_8G1K08_T    0x03
+#define    COMP_PE_P14_8G1K08_T    0x04
+#define    COMP_PE_P15_8G1K08_T    0x05
+#define    COMP_PE_P16_8G1K08_T    0x06
+#define    COMP_PE_P17_8G1K08_T    0x07
+#define    COMP_PE_P30_8G1K08_T    0x08
+#define    COMP_PE_P31_8G1K08_T    0x09
+#define    COMP_PE_P32_8G1K08_T    0x0A
+#define    COMP_PE_P33_8G1K08_T    0x0B
+#define    COMP_PE_P34_8G1K08_T    0x0C
+#define    COMP_PE_P35_8G1K08_T    0x0D
+#define    COMP_PE_P36_8G1K08_T    0x0E
+
+/* STC8G2K64S4 16Pin / STC8G2K64S2 */
+#define    COMP_PE_P10_8G2K64S2_S4    0x00
+#define    COMP_PE_P11_8G2K64S2_S4    0x01
+#define    COMP_PE_P12_8G2K64S2_S4    0x02
+#define    COMP_PE_P13_8G2K64S2_S4    0x03
+#define    COMP_PE_P14_8G2K64S2_S4    0x04
+#define    COMP_PE_P15_8G2K64S2_S4    0x05
+#define    COMP_PE_P16_8G2K64S2_S4    0x06
+#define    COMP_PE_P17_8G2K64S2_S4    0x07
+#define    COMP_PE_P00_8G2K64S2_S4    0x08
+#define    COMP_PE_P01_8G2K64S2_S4    0x09
+#define    COMP_PE_P02_8G2K64S2_S4    0x0A
+#define    COMP_PE_P03_8G2K64S2_S4    0x0B
+#define    COMP_PE_P04_8G2K64S2_S4    0x0C
+#define    COMP_PE_P05_8G2K64S2_S4    0x0D
+#define    COMP_PE_P06_8G2K64S2_S4    0x0E
+   
+/* STC8H1K28 */
+#define    COMP_PE_P10_8H1K28    0x00
+#define    COMP_PE_P11_8H1K28    0x01
+#define    COMP_PE_P12_8H1K28    0x02
+#define    COMP_PE_P13_8H1K28    0x03
+#define    COMP_PE_P14_8H1K28    0x04
+#define    COMP_PE_P15_8H1K28    0x05
+#define    COMP_PE_P16_8H1K28    0x06
+#define    COMP_PE_P17_8H1K28    0x07
+#define    COMP_PE_P00_8H1K28    0x08
+#define    COMP_PE_P01_8H1K28    0x09
+#define    COMP_PE_P02_8H1K28    0x0A
+#define    COMP_PE_P03_8H1K28    0x0B
+
+/* STC8H1K08 */
+#define    COMP_PE_P10_8H1K08    0x00
+#define    COMP_PE_P11_8H1K08    0x01
+#define    COMP_PE_P30_8H1K08    0x08
+#define    COMP_PE_P31_8H1K08    0x09
+#define    COMP_PE_P32_8H1K08    0x0A
+#define    COMP_PE_P33_8H1K08    0x0B
+#define    COMP_PE_P34_8H1K08    0x0C
+#define    COMP_PE_P35_8H1K08    0x0D
+#define    COMP_PE_P36_8H1K08    0x0E
+
+/* STC8H3K64S2 / STC8H3K64S4 */
+#define    COMP_PE_P10_8H3K64S2_S4    0x00
+#define    COMP_PE_P11_8H3K64S2_S4    0x01
+#define    COMP_PE_P12_8H3K64S2_S4    0x02
+#define    COMP_PE_P16_8H3K64S2_S4    0x06
+#define    COMP_PE_P17_8H3K64S2_S4    0x07
+#define    COMP_PE_P00_8H3K64S2_S4    0x08
+#define    COMP_PE_P01_8H3K64S2_S4    0x09
+#define    COMP_PE_P02_8H3K64S2_S4    0x0A
+#define    COMP_PE_P03_8H3K64S2_S4    0x0B
+#define    COMP_PE_P04_8H3K64S2_S4    0x0C
+#define    COMP_PE_P05_8H3K64S2_S4    0x0D
+#define    COMP_PE_P06_8H3K64S2_S4    0x0E
+
+/* STC8H8K64U / STC8H2K64T */
+#define    COMP_PE_P10_8H8K64U_2K64T    0x00
+#define    COMP_PE_P11_8H8K64U_2K64T    0x01
+#define    COMP_PE_P54_8H8K64U_2K64T    0x02
+#define    COMP_PE_P13_8H8K64U_2K64T    0x03
+#define    COMP_PE_P14_8H8K64U_2K64T    0x04
+#define    COMP_PE_P15_8H8K64U_2K64T    0x05
+#define    COMP_PE_P16_8H8K64U_2K64T    0x06
+#define    COMP_PE_P17_8H8K64U_2K64T    0x07
+#define    COMP_PE_P00_8H8K64U_2K64T    0x08
+#define    COMP_PE_P01_8H8K64U_2K64T    0x09
+#define    COMP_PE_P02_8H8K64U_2K64T    0x0A
+#define    COMP_PE_P03_8H8K64U_2K64T    0x0B
+#define    COMP_PE_P04_8H8K64U_2K64T    0x0C
+#define    COMP_PE_P05_8H8K64U_2K64T    0x0D
+#define    COMP_PE_P06_8H8K64U_2K64T    0x0E
 
 /* NEPin */
 #define  COMP_NE_P36     0x10
@@ -86,7 +184,7 @@
 NEPin and PEPin :
 Test the internal 1.344v refv voltage.
 */
-#define	 COMP_IN_REV     0x0F  
+#define	 COMP_IN_REV     0x0F
 
 /*--------------------------------------------------------
 | @Description: COMP output direction enumerator         |

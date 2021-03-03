@@ -21,7 +21,7 @@
 #define  COMP_PEINPUT_CFG(PEPin)  { \
     if(PEPin == COMP_PE_P37) {CMPCR1 &= 0xF7;}\
     else {CMPCR1 |= 0x08; \
-    ADC_CONTR = (ADC_CONTR & 0xF0)|(PEPin);  }}
+    ADC_CONTR = (ADC_CONTR & 0xF0)|(PEPin)|0x80;  }}
 
 /*--------------------------------------------------------
 | @Description: COMP NEPin select define function        |
