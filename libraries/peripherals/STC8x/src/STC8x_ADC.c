@@ -61,7 +61,7 @@ FSCSTATE ADC_Init(const ADC_InitType *adcx)
   * @param   acc   ADCAcc_Type
   * @return  value of adc sample (uint16_t)
 ***/
-uint16_t ADC_Get_Sample(ADCRoad_Type road, ADCAcc_Type acc)
+uint16_t ADC_Get_Sample(uint8_t road, ADCAcc_Type acc)
 {	
     uint16_t value;
     ADC_RES = 0;
@@ -82,7 +82,7 @@ uint16_t ADC_Get_Sample(ADCRoad_Type road, ADCAcc_Type acc)
   * @param   acc   ADCAcc_Type
   * @return  value of adc sample (uint16_t)
 ***/
-uint16_t ADC_Get_Sample_interrupt(ADCRoad_Type road, ADCAcc_Type acc)
+uint16_t ADC_Get_Sample_interrupt(uint8_t road, ADCAcc_Type acc)
 {	
     uint16_t value;
     ADC_RES = 0;

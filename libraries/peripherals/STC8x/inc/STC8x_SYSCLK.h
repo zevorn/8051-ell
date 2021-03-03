@@ -103,12 +103,10 @@ typedef enum
 	AUTO = 0x00,   /* stc -isp toll control */
 	HIRC = 0x01,   /* High internal 4MHz~24MHz oscillator */
 	LIRC = 0x02,   /* Internal 32KHz oscillator */
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || \
-     PER_LIB_MCU_MUODEL == STC8Fx || PER_LIB_MCU_MUODEL == STC8Gx)
-    XOSC = 0x03    /* External oscillator control */
-#elif (PER_LIB_MCU_MUODEL == STC8Hx)
-    X32KSC = 0x04  /* External  32KHzoscillator control */
+#if (PER_LIB_MCU_MUODEL == STC8Hx)
+    X32KSC = 0x03,  /* External  32KHzoscillator control */
 #endif
+    XOSC = 0x04    /* External oscillator control */
 }   MCLKSrc_Type;
 
 #if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)

@@ -118,7 +118,7 @@ typedef enum
 ***/
 typedef struct 
 {
-#if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Gx)
+#if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
     uint8_t SysClkDiv;   /* just STC8G、STC8H */
 #endif
     TIMERType_Type Type;       

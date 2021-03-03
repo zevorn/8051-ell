@@ -49,6 +49,7 @@ void STC8x_System_Init(void)
 	*/
 	
 	NVIC_GLOBAL_ENABLE();
+    
 }
 
 /**
@@ -79,12 +80,6 @@ static void STC8x_SYSCLK_Config(void)
 ***/
 static void STC8x_GPIO_Config(void)
 {
-	GPIO_MODE_WEAK_PULL(GPIO_P0,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P1,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P2,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P3,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P4,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P5,Pin_All);
 	RST_P54_ENABLE();
 	
     /* Run lamp */

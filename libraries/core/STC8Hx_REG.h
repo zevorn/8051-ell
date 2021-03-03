@@ -1159,6 +1159,60 @@ sfr SPDAT    =   SPDAT_ADDRESS;
 #define I2CTXD      (*(__IO uint8_t xdata *)  I2CTXD_ADDRESS)
 #define I2CRXD      (*(__IO uint8_t xdata *)  I2CRXD_ADDRESS)
 
+/*--------------------------------------------------------
+| @Description: MDU16 peripherals                        |
+--------------------------------------------------------*/
+
+typedef struct
+{
+    __IO uint8_t MD3_REG;    /*---- MDU Divisor data register */
+
+    __IO uint8_t MD2_REG;   /*---- MDU Divisor data register */
+	
+    __IO uint8_t MD1_REG;   /*---- MDU Divisor data register   */	
+	
+    __IO uint8_t MD0_REG;   /*---- MDU Divisor data register  */
+	
+    __IO uint8_t MD5_REG; /*---- MDU Divisor data register */
+
+    __IO uint8_t MD4_REG;  /*---- MDU Divisor data register */ 
+
+    __IO uint8_t ARCON_REG;   /*----MDU module data registe */
+
+    __IO uint8_t OPCON_REG;   /*----MDU control data registe */
+
+}   MDU16_TypeDef;
+
+#define    MDU16_BASE    0xFCF0U
+
+#define    MD3_ADDRESS      (MDU16_BASE)
+#define    MD2_ADDRESS      (MDU16_BASE + 0x0001U)
+#define    MD1_ADDRESS      (MDU16_BASE + 0x0002U)
+#define    MD0_ADDRESS      (MDU16_BASE + 0x0003U)
+#define    MD5_ADDRESS      (MDU16_BASE + 0x0004U)
+#define    MD4_ADDRESS      (MDU16_BASE + 0x0005U)
+#define    ARCON_ADDRESS    (MDU16_BASE + 0x0006U)
+#define    OPCON_ADDRESS    (MDU16_BASE + 0x0007U)
+
+/* Define type of MDU16 */
+
+#define    MDU16      (* (MDU16_TypeDef  xdata *) MDU16_BASE)
+
+#define    MD3U32      (*(__IO uint8_t xdata *)  MD3_ADDRESS)
+#define    MD3U16      (*(__IO uint8_t xdata *)  MD3_ADDRESS)
+#define    MD1U16      (*(__IO uint8_t xdata *)  MD1_ADDRESS)
+#define    MD5U16      (*(__IO uint8_t xdata *)  MD5_ADDRESS)
+
+#define    MD3         (*(__IO uint8_t xdata *)  MD3_ADDRESS)
+#define    MD2         (*(__IO uint8_t xdata *)  MD2_ADDRESS)
+#define    MD1         (*(__IO uint8_t xdata *)  MD1_ADDRESS)
+#define    MD0         (*(__IO uint8_t xdata *)  MD0_ADDRESS)
+#define    MD5         (*(__IO uint8_t xdata *)  MD5_ADDRESS)
+#define    MD4         (*(__IO uint8_t xdata *)  MD4_ADDRESS)
+
+#define    ARCON     (*(__IO uint8_t xdata *)  ARCON_ADDRESS)
+#define    OPCON     (*(__IO uint8_t xdata *)  OPCON_ADDRESS)
+
 
 #endif
 /*-----------------------------------------------------------------------

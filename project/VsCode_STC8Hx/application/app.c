@@ -19,17 +19,6 @@
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
-/**
-  * @name    led_entry
-  * @brief   led twinkle function
-  * @param   None
-  * @return  None
-***/
-void led_entry(void)
-{
-    P50 = !P50;
-    printf("Hello,world!\r\n");
-}
 
 
 /*-----------------------------------------------------------------------
