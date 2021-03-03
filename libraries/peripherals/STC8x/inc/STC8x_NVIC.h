@@ -249,7 +249,7 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
 /*--------------------------------------------------------
 | @Description: PCA ISR define                           |
 --------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
     #define PCA_ISRQ_Handler(void)  PCA_ISR(void) interrupt  7
     
