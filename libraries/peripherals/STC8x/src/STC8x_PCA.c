@@ -14,12 +14,14 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx )
+
 static vuint16_t PCA_Value[4];
 static vuint16_t PCA_Rvalue[4];
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx )
+
 /**
   * @name    PCA_CNT_Init
   * @brief   PCA0 counter init function,It must be initialized last
@@ -49,28 +51,28 @@ FSCSTATE PCA0_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 {
     CCAPM0 = PCA_TYPE_PWM;
     PCA_PWM0 = (PCA_PWM0 & 0x3F)|(pwmBits << 6);
-		if(pwmBits == PCA_PWM_6Bit)
+		if(pwmBits == PCA_PWM_6Bits)
 		{
 			PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x40) >> 6); //EPC0L
 			PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x40) >> 5); //EPC0H			
 			CCAP0L = (uint8_t)(duty & 0x003F);
-			CCAP0H = (uint8_t)(duty & 0x003F);		 
+			CCAP0H = (uint8_t)(duty & 0x003F);
 		}
-		else if(pwmBits == PCA_PWM_7Bit)
+		else if(pwmBits == PCA_PWM_7Bits)
 		{
 			PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x80) >> 7); //EPC0L
 			PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x80) >> 6); //EPC0H			
 			CCAP0L = (uint8_t)(duty & 0x007F);
 			CCAP0H = (uint8_t)(duty & 0x007F);		 		
 		}
-		else if(pwmBits == PCA_PWM_8Bit)
+		else if(pwmBits == PCA_PWM_8Bits)
 		{	
 			PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x100) >> 8); //EPC0L
 			PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x100) >> 7); //EPC0H			
 			CCAP0L = (uint8_t)duty;
 			CCAP0H = (uint8_t)duty;		 					
 		}
-		else if(pwmBits == PCA_PWM_10Bit)
+		else if(pwmBits == PCA_PWM_10Bits)
 		{
 			PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x400) >> 10); //EPC0L
 			PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x400) >> 9); //EPC0H					

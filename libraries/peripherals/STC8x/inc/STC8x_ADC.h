@@ -55,7 +55,7 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 /*--------------------------------------------------------
 | @Description: ADC road defin                           |
 --------------------------------------------------------*/
@@ -224,13 +224,13 @@ typedef struct
     uint8_t Road;
     uint8_t Speed;
     ADCAlign_Type Align; 
-    FUNSTATE Run;  
+    FUNSTATE Run;
 }   ADC_InitType;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
 /*--------------------------------------------------------
 | @Description: ADC get Sample (Query mode)              |
 --------------------------------------------------------*/
@@ -243,6 +243,8 @@ uint16_t ADC_Get_Sample_interrupt(uint8_t road, ADCAcc_Type acc);
 --------------------------------------------------------*/
 
 FSCSTATE ADC_Init(const ADC_InitType *adcx);
+
+
 #endif
 
 #endif

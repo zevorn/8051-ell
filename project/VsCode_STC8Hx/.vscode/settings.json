@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "STC8X_SYSCLK.C": "cpp",
-        "STC8X_TIMER.C": "cpp"
+        "STC8X_TIMER.C": "cpp",
+        "stc8x_pca.h": "c"
     }
 }

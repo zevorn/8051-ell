@@ -51,6 +51,7 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
 /*--------------------------------------------------------
 | @Description: PCA mode enum                            |
@@ -97,16 +98,16 @@ typedef enum
 
 typedef enum
 {
-	PCA_PWM_8Bit   = 0x00,  // 8-bit PCA_PWM mode
-	PCA_PWM_7Bit   = 0x01,	// 7-bit PCA_PWM mode
-	PCA_PWM_6Bit   = 0x02,	// 6-bit PCA_PWM mode
-	PCA_PWM_10Bit  = 0x03	//10-bit PCA_PWM mode
+	PCA_PWM_8Bits   = 0x00,  // 8-bit PCA_PWM mode
+	PCA_PWM_7Bits   = 0x01,	// 7-bit PCA_PWM mode
+	PCA_PWM_6Bits   = 0x02,	// 6-bit PCA_PWM mode
+	PCA_PWM_10Bits  = 0x03	//10-bit PCA_PWM mode
 }	PCA_PWMBits_Type;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
+
 /*--------------------------------------------------------
 | @Description: PCA Counter working function             |
 --------------------------------------------------------*/
@@ -125,6 +126,162 @@ FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 #endif
 
+#define PCA0_PWM_6BITS_CTRL(duty)     do{ \
+                                            CCAPM0 = PCA_TYPE_PWM; \
+                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x02 << 6); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x40) >> 6);  \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x40) >> 5);  \
+                                            CCAP0L = (uint8_t)(duty & 0x003F); \
+                                            CCAP0H = (uint8_t)(duty & 0x003F); \
+                                        } while (0)
+
+#define PCA0_PWM_7BITS_CTRL(duty)     do{ \
+                                            CCAPM0 = PCA_TYPE_PWM; \
+                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x01 << 6); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x80) >> 7); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x80) >> 6); \
+                                            CCAP0L = (uint8_t)(duty & 0x007F); \
+                                            CCAP0H = (uint8_t)(duty & 0x007F); \
+                                        } while (0)
+
+#define PCA0_PWM_8BITS_CTRL(duty)     do{ \
+                                            CCAPM0 = PCA_TYPE_PWM; \
+                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x00 << 6); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x100) >> 8); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x100) >> 7); \
+                                            CCAP0L = (uint8_t)duty; \
+                                            CCAP0H = (uint8_t)duty; \
+                                        } while (0)
+
+#define PCA0_PWM_10BITS_CTRL(duty)     do{ \
+                                            CCAPM0 = PCA_TYPE_PWM; \
+                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x03 << 6); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x400) >> 10); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x400) >> 9); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XF3) | ((duty & 0x300) >> 6); \
+                                            PCA_PWM0 = (PCA_PWM0 & 0XCF) | ((duty & 0x300) >> 4); \
+                                            CCAP0L = (uint8_t)duty;  \
+                                            CCAP0H = (uint8_t)duty;  \
+                                        } while (0)
+
+#define PCA1_PWM_6BITS_CTRL(duty)     do{ \
+                                            CCAPM1 = PCA_TYPE_PWM; \
+                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x02 << 6); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x40) >> 6);  \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x40) >> 5);  \
+                                            CCAP1L = (uint8_t)(duty & 0x003F); \
+                                            CCAP1H = (uint8_t)(duty & 0x003F); \
+                                        } while (0)
+
+#define PCA1_PWM_7BITS_CTRL(duty)     do{ \
+                                            CCAPM1 = PCA_TYPE_PWM; \
+                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x01 << 6); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x80) >> 7); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x80) >> 6); \
+                                            CCAP1L = (uint8_t)(duty & 0x007F); \
+                                            CCAP1H = (uint8_t)(duty & 0x007F); \
+                                        } while (0)
+
+#define PCA1_PWM_8BITS_CTRL(duty)     do{ \
+                                            CCAPM1 = PCA_TYPE_PWM; \
+                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x00 << 6); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x100) >> 8); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x100) >> 7); \
+                                            CCAP1L = (uint8_t)duty; \
+                                            CCAP1H = (uint8_t)duty; \
+                                        } while (0)
+
+#define PCA1_PWM_10BITS_CTRL(duty)     do{ \
+                                            CCAPM1 = PCA_TYPE_PWM; \
+                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x03 << 6); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x400) >> 10); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x400) >> 9); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XF3) | ((duty & 0x300) >> 6); \
+                                            PCA_PWM1 = (PCA_PWM1 & 0XCF) | ((duty & 0x300) >> 4); \
+                                            CCAP1L = (uint8_t)duty;  \
+                                            CCAP1H = (uint8_t)duty;  \
+                                        } while (0)
+
+#define PCA2_PWM_6BITS_CTRL(duty)     do{ \
+                                            CCAPM2 = PCA_TYPE_PWM; \
+                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x02 << 6); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x40) >> 6);  \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x40) >> 5);  \
+                                            CCAP2L = (uint8_t)(duty & 0x003F); \
+                                            CCAP2H = (uint8_t)(duty & 0x003F); \
+                                        } while (0)
+
+#define PCA2_PWM_7BITS_CTRL(duty)     do{ \
+                                            CCAPM2 = PCA_TYPE_PWM; \
+                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x01 << 6); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x80) >> 7); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x80) >> 6); \
+                                            CCAP2L = (uint8_t)(duty & 0x007F); \
+                                            CCAP2H = (uint8_t)(duty & 0x007F); \
+                                        } while (0)
+
+#define PCA2_PWM_8BITS_CTRL(duty)     do{ \
+                                            CCAPM2 = PCA_TYPE_PWM; \
+                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x00 << 6); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x100) >> 8); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x100) >> 7); \
+                                            CCAP2L = (uint8_t)duty; \
+                                            CCAP2H = (uint8_t)duty; \
+                                        } while (0)
+
+#define PCA2_PWM_10BITS_CTRL(duty)     do{ \
+                                            CCAPM2 = PCA_TYPE_PWM; \
+                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x03 << 6); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x400) >> 10); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x400) >> 9); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XF3) | ((duty & 0x300) >> 6); \
+                                            PCA_PWM2 = (PCA_PWM2 & 0XCF) | ((duty & 0x300) >> 4); \
+                                            CCAP2L = (uint8_t)duty;  \
+                                            CCAP2H = (uint8_t)duty;  \
+                                        } while (0)
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+
+    #define PCA3_PWM_6BITS_CTRL(duty)     do{ \
+                                                CCAPM3 = PCA_TYPE_PWM; \
+                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x02 << 6); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x40) >> 6);  \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x40) >> 5);  \
+                                                CCAP3L = (uint8_t)(duty & 0x003F); \
+                                                CCAP3H = (uint8_t)(duty & 0x003F); \
+                                            } while (0)
+
+    #define PCA3_PWM_7BITS_CTRL(duty)     do{ \
+                                                CCAPM3 = PCA_TYPE_PWM; \
+                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x01 << 6); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x80) >> 7); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x80) >> 6); \
+                                                CCAP3L = (uint8_t)(duty & 0x007F); \
+                                                CCAP3H = (uint8_t)(duty & 0x007F); \
+                                            } while (0)
+
+    #define PCA3_PWM_8BITS_CTRL(duty)     do{ \
+                                                CCAPM3 = PCA_TYPE_PWM; \
+                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x00 << 6); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x100) >> 8); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x100) >> 7); \
+                                                CCAP3L = (uint8_t)duty; \
+                                                CCAP3H = (uint8_t)duty; \
+                                            } while (0)
+
+    #define PCA3_PWM_10BITS_CTRL(duty)     do{ \
+                                                CCAPM3 = PCA_TYPE_PWM; \
+                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x03 << 6); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x400) >> 10); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x400) >> 9); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XF3) | ((duty & 0x300) >> 6); \
+                                                PCA_PWM3 = (PCA_PWM3 & 0XCF) | ((duty & 0x300) >> 4); \
+                                                CCAP3L = (uint8_t)duty;  \
+                                                CCAP3H = (uint8_t)duty;  \
+                                            } while (0)
+
+#endif
+
 /*--------------------------------------------------------
 | @Description: PCA CAP mode working function            |
 --------------------------------------------------------*/
@@ -134,7 +291,7 @@ FSCSTATE PCA1_CAP_Init(CAPMode_Type mode);
 FSCSTATE PCA2_CAP_Init(CAPMode_Type mode);
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax)
-FSCSTATE PCA3_CAP_Init(CAPMode_Type mode);
+    FSCSTATE PCA3_CAP_Init(CAPMode_Type mode);
 #endif
 
 /*--------------------------------------------------------
@@ -146,7 +303,7 @@ FSCSTATE PCA1_TIM_Init(uint16_t value);
 FSCSTATE PCA2_TIM_Init(uint16_t value);
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax)
-FSCSTATE PCA3_TIM_Init(uint16_t value);
+    FSCSTATE PCA3_TIM_Init(uint16_t value);
 #endif
 
 /*--------------------------------------------------------
@@ -158,7 +315,7 @@ FSCSTATE PCA1_POP_Init(uint16_t value);
 FSCSTATE PCA2_POP_Init(uint16_t value);
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax)
-FSCSTATE PCA3_POP_Init(uint16_t value);
+    FSCSTATE PCA3_POP_Init(uint16_t value);
 #endif
 
 /*--------------------------------------------------------
@@ -170,7 +327,7 @@ void PCA1_TIM_POP_ReValue(void);
 void PCA2_TIM_POP_ReValue(void);
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax)
-void PCA3_TIM_POP_ReValue(void);
+    void PCA3_TIM_POP_ReValue(void);
 #endif
 
 /*--------------------------------------------------------
@@ -182,10 +339,11 @@ void PCA3_TIM_POP_ReValue(void);
 #define    PCA2_WORK_STOP()   CCAPM2 = 0
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax)
-#define    PCA3_WORK_STOP()   CCAPM3 = 0
+    #define    PCA3_WORK_STOP()   CCAPM3 = 0
 #endif
 
 #endif
+
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

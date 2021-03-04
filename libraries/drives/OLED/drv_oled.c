@@ -54,8 +54,8 @@ FSCSTATE OLED_Init(void)
 	}
 	#endif
 
-  delay_ms(10);
-  OLED_CS=1;
+    delay_ms(10);
+    OLED_CS=1;
 	delay_ms(10);
 	OLED_CS=0;
 
@@ -104,10 +104,10 @@ FSCSTATE OLED_Init(void)
 | @return     : SPI data                                 |
 --------------------------------------------------------*/
 
-uint8 OLED_Write_Byte(uint8 Dat,OLEDTran_Type State)
+uint8 OLED_Write_Byte(uint8 dat,OLEDTran_Type state)
 {
-  	OLED_DC = State;
-	  SPDAT = Dat;                   
+  	OLED_DC = state;
+	SPDAT = dat;                   
   	while (!(SPI_GET_FLAG()));      
   	SPI_CLEAR_FLAG();        
   	return SPDAT;                    
@@ -287,16 +287,16 @@ void OLED_Show_Num_1608(uint8 x,uint8 y,uint32 num,uint8 len)
 | @return     : FSCSTATE : Success / Fail                |
 --------------------------------------------------------*/
 
-void OLED_Show_Float_1608(uint8 x,uint8 y,float num,uint8 len,uint8 Acc)
-{         	
+void OLED_Show_Float_1608(uint8 x,uint8 y,float num,uint8 len,uint8 acc)
+{
 	uint8 i,Dat;
 	uint32 Num;
-	for(i=0;i<Acc;i++) num *= 10;
+	for(i=0;i<acc;i++) num *= 10;
 	Num = num;
 	for(i=0;i<=len;i++)
 	{
 		Dat = Num % 10;
-		if(i != Acc)
+		if(i != acc)
 		{
 			if(Num == 0 && Dat != 0)
 			{	
