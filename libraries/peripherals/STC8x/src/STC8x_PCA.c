@@ -43,7 +43,7 @@ FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,FUNSTATE run)
 /**
   * @name    PCA0_PWM_Init
   * @brief   PCA0 PWM init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -89,7 +89,7 @@ FSCSTATE PCA0_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 /**
   * @name    PCA1_PWM_Init
   * @brief   PCA1 PWM init function,it must first is initialized
-  * @param   pwmBits | PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits | PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty    | duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -97,28 +97,28 @@ FSCSTATE PCA1_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 {
     CCAPM1 = PCA_TYPE_PWM;
     PCA_PWM1 = (PCA_PWM1 & 0x3F)|(pwmBits << 6);
-    if(pwmBits == PCA_PWM_6Bit)
+    if(pwmBits == PCA_PWM_6Bits)
 	{
 		PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x40) >> 6); //EPC0L
 		PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x40) >> 5); //EPC0H			
         CCAP1L = (uint8_t)(duty & 0x003F);
         CCAP1H = (uint8_t)(duty & 0x003F);	 
 	}
-	else if(pwmBits == PCA_PWM_7Bit)
+	else if(pwmBits == PCA_PWM_7Bits)
 	{
 		PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x80) >> 7); //EPC0L
 		PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x80) >> 6); //EPC0H			
 		CCAP1L = (uint8_t)(duty & 0x007F);
         CCAP1H = (uint8_t)(duty & 0x007F);
 	}
-	else if(pwmBits == PCA_PWM_8Bit)
+	else if(pwmBits == PCA_PWM_8Bits)
 	{	
 		PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x100) >> 8); //EPC0L
 		PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x100) >> 7); //EPC0H			
 		CCAP1L = (uint8_t)duty;
 		CCAP1H = (uint8_t)duty;
 	}
-	else if(pwmBits == PCA_PWM_10Bit)
+	else if(pwmBits == PCA_PWM_10Bits)
 	{
 		PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x400) >> 10); //EPC0L
 		PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x400) >> 9); //EPC0H					
@@ -135,7 +135,7 @@ FSCSTATE PCA1_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 /**
   * @name    PCA2_PWM_Init
   * @brief   PCA2 PWM init function,it must first is initialized
-  * @param   pwmBits | PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits | PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty    | duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -143,28 +143,28 @@ FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 {
     CCAPM2 = PCA_TYPE_PWM;
     PCA_PWM2 = (PCA_PWM2 & 0x3F)|(pwmBits << 6);
-	if(pwmBits == PCA_PWM_6Bit)
+	if(pwmBits == PCA_PWM_6Bits)
 	{
 		PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x40) >> 6); //EPC0L
 		PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x40) >> 5); //EPC0H			
         CCAP2L = (uint8_t)(duty & 0x003F);
         CCAP2H = (uint8_t)(duty & 0x003F);	 
 	}
-	else if(pwmBits == PCA_PWM_7Bit)
+	else if(pwmBits == PCA_PWM_7Bits)
 	{
 		PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x80) >> 7); //EPC0L
 		PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x80) >> 6); //EPC0H			
         CCAP2L = (uint8_t)(duty & 0x007F);
         CCAP2H = (uint8_t)(duty & 0x007F);	 		
 	}
-	else if(pwmBits == PCA_PWM_8Bit)
+	else if(pwmBits == PCA_PWM_8Bits)
 	{	
 		PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x100) >> 8); //EPC0L
 		PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x100) >> 7); //EPC0H			
 		CCAP2L = (uint8_t)duty;
 		CCAP2H = (uint8_t)duty;		 					
 	}
-	else if(pwmBits == PCA_PWM_10Bit)
+	else if(pwmBits == PCA_PWM_10Bits)
 	{
 		PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x400) >> 10); //EPC0L
 		PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x400) >> 9); //EPC0H					
@@ -182,7 +182,7 @@ FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 /**
   * @name    PCA3_PWM_Init
   * @brief   PCA3 PWM init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -190,28 +190,28 @@ FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 {
     CCAPM3 = PCA_TYPE_PWM;
     PCA_PWM3 = (PCA_PWM3 & 0x3F)|(pwmBits << 6);
-	if(pwmBits == PCA_PWM_6Bit)
+	if(pwmBits == PCA_PWM_6Bits)
 	{
 		PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x0040) >> 6); //EPC0L
 		PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x0040) >> 5); //EPC0H			
         CCAP3L = (uint8_t)(duty & 0x003F);
         CCAP3H = (uint8_t)(duty & 0x003F);	 	 
 	}
-	else if(pwmBits == PCA_PWM_7Bit)
+	else if(pwmBits == PCA_PWM_7Bits)
 	{
 		PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x0080) >> 7); //EPC0L
 		PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x0080) >> 6); //EPC0H			
         CCAP2L = (uint8_t)(duty & 0x007F);
         CCAP2H = (uint8_t)(duty & 0x007F);	 
 	}
-	else if(pwmBits == PCA_PWM_8Bit)
+	else if(pwmBits == PCA_PWM_8Bits)
 	{	
 		PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x0100) >> 8); //EPC0L
 		PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x0100) >> 7); //EPC0H			
 		CCAP3L = (uint8_t)duty;
 		CCAP3H = (uint8_t)duty;
 	}
-	else if(pwmBits == PCA_PWM_10Bit)
+	else if(pwmBits == PCA_PWM_10Bits)
 	{
 		PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x0400) >> 10); //EPC0L
 		PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x0400) >> 9); //EPC0H					
@@ -229,7 +229,7 @@ FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t duty)
 /**
   * @name    PCA0_TIM_Init
   * @brief   PCA0 TIMER init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -250,7 +250,7 @@ FSCSTATE PCA0_TIM_Init(uint16_t value)
 /**
   * @name    PCA1_TIM_Init
   * @brief   PCA1 TIMER init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -271,7 +271,7 @@ FSCSTATE PCA1_TIM_Init(uint16_t value)
 /**
   * @name    PCA2_TIM_Init
   * @brief   PCA2 TIMER init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -293,7 +293,7 @@ FSCSTATE PCA2_TIM_Init(uint16_t value)
 /**
   * @name    PCA3_TIM_Init
   * @brief   PCA3 TIMER init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -315,7 +315,7 @@ FSCSTATE PCA3_TIM_Init(uint16_t value)
 /**
   * @name    PCA0_POP_Init
   * @brief   PCA0 POP init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -336,7 +336,7 @@ FSCSTATE PCA0_POP_Init(uint16_t value)
 /**
   * @name    PCA1_POP_Init
   * @brief   PCA1 POP init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
 FSCSTATE PCA1_POP_Init(uint16_t value) 
@@ -356,7 +356,7 @@ FSCSTATE PCA1_POP_Init(uint16_t value)
 /**
   * @name    PCA2_POP_Init
   * @brief   PCA2 POP init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
@@ -378,7 +378,7 @@ FSCSTATE PCA2_POP_Init(uint16_t value)
 /**
   * @name    PCA3_POP_Init
   * @brief   PCA3 POP init function,it must first is initialized
-  * @param   pwmBits   PCA_PWM_8Bit | PCA_PWM_7Bit | PCA_PWM_6Bit | PCA_PWM_10Bit
+  * @param   pwmBits   PCA_PWM_8Bits | PCA_PWM_7Bits | PCA_PWM_6Bits | PCA_PWM_10Bits
   * @param   duty      duty of PWM (uint16_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/

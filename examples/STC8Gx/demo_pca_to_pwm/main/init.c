@@ -77,7 +77,7 @@ static void STC8x_PCA_Config(void)
      * to  value = 0x200
      * so, duty = (0x400 - 0x200) / 0x400 = 50%
      */
-     PCA0_PWM_Init(PCA_PWM_10Bit,0x200);
+     PCA0_PWM_10BITS_CTRL(0x200);
      PCA_CNT_Init(PCA_TIMER0,ENABLE);
 }
 
