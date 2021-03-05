@@ -32,9 +32,9 @@
 #include "STC8x_TYPE.h"
 #include "STC8x_UART.h"
 
-#ifndef DEBUG_CONTRL
+#ifndef DEBUG_CTRL
 
-    #define    DEBUG_CONTRL    (0)
+    #define    DEBUG_CTRL    (0)
 	
 #endif
 
@@ -42,7 +42,7 @@
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
-#if (DEBUG_CONTRL == 1)
+#if (DEBUG_CTRL == 1)
 
     #define DEBUG_LOGO_LINE()    printf("Code line number: [%bd] \r\n", __LINE__)
     #define DEBUG_LOGO_FILE()    printf("File path: %s \r\n", __FILE__)
