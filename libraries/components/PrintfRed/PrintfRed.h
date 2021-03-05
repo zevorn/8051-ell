@@ -32,6 +32,33 @@
 #include "STC8x_TYPE.h"
 #include "STC8x_UART.h"
 
+#ifndef DEBUG_CONTRL
+
+    #define    DEBUG_CONTRL    (0)
+	
+#endif
+
+/*-----------------------------------------------------------------------
+|                               FUNCTION                                |
+-----------------------------------------------------------------------*/
+
+#if (DEBUG_CONTRL == 1)
+
+    #define DEBUG_LOGO_LINE()    printf("Code line number: [%bd] \r\n", __LINE__)
+    #define DEBUG_LOGO_FILE()    printf("File path: %s \r\n", __FILE__)
+	#define DEBUG_LOGO(format)   do{ printf("Line is <%bd> and Path is [%s]:\r\n", __LINE__, __FILE__); printf(format); }while(0)
+		
+#else
+	
+	#define DEBUG_LOGO_LINE()
+    #define DEBUG_LOGO_FILE()	
+	#define DEBUG_LOGO(format)
+	
+#endif
+	
+
+
+
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
