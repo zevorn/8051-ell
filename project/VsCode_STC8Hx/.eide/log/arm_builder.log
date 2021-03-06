@@ -28,3 +28,12 @@
 [2021-03-05 11:04:39]	[done]
 	build successfully !
 
+[2021-03-06 11:27:41]	compilation failed at : "d:\OneDrive\Desktop\ELL-8051-LIB\libraries\peripherals\STC8x\src\STC8x_SYSCLK.c", exit code: 2
+   在 unify_builder.Program.Main(String[] args)
+
+[2021-03-06 11:28:48]	[done]
+	build successfully !
+
+[2021-03-06 11:30:00]	[done]
+	build successfully !
+

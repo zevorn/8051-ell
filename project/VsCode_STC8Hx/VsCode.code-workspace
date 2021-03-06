@@ -17,7 +17,8 @@
             "stc8cx_reg.h": "c",
             "stc8gx_reg.h": "c",
             "stc8x_gpio.h": "c",
-            "stc8x_pca.h": "c"
+            "stc8x_pca.h": "c",
+            "stc8x_sysclk.h": "c"
         },
         "C_Cpp.default.intelliSenseMode": "gcc-arm",
         "files.autoGuessEncoding": true,

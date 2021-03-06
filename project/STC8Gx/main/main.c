@@ -28,6 +28,8 @@
 int main(void)
 {
     STC8x_System_Init();
+	printf("IRTRIM=%bd IRC_24M=%bd  \r\n",IRTRIM,IRC_24M);
+	printf("%0.4f M \r\n",(float)(Get_SysClk_FRE()/1000000.0f));
 	
     for(;;)
     {

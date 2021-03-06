@@ -28,7 +28,7 @@
 int main(void)
 {
     STC8x_System_Init();
-
+    printf("%0.2f M \r\n",(float)(Get_SysClk_FRE()/1000000UL));
     for(;;)
     {
 
