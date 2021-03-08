@@ -109,7 +109,7 @@ typedef enum
     XOSC = 0x04    /* External oscillator control */
 }   MCLKSrc_Type;
 
-#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
 /*--------------------------------------------------------
 | @Description: IRC band selector enum type              |
@@ -117,7 +117,7 @@ typedef enum
     typedef enum
     {
         IRC_Band_20MHz = 0x00,
-#if   (PER_LIB_MCU_MUODEL == STC8Gx)
+#if   (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx)
         IRC_Band_33MHz = 0x01
 #elif (PER_LIB_MCU_MUODEL == STC8Hx)
         IRC_Band_35MHz = 0x01
@@ -166,7 +166,7 @@ typedef struct
 
     SCLKOut_Type SCLKOutPin; /* Select system clock output pin */
     
-#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
     IRCBand_Type  IRCBand;
 #endif
 

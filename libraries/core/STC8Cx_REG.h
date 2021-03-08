@@ -1,25 +1,29 @@
 /*-----------------------------------------------------------------------
-  - File name      : STC8Cx_REG.h
-  - Author         : Quark Team
-  - Update date    : 2021-03-01                
-  -	Copyright      : Gevico Electronic studio   
-  - Module comments: Header file of STC8Ax MCU model.
+|                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+  - File name     : STC8Cx_REG.h
+  - Author        : zeweni
+  - Update date   : 2020.03.08                
+  -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
+-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+|                               UPDATE NOTE                             |
+-----------------------------------------------------------------------*/
+/**
+  * Update note:
+  * ------------   ---------------   ----------------------------------
+  *     Date            Author                       Note
+  * ------------   ---------------   ----------------------------------
+  *  2020.02.07         zeweni       Update code style.
+  *  2020.03.01         zeweni       Update register.
+  *
+***/
 #ifndef __STC8Cx_REG_H_
 #define __STC8Cx_REG_H_
-/*
- * Update note:
- * ------------   ---------------   ------------------------------------
- *     Date            Author                         Note
- * ------------   ---------------   ------------------------------------
- *  2020.03.01         zeweni       Wrote register list of stc8cx MCU.
- * 
- */
-
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
-
 #include "STC8x_TYPE.h"
 
 /*-----------------------------------------------------------------------
@@ -32,7 +36,7 @@
 
 /* Base address define */
 #define AUXR_ADDRESS       0x8EU
-#define AUXR2_ADDRESS      0x97U
+#define AUXR2_ADDRESS      0x8FU
 #define PER_SW1_ADDRESS    0xA2U
 #define PER_SW2_ADDRESS    0xBAU
 
@@ -51,25 +55,29 @@ sfr P_SW2 =       PER_SW2_ADDRESS;
 
 typedef struct
 {
-	__IO uint8 CKSEL_REG   ; /*----Clock selection  */
-	
-	__IO uint8 CLKDIV_REG  ; /*----Clock frequency division */
-	
-	__IO uint8 IRC24MCR_REG  ; /*----High internal 24MHz oscillator control */	
-	
-	__IO uint8 XOSCCR_REG  ; /*----External oscillator control */
-	
-	__IO uint8 IRC32KCR_REG; /*----Internal 32KHz oscillator control */
+    __IO uint8_t CKSEL_REG;    /*----Clock selection register */
 
-} SYSCLK_TypeDef;
+    __IO uint8_t CLKDIV_REG;   /*----Clock frequency division register */
+	
+    __IO uint8_t HIRCCR_REG;   /*----High internal 24MHz oscillator control register */	
+	
+    __IO uint8_t XOSCCR_REG;   /*----External oscillator control register */
+	
+    __IO uint8_t IRC32KCR_REG; /*----Internal 32KHz oscillator control register */
+
+    __IO uint8_t MCLKOCR_REG;  /*----Master clock output control register */ 
+
+}   SYSCLK_TypeDef;
 
 
 /*--------------------------------------------------------
 | @Description: System clock peripherals                 |
 --------------------------------------------------------*/
 
-#define IRTRIM_ADDRESS    0x9FU
+#define IRCBAND_ADDRESS   0x9DU
 #define LIRTRIM_ADDRESS   0x9EU
+#define IRTRIM_ADDRESS    0x9FU
+
 
 /* System clock base address in the 
 internal expansion RAM area */
@@ -77,28 +85,31 @@ internal expansion RAM area */
 
 #define    CKSEL_ADDRESS      (SYSCLK_BASE + 0x0000U)
 #define    CLKDIV_ADDRESS     (SYSCLK_BASE + 0x0001U)
-#define    IRC24MCR_ADDRESS   (SYSCLK_BASE + 0x0002U)
+#define    HIRCCR_ADDRESS     (SYSCLK_BASE + 0x0002U)
 #define    XOSCCR_ADDRESS     (SYSCLK_BASE + 0x0003U)
 #define    IRC32KCR_ADDRESS   (SYSCLK_BASE + 0x0004U)
-
+#define    MCLKOCR_ADDRESS    (SYSCLK_BASE + 0x0005U)
 /* Define type of SYSCLK */
 
 #define    SYSCLK     (* (SYSCLK_TypeDef  xdata *) SYSCLK_BASE)
 
 /* SYSCLIL register */
 
-#define    CKSEL       ( *(__IO uint8 xdata *)   CKSEL_ADDRESS)
-#define    CLKDIV      ( *(__IO uint8 xdata *)  CLKDIV_ADDRESS)
-#define    IRC24MCR    ( *(__IO uint8 xdata *)  HIRCCR_ADDRESS)
-#define    XOSCCR      ( *(__IO uint8 xdata *)  XOSCCR_ADDRESS)
-#define    IRC32KCR    ( *(__IO uint8 xdata *)IRC32KCR_ADDRESS)
+#define    CKSEL       ( *(__IO uint8_t xdata *)    CKSEL_ADDRESS)
+#define    CLKDIV      ( *(__IO uint8_t xdata *)   CLKDIV_ADDRESS)
+#define    IRC24MCR    ( *(__IO uint8_t xdata *)   HIRCCR_ADDRESS)
+#define    XOSCCR      ( *(__IO uint8_t xdata *)   XOSCCR_ADDRESS)
+#define    IRC32KCR    ( *(__IO uint8_t xdata *) IRC32KCR_ADDRESS)
+#define    MCLKOCR     ( *(__IO uint8_t xdata *)  MCLKOCR_ADDRESS)
 
 /* IRC frequency adjustment register */
 
+sfr IRCBAND     =   IRCBAND_ADDRESS;
 sfr IRTRIM      =   IRTRIM_ADDRESS;
 sfr LIRTRIM     =   LIRTRIM_ADDRESS;
 
-#define IRC_24M (*(__I uint8 idata *)0xFB)
+#define IRC_22_1184M  (*(__I uint8_t idata *)0xFA)
+#define IRC_24M       (*(__I uint8_t idata *)0xFB)
 
 /*--------------------------------------------------------
 | @Description: Power peripherals                        |
@@ -117,14 +128,36 @@ sfr VOCTRL = VOCTRL_ADDRESS;
 --------------------------------------------------------*/
 
 /* ISR base address */
-#define    IE_ADDRESS          0xA8U
-#define    IE2_ADDRESS         0xAFU
-#define    IP_ADDRESS          0xB8U
-#define    IP2_ADDRESS         0xB5U
-#define    IPH_ADDRESS         0xB7U
-#define    IP2H_ADDRESS        0xB6U
-#define    INTCLKO_ADDRESS     0x8FU
-#define    AUXINTIF_ADDRESS    0xEFU
+#define    IE_ADDRESS            0xA8U
+#define    IE2_ADDRESS           0xAFU
+#define    IP_ADDRESS            0xB8U
+#define    IP2_ADDRESS           0xB5U
+#define    IPH_ADDRESS           0xB7U
+#define    IP2H_ADDRESS          0xB6U
+#define    INTCLKO_ADDRESS       0x8FU
+#define    AUXINTIF_ADDRESS      0xEFU
+#define    INTE_GPIO_ADDRESS   0xFD00U
+#define    INTF_GPIO_ADDRESS   0xFD10U
+
+/* GPIO */
+
+#define P0INTE_ADDRESS              INTE_GPIO_ADDRESS
+#define P1INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0001U)
+#define P2INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0002U)
+#define P3INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0003U)
+#define P4INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0004U)
+#define P5INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0005U)
+#define P6INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0006U)
+#define P7INTE_ADDRESS  (INTE_GPIO_ADDRESS + 0x0007U)
+
+#define P0INTF_ADDRESS              INTF_GPIO_ADDRESS
+#define P1INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0001U)
+#define P2INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0002U)
+#define P3INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0003U)
+#define P4INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0004U)
+#define P5INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0005U)
+#define P6INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0006U)
+#define P7INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0007U)
 
 /* IE2 */
 #define ET4         0x40
@@ -207,6 +240,20 @@ sbit PX1  = IP^2;
 sbit PT0  = IP^1;
 sbit PX0  = IP^0;
 
+#define    P0INTE    ( *(__IO uint8_t xdata *)   P0INTE_ADDRESS)
+#define    P1INTE    ( *(__IO uint8_t xdata *)   P1INTE_ADDRESS)
+#define    P2INTE    ( *(__IO uint8_t xdata *)   P2INTE_ADDRESS)
+#define    P3INTE    ( *(__IO uint8_t xdata *)   P3INTE_ADDRESS)
+#define    P4INTE    ( *(__IO uint8_t xdata *)   P4INTE_ADDRESS)
+#define    P5INTE    ( *(__IO uint8_t xdata *)   P5INTE_ADDRESS)
+
+#define    P0INTF    ( *(__IO uint8_t xdata *)   P0INTF_ADDRESS)
+#define    P1INTF    ( *(__IO uint8_t xdata *)   P1INTF_ADDRESS)
+#define    P2INTF    ( *(__IO uint8_t xdata *)   P2INTF_ADDRESS)
+#define    P3INTF    ( *(__IO uint8_t xdata *)   P3INTF_ADDRESS)
+#define    P4INTF    ( *(__IO uint8_t xdata *)   P4INTF_ADDRESS)
+#define    P5INTF    ( *(__IO uint8_t xdata *)   P5INTF_ADDRESS)
+
 /*--------------------------------------------------------
 | @Description: GPIO peripherals                         |
 --------------------------------------------------------*/
@@ -232,8 +279,6 @@ ram areas below */
 #define    GPIO_P3_ADDRESS      0xB0U 
 #define    GPIO_P4_ADDRESS      0xC0U
 #define    GPIO_P5_ADDRESS      0xC8U 
-#define    GPIO_P6_ADDRESS      0xE8U 
-#define    GPIO_P7_ADDRESS      0xF8U 
 
 /*PxMx address define*/
 #define    P0M1_ADDRESS  PxM1_BASE
@@ -242,8 +287,6 @@ ram areas below */
 #define    P3M1_ADDRESS      0xB1U
 #define    P4M1_ADDRESS      0xB3U
 #define    P5M1_ADDRESS      0xC9U
-#define    P6M1_ADDRESS      0xCBU
-#define    P7M1_ADDRESS      0xE1U
 				 							    
 #define    P0M0_ADDRESS  PxM0_BASE
 #define    P1M0_ADDRESS      0x92U
@@ -251,8 +294,6 @@ ram areas below */
 #define    P3M0_ADDRESS      0xB2U
 #define    P4M0_ADDRESS      0xB4U
 #define    P5M0_ADDRESS      0xCAU
-#define    P6M0_ADDRESS      0xCCU
-#define    P7M0_ADDRESS      0xE2U
 
 /*GPIO pull up address */
 #define    P0PU_ADDRESS    (PxPU_BASE + 0x00U)
@@ -261,8 +302,6 @@ ram areas below */
 #define    P3PU_ADDRESS    (PxPU_BASE + 0x03U)
 #define    P4PU_ADDRESS    (PxPU_BASE + 0x04U)
 #define    P5PU_ADDRESS    (PxPU_BASE + 0x05U)
-#define    P6PU_ADDRESS    (PxPU_BASE + 0x06U)
-#define    P7PU_ADDRESS    (PxPU_BASE + 0x07U)
 
 #define    GPIO_P0PU_ADDRESS    (PxPU_BASE + 0x00U)
 #define    GPIO_P1PU_ADDRESS    (PxPU_BASE + 0x01U)
@@ -270,8 +309,6 @@ ram areas below */
 #define    GPIO_P3PU_ADDRESS    (PxPU_BASE + 0x03U)
 #define    GPIO_P4PU_ADDRESS    (PxPU_BASE + 0x04U)
 #define    GPIO_P5PU_ADDRESS    (PxPU_BASE + 0x05U)
-#define    GPIO_P6PU_ADDRESS    (PxPU_BASE + 0x06U)
-#define    GPIO_P7PU_ADDRESS    (PxPU_BASE + 0x07U)
 
 /*GPIO schmidt trigger address */
 #define    P0NCS_ADDRESS   (PxNCS_BASE + 0x00U)
@@ -280,8 +317,6 @@ ram areas below */
 #define    P3NCS_ADDRESS   (PxNCS_BASE + 0x03U)
 #define    P4NCS_ADDRESS   (PxNCS_BASE + 0x04U)
 #define    P5NCS_ADDRESS   (PxNCS_BASE + 0x05U)
-#define    P6NCS_ADDRESS   (PxNCS_BASE + 0x06U)
-#define    P7NCS_ADDRESS   (PxNCS_BASE + 0x07U)
 
 #define    GPIO_P0NCS_ADDRESS   (PxNCS_BASE + 0x00U)
 #define    GPIO_P1NCS_ADDRESS   (PxNCS_BASE + 0x01U)
@@ -289,8 +324,6 @@ ram areas below */
 #define    GPIO_P3NCS_ADDRESS   (PxNCS_BASE + 0x03U)
 #define    GPIO_P4NCS_ADDRESS   (PxNCS_BASE + 0x04U)
 #define    GPIO_P5NCS_ADDRESS   (PxNCS_BASE + 0x05U)
-#define    GPIO_P6NCS_ADDRESS   (PxNCS_BASE + 0x06U)
-#define    GPIO_P7NCS_ADDRESS   (PxNCS_BASE + 0x07U)
 
 /* GPIO level conversion address */
 #define    P0SR_ADDRESS    (PxSR_BASE + 0x00U)
@@ -299,8 +332,6 @@ ram areas below */
 #define    P3SR_ADDRESS    (PxSR_BASE + 0x03U)
 #define    P4SR_ADDRESS    (PxSR_BASE + 0x04U)
 #define    P5SR_ADDRESS    (PxSR_BASE + 0x05U)
-#define    P6SR_ADDRESS    (PxSR_BASE + 0x06U)
-#define    P7SR_ADDRESS    (PxSR_BASE + 0x07U)
 
 #define    GPIO_P0SR_ADDRESS    (PxSR_BASE + 0x00U)
 #define    GPIO_P1SR_ADDRESS    (PxSR_BASE + 0x01U)
@@ -308,8 +339,6 @@ ram areas below */
 #define    GPIO_P3SR_ADDRESS    (PxSR_BASE + 0x03U)
 #define    GPIO_P4SR_ADDRESS    (PxSR_BASE + 0x04U)
 #define    GPIO_P5SR_ADDRESS    (PxSR_BASE + 0x05U)
-#define    GPIO_P6SR_ADDRESS    (PxSR_BASE + 0x06U)
-#define    GPIO_P7SR_ADDRESS    (PxSR_BASE + 0x07U)
 
 /* GPIO drive current address */
 #define    P0DR_ADDRESS    (PxDR_BASE + 0x00U)
@@ -318,8 +347,6 @@ ram areas below */
 #define    P3DR_ADDRESS    (PxDR_BASE + 0x03U)
 #define    P4DR_ADDRESS    (PxDR_BASE + 0x04U)
 #define    P5DR_ADDRESS    (PxDR_BASE + 0x05U)
-#define    P6DR_ADDRESS    (PxDR_BASE + 0x06U)
-#define    P7DR_ADDRESS    (PxDR_BASE + 0x07U)
 
 #define    GPIO_P0DR_ADDRESS    (PxDR_BASE + 0x00U)
 #define    GPIO_P1DR_ADDRESS    (PxDR_BASE + 0x01U)
@@ -327,8 +354,7 @@ ram areas below */
 #define    GPIO_P3DR_ADDRESS    (PxDR_BASE + 0x03U)
 #define    GPIO_P4DR_ADDRESS    (PxDR_BASE + 0x04U)
 #define    GPIO_P5DR_ADDRESS    (PxDR_BASE + 0x05U)
-#define    GPIO_P6DR_ADDRESS    (PxDR_BASE + 0x06U)
-#define    GPIO_P7DR_ADDRESS    (PxDR_BASE + 0x07U)
+
 
 /* GPIO intput enable address*/
 #define    P0IE_ADDRESS    (PxIE_BASE + 0x00U)
@@ -342,8 +368,7 @@ sfr P2 = GPIO_P2_ADDRESS;
 sfr P3 = GPIO_P3_ADDRESS;
 sfr P4 = GPIO_P4_ADDRESS;
 sfr P5 = GPIO_P5_ADDRESS;
-sfr P6 = GPIO_P6_ADDRESS;
-sfr P7 = GPIO_P7_ADDRESS;
+
 
 sfr GPIO_P0_IO = GPIO_P0_ADDRESS;
 sfr GPIO_P1_IO = GPIO_P1_ADDRESS;
@@ -351,8 +376,6 @@ sfr GPIO_P2_IO = GPIO_P2_ADDRESS;
 sfr GPIO_P3_IO = GPIO_P3_ADDRESS;
 sfr GPIO_P4_IO = GPIO_P4_ADDRESS;
 sfr GPIO_P5_IO = GPIO_P5_ADDRESS;
-sfr GPIO_P6_IO = GPIO_P6_ADDRESS;
-sfr GPIO_P7_IO = GPIO_P7_ADDRESS;
 
 /* GPIO register */
 sbit P00 = P0^0;
@@ -407,24 +430,6 @@ sbit P55 = P5^5;
 sbit P56 = P5^6;
 sbit P57 = P5^7;
 
-sbit P60 = P6^0;
-sbit P61 = P6^1;
-sbit P62 = P6^2;
-sbit P63 = P6^3;
-sbit P64 = P6^4;
-sbit P65 = P6^5;
-sbit P66 = P6^6;
-sbit P67 = P6^7;
-						
-sbit P70 = P7^0;
-sbit P71 = P7^1;
-sbit P72 = P7^2;
-sbit P73 = P7^3;
-sbit P74 = P7^4;
-sbit P75 = P7^5;
-sbit P76 = P7^6;
-sbit P77 = P7^7;
-
 /* GPIO mode register  */
 sfr P0M1 = P0M1_ADDRESS;
 sfr P1M1 = P1M1_ADDRESS;
@@ -432,8 +437,6 @@ sfr P2M1 = P2M1_ADDRESS;
 sfr P3M1 = P3M1_ADDRESS;
 sfr P4M1 = P4M1_ADDRESS;
 sfr P5M1 = P5M1_ADDRESS;
-sfr P6M1 = P6M1_ADDRESS;
-sfr P7M1 = P7M1_ADDRESS;
 
 sfr GPIO_P0M1 = P0M1_ADDRESS;
 sfr GPIO_P1M1 = P1M1_ADDRESS;
@@ -441,8 +444,6 @@ sfr GPIO_P2M1 = P2M1_ADDRESS;
 sfr GPIO_P3M1 = P3M1_ADDRESS;
 sfr GPIO_P4M1 = P4M1_ADDRESS;
 sfr GPIO_P5M1 = P5M1_ADDRESS;
-sfr GPIO_P6M1 = P6M1_ADDRESS;
-sfr GPIO_P7M1 = P7M1_ADDRESS;
 
 /* GPIO mode register  */
 sfr P0M0 = P0M0_ADDRESS;
@@ -451,8 +452,6 @@ sfr P2M0 = P2M0_ADDRESS;
 sfr P3M0 = P3M0_ADDRESS;
 sfr P4M0 = P4M0_ADDRESS;
 sfr P5M0 = P5M0_ADDRESS;
-sfr P6M0 = P6M0_ADDRESS;
-sfr P7M0 = P7M0_ADDRESS;
 
 sfr GPIO_P0M0 = P0M0_ADDRESS;
 sfr GPIO_P1M0 = P1M0_ADDRESS;
@@ -460,8 +459,6 @@ sfr GPIO_P2M0 = P2M0_ADDRESS;
 sfr GPIO_P3M0 = P3M0_ADDRESS;
 sfr GPIO_P4M0 = P4M0_ADDRESS;
 sfr GPIO_P5M0 = P5M0_ADDRESS;
-sfr GPIO_P6M0 = P6M0_ADDRESS;
-sfr GPIO_P7M0 = P7M0_ADDRESS;
 
 /* Bus speed control register  */
 sfr BUS_SPEED = BUS_SPEED_ADDRESS;
@@ -479,8 +476,6 @@ sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 #define    P3PU    ( *(__IO uint8_t xdata *) P3PU_ADDRESS)
 #define    P4PU    ( *(__IO uint8_t xdata *) P4PU_ADDRESS)
 #define    P5PU    ( *(__IO uint8_t xdata *) P5PU_ADDRESS)
-#define    P6PU    ( *(__IO uint8_t xdata *) P6PU_ADDRESS)
-#define    P7PU    ( *(__IO uint8_t xdata *) P7PU_ADDRESS)
 								   
 #define    P0SR    ( *(__IO uint8_t xdata *) P0SR_ADDRESS)
 #define    P1SR    ( *(__IO uint8_t xdata *) P1SR_ADDRESS)
@@ -488,17 +483,13 @@ sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 #define    P3SR    ( *(__IO uint8_t xdata *) P3SR_ADDRESS)
 #define    P4SR    ( *(__IO uint8_t xdata *) P4SR_ADDRESS)
 #define    P5SR    ( *(__IO uint8_t xdata *) P5SR_ADDRESS)
-#define    P6SR    ( *(__IO uint8_t xdata *) P6SR_ADDRESS)
-#define    P7SR    ( *(__IO uint8_t xdata *) P7SR_ADDRESS)
-								   
+
 #define    P0DR    ( *(__IO uint8_t xdata *) P0DR_ADDRESS)
 #define    P1DR    ( *(__IO uint8_t xdata *) P1DR_ADDRESS)
 #define    P2DR    ( *(__IO uint8_t xdata *) P2DR_ADDRESS)
 #define    P3DR    ( *(__IO uint8_t xdata *) P3DR_ADDRESS)
 #define    P4DR    ( *(__IO uint8_t xdata *) P4DR_ADDRESS)
 #define    P5DR    ( *(__IO uint8_t xdata *) P5DR_ADDRESS)
-#define    P6DR    ( *(__IO uint8_t xdata *) P6DR_ADDRESS)
-#define    P7DR    ( *(__IO uint8_t xdata *) P7DR_ADDRESS)
 								   
 #define    P0IE    ( *(__IO uint8_t xdata *) P0IE_ADDRESS)
 #define    P1IE    ( *(__IO uint8_t xdata *) P1IE_ADDRESS)
@@ -515,8 +506,6 @@ sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 #define    P3NCS  ( *(__IO uint8_t xdata *) P3NCS_ADDRESS)
 #define    P4NCS  ( *(__IO uint8_t xdata *) P4NCS_ADDRESS)
 #define    P5NCS  ( *(__IO uint8_t xdata *) P5NCS_ADDRESS)
-#define    P6NCS  ( *(__IO uint8_t xdata *) P6NCS_ADDRESS)
-#define    P7NCS  ( *(__IO uint8_t xdata *) P7NCS_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: WDT peripherals                          |
@@ -552,6 +541,10 @@ sfr   RSTCFG = RSTCFG_ADDRESS;
 #define   T2L_ADDRESS     0xD7U
 #define   WKTCL_ADDRESS   0xAAU
 #define   WKTCH_ADDRESS   0xABU
+
+#define   TM2PS_ADDRESS   0xFEA2U
+#define   TM3PS_ADDRESS   0xFEA3U
+#define   TM4PS_ADDRESS   0xFEA4U
 
 /* TMOD */
 #define T1_GATE     0x80
@@ -610,10 +603,14 @@ sbit TR0  =  TCON^4;
 sbit IE1  =  TCON^3;
 sbit IE0  =  TCON^1;
 
+#define TM2PS    (*(__IO uint8_t xdata *)TM2PS_ADDRESS)
+#define TM3PS    (*(__IO uint8_t xdata *)TM3PS_ADDRESS)
+#define TM4PS    (*(__IO uint8_t xdata *)TM4PS_ADDRESS)
+
 /* Clock frequency address of timer5 */
 
-#define FWTH    (*(__I uint8 idata *)0xF8)
-#define FWTL    (*(__I uint8 idata *)0xF9)
+#define FWTH    (*(__I uint8_t idata *)0xF8)
+#define FWTL    (*(__I uint8_t idata *)0xF9)
 
 /*--------------------------------------------------------
 | @Description: EXTI peripherals                         |
@@ -718,29 +715,6 @@ sbit RI   =   SCON^0;
 sfr CMPCR1 = CMPCR1_ADDRESS;
 sfr CMPCR2 = CMPCR2_ADDRESS;
 
-/* Base address define */
-#define    ADC_CONTR_ADDRESS    0xBCU
-#define    ADC_RES_ADDRESS      0xBDU
-#define    ADC_RESH_ADDRESS     0xBDU
-#define    ADC_RESL_ADDRESS     0xBEU
-#define    ADCCFG_ADDRESS       0xDEU
-#define    ADCTIM_ADDRESS     0xFEA8U
-/* ADC_CONTR */
-#define ADC_POWER   0x80
-#define ADC_START   0x40
-#define ADC_FLAG    0x20
-
-/* ADCCFG */
-#define ADC_RESFMT  0x20
-
-
-/* ADC register */
-sfr ADC_CONTR  = ADC_CONTR_ADDRESS;
-sfr ADC_RES    =  ADC_RESH_ADDRESS;
-sfr ADC_RESL   =  ADC_RESL_ADDRESS;
-sfr ADCCFG     =    ADCCFG_ADDRESS;
-
-#define ADCTIM    (*(__IO uint8_t xdata *)ADCTIM_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: EEPROM peripherals                       |
@@ -753,6 +727,7 @@ sfr ADCCFG     =    ADCCFG_ADDRESS;
 #define    IAP_CMD_ADDRESS     0xC5U
 #define    IAP_TRIG_ADDRESS    0xC6U
 #define    IAP_CONTR_ADDRESS   0xC7U
+#define    IAP_TPS_ADDRESS     0xF5U
 
 #define    ISP_DATA_ADDRESS    0xC2U
 #define    ISP_ADDRH_ADDRESS   0xC3U
@@ -780,6 +755,7 @@ sfr IAP_ADDRL   =   IAP_ADDRL_ADDRESS;
 sfr IAP_CMD     =   IAP_CMD_ADDRESS;
 sfr IAP_TRIG    =   IAP_TRIG_ADDRESS;
 sfr IAP_CONTR   =   IAP_CONTR_ADDRESS;
+sfr IAP_TPS     =   IAP_TPS_ADDRESS;
 
 sfr ISP_DATA    =   ISP_DATA_ADDRESS;
 sfr ISP_ADDRH   =   ISP_ADDRH_ADDRESS;
@@ -787,6 +763,85 @@ sfr ISP_ADDRL   =   ISP_ADDRL_ADDRESS;
 sfr ISP_CMD     =   ISP_CMD_ADDRESS;
 sfr ISP_TRIG    =   ISP_TRIG_ADDRESS;
 sfr ISP_CONTR   =   ISP_CONTR_ADDRESS;
+
+/*--------------------------------------------------------
+| @Description: PCA peripherals                          |
+--------------------------------------------------------*/
+
+/*  Base address define */
+#define    CCON_ADDRESS      0xD8U
+#define    CMOD_ADDRESS      0xD9U
+#define    CL_ADDRESS        0xE9U
+#define    CH_ADDRESS        0xF9U
+#define    CCAPM0_ADDRESS    0xDAU
+#define    CCAPM1_ADDRESS    0xDBU
+#define    CCAPM2_ADDRESS    0xDCU
+#define    CCAP0L_ADDRESS    0xEAU
+#define    CCAP1L_ADDRESS    0xEBU
+#define    CCAP2L_ADDRESS    0xECU
+#define    CCAP0H_ADDRESS    0xFAU
+#define    CCAP1H_ADDRESS    0xFBU
+#define    CCAP2H_ADDRESS    0xFCU
+#define    PCA_PWM0_ADDRESS  0xF2U
+#define    PCA_PWM1_ADDRESS  0xF3U
+#define    PCA_PWM2_ADDRESS  0xF4U
+
+/* CMOD */
+#define CIDL        0x80
+#define ECF         0x01
+
+/* CCAPM0 */
+#define ECOM0       0x40
+#define CCAPP0      0x20
+#define CCAPN0      0x10
+#define MAT0        0x08
+#define TOG0        0x04
+#define PWM0        0x02
+#define ECCF0       0x01
+
+/* CCAPM1 */
+#define ECOM1       0x40
+#define CCAPP1      0x20
+#define CCAPN1      0x10
+#define MAT1        0x08
+#define TOG1        0x04
+#define PWM1        0x02
+#define ECCF1       0x01
+
+/* CCAMP2 */
+#define ECOM2       0x40
+#define CCAPP2      0x20
+#define CCAPN2      0x10
+#define MAT2        0x08
+#define TOG2        0x04
+#define PWM2        0x02
+#define ECCF2       0x01
+
+/* PCA register */
+sfr CCON      =   CCON_ADDRESS;
+sfr CMOD      =   CMOD_ADDRESS;
+sfr CL        =   CL_ADDRESS;
+sfr CH        =   CH_ADDRESS;
+sfr CCAPM0    =   CCAPM0_ADDRESS;
+sfr CCAPM1    =   CCAPM1_ADDRESS;
+sfr CCAPM2    =   CCAPM2_ADDRESS;
+sfr CCAP0L    =   CCAP0L_ADDRESS;
+sfr CCAP1L    =   CCAP1L_ADDRESS;
+sfr CCAP2L    =   CCAP2L_ADDRESS;
+
+sfr CCAP0H    =   CCAP0H_ADDRESS;
+sfr CCAP1H    =   CCAP1H_ADDRESS;
+sfr CCAP2H    =   CCAP2H_ADDRESS;
+sfr PCA_PWM0  =   PCA_PWM0_ADDRESS;
+sfr PCA_PWM1  =   PCA_PWM1_ADDRESS;
+sfr PCA_PWM2  =   PCA_PWM2_ADDRESS;
+
+sbit CF    =  CCON ^ 7;
+sbit CR    =  CCON ^ 6;
+sbit CCF3  =  CCON ^ 3;
+sbit CCF2  =  CCON ^ 2;
+sbit CCF1  =  CCON ^ 1;
+sbit CCF0  =  CCON ^ 0;
 
 /*--------------------------------------------------------
 | @Description: SPI peripherals                          |
@@ -861,15 +916,68 @@ sfr SPDAT    =   SPDAT_ADDRESS;
 
 /* SPI register */
 
-#define I2CCFG      (*(__IO uint8 xdata *)  I2CCFG_ADDRESS)
-#define I2CMSCR     (*(__IO uint8 xdata *) I2CMSCR_ADDRESS)
-#define I2CMSST     (*(__IO uint8 xdata *) I2CMSST_ADDRESS)
-#define I2CSLCR     (*(__IO uint8 xdata *) I2CSLCR_ADDRESS)
-#define I2CSLST     (*(__IO uint8 xdata * )I2CSLST_ADDRESS)
-#define I2CSLADR    (*(__IO uint8 xdata *)I2CSLADR_ADDRESS)
-#define I2CTXD      (*(__IO uint8 xdata *)  I2CTXD_ADDRESS)
-#define I2CRXD      (*(__IO uint8 xdata *)  I2CRXD_ADDRESS)
+#define I2CCFG      (*(__IO uint8_t xdata *)  I2CCFG_ADDRESS)
+#define I2CMSCR     (*(__IO uint8_t xdata *) I2CMSCR_ADDRESS)
+#define I2CMSST     (*(__IO uint8_t xdata *) I2CMSST_ADDRESS)
+#define I2CSLCR     (*(__IO uint8_t xdata *) I2CSLCR_ADDRESS)
+#define I2CSLST     (*(__IO uint8_t xdata * )I2CSLST_ADDRESS)
+#define I2CSLADR    (*(__IO uint8_t xdata *)I2CSLADR_ADDRESS)
+#define I2CTXD      (*(__IO uint8_t xdata *)  I2CTXD_ADDRESS)
+#define I2CRXD      (*(__IO uint8_t xdata *)  I2CRXD_ADDRESS)
 
+/*--------------------------------------------------------
+| @Description: MDU16 peripherals                        |
+--------------------------------------------------------*/
+
+typedef struct
+{
+    __IO uint8_t MD3_REG;    /*---- MDU Divisor data register */
+
+    __IO uint8_t MD2_REG;   /*---- MDU Divisor data register */
+	
+    __IO uint8_t MD1_REG;   /*---- MDU Divisor data register   */	
+	
+    __IO uint8_t MD0_REG;   /*---- MDU Divisor data register  */
+	
+    __IO uint8_t MD5_REG; /*---- MDU Divisor data register */
+
+    __IO uint8_t MD4_REG;  /*---- MDU Divisor data register */ 
+
+    __IO uint8_t ARCON_REG;   /*----MDU module data registe */
+
+    __IO uint8_t OPCON_REG;   /*----MDU control data registe */
+
+}   MDU16_TypeDef;
+
+#define    MDU16_BASE    0xFCF0U
+
+#define    MD3_ADDRESS      (MDU16_BASE)
+#define    MD2_ADDRESS      (MDU16_BASE + 0x0001U)
+#define    MD1_ADDRESS      (MDU16_BASE + 0x0002U)
+#define    MD0_ADDRESS      (MDU16_BASE + 0x0003U)
+#define    MD5_ADDRESS      (MDU16_BASE + 0x0004U)
+#define    MD4_ADDRESS      (MDU16_BASE + 0x0005U)
+#define    ARCON_ADDRESS    (MDU16_BASE + 0x0006U)
+#define    OPCON_ADDRESS    (MDU16_BASE + 0x0007U)
+
+/* Define type of MDU16 */
+
+#define    MDU16      (* (MDU16_TypeDef  xdata *) MDU16_BASE)
+
+#define    MD3U32      (*(__IO uint8_t xdata *)  MD3_ADDRESS)
+#define    MD3U16      (*(__IO uint8_t xdata *)  MD3_ADDRESS)
+#define    MD1U16      (*(__IO uint8_t xdata *)  MD1_ADDRESS)
+#define    MD5U16      (*(__IO uint8_t xdata *)  MD5_ADDRESS)
+
+#define    MD3         (*(__IO uint8_t xdata *)  MD3_ADDRESS)
+#define    MD2         (*(__IO uint8_t xdata *)  MD2_ADDRESS)
+#define    MD1         (*(__IO uint8_t xdata *)  MD1_ADDRESS)
+#define    MD0         (*(__IO uint8_t xdata *)  MD0_ADDRESS)
+#define    MD5         (*(__IO uint8_t xdata *)  MD5_ADDRESS)
+#define    MD4         (*(__IO uint8_t xdata *)  MD4_ADDRESS)
+
+#define    ARCON     (*(__IO uint8_t xdata *)  ARCON_ADDRESS)
+#define    OPCON     (*(__IO uint8_t xdata *)  OPCON_ADDRESS)
 
 #endif
 /*-----------------------------------------------------------------------

@@ -60,7 +60,7 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
 		
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKDiv;   /* System clock frequency division */
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKOutPin << 3;
-#elif ( PER_LIB_MCU_MUODEL == STC8Gx ) 		
+#elif ( PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx ) 		
 		
 		    if(sysClkn -> MCLKSrc != AUTO)
 		    {
@@ -146,7 +146,7 @@ uint32_t Get_SysClk_FRE(void)
 	/* Frequency deviation, calculate the approximate data */
 	Count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL);
 	Count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
-#elif (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 	/* Frequency deviation, calculate the approximate data */
     if(IRCBAND)    Count = 36000000UL + ((int32)((int32)IRTRIM - (int32)IRC_22_1184M) * 0x128E0UL); 
 	else           Count = 24000000UL + ((int32)((int32)IRTRIM - (int32)IRC_24M) * 0xBB80UL); 

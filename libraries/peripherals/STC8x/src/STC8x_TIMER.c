@@ -44,7 +44,7 @@ value = (65536UL - (sysClk_FRE / (1000000UL /  value \
 value = (65536UL - (sysClk_FRE / (1000000UL /  value \
 	         * (11 * (!(AUXR & 0x40)) + 1)) ) );}while(0)
 
-#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
+#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
     
     #define TIMER2_VALUE_CFG(value) do{ \
     value = (65536UL - (sysClk_FRE / (1000000UL /  value \
@@ -58,7 +58,7 @@ value = (65536UL - (sysClk_FRE / (1000000UL /  value \
     value = (65536UL - (sysClk_FRE / (1000000UL /  value \
 	          * (11 * (!(T4T3M & 0x20)) + 1)) ) );}while(0)	
               
-#elif  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     #define TIMER2_VALUE_CFG(value) do{ \
     value = (65536UL - ( (sysClk_FRE / (TM2PS + 1) ) / (1000000UL /  value \
@@ -136,7 +136,7 @@ FSCSTATE TIMER2_Init(const TIMER_InitType *timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
 	uint32_t sysClk_FRE;
-    #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+    #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
         EAXFR_ENABLE();
         TM2PS = timerx -> SysClkDiv;
         EAXFR_DISABLE();
@@ -164,7 +164,7 @@ FSCSTATE TIMER3_Init(const TIMER_InitType *timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
-    #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+    #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
         EAXFR_ENABLE();
         TM3PS = timerx -> SysClkDiv;
         EAXFR_DISABLE();
@@ -192,7 +192,7 @@ FSCSTATE TIMER4_Init(const TIMER_InitType *timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
-    #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+    #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
         EAXFR_ENABLE();
         TM4PS = timerx -> SysClkDiv;
         EAXFR_DISABLE();

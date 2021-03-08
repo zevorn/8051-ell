@@ -55,7 +55,7 @@
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
 /**
   * @name    MUL_16_BIT
