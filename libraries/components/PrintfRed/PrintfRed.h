@@ -44,15 +44,15 @@
 
 #if (DEBUG_CTRL == 1)
 
-    #define DEBUG_LOGO_LINE()    printf("Code line number: [%bd] \r\n", __LINE__)
-    #define DEBUG_LOGO_FILE()    printf("File path: %s \r\n", __FILE__)
-	#define DEBUG_LOGO(format)   do{ printf("Line is <%bd> and Path is [%s]:\r\n", __LINE__, __FILE__); printf(format); }while(0)
+    #define DEBUG_LOG_LINE()    printf("Code line number: [%bd] \r\n", __LINE__)
+    #define DEBUG_LOG_FILE()    printf("File path: %s \r\n", __FILE__)
+	#define DEBUG_LOG(format)   do{ printf("Line is <%bd> and Path is [%s]:\r\n", __LINE__, __FILE__); printf(format); }while(0)
 		
 #else
 	
-	#define DEBUG_LOGO_LINE()
-    #define DEBUG_LOGO_FILE()	
-	#define DEBUG_LOGO(format)
+	#define DEBUG_LOG_LINE()
+    #define DEBUG_LOG_FILE()	
+	#define DEBUG_LOG(format)
 	
 #endif
 	
