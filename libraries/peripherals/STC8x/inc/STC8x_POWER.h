@@ -66,7 +66,7 @@
 typedef enum
 {
   POWER_Mode_Normal = 0x00, /* Power normal mode */
-  POWER_Mode_Down   = 0x02, /* Power down mode */
+  POWER_Mode_Stop   = 0x02, /* Power down mode */
   POWER_Mode_Idle   = 0x03  /* Power idle mode */
 } POWERMode_Type;
 
