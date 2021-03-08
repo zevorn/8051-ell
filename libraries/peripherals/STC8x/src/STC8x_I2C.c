@@ -49,7 +49,7 @@ static FSCSTATE I2C_Wait(void)
         I2C_Delay_us(1);
         if(count++ >= 30) //等待超过30us，则退出等待。
         {
-						count = 0;
+            count = 0;
             return FSC_FAIL;
         }
     }
@@ -143,17 +143,32 @@ FSCSTATE I2C_Read_ACK(void)
 }
 
 /**
-  * @name    I2C_Send_Data
+  * @name    I2C_Send_Btye
   * @brief   I2C send data function
+  * @param   dat byte data
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE I2C_Send_Btye(uint8_t dat)
+{
+  I2CTXD = dat;
+  I2CMSCR = 0x02;
+  return I2C_Wait();
+}
+
+/**
+  * @name    I2C_Read_byte
+  * @brief   I2C read data function
   * @param   None
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE I2C_Send_Data(uint8_t dat)
+uint8_t I2C_Read_Byte()       
 {
-  I2CTXD = dat;                            
-  I2CMSCR = 0x02;                          
-  return I2C_Wait();
+    I2CMSCR = 0x04;     //发送RECV命令
+    I2C_Wait();
+    return I2CRXD;
 }
+
+
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
