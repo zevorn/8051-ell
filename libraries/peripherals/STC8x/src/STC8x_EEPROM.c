@@ -91,14 +91,14 @@ uint8_t EEPROM_Read_Byte(uint16_t addr)
 }
 
 /**
-  * @name    EEPROM_Read_arry
+  * @name    EEPROM_Read_Arry
   * @brief   EEPROM read byte function  
   * @param   addr   falsh address (uint16_t)
   * @param   *arry  data of arry (uint8_t)
   * @param   len    arry length  (uint8_t) 
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE EEPROM_Read_arry(uint16_t addr,uint8_t *arry,uint8_t len)
+FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *arry,uint8_t len)
 {
 	while(len--)
 	{
@@ -127,13 +127,13 @@ FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte)
 }
 
 /**
-  * @name    EEPROM_Write_str
+  * @name    EEPROM_Write_Str
   * @brief   EEPROM write string function 
   * @param   addr    falsh address (uint16_t)
   * @param   *str    data of string (uint8_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE EEPROM_Write_str(uint16_t addr,const uint8_t *str)
+FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t *str)
 {
 	while(*str)
 	{
@@ -150,7 +150,7 @@ FSCSTATE EEPROM_Write_str(uint16_t addr,const uint8_t *str)
   * @param   len     arry length  (uint8_t) 
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE EEPROM_Write_arry(uint16_t addr,const uint8_t *arry,uint8_t len)
+FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t *arry,uint8_t len)
 {
 	while(len--)
 	{

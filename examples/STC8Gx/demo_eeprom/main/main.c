@@ -47,6 +47,7 @@ void Demo(void)
 ***/
 int main(void)
 {
+	extern void eeprom_entry();
 	STC8x_System_Init();
 
 	for(;;)
@@ -54,7 +55,7 @@ int main(void)
       if(Time500MsFlag == 1)
       {
         Time500MsFlag = 0;
-        Demo();
+        eeprom_entry();
       }
 	}
 

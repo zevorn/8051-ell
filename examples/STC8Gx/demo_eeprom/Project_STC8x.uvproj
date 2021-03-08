@@ -525,6 +525,13 @@
         </Group>
         <Group>
           <GroupName>user/app</GroupName>
+          <Files>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\application\app.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
