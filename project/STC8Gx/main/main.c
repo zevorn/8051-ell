@@ -28,7 +28,7 @@
 int main(void)
 {
     STC8x_System_Init();
-	DEBUG_LOGO("hello,world\r\n");
+	DEBUG_LOG("hello,world\r\n");
     for(;;)
     {
 

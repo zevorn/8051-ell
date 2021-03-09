@@ -126,6 +126,14 @@ static void STC8x_UART_Config(void)
 	UART_InitStruct.RxEnable = ENABLE;
 	UART1_Init(&UART_InitStruct);
 	NVIC_UART1_Init(NVIC_PR0,ENABLE);
+
+	UART_InitStruct.Mode = UART_8bit_BRTx;
+	UART_InitStruct.BRTGen = UART_BRT_TIM2;
+	UART_InitStruct.BRTMode = UART_BRT_1T;
+	UART_InitStruct.BaudRate = 4800;
+	UART_InitStruct.RxEnable = ENABLE;
+	UART2_Init(&UART_InitStruct);
+	NVIC_UART2_Init(NVIC_PR0,ENABLE);	
 }
 
 

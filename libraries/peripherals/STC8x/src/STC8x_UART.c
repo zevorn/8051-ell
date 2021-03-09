@@ -14,7 +14,7 @@
 /*-----------------------------------------------------------------------
 |                                 datA                                  |
 -----------------------------------------------------------------------*/
-vuint8 UART_BUSY_FLAG[4] = {0,0,0,0};		 //Busy flag of receive
+vuint8_t UART_BUSY_FLAG[4] = {0,0,0,0};		 //Busy flag of receive
 /*--------------------------------------------------------
 | @Description: UART mode configure define function      |
 --------------------------------------------------------*/
@@ -30,28 +30,51 @@ vuint8 UART_BUSY_FLAG[4] = {0,0,0,0};		 //Busy flag of receive
 
 #define UART1_TIMER1_BRTMODE_CFG(brtMode,baudRate) do{ \
 AUXR = (AUXR & 0xBF) | ( !brtMode << 6 ); \
-T1L = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) ; \
-T1H = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) >> 8;} \
+T1L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) ; \
+T1H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) >> 8;} \
 while(0)
 
-#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate) do{ \
-AUXR = (AUXR & 0xFB) | ( !brtMode << 2 ); \
-T2L = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
-T2H = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
-while(0)
+#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 
-#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate) do{ \
-T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 ); \
-T3L = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
-T3H = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
-while(0)
+	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate) do{ \
+	AUXR = (AUXR & 0xFB) | ( !brtMode << 2 ); \
+	T2L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
+	T2H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
+	while(0)
 
-#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate) do{ \
-T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 ); \
-T4L = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
-T4H = (65536 - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
-while(0)
+	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate) do{ \
+	T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 ); \
+	T3L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
+	T3H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
+	while(0)
 
+	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate) do{ \
+	T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 ); \
+	T4L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
+	T4H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
+	while(0)
+		
+#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+	
+	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate) do{ \
+	AUXR = (AUXR & 0xFB) | ( !brtMode << 2 ); \
+	T2L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
+	T2H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
+	while(0)
+
+	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate) do{ \
+	T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 ); \
+	T3L = (65536UL - (sysClk_FRE / (TM3PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
+	T3H = (65536UL - (sysClk_FRE / (TM3PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
+	while(0)
+
+	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate) do{ \
+	T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 ); \
+	T4L = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
+	T4H = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
+	while(0)
+		
+#endif     
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -87,6 +110,11 @@ FSCSTATE UART1_Init(const UART_InitType *uartx)
         AUXR &= 0xEF;  //Turn off timer2
         IE2 &= 0xFB;   //Ban timer2 interrupt
         AUXR |= 0x01;  //Select timer2 as baud rate generator
+		#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			EAXFR_ENABLE();
+			TM2PS = uartx -> BRTGenClkDiv;
+			EAXFR_DISABLE();
+		#endif	
         uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
                                uartx -> BaudRate);   
         AUXR |= 0X10;  //Turn on timer2
@@ -119,11 +147,16 @@ FSCSTATE UART2_Init(const UART_InitType *uartx)
     UART2_MODE_CFG(uartx -> Mode);
     if(uartx -> BRTGen == UART_BRT_TIM2)
     {
-       AUXR &= 0xEF;  //Turn off timer2
-       IE2 &= 0xFB;   //Ban timer2 interrupt
-       uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
-                              uartx -> BaudRate);     
-       AUXR |= 0X10;  //Turn on timer2
+		AUXR &= 0xEF;  //Turn off timer2
+		IE2 &= 0xFB;   //Ban timer2 interrupt
+		#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			EAXFR_ENABLE();
+			TM2PS = uartx -> BRTGenClkDiv;
+			EAXFR_DISABLE();
+		#endif	
+		uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
+                               uartx -> BaudRate);     
+		AUXR |= 0X10;  //Turn on timer2
     }
     else return FSC_FAIL;
     S2CON = (S2CON & 0xDF) | (uartx -> MulitComm << 5);
@@ -152,6 +185,11 @@ FSCSTATE UART3_Init(const UART_InitType *uartx)
             AUXR &= 0xEF;  //Turn off timer2
             IE2 &= 0xFB;   //Ban timer2 interrupt
             S3CON &= 0xBF;  //Select timer2 as baud rate generator
+			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+				EAXFR_ENABLE();
+				TM2PS = uartx -> BRTGenClkDiv;
+				EAXFR_DISABLE();
+			#endif	
             uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
                                    uartx -> BaudRate);     
             AUXR |= 0X10;  //Turn on timer2
@@ -162,6 +200,11 @@ FSCSTATE UART3_Init(const UART_InitType *uartx)
             T4T3M &= 0xF7;  //Turn off timer3
             IE2 &= 0xDF;  //Ban timer3 interrupt
             S3CON |= 0x40;    //Select timer3 as baud rate generator
+			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+				EAXFR_ENABLE();
+				TM3PS = uartx -> BRTGenClkDiv;
+				EAXFR_DISABLE();
+			#endif	
             UART3_TIMER3_BRTMODE_CFG(uartx -> BRTMode,
                                    uartx -> BaudRate);
             T4T3M |= 0x08; //Turn on timer3 
@@ -195,6 +238,11 @@ FSCSTATE UART4_Init(const UART_InitType *uartx)
             AUXR &= 0xEF;  //Turn off timer2
             IE2 &= 0xFB;   //Ban timer2 interrupt
             S4CON &= 0xBF;  //Select timer2 as baud rate generator
+			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+				EAXFR_ENABLE();
+				TM2PS = uartx -> BRTGenClkDiv;
+				EAXFR_DISABLE();
+			#endif	
             uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
                                    uartx -> BaudRate);     
             AUXR |= 0X10;  //Turn on timer2
@@ -205,6 +253,11 @@ FSCSTATE UART4_Init(const UART_InitType *uartx)
             T4T3M &= 0x7F;  //Turn off timer3
             IE2 &= 0xBF;  //Ban timer4 interrupt
             S4CON |= 0x40;   //Select timer3 as baud rate generator
+			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+				EAXFR_ENABLE();
+				TM4PS = uartx -> BRTGenClkDiv;
+				EAXFR_DISABLE();
+			#endif	
             UART4_TIMER4_BRTMODE_CFG(uartx -> BRTMode,
                                    uartx -> BaudRate);
             T4T3M |= 0x80; //Turn on timer4
@@ -221,10 +274,10 @@ FSCSTATE UART4_Init(const UART_InitType *uartx)
 /**
   * @name    UART1_Send_Byte
   * @brief   UART1 Send byte function  
-  * @param   dat: uint8
+  * @param   dat: uint8_t
   * @return  None 
 ***/
-void UART1_Send_Byte(uint8 dat)
+void UART1_Send_Byte(uint8_t dat)
 {
     while(UART1_GET_BUSY_FLAG());
     UART1_SET_BUSY_FLAG();
@@ -234,10 +287,10 @@ void UART1_Send_Byte(uint8 dat)
 /**
   * @name    UART2_Send_Byte
   * @brief   UART2 Send byte function  
-  * @param   dat: uint8
+  * @param   dat: uint8_t
   * @return  None 
 ***/
-void UART2_Send_Byte(uint8 dat)
+void UART2_Send_Byte(uint8_t dat)
 {
     while(UART2_GET_BUSY_FLAG());
     UART2_SET_BUSY_FLAG();
@@ -247,10 +300,10 @@ void UART2_Send_Byte(uint8 dat)
 /**
   * @name    UART3_Send_Byte
   * @brief   UART3 Send byte function  
-  * @param   dat: uint8
+  * @param   dat: uint8_t
   * @return  None 
 ***/
-void UART3_Send_Byte(uint8 dat)
+void UART3_Send_Byte(uint8_t dat)
 {
     while(UART3_GET_BUSY_FLAG());
     UART3_SET_BUSY_FLAG();
@@ -260,10 +313,10 @@ void UART3_Send_Byte(uint8 dat)
 /**
   * @name    UART4_Send_Byte
   * @brief   UART4 Send byte function  
-  * @param   dat: uint8
+  * @param   dat: uint8_t
   * @return  None 
 ***/
-void UART4_Send_Byte(uint8 dat)
+void UART4_Send_Byte(uint8_t dat)
 {
     while(UART4_GET_BUSY_FLAG());
     UART4_SET_BUSY_FLAG();
@@ -274,9 +327,9 @@ void UART4_Send_Byte(uint8 dat)
   * @name    UART1_Rev_Byte
   * @brief   UART1 get byte function  
   * @param   None
-  * @return  receive data (uint8) 
+  * @return  receive data (uint8_t) 
 ***/
-uint8 UART1_Rev_Byte(void)
+uint8_t UART1_Rev_Byte(void)
 {
     while(UART1_GET_BUSY_FLAG());
     return SBUF;
@@ -286,9 +339,9 @@ uint8 UART1_Rev_Byte(void)
   * @name    UART2_Rev_Byte
   * @brief   UART2 get byte function  
   * @param   None
-  * @return  receive data (uint8) 
+  * @return  receive data (uint8_t) 
 ***/
-uint8 UART2_Rev_Byte(void)
+uint8_t UART2_Rev_Byte(void)
 {
     while(UART2_GET_BUSY_FLAG());
     return S2BUF;
@@ -298,9 +351,9 @@ uint8 UART2_Rev_Byte(void)
   * @name    UART3_Rev_Byte
   * @brief   UART3 get byte function  
   * @param   None
-  * @return  receive data (uint8) 
+  * @return  receive data (uint8_t) 
 ***/
-uint8 UART3_Rev_Byte(void)
+uint8_t UART3_Rev_Byte(void)
 {
     while(UART3_GET_BUSY_FLAG());
     return S3BUF;
@@ -310,9 +363,9 @@ uint8 UART3_Rev_Byte(void)
   * @name    UART4_Rev_Byte
   * @brief   UART4 get byte function  
   * @param   None
-  * @return  receive data (uint8) 
+  * @return  receive data (uint8_t) 
 ***/
-uint8 UART4_Rev_Byte(void)
+uint8_t UART4_Rev_Byte(void)
 {
     while(UART4_GET_BUSY_FLAG());
     return S4BUF;
@@ -321,10 +374,10 @@ uint8 UART4_Rev_Byte(void)
 /**
   * @name    UART1_Send_String
   * @brief   UART1 send string function  
-  * @param   *str  String first address (uint8)
+  * @param   *str  String first address (uint8_t)
   * @return  None 
 ***/
-void UART1_Send_String(uint8 *str)
+void UART1_Send_String(uint8_t *str)
 {
    	while(*str)
   	{
@@ -335,10 +388,10 @@ void UART1_Send_String(uint8 *str)
 /**
   * @name    UART2_Send_String
   * @brief   UART2 send string function  
-  * @param   *str  String first address (uint8)
+  * @param   *str  String first address (uint8_t)
   * @return  None 
 ***/
-void UART2_Send_String(uint8 *str)
+void UART2_Send_String(uint8_t *str)
 {
   	while(*str)
   	{
@@ -349,10 +402,10 @@ void UART2_Send_String(uint8 *str)
 /**
   * @name    UART3_Send_String
   * @brief   UART3 send string function  
-  * @param   *str  String first address (uint8)
+  * @param   *str  String first address (uint8_t)
   * @return  None 
 ***/
-void UART3_Send_String(uint8 *str)
+void UART3_Send_String(uint8_t *str)
 {
     while(*str)
   	{
@@ -363,10 +416,10 @@ void UART3_Send_String(uint8 *str)
 /**
   * @name    UART4_Send_String
   * @brief   UART4 send string function  
-  * @param   *str  String first address (uint8)
+  * @param   *str  String first address (uint8_t)
   * @return  None 
 ***/
-void UART4_Send_String(uint8 *str)
+void UART4_Send_String(uint8_t *str)
 {
   	while(*str)
   	{
@@ -377,11 +430,11 @@ void UART4_Send_String(uint8 *str)
 /**
   * @name    UART1_Send_Array
   * @brief   UART1 send arry function  
-  * @param   *str  Array first address (uint8) 
+  * @param   *str  Array first address (uint8_t) 
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART1_Send_Array(const uint8 *str,uint16 len)
+void UART1_Send_Array(const uint8_t *str,uint16 len)
 {
   	while(len--)
   	{
@@ -392,11 +445,11 @@ void UART1_Send_Array(const uint8 *str,uint16 len)
 /**
   * @name    UART2_Send_Array
   * @brief   UART2 send arry function  
-  * @param   *str  Array first address (uint8) 
+  * @param   *str  Array first address (uint8_t) 
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART2_Send_Array(const uint8 *str,uint16 len)
+void UART2_Send_Array(const uint8_t *str,uint16 len)
 {
     while(len--)
   	{
@@ -407,11 +460,11 @@ void UART2_Send_Array(const uint8 *str,uint16 len)
 /**
   * @name    UART3_Send_Array
   * @brief   UART3 send arry function  
-  * @param   *str  Array first address (uint8) 
+  * @param   *str  Array first address (uint8_t) 
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART3_Send_Array(const uint8 *str,uint16 len)
+void UART3_Send_Array(const uint8_t *str,uint16 len)
 {
   	while(len--)
     {
@@ -422,11 +475,11 @@ void UART3_Send_Array(const uint8 *str,uint16 len)
 /**
   * @name    UART4_Send_Array
   * @brief   UART4 send arry function  
-  * @param   *str  Array first address (uint8) 
+  * @param   *str  Array first address (uint8_t) 
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART4_Send_Array(const uint8 *str,uint16 len)
+void UART4_Send_Array(const uint8_t *str,uint16 len)
 {
   	while(len--)
   	{

@@ -135,9 +135,11 @@ sfr VOCTRL = VOCTRL_ADDRESS;
 #define    IE_ADDRESS            0xA8U
 #define    IE2_ADDRESS           0xAFU
 #define    IP_ADDRESS            0xB8U
-#define    IP2_ADDRESS           0xB5U
 #define    IPH_ADDRESS           0xB7U
+#define    IP2_ADDRESS           0xB5U
 #define    IP2H_ADDRESS          0xB6U
+#define    IP3_ADDRESS           0xDFU
+#define    IP3H_ADDRESS          0xEEU
 #define    INTCLKO_ADDRESS       0x8FU
 #define    AUXINTIF_ADDRESS      0xEFU
 #define    INTE_GPIO_ADDRESS   0xFD00U
@@ -163,66 +165,15 @@ sfr VOCTRL = VOCTRL_ADDRESS;
 #define P6INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0006U)
 #define P7INTF_ADDRESS  (INTF_GPIO_ADDRESS + 0x0007U)
 
-/* IE2 */
-#define ET4         0x40
-#define ET3         0x20
-#define ES4         0x10
-#define ES3         0x08
-#define ET2         0x04
-#define ESPI        0x02
-#define ES2         0x01
-
-/* IP2 */
-#define PI2C        0x40
-#define PCMP        0x20
-#define PX4         0x10
-#define PPWMFD      0x08
-#define PPWM        0x04
-#define PSPI        0x02
-#define PS2         0x01
-
-/* IPH */
-#define PPCAH       0x80
-#define PLVDH       0x40
-#define PADCH       0x20
-#define PSH         0x10
-#define PT1H        0x08
-#define PX1H        0x04
-#define PT0H        0x02
-#define PX0H        0x01
-
-/* IP2H */
-#define PI2CH       0x40
-#define PCMPH       0x20
-#define PX4H        0x10
-#define PPWMFDH     0x08
-#define PPWMH       0x04
-#define PSPIH       0x02
-#define PS2H        0x01
-
-/* INTCLKO */
-#define EX4         0x40
-#define EX3         0x20
-#define EX2         0x10
-#define T2CLKO      0x04
-#define T1CLKO      0x02
-#define T0CLKO      0x01
-
-/* AUXINTIF */
-#define INT4IF      0x40
-#define INT3IF      0x20
-#define INT2IF      0x10
-#define T4IF        0x04
-#define T3IF        0x02
-#define T2IF        0x01
-
 /* ISR register */
 sfr IE   =   IE_ADDRESS;
 sfr IE2  =  IE2_ADDRESS;
 sfr IP   =   IP_ADDRESS;
-sfr IP2  = IP2H_ADDRESS;
 sfr IPH  =  IPH_ADDRESS;
+sfr IP2  = IP2H_ADDRESS;
 sfr IP2H = IP2H_ADDRESS;
+sfr IP3  =  IP3_ADDRESS;
+sfr IP3H = IP3H_ADDRESS;
 sfr INTCLKO  =  INTCLKO_ADDRESS;
 sfr AUXINTIF = AUXINTIF_ADDRESS;
 
@@ -250,8 +201,6 @@ sbit PX0  = IP^0;
 #define    P3INTE    ( *(__IO uint8_t xdata *)   P3INTE_ADDRESS)
 #define    P4INTE    ( *(__IO uint8_t xdata *)   P4INTE_ADDRESS)
 #define    P5INTE    ( *(__IO uint8_t xdata *)   P5INTE_ADDRESS)
-#define    P6INTE    ( *(__IO uint8_t xdata *)   P6INTE_ADDRESS)
-#define    P7INTE    ( *(__IO uint8_t xdata *)   P7INTE_ADDRESS)
 
 #define    P0INTF    ( *(__IO uint8_t xdata *)   P0INTF_ADDRESS)
 #define    P1INTF    ( *(__IO uint8_t xdata *)   P1INTF_ADDRESS)
@@ -259,8 +208,6 @@ sbit PX0  = IP^0;
 #define    P3INTF    ( *(__IO uint8_t xdata *)   P3INTF_ADDRESS)
 #define    P4INTF    ( *(__IO uint8_t xdata *)   P4INTF_ADDRESS)
 #define    P5INTF    ( *(__IO uint8_t xdata *)   P5INTF_ADDRESS)
-#define    P6INTF    ( *(__IO uint8_t xdata *)   P6INTF_ADDRESS)
-#define    P7INTF    ( *(__IO uint8_t xdata *)   P7INTF_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: GPIO peripherals                         |

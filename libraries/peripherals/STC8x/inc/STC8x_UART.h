@@ -96,26 +96,30 @@ typedef enum
 /**
   * @name    UART_InitType
   * @brief   UART init struct  
-  * @param   Mode       Working mode
-  * @param   BRTGen     Baud rate generator
-  * @param   BRTMode    Baud rate generator clock mode
-  * @param   BRTDouble  Double baud rate
-  * @param   BaudRate   BaudRate
-  * @param   MulitComm  Multi mcu communication
-  * @param   Relay      Relay broadcasting
-  * @param   RxEnable  Receive enable 
+  * @param   Mode          Working mode
+  * @param   BRTGen        Baud rate generator
+  * @param   BRTGenClkDiv  Baud rate generator clock division
+  * @param   BRTMode       Baud rate generator clock mode
+  * @param   BRTDouble     Double baud rate
+  * @param   BaudRate      BaudRate
+  * @param   MulitComm     Multi mcu communication
+  * @param   Relay         Relay broadcasting
+  * @param   RxEnable      Receive enable 
 ***/
 typedef struct 
 {
-  UARTMode_Type Mode;
-  UART_BRTGen_Type BRTGen;    
-  UART_BRTMode_Type BRTMode;
-  FUNSTATE BRTDouble;
-  uint32 BaudRate;
-  FUNSTATE MulitComm;
-  FUNSTATE Relay;
-  FUNSTATE RxEnable;
-} UART_InitType;
+	UARTMode_Type Mode;
+	UART_BRTGen_Type BRTGen;
+	#if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		uint8_t BRTGenClkDiv;   /* just STC8G、STC8H */
+	#endif
+	UART_BRTMode_Type BRTMode;
+	FUNSTATE BRTDouble;
+	uint32_t BaudRate;
+	FUNSTATE MulitComm;
+	FUNSTATE Relay;
+	FUNSTATE RxEnable;
+}	UART_InitType;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
@@ -161,25 +165,25 @@ FSCSTATE UART4_Init(const UART_InitType *uartx);
 | @Description: UART working function                    |
 --------------------------------------------------------*/
 
-void UART1_Send_Byte(uint8 dat);
-void UART2_Send_Byte(uint8 dat);
-void UART3_Send_Byte(uint8 dat);
-void UART4_Send_Byte(uint8 dat);
+void UART1_Send_Byte(uint8_t dat);
+void UART2_Send_Byte(uint8_t dat);
+void UART3_Send_Byte(uint8_t dat);
+void UART4_Send_Byte(uint8_t dat);
 
-uint8 UART1_Rev_Byte(void);
-uint8 UART2_Rev_Byte(void);
-uint8 UART3_Rev_Byte(void);
-uint8 UART4_Rev_Byte(void);
+uint8_t UART1_Rev_Byte(void);
+uint8_t UART2_Rev_Byte(void);
+uint8_t UART3_Rev_Byte(void);
+uint8_t UART4_Rev_Byte(void);
 
-void UART1_Send_String(const uint8 *str);
-void UART2_Send_String(const uint8 *str);
-void UART3_Send_String(const uint8 *str);
-void UART4_Send_String(const uint8 *str);
+void UART1_Send_String(const uint8_t *str);
+void UART2_Send_String(const uint8_t *str);
+void UART3_Send_String(const uint8_t *str);
+void UART4_Send_String(const uint8_t *str);
 
-void UART1_Send_Array(const uint8 *str,uint16 len);
-void UART2_Send_Array(const uint8 *str,uint16 len);
-void UART3_Send_Array(const uint8 *str,uint16 len);
-void UART4_Send_Array(const uint8 *str,uint16 len);
+void UART1_Send_Array(const uint8_t *str,uint16_t len);
+void UART2_Send_Array(const uint8_t *str,uint16_t len);
+void UART3_Send_Array(const uint8_t *str,uint16_t len);
+void UART4_Send_Array(const uint8_t *str,uint16_t len);
 
 
 #endif

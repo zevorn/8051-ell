@@ -50,6 +50,14 @@ IP  = (IP  & 0xEF) | ((pri & 0x01) << 4); }
 IP2H = (IP2H & 0xFE) | ((pri & 0x02) >> 1); \
 IP2  = (IP2  & 0xFE) | (pri & 0x01); }
 
+#define UART3_NVIC_PRI(pri) { \
+IP3H = (IP3H & 0xFE) | ((pri & 0x02) >> 1); \
+IP3  = (IP3  & 0xFE) | (pri & 0x01); }
+
+#define UART4_NVIC_PRI(pri) { \
+IP3H = (IP3H & 0xFD) | (pri & 0x02); \
+IP3  = (IP3  & 0xFD) | (pri & 0x01) << 1;}
+
 /*--------------------------------------------------------
 | @Description: COMP priority define function            |
 --------------------------------------------------------*/
@@ -301,6 +309,7 @@ FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,FUNSTATE run)
 	return FSC_SUCCESS;
 }
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 /**
   * @name    NVIC_UART3_Init
   * @brief   UART3 NVIC function  
@@ -325,6 +334,37 @@ FSCSTATE NVIC_UART4_Init(FUNSTATE run)
 	return FSC_SUCCESS;
 }
 
+#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+/**
+  * @name    NVIC_UART3_Init
+  * @brief   UART3 NVIC function  
+  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,FUNSTATE run)
+{
+	IE2 = (IE2 & 0xF7) | (run << 3);
+    UART3_NVIC_PRI(priority);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_UART4_Init
+  * @brief   UART4 NVIC function  
+  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,FUNSTATE run)
+{
+	IE2 = (IE2 & 0xEF) | (run << 4);
+    UART4_NVIC_PRI(priority);
+	return FSC_SUCCESS;
+}
+
+#endif
 /**
   * @name    NVIC_COMP_Init
   * @brief   COMP NVIC function

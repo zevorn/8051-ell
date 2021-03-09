@@ -48,6 +48,7 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
@@ -207,9 +208,18 @@ FSCSTATE NVIC_TIMER4_Init(FUNSTATE run);
 
 FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,FUNSTATE run);
 FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,FUNSTATE run);
-FSCSTATE NVIC_UART3_Init(FUNSTATE run);
-FSCSTATE NVIC_UART4_Init(FUNSTATE run);
 
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+
+	FSCSTATE NVIC_UART3_Init(FUNSTATE run);
+	FSCSTATE NVIC_UART4_Init(FUNSTATE run);
+
+#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+	FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,FUNSTATE run);
+	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,FUNSTATE run);
+
+#endif
 /*--------------------------------------------------------
 | @Description: COMP ISR define                          |
 --------------------------------------------------------*/
