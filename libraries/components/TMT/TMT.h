@@ -94,10 +94,10 @@ typedef struct
 {
   void (*      Run)   (void);
   void (*     Tick)   (void);
-  void (*   Create)   (void (*taskFunction) (void), uint16_t triTime);
-  void (*   Delete)   (void (*taskFunction) (void));
-  void (* TimeCtrl)   (void (*taskFunction) (void), uint16_t triTime);
-  void (*  RunCtrl)   (void (*taskFunction) (void), TaskState_Type state);
+  void (*   Create)   (void (*taskFunc) (void), uint16_t triTime);
+  void (*   Delete)   (void (*taskFunc) (void));
+  void (* TimeCtrl)   (void (*taskFunc) (void), uint16_t triTime);
+  void (*  RunCtrl)   (void (*taskFunc) (void), TaskState_Type state);
 }TMT_Struct;
 
 extern TMT_Struct TMT;
