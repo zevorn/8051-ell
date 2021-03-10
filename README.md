@@ -22,7 +22,7 @@
 
 [开发指南视频链接](https://www.bilibili.com/video/BV1EU4y1s736?from=search&seid=5098754810768350553)
 
-[开发者文档](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
+[开发者文档(最下方有细则)](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
 
 配套核心板购买连接（待上架）
 
@@ -91,7 +91,51 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 
 
-# 目前支持的型号及外设
+# 开发者文档
+
+
+
+[开发者文档(总览)](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
+
+[ELL库工程创建](https://zeweni.gitee.io/2021/02/18/8051ell-ku-gong-cheng-chuang-jian/)
+
+
+
+## 片内外设库
+
+
+
+[时钟管理](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-shi-zhong-guan-li/)
+
+[IO口](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-io-kou/)
+
+[定时器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ding-shi-qi/)
+
+[串口](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-chuan-kou/)
+
+[可编程计数器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ke-bian-cheng-ji-shu-qi/)
+
+[其他暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
+
+
+
+## 组件库
+
+
+
+[暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
+
+
+
+## 设备驱动库
+
+
+
+[暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
+
+
+
+# 支持的型号及外设
 
 > `√`代表已经支持、`X`代表硬件没有这个外设、 ` 空`代表还没有适配
 
