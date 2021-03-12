@@ -157,6 +157,12 @@ FSCSTATE NVIC_EXTI2_Init(FUNSTATE run);
 FSCSTATE NVIC_EXTI3_Init(FUNSTATE run);
 FSCSTATE NVIC_EXTI4_Init(FUNSTATE run);
 
+#define    NVIC_EXTI0_CTRL(run)     do{ EX0 = run; }while(0)
+#define    NVIC_EXTI1_CTRL(run)     do{ EX1 = run; }while(0)
+#define    NVIC_EXTI2_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xEF) | (run << 4); }while(0)
+#define    NVIC_EXTI3_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xDF) | (run << 5); }while(0)
+#define    NVIC_EXTI4_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xBF) | (run << 6); }while(0)
+
 /*--------------------------------------------------------
 | @Description: TIMER ISR define                         |
 --------------------------------------------------------*/
@@ -176,6 +182,12 @@ FSCSTATE NVIC_TIMER1_Init(NVICPri_Type priority,FUNSTATE run);
 FSCSTATE NVIC_TIMER2_Init(FUNSTATE run);
 FSCSTATE NVIC_TIMER3_Init(FUNSTATE run);
 FSCSTATE NVIC_TIMER4_Init(FUNSTATE run);
+
+#define    NVIC_TIMER0_CTRL(run)     do{ ET0 = run; }while(0)
+#define    NVIC_TIMER1_CTRL(run)     do{ ET1 = run; }while(0)
+#define    NVIC_TIMER2_CTRL(run)     do{ IE2 = (IE2 & 0xFB) | (run << 2); }while(0)
+#define    NVIC_TIMER3_CTRL(run)     do{ IE2 = (IE2 & 0xDF) | (run << 5); }while(0)
+#define    NVIC_TIMER4_CTRL(run)     do{ IE2 = (IE2 & 0xBF) | (run << 6); }while(0)
 
 /*--------------------------------------------------------
 | @Description: UART ISR define                          |
@@ -209,6 +221,11 @@ FSCSTATE NVIC_TIMER4_Init(FUNSTATE run);
 FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,FUNSTATE run);
 FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,FUNSTATE run);
 
+#define    NVIC_UART1_CTRL(run)     do{ ES = run; }while(0)
+#define    NVIC_UART2_CTRL(run)     do{ IE2 = (IE2 & 0xFE) | (run); }while(0)
+#define    NVIC_UART3_CTRL(run)     do{ IE2 = (IE2 & 0xF7) | (run << 3); }while(0)
+#define    NVIC_UART4_CTRL(run)     do{ IE2 = (IE2 & 0xEF) | (run << 4); }while(0)
+
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 
 	FSCSTATE NVIC_UART3_Init(FUNSTATE run);
@@ -232,6 +249,8 @@ FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,FUNSTATE run);
 
 FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
 
+#define    NVIC_COMP_CTRL(run)     do{ CMPCR1 = (CMPCR1 & 0xCF)|(run << 4); }while(0)
+
 /*--------------------------------------------------------
 | @Description: ADC ISR define                           |
 --------------------------------------------------------*/
@@ -243,8 +262,11 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
     #define ADC_CLEAR_FLAG()      ADC_CONTR &= 0xDF
 
     FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,FUNSTATE run);
-	
+
+	#define    NVIC_ADC_CTRL(run)     do{ EADC = run; }while(0)
+
 #endif
+	
 /*--------------------------------------------------------
 | @Description: LVD ISR define                           |
 --------------------------------------------------------*/
@@ -255,6 +277,8 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
 #define LVD_CLEAR_FLAG()      PCON &= 0xDF
 
 FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
+
+#define    NVIC_LVD_CTRL(run)     do{ ELVD = run; }while(0)
 
 /*--------------------------------------------------------
 | @Description: PCA ISR define                           |
@@ -281,13 +305,37 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
     FSCSTATE NVIC_PCA0_TIM_POP_Init(FUNSTATE run);
     FSCSTATE NVIC_PCA1_TIM_POP_Init(FUNSTATE run);
     FSCSTATE NVIC_PCA2_TIM_POP_Init(FUNSTATE run);
-    FSCSTATE NVIC_PCA3_TIM_POP_Init(FUNSTATE run);
-    
+
+    #if (PER_LIB_MCU_MUODEL == STC8Ax)
+        FSCSTATE NVIC_PCA3_TIM_POP_Init(FUNSTATE run);
+    #endif
+
     FSCSTATE NVIC_PCA0_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run);
     FSCSTATE NVIC_PCA1_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run);
     FSCSTATE NVIC_PCA2_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run);
-    FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run);
-	
+
+    #if (PER_LIB_MCU_MUODEL == STC8Ax)
+        FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,FUNSTATE run);
+    #endif
+
+    #define    NVIC_PCA_CNT_CTRL(run)     do{ CMOD = (CMOD & 0xFE) | run; }while(0)
+
+    #define    NVIC_PCA0_TIM_POP_CTRL(run)     do{ CCAPM0 = (CCAPM0 & 0xFE) | (run); }while(0)
+    #define    NVIC_PCA1_TIM_POP_CTRL(run)     do{ CCAPM1 = (CCAPM0 & 0xFE) | (run); }while(0)
+    #define    NVIC_PCA2_TIM_POP_CTRL(run)     do{ CCAPM2 = (CCAPM0 & 0xFE) | (run); }while(0)
+
+    #if (PER_LIB_MCU_MUODEL == STC8Ax)
+        #define    NVIC_PCA3_TIM_POP_CTRL(run)     do{ CCAPM3 = (CCAPM0 & 0xFE) | (run); }while(0)
+    #endif
+
+    #define    NVIC_PCA0_PWM_CAP_CTRL(run)     do{ CCAPM0 = (CCAPM0 & 0xFE) | (run); }while(0)
+    #define    NVIC_PCA1_PWM_CAP_CTRL(run)     do{ CCAPM1 = (CCAPM0 & 0xFE) | (run); }while(0)
+    #define    NVIC_PCA2_PWM_CAP_CTRL(run)     do{ CCAPM2 = (CCAPM0 & 0xFE) | (run); }while(0)
+
+    #if (PER_LIB_MCU_MUODEL == STC8Ax)    
+        #define    NVIC_PCA3_PWM_CAP_CTRL(run)     do{ CCAPM3 = (CCAPM0 & 0xFE) | (run); }while(0)
+    #endif
+
 #endif
 /*--------------------------------------------------------
 | @Description: PWM ISR define                           |
@@ -331,7 +379,19 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
     FSCSTATE NVIC_PWM5_Init(PWMFlip_Type flipMode);
     FSCSTATE NVIC_PWM6_Init(PWMFlip_Type flipMode);
     FSCSTATE NVIC_PWM7_Init(PWMFlip_Type flipMode);
-	
+
+    #define    NVIC_PWM_CNT_CTRL(run)     do{ PWMCR = (PWMCR & 0xBF) | (run << 6); }while(0)	
+    #define    NVIC_PWM_ABD_CTRL(run)     do{ PWMFDCR = (PWMFDCR & 0xF7) | (run << 3); }while(0)	
+    #define    NVIC_PWM0_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM0CR_ADDRESS) = (PWMxCR(PWM0CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)	
+    #define    NVIC_PWM1_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM1CR_ADDRESS) = (PWMxCR(PWM1CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM2_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM2CR_ADDRESS) = (PWMxCR(PWM2CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM3_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM3CR_ADDRESS) = (PWMxCR(PWM3CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM4_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM4CR_ADDRESS) = (PWMxCR(PWM4CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM5_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM5CR_ADDRESS) = (PWMxCR(PWM5CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM6_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM6CR_ADDRESS) = (PWMxCR(PWM6CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM6_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM6CR_ADDRESS) = (PWMxCR(PWM6CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+    #define    NVIC_PWM7_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM7CR_ADDRESS) = (PWMxCR(PWM7CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
+
 #endif
 
 /*--------------------------------------------------------
@@ -344,6 +404,8 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run);
 #define SPI_CLEAR_FLAG()                 SPSTAT = 0xC0
 
 FSCSTATE NVIC_SPI_Init(NVICPri_Type priority,FUNSTATE run);
+
+#define    NVIC_SPI_CTRL(run)    do{ IE2 = (IE2 & 0xFD) | (run << 1); }while(0)
 
 /*--------------------------------------------------------
 | @Description: I2C ISR define                           |
@@ -365,6 +427,9 @@ FSCSTATE NVIC_SPI_Init(NVICPri_Type priority,FUNSTATE run);
 
 FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,FUNSTATE run);
 FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triMode);
+
+#define    NVIC_I2C_MASTER_CTRL(run)    do{ EAXFR_ENABLE();	I2CMSCR = run << 7; EAXFR_DISABLE(); }while(0)
+#define    NVIC_I2C_SLAVE_CTRL(run)     do{ EAXFR_ENABLE(); I2CSLCR &= (I2CSLCR & 0x01 )| (run << 6) | (run << 5) | (run << 4) | (run << 3); EAXFR_DISABLE(); }while(0)
 
 #endif
 /*-----------------------------------------------------------------------

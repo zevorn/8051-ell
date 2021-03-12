@@ -227,7 +227,7 @@ FSCSTATE NVIC_EXTI4_Init(FUNSTATE run)
 FSCSTATE NVIC_TIMER0_Init(NVICPri_Type priority,FUNSTATE run)
 {
 	ET0 = run;
-  TIMER0_NVIC_PRI(priority);
+    TIMER0_NVIC_PRI(priority);
 	return FSC_SUCCESS;
 }
 
@@ -421,7 +421,7 @@ FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,FUNSTATE run)
 ***/
 FSCSTATE NVIC_PCA_CNT_Init(NVICPri_Type priority,FUNSTATE run)
 {
-	CMOD |= run;
+	CMOD = (CMOD & 0xFE) | run;
 	PCA_NVIC_PRI(priority);
 	return FSC_SUCCESS;
 }
@@ -733,7 +733,6 @@ FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triState)
 {
 	EAXFR_ENABLE();
 	I2C_NVIC_PRI(priority);
-	I2CMSCR &= 0x7F;
 	I2CSLCR &= (I2CSLCR & 0x01 )| (triState);
 	EAXFR_DISABLE();
 	return FSC_SUCCESS;
