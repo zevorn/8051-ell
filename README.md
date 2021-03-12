@@ -1,10 +1,8 @@
-
-
-[![Fork me on Gitee](https://gitee.com/zeweni/ELL-8051-LIB/widgets/widget_3.svg?color=381296)](https://gitee.com/zeweni/ELL-8051-LIB)
-
 # 8051 ELL函数库简介
 
-[![star](https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=dark)](https://gitee.com/zeweni/ELL-8051-LIB/stargazers)
+[![Fork me on Gitee](https://gitee.com/zeweni/ELL-8051-LIB/widgets/widget_6.svg?color=381296)](https://gitee.com/zeweni/ELL-8051-LIB)
+
+[![star](https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=dark)](https://gitee.com/zeweni/ELL-8051-LIB/stargazers)[![fork](https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=white)](https://gitee.com/zeweni/ELL-8051-LIB/members)
 
 
 
