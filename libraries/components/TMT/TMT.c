@@ -15,17 +15,10 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 #if (COM_LIB_TMT_CTRL == 1)
-/*--------------------------------------------------------
-| @Description: Task definition                          |
---------------------------------------------------------*/
 
-typedef struct 
-{
-	uint8_t Run;               //Program running flag
-    uint16_t TIMCount;         //Time counter
-	uint16_t TRITime;          //Task running interval
-	void (*TaskFunction) (void); //Task function to run
-} TASK_COMPONENTS;       
+/*--------------------------------------------------------
+| @Description: Task object definition                   |
+--------------------------------------------------------*/
 
 TMT_Struct TMT;
 
@@ -33,13 +26,19 @@ TMT_Struct TMT;
 | @Description: Task definition                          |
 --------------------------------------------------------*/
 
-static TASK_COMPONENTS Task_Comps[TASKS_MAX];
+typedef struct 
+{
+	void (*TaskFunction) (void); //Task function to run
+    uint16_t TIMCount;         //Time counter
+	uint16_t TRITime;          //Task running interval
+	uint8_t Run;               //Program running flag
+}TASK_COMPONENTS;       
 
-/*--------------------------------------------------------
-| @Description: Maximum number of task lists             |
---------------------------------------------------------*/
-
-static uint8_t Tasks_Max;
+static struct Task_Object
+{
+	TASK_COMPONENTS Comp[TASKS_MAX];
+	uint8_t Number_Max;
+}Task_Object;
 
 /*--------------------------------------------------------
 | @Description: Task execution status                    |
@@ -76,6 +75,7 @@ void TMT_Init(void)
 	TMT.Delete = TMT_Delete_t;
 	TMT.TimeCtrl = TMT_TimeCtrl_t;
 	TMT.RunCtrl = TMT_RunCtrl_t;
+	Task_Object.Number_Max = 0;
 }
 
 /**
@@ -87,9 +87,10 @@ void TMT_Init(void)
 void TMT_Tick_t(void)
 {
 	uint8_t i;
-	for(i=0; i<Tasks_Max; i++){
+	for(i=0; i<Task_Object.Number_Max; i++)
+    {
 		 /* If time arrives */
-		Task_Comps[i].TIMCount--;
+		Task_Object.Comp[i].TIMCount--;
 	}	
 }
 
@@ -102,16 +103,16 @@ void TMT_Tick_t(void)
 void TMT_Run_t(void)
 {
 	uint8_t i;
-	for(i=0; i<Tasks_Max; i++){
+	for(i=0; i<Task_Object.Number_Max; i++){
 		 /* If time arrives */
-		if(Task_Comps[i].TIMCount == 0 && Task_Comps[i].Run == 1)
+		if(Task_Object.Comp[i].TIMCount == 0 && Task_Object.Comp[i].Run == 1)
 		{
-			Task_Comps[i].TIMCount = Task_Comps[i].TRITime;
+			Task_Object.Comp[i].TIMCount = Task_Object.Comp[i].TRITime;
 			/* 
 				To prevent process conflict, 
 				only one process can be executed in the same time period.
 			*/
-		    Task_Comps[i].TaskFunction();  /* Run task */
+		    Task_Object.Comp[i].TaskFunction();  /* Run task */
 		}
 	}
 }
@@ -128,12 +129,12 @@ CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
     static uint8_t task_num = 0; /* Initialize to 0 */
 	if(task_num>=0 && task_num < TASKS_MAX)
 	{
-		Task_Comps[task_num].TaskFunction = taskFunc;
-		Task_Comps[task_num].TRITime = triTime;
-		Task_Comps[task_num].TIMCount = triTime;
-		Task_Comps[task_num].Run = 1;
+		Task_Object.Comp[task_num].TaskFunction = taskFunc;
+		Task_Object.Comp[task_num].TRITime = triTime;
+		Task_Object.Comp[task_num].TIMCount = triTime;
+		Task_Object.Comp[task_num].Run = 1;
 		task_num += 1;
-		Tasks_Max = task_num;
+		Task_Object.Number_Max = task_num;
 		return Create_Success;
 	}
 	else
@@ -151,18 +152,18 @@ CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
 DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void))
 {	
 	uint8_t i;
-	if(Tasks_Max > 0 && Tasks_Max < TASKS_MAX)
+	if(Task_Object.Number_Max > 0 && Task_Object.Number_Max < Task_Object.Number_Max)
 	{
 		NVIC_TIMER_ISR_DISABLE();
-		for(i=0; i<Tasks_Max; i++)
+		for(i=0; i<Task_Object.Number_Max; i++)
 		{
-			if(Task_Comps[i].TaskFunction == taskFunc)
+			if(Task_Object.Comp[i].TaskFunction == taskFunc)
 			{
-					Task_Comps[i].TaskFunction = Task_Comps[Tasks_Max-1].TaskFunction;
-					Task_Comps[i].TRITime = Task_Comps[Tasks_Max-1].TRITime;
-					Task_Comps[i].TIMCount = Task_Comps[Tasks_Max-1].TIMCount;
-					Task_Comps[i].Run =Task_Comps[Tasks_Max-1].Run;
-					Tasks_Max -= 1;
+					Task_Object.Comp[i].TaskFunction = Task_Object.Comp[Task_Object.Number_Max-1].TaskFunction;
+					Task_Object.Comp[i].TRITime = Task_Object.Comp[Task_Object.Number_Max-1].TRITime;
+					Task_Object.Comp[i].TIMCount = Task_Object.Comp[Task_Object.Number_Max-1].TIMCount;
+					Task_Object.Comp[i].Run = Task_Object.Comp[Task_Object.Number_Max-1].Run;
+					Task_Object.Number_Max -= 1;
 					return Delete_Success;
 			}
 		}
@@ -186,11 +187,11 @@ DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void))
 CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
 {
 	uint8_t i;
-	for(i=0; i<Tasks_Max; i++)
+	for(i=0; i<Task_Object.Number_Max; i++)
 	{
-		if(Task_Comps[i].TaskFunction == taskFunc)
+		if(Task_Object.Comp[i].TaskFunction == taskFunc)
 		{
-		    Task_Comps[i].Run = state;
+		    Task_Object.Comp[i].Run = state;
 			return Ctrl_Success;
 		}
 	}
@@ -207,12 +208,12 @@ CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
 CtrlFun_Type TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime)
 {	
 	uint8_t i;
-	for(i=0; i<Tasks_Max; i++)
+	for(i=0; i<Task_Object.Number_Max; i++)
 	{
-		if(Task_Comps[i].TaskFunction == taskFunc)
+		if(Task_Object.Comp[i].TaskFunction == taskFunc)
 		{
-			Task_Comps[i].TIMCount = triTime;
-			Task_Comps[i].TRITime = triTime;
+			Task_Object.Comp[i].TIMCount = triTime;
+			Task_Object.Comp[i].TRITime = triTime;
 			return Ctrl_Success;
 		}
 	}

@@ -41,7 +41,7 @@ int main(void)
 	
 	TMT_Init();
 	
-	if(TMT.Create(Task1_Led,100) == Create_Success)
+	if(TMT.Create(Task1_Led,500) == Create_Success)
 	{
 		DEBUG_LOG("success \r\n");
 	}
