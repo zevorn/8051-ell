@@ -496,6 +496,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\libraries\drives\DrvList.h</FilePath>
             </File>
+            <File>
+              <FileName>KeyScan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drives\KeyScan\KeyScan.c</FilePath>
+            </File>
+            <File>
+              <FileName>KeyScan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\drives\KeyScan\KeyScan.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

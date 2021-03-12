@@ -38,20 +38,20 @@ while(0)
 
 	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate) do{ \
 	AUXR = (AUXR & 0xFB) | ( !brtMode << 2 ); \
-	T2L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
-	T2H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
+	T2L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
+	T2H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
 	while(0)
 
 	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate) do{ \
 	T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 ); \
-	T3L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
-	T3H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
+	T3L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
+	T3H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
 	while(0)
 
 	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate) do{ \
 	T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 ); \
-	T4L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
-	T4H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
+	T4L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
+	T4H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
 	while(0)
 		
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)

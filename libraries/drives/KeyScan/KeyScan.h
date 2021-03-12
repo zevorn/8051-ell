@@ -27,12 +27,13 @@
 
 #include "STC8x_TYPE.h"
 #include "STC8x_CORE.h"
+#include "STC8x_GPIO.h"
 
 /*-----------------------------------------------------------------------
 |                                 CONFIG                                |
 -----------------------------------------------------------------------*/
 
-#define KEY_NUM_MAX  ( 5 )
+#define KEY_NUM_MAX  ( 8 )
 
 /*-----------------------------------------------------------------------
 |                                  DATA                                 |
@@ -51,7 +52,6 @@ typedef enum
 } Sem_Click;
 
 typedef void (* KeyScan_FunCallBack)  (Sem_Click *clickMode);
-typedef void (* KeyScan_ReadPin_Func)  (uint8 *rValue);
 
 /*--------------------------------------------------------
 | @Description: Key state enum                           |
@@ -62,22 +62,24 @@ typedef enum
   Tri_Low_level  = 0x01,
   Tri_High_level = 0x02
 } Sem_Tri;
+
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
+void KeyScan_Init(void);
+
 typedef struct
 {
+  void (*     Add)  (void (*readPinFunc) (void), Sem_Click clickMode, Sem_Tri triMode);
   void (*    Scan)  (void);
   void (*     Run)  (void);
-  void (*  Config)  (Sem_Click clickMode,Sem_Tri triMode);
-  void (* ReadPin)  (KeyScan_ReadPin_Func ReadPin);
   void (*  Attach)  (KeyScan_FunCallBack keyScan_CallBack);
-}KeyScan_object;
+}KeyScan_Struct;
 
-extern KeyScan_object Key;
+extern KeyScan_Struct KeyScan;
 
-void KeyScan_Init(void);
+
 
 #endif
 /*-----------------------------------------------------------------------

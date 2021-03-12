@@ -83,7 +83,7 @@ static void STC8x_SYSCLK_Config(void)
 static void STC8x_GPIO_Config(void)
 {
     /* Run lamp */
-	GPIO_MODE_OUT_PP(GPIO_P5,Pin_5);  //P55
+	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);  //P55
 }
 
 /**

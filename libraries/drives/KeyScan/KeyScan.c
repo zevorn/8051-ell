@@ -19,7 +19,7 @@
 /**
   * @brief   Define key scan object
 ***/
-KeyScan_object Key;
+KeyScan_Struct KeyScan;
 
 /**
   * @brief   Define key handling callback function
@@ -27,33 +27,36 @@ KeyScan_object Key;
 static KeyScan_FunCallBack KeyScan_CallBack;
 
 /**
-  * @brief   Define key read pin callback function
+  * @brief	 Define key to return key value
 ***/
-KeyScan_ReadPin_Func KeyScan_ReadPin;
+typedef struct
+{
+  uint8_t (*ReadPin) (void);
+  uint8_t ReadValue;
+  uint8_t KeyNum;
+  uint8_t Trg;
+  uint8_t Cont;
+  Sem_Click ClickMode;  
+  Sem_Tri TriMode;
+} KEY_COMPS;
+
 /**
   * @brief	 Define key to return key value
 ***/
-
 static struct
 {
-  Sem_Click ClickMode[KEY_NUM_MAX];  
-  Sem_Tri TriMode[KEY_NUM_MAX];
-  uint8 ReadValue[KEY_NUM_MAX];
-  uint8 KeyNum;
-  uint8 Trg[KEY_NUM_MAX];
-  uint8 Cont[KEY_NUM_MAX];
-}KeyScan;
-
+	KEY_COMPS Comps[KEY_NUM_MAX];
+	uint8_t Number_Max;
+} KeyScan_Object;
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
-static void KeyScan_Scan(void);
-static void KeyScan_Run(void);
-static void KeyScan_Attach(KeyScan_FunCallBack BCallBack);
-static void Key_Mode_config(Sem_Click click,Sem_Tri tri);
-static void KeyScan_ReadPin_Attach(KeyScan_FunCallBack readPin);
+static void KeyScan_Scan_t(void);
+static void KeyScan_Run_t(void);
+static void KeyScan_Attach_t(KeyScan_FunCallBack BCallBack);
+static void KeyScan_Add_t(uint8_t (*readPinFunc) (void),Sem_Click click,Sem_Tri tri);
 
 /**
   * @name    KeyScan_Init
@@ -63,25 +66,31 @@ static void KeyScan_ReadPin_Attach(KeyScan_FunCallBack readPin);
 ***/
 void KeyScan_Init(void)
 {
-  Key.ReadPin = KeyScan_ReadPin_Attach;
-  Key.Config = Key_Mode_config;
-	Key.Attach = KeyScan_Attach;
-	Key.Scan = KeyScan_Scan;
-	Key.Run = KeyScan_Run;
-  KeyScan.KeyNum = 0;
+    KeyScan.Add = KeyScan_Add_t;
+	KeyScan.Attach = KeyScan_Attach_t;
+	KeyScan.Scan = KeyScan_Scan_t;
+	KeyScan.Run = KeyScan_Run_t;
+    KeyScan_Object.Number_Max = 0;
 }
 
 /**
-  * @name    KeyScan_Init
-  * @brief   Init
-  * @param   None
+  * @name    KeyScan_Add_t
+  * @brief   click
+  * @param   click
+  * @param   tri
+  * @param   gpio_px
+  * @param   gpio_pin
   * @return  None
 ***/
-void Key_Mode_config(Sem_Click click,Sem_Tri tri)
+void KeyScan_Add_t(uint8_t (*readPinFunc) (void),Sem_Click click,Sem_Tri tri)
 {
-  KeyScan.ClickMode[KeyScan.KeyNum] = click;
-  KeyScan.TriMode[KeyScan.KeyNum] = tri;
-  KeyScan.KeyNum = (KeyScan.KeyNum + 1) % KEY_NUM_MAX;
+  static uint8_t number = 0;
+	
+  KeyScan_Object.Comps[number].ReadPin = readPinFunc;
+  KeyScan_Object.Comps[number].ClickMode = click;
+  KeyScan_Object.Comps[number].TriMode = tri;
+  number += 1;
+  KeyScan_Object.Number_Max = number;
 }
 
 
@@ -91,49 +100,40 @@ void Key_Mode_config(Sem_Click click,Sem_Tri tri)
   * @param   BCallBack : KeyScan_FunCallBack
   * @return  None
 ***/
-static void KeyScan_Attach(KeyScan_FunCallBack BCallBack)
+static void KeyScan_Attach_t(KeyScan_FunCallBack BCallBack)
 {
 	KeyScan_CallBack = BCallBack;
 }
 
-/**
-  * @name    KeyScan_ReadPin_Attach
-  * @brief   KeyScan readPin callbackfunction
-  * @param   KeyScan_ReadPin readPin
-  * @return  None
-***/
-void KeyScan_ReadPin_Attach(KeyScan_FunCallBack readPin)
-{
-  KeyScan_ReadPin = readPin;
-}
+
 /**
   * @name    KeyScan_Run
   * @brief   None
   * @param   None
   * @return  None
 ***/
-static void KeyScan_Run(void)
+static void KeyScan_Run_t(void)
 {
-  uint8 num;
-  for(num=0;num < KeyScan.KeyNum;num++)
-  {
-    if(KeyScan.ClickMode[num] == Click_Short)
-    {
-      if(KeyScan.Trg[num])
-      {
-        KeyScan_CallBack(&KeyScan.ClickMode[num]);
-        KeyScan.Trg[num] = 0;
-      }
-    }
-    else if (KeyScan.ClickMode[num] == Click_Long)
-    {
-      if(KeyScan.Cont[num])
-      {
-        KeyScan_CallBack(&KeyScan.ClickMode[num]);
-        KeyScan.Cont[num] = 0;
-      }
-    }
-  }
+	uint8_t num;
+	for(num=0;num < KeyScan_Object.Number_Max;num++)
+	{
+		if(KeyScan_Object.Comps[num].ClickMode == Click_Short)
+		{
+			if(KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_CallBack(&KeyScan_Object.Comps[num].ClickMode);
+				KeyScan_Object.Comps[num].Trg = 0;
+			}
+		}
+		else if (KeyScan_Object.Comps[num].ClickMode == Click_Long)
+		{
+			if(KeyScan_Object.Comps[num].Cont)
+			{
+				KeyScan_CallBack(&KeyScan_Object.Comps[num].ClickMode);
+				KeyScan_Object.Comps[num].Trg = 0;
+			}
+		}
+	}
 }
 
 /**
@@ -142,24 +142,25 @@ static void KeyScan_Run(void)
   * @param   None
   * @return  None
 ***/
-static void KeyScan_Scan(void)
+static void KeyScan_Scan_t(void)
 {
-  uint8 num;
-  for(num=0;num < KeyScan.KeyNum;num++)
-  {
-    KeyScan_ReadPin(KeyScan.ReadValue);
-    if(KeyScan.TriMode[num] == Tri_Low_level)
-    {
-        KeyScan.ReadValue[num] = KeyScan.ReadValue[num] ^ 0x01;
-    }
-    else if (KeyScan.TriMode[num] == Tri_High_level)
-    {
-        KeyScan.ReadValue[num] = KeyScan.ReadValue[num] ^ 0x00;
-    }
-    KeyScan.Trg[num]  = (KeyScan.ReadValue[num] ^ KeyScan.Cont[num] ) & KeyScan.ReadValue[num];  
-    KeyScan.Cont[num] = KeyScan.ReadValue[num];
-   
-  }
+	uint8_t num;
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].TriMode == Tri_Low_level)
+		{
+			KeyScan_Object.Comps[num].ReadValue = KeyScan_Object.Comps[num].ReadPin() ^ 0x01;
+		}
+		else if (KeyScan_Object.Comps[num].TriMode == Tri_High_level)
+		{
+			KeyScan_Object.Comps[num].ReadValue = KeyScan_Object.Comps[num].ReadPin() ^ 0x00;
+		}
+		
+		KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont ) 
+                                    	  &	KeyScan_Object.Comps[num].ReadValue; 
+		
+		KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+	}
 }
 
 /*-----------------------------------------------------------------------
