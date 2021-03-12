@@ -27,7 +27,7 @@
 ***/
 void TIMER0_ISRQ_Handler(void)
 {
-
+	TMT.Tick();
 }
 
 /**

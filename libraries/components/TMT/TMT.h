@@ -45,15 +45,10 @@
     #include "STC8Hx_REG.h"
 #endif
 
-/*--------------------------------------------------------
-| @Description: STC8x MCU type                           |
---------------------------------------------------------*/
-
-#include "STC8x_TYPE.h"
-
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+#if (COM_LIB_TMT_CTRL == 1)
 /*--------------------------------------------------------
 | @Description: Task work state                          |
 --------------------------------------------------------*/
@@ -61,12 +56,29 @@ typedef enum
 {
 	Task_Continue = 1,
 	Task_Stop = !Task_Continue
-} TaskState_Type;
+}   TaskState_Type;
+
+typedef enum
+{
+    Create_Fail = 0x00,
+    Create_Success = !Create_Fail
+}   CreateFun_Type;
+
+typedef enum
+{
+    Delete_Fail = 0x00,
+    Delete_Success = !Delete_Fail
+}   DeleteFun_Type;
+
+typedef enum
+{
+    Ctrl_Fail = 0x00,
+    Ctrl_Success = !Delete_Fail
+}   CtrlFun_Type;
 
 /*-----------------------------------------------------------------------
 |                                CONFIG                                 |
 -----------------------------------------------------------------------*/
-#if (COM_LIB_TMT_CTRL == 1)
 /*--------------------------------------------------------
 | @Description: Task definition max number               |
 --------------------------------------------------------*/
@@ -88,21 +100,37 @@ typedef enum
 | @Description: Task control function                    |
 --------------------------------------------------------*/
 
+/**
+  * @name    TMT_Init
+  * @brief   Init TMT tool function
+  * @param   None
+  * @return  None
+***/
 void TMT_Init(void);
 
+/**
+  * @name    TMT_Struct
+  * @brief   TMT.Run(void)                                              Task run function
+             TMT.Tick(void)                                             Get ticks of task function
+             TMT.Create(void (*taskFunc) (void), uint16_t triTime)      Create task function
+             TMT.Delete(void (*taskFunc) (void))                        Delete task function
+             TMT.TimeCtrl(void (*taskFunc) (void), uint16_t triTime)    Control task time function
+             TMT.RunCtrl(void (*taskFunc) (void))                       Control task run function				 
+***/
 typedef struct
 {
-  void (*      Run)   (void);
-  void (*     Tick)   (void);
-  void (*   Create)   (void (*taskFunc) (void), uint16_t triTime);
-  void (*   Delete)   (void (*taskFunc) (void));
-  void (* TimeCtrl)   (void (*taskFunc) (void), uint16_t triTime);
-  void (*  RunCtrl)   (void (*taskFunc) (void), TaskState_Type state);
+  void            (*      Run)   (void);
+  void            (*     Tick)   (void);
+  CreateFun_Type  (*   Create)   (void (*taskFunc) (void), uint16_t triTime);
+  DeleteFun_Type  (*   Delete)   (void (*taskFunc) (void));
+  CtrlFun_Type    (* TimeCtrl)   (void (*taskFunc) (void), uint16_t triTime);
+  CtrlFun_Type    (*  RunCtrl)   (void (*taskFunc) (void), TaskState_Type state);
 }TMT_Struct;
 
 extern TMT_Struct TMT;
 
 #endif
+
 #endif
 /*-----------------------------------------------------------------------
 |          END OF FLIE        (C) COPYRIGHT Gevico Electronics          | 

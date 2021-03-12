@@ -48,49 +48,43 @@ static uint8_t Tasks_Max;
 static uint8_t tmt_state = 0; /* Initialize to 0 */
 
 /*--------------------------------------------------------
-| @Description: Task number of now                       |
---------------------------------------------------------*/
-
-static uint8_t task_num = 0; /* Initialize to 0 */
-
-/*--------------------------------------------------------
 | @Description: function                                 |
 --------------------------------------------------------*/
 
-static void TMT_Pro_Time_Callback(void);
-static void TMT_Pro_Handler_Callback(void);
-static void TMT_Pro_Delete(void (*TaskFunction) (void));
-static void TMT_Pro_Create(void (*TaskFunction) (void),uint16_t TRITime);
-static void TMT_Pro_Time_Ctrl(void (*TaskFunction) (void),uint16_t TRITime);
-static void TMT_Pro_Run_Ctrl(void (*TaskFunction) (void),TaskState_Type State);
+static void TMT_Tick_t(void);
+static void TMT_Run_t(void);
+static DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void));
+static CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime);
+static CtrlFun_Type TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime);
+static CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state);
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: Task time tool init function             |
-| @param      : None                                     |
-| @return     : None                                     |
---------------------------------------------------------*/
-
+/**
+  * @name    TMT_Init
+  * @brief   Init TMT tool function
+  * @param   None
+  * @return  None
+***/
 void TMT_Init(void)
 {
-	TMT.Run = TMT_Pro_Handler_Callback;
-	TMT.Tick = TMT_Pro_Time_Callback;
-	TMT.Create = TMT_Pro_Create;
-	TMT.Delete = TMT_Pro_Delete;
-	TMT.TimeCtrl = TMT_Pro_Time_Ctrl;
-	TMT.RunCtrl = TMT_Pro_Run_Ctrl;
+	TMT.Run = TMT_Run_t;
+	TMT.Tick = TMT_Tick_t;
+	TMT.Create = TMT_Create_t;
+	TMT.Delete = TMT_Delete_t;
+	TMT.TimeCtrl = TMT_TimeCtrl_t;
+	TMT.RunCtrl = TMT_RunCtrl_t;
 }
 
-/*--------------------------------------------------------
-| @Description: Task time handler function               |
-| @param      : None                                     |
-| @return     : None                                     |
---------------------------------------------------------*/
-
-void TMT_Pro_Time_Callback(void)
+/**
+  * @name    TMT_Tick_t
+  * @brief   Get ticks of task function
+  * @param   None
+  * @return  None
+***/
+void TMT_Tick_t(void)
 {
 	uint8_t i;
 	for(i=0; i<Tasks_Max; i++){
@@ -99,13 +93,13 @@ void TMT_Pro_Time_Callback(void)
 	}	
 }
 
-/*--------------------------------------------------------
-| @Description: Task remarks handler function            |
-| @param      : None                                     |
-| @return     : None                                     |
---------------------------------------------------------*/
-
-void TMT_Pro_Handler_Callback(void)
+/**
+  * @name    TMT_Run_t
+  * @brief   Task run function
+  * @param   None
+  * @return  None
+***/
+void TMT_Run_t(void)
 {
 	uint8_t i;
 	for(i=0; i<Tasks_Max; i++){
@@ -122,86 +116,109 @@ void TMT_Pro_Handler_Callback(void)
 	}
 }
 
-/*--------------------------------------------------------
-| @Description: Task process create function             |
-| @param      : None                                     |
-| @return     : None                                     |
---------------------------------------------------------*/
-
-void TMT_Pro_Create(void (*TaskFunction) (void),uint16_t TRITime)
+/**
+  * @name    TMT_Create_t
+  * @brief   Create task function
+  * @param   *taskFunc (void)   A pointer function without formal parameters.
+  * @param   triTime  task run time (ticks)
+  * @return  None
+***/
+CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
 {	
-	Task_Comps[task_num].TaskFunction = TaskFunction;
-	Task_Comps[task_num].TRITime = TRITime;
-	Task_Comps[task_num].TIMCount = TRITime;
-	Task_Comps[task_num].Run = 1;
-    task_num = (task_num + 1) % (TASKS_MAX+1);
-	Tasks_Max = task_num;
+    static uint8_t task_num = 0; /* Initialize to 0 */
+	if(task_num>=0 && task_num < TASKS_MAX)
+	{
+		Task_Comps[task_num].TaskFunction = taskFunc;
+		Task_Comps[task_num].TRITime = triTime;
+		Task_Comps[task_num].TIMCount = triTime;
+		Task_Comps[task_num].Run = 1;
+		task_num += 1;
+		Tasks_Max = task_num;
+		return Create_Success;
+	}
+	else
+	{
+		return Create_Fail;	
+	}		
 }
 
-/*--------------------------------------------------------
-| @Description: Task process time config function        |
-| @param      : None                                     |
-| @return     : None                                     |
---------------------------------------------------------*/
-
-void TMT_Pro_Time_Ctrl(void (*TaskFunction) (void),uint16_t TRITime)
+/**
+  * @name    TMT_Delete_t
+  * @brief   Delete task function
+  * @param   *taskFunc (void)   A pointer function without formal parameters.
+  * @return  None
+***/
+DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void))
 {	
 	uint8_t i;
-	for(i=0; i<Tasks_Max; i++)
+	if(Tasks_Max > 0 && Tasks_Max < TASKS_MAX)
 	{
-		if(Task_Comps[i].TaskFunction == TaskFunction)
+		NVIC_TIMER_ISR_DISABLE();
+		for(i=0; i<Tasks_Max; i++)
 		{
-			Task_Comps[i].TIMCount = TRITime;
-			Task_Comps[i].TRITime = TRITime;
-			return;
+			if(Task_Comps[i].TaskFunction == taskFunc)
+			{
+					Task_Comps[i].TaskFunction = Task_Comps[Tasks_Max-1].TaskFunction;
+					Task_Comps[i].TRITime = Task_Comps[Tasks_Max-1].TRITime;
+					Task_Comps[i].TIMCount = Task_Comps[Tasks_Max-1].TIMCount;
+					Task_Comps[i].Run =Task_Comps[Tasks_Max-1].Run;
+					Tasks_Max -= 1;
+					return Delete_Success;
+			}
 		}
+		NVIC_TIMER_ISR_ENABLE();
+		return Delete_Success;
+	}
+	else 
+	{
+        return Delete_Fail;		
 	}
 }
 
-/*--------------------------------------------------------
-| @Description: Task process delete function             |
-| @param      : void (*TaskFunction) (void)              |
-| @return     : None                                     |
---------------------------------------------------------*/
 
-void TMT_Pro_Delete(void (*TaskFunction) (void))
-{	
-	uint8_t i;
-    NVIC_TIMER_ISR_DISABLE();
-	if(Tasks_Max == 0) return;
-	for(i=0; i<Tasks_Max; i++)
-	{
-		if(Task_Comps[i].TaskFunction == TaskFunction)
-		{
-				Task_Comps[i].TaskFunction = Task_Comps[Tasks_Max-1].TaskFunction;
-				Task_Comps[i].TRITime = Task_Comps[Tasks_Max-1].TRITime;
-				Task_Comps[i].TIMCount = Task_Comps[Tasks_Max-1].TIMCount;
-				Task_Comps[i].Run =Task_Comps[Tasks_Max-1].Run;
-				Tasks_Max -= 1;			
-			    return;
-		}
-	}
-    NVIC_TIMER_ISR_ENABLE();
-}
-
-
-/*--------------------------------------------------------
-| @Description: Task process run function                |
-| @param      : void (*TaskFunction) (void)              |
-| @return     : None                                     |
---------------------------------------------------------*/
-void TMT_Pro_Run_Ctrl(void (*TaskFunction) (void),TaskState_Type State)
+/**
+  * @name    TMT_RunCtrl_t
+  * @brief   Control task run function
+  * @param   *taskFunc (void)   A pointer function without formal parameters.
+  * @param   state   Task_Continue | Task_Stop
+  * @return  None
+***/
+CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
 {
 	uint8_t i;
 	for(i=0; i<Tasks_Max; i++)
 	{
-		if(Task_Comps[i].TaskFunction == TaskFunction)
+		if(Task_Comps[i].TaskFunction == taskFunc)
 		{
-		    Task_Comps[i].Run = State;
-			return;
+		    Task_Comps[i].Run = state;
+			return Ctrl_Success;
 		}
 	}
+	return Ctrl_Fail;
 }
+
+/**
+  * @name    TMT_TimeCtrl_t
+  * @brief   Control task time function
+  * @param   *taskFunc (void)   A pointer function without formal parameters.
+  * @param   triTime  task run time (ticks)
+  * @return  None
+***/
+CtrlFun_Type TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime)
+{	
+	uint8_t i;
+	for(i=0; i<Tasks_Max; i++)
+	{
+		if(Task_Comps[i].TaskFunction == taskFunc)
+		{
+			Task_Comps[i].TIMCount = triTime;
+			Task_Comps[i].TRITime = triTime;
+			return Ctrl_Success;
+		}
+	}
+	return Ctrl_Fail;
+}
+
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

@@ -20,6 +20,16 @@
 -----------------------------------------------------------------------*/
 
 /**
+  * @name    Task1_Led
+  * @brief   main program
+  * @param   None
+  * @return  None
+***/
+void Task1_Led(void)
+{
+	GPIO_TOGGLE_PIN(GPIO_P5,Pin_5);
+}
+/**
   * @name    main
   * @brief   main program
   * @param   None
@@ -28,10 +38,21 @@
 int main(void)
 {
     STC8x_System_Init();
-	DEBUG_LOG("hello,world\r\n");
+	
+	TMT_Init();
+	
+	if(TMT.Create(Task1_Led,100) == Create_Success)
+	{
+		DEBUG_LOG("success \r\n");
+	}
+	else
+	{
+		DEBUG_LOG("fail  \r\n");		
+	}
+	
     for(;;)
     {
-
+		TMT.Run();
     }
 
 }

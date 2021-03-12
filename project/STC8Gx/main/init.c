@@ -84,7 +84,6 @@ static void STC8x_GPIO_Config(void)
 {
     /* Run lamp */
 	GPIO_MODE_OUT_PP(GPIO_P5,Pin_5);  //P55
-    P55 = 1;
 }
 
 /**
@@ -122,18 +121,11 @@ static void STC8x_UART_Config(void)
 	UART_InitStruct.Mode = UART_8bit_BRTx;
 	UART_InitStruct.BRTGen = UART_BRT_TIM1;
 	UART_InitStruct.BRTMode = UART_BRT_1T;
-	UART_InitStruct.BaudRate = 4800;
+	UART_InitStruct.BaudRate = 9600;
 	UART_InitStruct.RxEnable = ENABLE;
 	UART1_Init(&UART_InitStruct);
 	NVIC_UART1_Init(NVIC_PR0,ENABLE);
 
-	UART_InitStruct.Mode = UART_8bit_BRTx;
-	UART_InitStruct.BRTGen = UART_BRT_TIM2;
-	UART_InitStruct.BRTMode = UART_BRT_1T;
-	UART_InitStruct.BaudRate = 4800;
-	UART_InitStruct.RxEnable = ENABLE;
-	UART2_Init(&UART_InitStruct);
-	NVIC_UART2_Init(NVIC_PR0,ENABLE);	
 }
 
 
