@@ -54,8 +54,8 @@
 --------------------------------------------------------*/
 typedef enum
 {
-	Task_Continue = 1,
-	Task_Stop = !Task_Continue
+    Task_Stop = 0x00,
+	Task_Continue = !Task_Stop
 }   TaskState_Type;
 
 typedef enum
