@@ -111,9 +111,9 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 [IO口](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-io-kou/)
 
-[定时器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ding-shi-qi/)
+[定时器](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-ding-shi-qi/)
 
-[串口](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-chuan-kou/)
+[串口](https://zeweni.gitee.io/2021/03/04/8051ell-ku-pian-nei-wai-she-pian-chuan-kou/)
 
 [可编程计数器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ke-bian-cheng-ji-shu-qi/)
 
