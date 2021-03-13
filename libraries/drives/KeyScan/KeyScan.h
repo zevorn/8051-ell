@@ -28,8 +28,17 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
+
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+#ifndef DRV_LIB_KEYSCAN_CTRL        
+    #define DRV_LIB_KEYSCAN_CTRL   (1)
+#endif
+
+#ifndef DRV_LIB_KEYSCAN_NUM_MAX             
+    #define DRV_LIB_KEYSCAN_NUM_MAX   (8)
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -43,6 +52,7 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 
 #include "STC8x_CORE.h"
 #include "STC8x_GPIO.h"

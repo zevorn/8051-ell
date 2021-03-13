@@ -29,8 +29,17 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
+
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+#ifndef COM_LIB_TMT_CTRL                      
+    #define COM_LIB_TMT_CTRL           (1)
+#endif
+
+#ifndef COM_LIB_TMT_TASK_NUM_MAX                   
+    #define COM_LIB_TMT_TASK_NUM_MAX   (8)
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
