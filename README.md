@@ -117,6 +117,8 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 [可编程计数器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ke-bian-cheng-ji-shu-qi/)
 
+[增强型PWM](https://zeweni.gitee.io/2021/03/14/8051ell-ku-pian-nei-wai-she-pian-zeng-qiang-xing-pwm/)
+
 [其他暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
 
 
@@ -134,6 +136,7 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 ## 设备驱动库
 
 
+[按键扫描](https://zeweni.gitee.io/2021/03/14/8051ell-ku-she-bei-qu-dong-pian-an-jian-sao-miao-dan-jian/)
 
 [暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
 
@@ -163,6 +166,14 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 # 更新记录
 
+
+### 2021.03.14 更新
+
+* 优化TMT组件，提高健壮性
+
+* 更新按键扫描驱动，支持高低电平触发，两种按键生效模式
+
+* 更新开发者文档，增加增强型PWM手册 KeyScan手册
 
 
 ### 2021.03.12 更新

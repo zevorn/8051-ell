@@ -20,7 +20,7 @@
 | @Description: Task object definition                   |
 --------------------------------------------------------*/
 
-TMT_Struct TMT;
+TMT_Object TMT;
 
 /*--------------------------------------------------------
 | @Description: Task definition                          |
@@ -52,10 +52,10 @@ static uint8_t tmt_state = 0; /* Initialize to 0 */
 
 static void TMT_Tick_t(void);
 static void TMT_Run_t(void);
-static DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void));
-static CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime);
-static CtrlFun_Type TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime);
-static CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state);
+static FSCSTATE TMT_Delete_t(void (*taskFunc) (void));
+static FSCSTATE TMT_Create_t(void (*taskFunc) (void),uint16_t triTime);
+static FSCSTATE TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime);
+static FSCSTATE TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state);
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
@@ -124,7 +124,7 @@ void TMT_Run_t(void)
   * @param   triTime  task run time (ticks)
   * @return  None
 ***/
-CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
+FSCSTATE TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
 {	
     static uint8_t task_num = 0; /* Initialize to 0 */
 	if(task_num>=0 && task_num < TASKS_MAX)
@@ -135,11 +135,11 @@ CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
 		Task_Object.Comp[task_num].Run = 1;
 		task_num += 1;
 		Task_Object.Number_Max = task_num;
-		return Create_Success;
+		return FSC_SUCCESS;
 	}
 	else
 	{
-		return Create_Fail;	
+		return FSC_FAIL;	
 	}		
 }
 
@@ -149,7 +149,7 @@ CreateFun_Type TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
   * @param   *taskFunc (void)   A pointer function without formal parameters.
   * @return  None
 ***/
-DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void))
+FSCSTATE TMT_Delete_t(void (*taskFunc) (void))
 {	
 	uint8_t i;
 	if(Task_Object.Number_Max > 0 && Task_Object.Number_Max < Task_Object.Number_Max)
@@ -164,15 +164,15 @@ DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void))
 					Task_Object.Comp[i].TIMCount = Task_Object.Comp[Task_Object.Number_Max-1].TIMCount;
 					Task_Object.Comp[i].Run = Task_Object.Comp[Task_Object.Number_Max-1].Run;
 					Task_Object.Number_Max -= 1;
-					return Delete_Success;
+					return FSC_SUCCESS;
 			}
 		}
 		NVIC_TIMER_ISR_ENABLE();
-		return Delete_Success;
+		return FSC_SUCCESS;
 	}
 	else 
 	{
-        return Delete_Fail;		
+        return FSC_FAIL;		
 	}
 }
 
@@ -184,7 +184,7 @@ DeleteFun_Type TMT_Delete_t(void (*taskFunc) (void))
   * @param   state   Task_Continue | Task_Stop
   * @return  None
 ***/
-CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
+FSCSTATE TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
 {
 	uint8_t i;
 	for(i=0; i<Task_Object.Number_Max; i++)
@@ -192,10 +192,10 @@ CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
 		if(Task_Object.Comp[i].TaskFunction == taskFunc)
 		{
 		    Task_Object.Comp[i].Run = state;
-			return Ctrl_Success;
+			return FSC_SUCCESS;
 		}
 	}
-	return Ctrl_Fail;
+	return FSC_FAIL;
 }
 
 /**
@@ -205,7 +205,7 @@ CtrlFun_Type TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
   * @param   triTime  task run time (ticks)
   * @return  None
 ***/
-CtrlFun_Type TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime)
+FSCSTATE TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime)
 {	
 	uint8_t i;
 	for(i=0; i<Task_Object.Number_Max; i++)
@@ -214,10 +214,10 @@ CtrlFun_Type TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime)
 		{
 			Task_Object.Comp[i].TIMCount = triTime;
 			Task_Object.Comp[i].TRITime = triTime;
-			return Ctrl_Success;
+			return FSC_SUCCESS;
 		}
 	}
-	return Ctrl_Fail;
+	return FSC_FAIL;
 }
 
 #endif

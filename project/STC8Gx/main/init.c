@@ -83,7 +83,8 @@ static void STC8x_SYSCLK_Config(void)
 static void STC8x_GPIO_Config(void)
 {
     /* Run lamp */
-	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);  //P55
+	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);  //P54
+	GPIO_MODE_OUT_PP(GPIO_P5,Pin_5);  //P55
 }
 
 /**
@@ -101,6 +102,13 @@ static void STC8x_TIMER_Config(void)
 	TIMER_InitStruct.Run = ENABLE;
 	TIMER0_Init(&TIMER_InitStruct);
 	NVIC_TIMER0_Init(NVIC_PR0,ENABLE);
+
+	TIMER_InitStruct.Mode = TIMER_16BitAutoReload;
+	TIMER_InitStruct.Value = 20000;     //20ms
+	TIMER_InitStruct.Run = ENABLE;
+	TIMER2_Init(&TIMER_InitStruct);
+	NVIC_TIMER2_Init(ENABLE);
+	
 }
 
 /**

@@ -45,10 +45,13 @@
     #include "STC8Hx_REG.h"
 #endif
 
+#include "STC8x_CORE.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 #if (COM_LIB_TMT_CTRL == 1)
+
 /*--------------------------------------------------------
 | @Description: Task work state                          |
 --------------------------------------------------------*/
@@ -57,24 +60,6 @@ typedef enum
     Task_Stop = 0x00,
 	Task_Continue = !Task_Stop
 }   TaskState_Type;
-
-typedef enum
-{
-    Create_Fail = 0x00,
-    Create_Success = !Create_Fail
-}   CreateFun_Type;
-
-typedef enum
-{
-    Delete_Fail = 0x00,
-    Delete_Success = !Delete_Fail
-}   DeleteFun_Type;
-
-typedef enum
-{
-    Ctrl_Fail = 0x00,
-    Ctrl_Success = !Delete_Fail
-}   CtrlFun_Type;
 
 /*-----------------------------------------------------------------------
 |                                CONFIG                                 |
@@ -119,15 +104,15 @@ void TMT_Init(void);
 ***/
 typedef struct
 {
-  void            (*      Run)   (void);
-  void            (*     Tick)   (void);
-  CreateFun_Type  (*   Create)   (void (*taskFunc) (void), uint16_t triTime);
-  DeleteFun_Type  (*   Delete)   (void (*taskFunc) (void));
-  CtrlFun_Type    (* TimeCtrl)   (void (*taskFunc) (void), uint16_t triTime);
-  CtrlFun_Type    (*  RunCtrl)   (void (*taskFunc) (void), TaskState_Type state);
-}TMT_Struct;
+  void      (*     Run)   (void);
+  void      (*    Tick)   (void);
+  FSCSTATE  (*   Create)   (void (*taskFunc) (void), uint16_t triTime);
+  FSCSTATE  (*   Delete)   (void (*taskFunc) (void));
+  FSCSTATE  (* TimeCtrl)   (void (*taskFunc) (void), uint16_t triTime);
+  FSCSTATE  (*  RunCtrl)   (void (*taskFunc) (void), TaskState_Type state);
+}TMT_Object;
 
-extern TMT_Struct TMT;
+extern TMT_Object TMT;
 
 #endif
 

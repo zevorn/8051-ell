@@ -59,14 +59,14 @@
 | @Description: GPIO Pin define                          |
 --------------------------------------------------------*/
 /* GPIO */
-#define	GPIO_P0      //IO P0
-#define	GPIO_P1      //IO P1
-#define	GPIO_P2      //IO P2
-#define	GPIO_P3      //IO P3
-#define	GPIO_P4      //IO P4
-#define	GPIO_P5      //IO P5
-#define	GPIO_P6      //IO P6
-#define	GPIO_P7      //IO P7
+#define	GPIO_P0      0x00 //IO P0
+#define	GPIO_P1      0x01 //IO P1
+#define	GPIO_P2      0x02 //IO P2
+#define	GPIO_P3      0x03 //IO P3
+#define	GPIO_P4      0x04 //IO P4
+#define	GPIO_P5      0x05 //IO P5
+#define	GPIO_P6      0x06 //IO P6
+#define	GPIO_P7      0x07 //IO P7
 
 /* Pin */
 #define	Pin_0    0x01  //IO Pin Px.0

@@ -18,32 +18,13 @@
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-/**
-  * @name    Task1_Led
-  * @brief   main program
-  * @param   None
-  * @return  None
-***/
-void Task1_Led(void)
+
+void Key_Handle(void)
 {
 	GPIO_TOGGLE_PIN(GPIO_P5,Pin_5);
+	UART1_Send_Byte(64);
 }
 
-void Key_Handle(Sem_Click *clickMode)
-{
-	if(*clickMode == Click_Short)
-	DEBUG_LOG(" Key success \r\n");
-}
-/**
-  * @name    Read_Pin
-  * @brief   Get pin valuie
-  * @param   None
-  * @return  None
-***/
-uint8_t Read_Pin(void) 
-{
-	return P54;
-}
 
 /**
   * @name    main
@@ -53,45 +34,25 @@ uint8_t Read_Pin(void)
 ***/
 int main(void)
 {
+	KeyScan_Type KeyScan_P54 = {0};
+	
     STC8x_System_Init();
-	
 	TMT_Init();
-	KeyScan_Init();
 	
-	KeyScan.Add(Read_Pin,Click_Short,Tri_Low_level);
+	TMT.Create(KeyScan.ReadPin_P5,20);
 	
-	KeyScan.Attach(Key_Handle);
+	KeyScan_P54.GPIO = GPIO_P5;
+	KeyScan_P54.Pin = Pin_4;
+	KeyScan_P54.EffMode = Effect_Release;
+	KeyScan_P54.TriMode = Tri_Low_level;
+	KeyScan_P54.HandleFunc = Key_Handle;
 	
-	if(TMT.Create(KeyScan.Run,20) == Create_Success)
-	{
-		DEBUG_LOG("success \r\n");
-	}
-	else
-	{
-		DEBUG_LOG("fail  \r\n");		
-	}	
-	
-	if(TMT.Create(KeyScan.Scan,20) == Create_Success)
-	{
-		DEBUG_LOG("success \r\n");
-	}
-	else
-	{
-		DEBUG_LOG("fail  \r\n");		
-	}	
-	
-	if(TMT.Create(Task1_Led,500) == Create_Success)
-	{
-		DEBUG_LOG("success \r\n");
-	}
-	else
-	{
-		DEBUG_LOG("fail  \r\n");		
-	}
+	KeyScan_Init(&KeyScan_P54);
 	
     for(;;)
     {
-		TMT.Run();
+		KeyScan.Run();
+		TMT.Run(); 
     }
 
 }

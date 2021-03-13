@@ -31,6 +31,18 @@ void TIMER0_ISRQ_Handler(void)
 }
 
 /**
+  * @name    TIMER2_ISRQ_Handler
+  * @brief   MCU TIMER0 Interrupt request service function
+  * @param   None
+  * @return  None
+***/
+void TIMER2_ISRQ_Handler(void)
+{
+	
+}
+
+
+/**
   * @name    UART1_ISRQ_Handler
   * @brief   MCU UART1 Interrupt request service function
   * @param   None

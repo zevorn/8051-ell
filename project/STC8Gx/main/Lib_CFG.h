@@ -43,7 +43,13 @@
 | @Description: STC8x Driver config                      |
 --------------------------------------------------------*/
 
-/* None */
+/**
+  * @name    KeyScan
+  * @brief   You need to config key scan.  
+***/
+#define  DRV_LIB_KEYSCAN_CTRL        (1)    // "1" is enable, "0" is disable 
+#define  DRV_LIB_KEYSCAN_NUM_MAX     (8)    // key scan number max
+
 
 /*--------------------------------------------------------
 | @Description: STC8x Componets config                   |

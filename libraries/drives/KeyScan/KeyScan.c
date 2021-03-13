@@ -11,39 +11,35 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "KeyScan.h"
-#include "main.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-
+#if (DRV_LIB_KEYSCAN_CTRL == 1)
 /**
   * @brief   Define key scan object
 ***/
-KeyScan_Struct KeyScan;
-
-/**
-  * @brief   Define key handling callback function
-***/
-static KeyScan_FunCallBack KeyScan_CallBack;
+KeyScan_Object_Type KeyScan;
 
 /**
   * @brief	 Define key to return key value
 ***/
 typedef struct
 {
-  uint8_t (*ReadPin) (void);
-  uint8_t ReadValue;
-  uint8_t KeyNum;
-  uint8_t Trg;
-  uint8_t Cont;
-  Sem_Click ClickMode;  
-  Sem_Tri TriMode;
+	KeyHandle_Func keyHandle;
+	uint8_t GPIO;
+	uint8_t Pin;
+	uint8_t Flag;
+	uint8_t ReadValue;
+	uint8_t Trg;
+	uint8_t Cont;
+	Sem_Effect EffMode;	
+	Sem_Tri    TriMode;
 } KEY_COMPS;
 
 /**
   * @brief	 Define key to return key value
 ***/
-static struct
+struct
 {
 	KEY_COMPS Comps[KEY_NUM_MAX];
 	uint8_t Number_Max;
@@ -53,57 +49,63 @@ static struct
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
-static void KeyScan_Scan_t(void);
+static void KeyScan_ReadPin_P0_t(void);
+static void KeyScan_ReadPin_P1_t(void);
+static void KeyScan_ReadPin_P2_t(void);
+static void KeyScan_ReadPin_P3_t(void);
+static void KeyScan_ReadPin_P4_t(void);
+static void KeyScan_ReadPin_P5_t(void);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx )
+
+static void KeyScan_ReadPin_P6_t(void);
+static void KeyScan_ReadPin_P7_t(void);
+
+#endif
+
 static void KeyScan_Run_t(void);
-static void KeyScan_Attach_t(KeyScan_FunCallBack BCallBack);
-static void KeyScan_Add_t(uint8_t (*readPinFunc) (void),Sem_Click click,Sem_Tri tri);
 
 /**
   * @name    KeyScan_Init
-  * @brief   Init
-  * @param   None
-  * @return  None
+  * @brief   KeyScan init function.
+  * @param   *keyScan KeyScan_Type
+  * @return  FSCSTATE SUCCESS(1) / FAIL(0)
 ***/
-void KeyScan_Init(void)
+FSCSTATE KeyScan_Init(KeyScan_Type *keyScan)
 {
-    KeyScan.Add = KeyScan_Add_t;
-	KeyScan.Attach = KeyScan_Attach_t;
-	KeyScan.Scan = KeyScan_Scan_t;
-	KeyScan.Run = KeyScan_Run_t;
-    KeyScan_Object.Number_Max = 0;
-}
+	static uint8_t number = 0;
+	if(number>= 0 && number < KEY_NUM_MAX)
+	{
+		KeyScan_Object.Comps[number].GPIO = keyScan -> GPIO;
+		KeyScan_Object.Comps[number].Pin = keyScan -> Pin;
+		KeyScan_Object.Comps[number].keyHandle = keyScan -> HandleFunc;
+		KeyScan_Object.Comps[number].TriMode = keyScan -> TriMode;
+		KeyScan_Object.Comps[number].EffMode = keyScan -> EffMode;
+		
+		KeyScan.ReadPin_P0 = KeyScan_ReadPin_P0_t;
+		KeyScan.ReadPin_P1 = KeyScan_ReadPin_P1_t;
+		KeyScan.ReadPin_P2 = KeyScan_ReadPin_P2_t;
+		KeyScan.ReadPin_P3 = KeyScan_ReadPin_P3_t;
+		KeyScan.ReadPin_P4 = KeyScan_ReadPin_P4_t;
+		KeyScan.ReadPin_P5 = KeyScan_ReadPin_P5_t;
+		
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx )
+				KeyScan.ReadPin_P6 = KeyScan_ReadPin_P6_t;
+				KeyScan.ReadPin_P7 = KeyScan_ReadPin_P7_t;
+		#endif
+		
+		KeyScan.Run = KeyScan_Run_t;
+		number += 1;
+		KeyScan_Object.Number_Max = number;	
+		
+		return FSC_SUCCESS;
+	}
+	else 
+	{
+		return FSC_FAIL;
+	}
 
-/**
-  * @name    KeyScan_Add_t
-  * @brief   click
-  * @param   click
-  * @param   tri
-  * @param   gpio_px
-  * @param   gpio_pin
-  * @return  None
-***/
-void KeyScan_Add_t(uint8_t (*readPinFunc) (void),Sem_Click click,Sem_Tri tri)
-{
-  static uint8_t number = 0;
-	
-  KeyScan_Object.Comps[number].ReadPin = readPinFunc;
-  KeyScan_Object.Comps[number].ClickMode = click;
-  KeyScan_Object.Comps[number].TriMode = tri;
-  number += 1;
-  KeyScan_Object.Number_Max = number;
-}
-
-
-/**
-  * @name    KeyScan_Attach
-  * @brief   KeyScan callback function register function
-  * @param   BCallBack : KeyScan_FunCallBack
-  * @return  None
-***/
-static void KeyScan_Attach_t(KeyScan_FunCallBack BCallBack)
-{
-	KeyScan_CallBack = BCallBack;
-}
+}	
 
 
 /**
@@ -116,53 +118,269 @@ static void KeyScan_Run_t(void)
 {
 	uint8_t num;
 	for(num=0;num < KeyScan_Object.Number_Max;num++)
-	{
-		if(KeyScan_Object.Comps[num].ClickMode == Click_Short)
+	{	
+		if(KeyScan_Object.Comps[num].Flag == 1)
 		{
-			if(KeyScan_Object.Comps[num].Trg)
-			{
-				KeyScan_CallBack(&KeyScan_Object.Comps[num].ClickMode);
-				KeyScan_Object.Comps[num].Trg = 0;
-			}
-		}
-		else if (KeyScan_Object.Comps[num].ClickMode == Click_Long)
-		{
-			if(KeyScan_Object.Comps[num].Cont)
-			{
-				KeyScan_CallBack(&KeyScan_Object.Comps[num].ClickMode);
-				KeyScan_Object.Comps[num].Trg = 0;
-			}
+			KeyScan_Object.Comps[num].Trg = 0;
+			KeyScan_Object.Comps[num].Flag = 0;
+			KeyScan_Object.Comps[num].keyHandle();
 		}
 	}
 }
 
 /**
-  * @name    KeyScan_Scan
+  * @name    KeyScan_ReadPin_P0_t
   * @brief   None
   * @param   None
   * @return  None
 ***/
-static void KeyScan_Scan_t(void)
+static void KeyScan_ReadPin_P0_t(void)
 {
 	uint8_t num;
+
 	for(num=0;num < KeyScan_Object.Number_Max; num++)
 	{
-		if(KeyScan_Object.Comps[num].TriMode == Tri_Low_level)
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P0)
 		{
-			KeyScan_Object.Comps[num].ReadValue = KeyScan_Object.Comps[num].ReadPin() ^ 0x01;
+			
+			KeyScan_Object.Comps[num].ReadValue = P0 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
 		}
-		else if (KeyScan_Object.Comps[num].TriMode == Tri_High_level)
-		{
-			KeyScan_Object.Comps[num].ReadValue = KeyScan_Object.Comps[num].ReadPin() ^ 0x00;
-		}
-		
-		KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont ) 
-                                    	  &	KeyScan_Object.Comps[num].ReadValue; 
-		
-		KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
 	}
+
+}
+/**
+  * @name    KeyScan_ReadPin_P1_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P1_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P1)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P1 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
+}
+/**
+  * @name    KeyScan_ReadPin_P2_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P2_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P2)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P2 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
+}
+/**
+  * @name    KeyScan_ReadPin_P3_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P3_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P3)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P3 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
+}
+/**
+  * @name    KeyScan_ReadPin_P4_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P4_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P4)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P4 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
+}
+/**
+  * @name    KeyScan_ReadPin_P5_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P5_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P5)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P5 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
+}
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx )
+/**
+  * @name    KeyScan_ReadPin_P6_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P6_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P6)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P6 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
+}
+/**
+  * @name    KeyScan_ReadPin_P7_t
+  * @brief   None
+  * @param   None
+  * @return  None
+***/
+static void KeyScan_ReadPin_P7_t(void)
+{
+	uint8_t num;
+
+	for(num=0;num < KeyScan_Object.Number_Max; num++)
+	{
+		if(KeyScan_Object.Comps[num].GPIO == GPIO_P7)
+		{
+			
+			KeyScan_Object.Comps[num].ReadValue = P7 ^ (0xFF * ( KeyScan_Object.Comps[num].TriMode 
+			                                                 | KeyScan_Object.Comps[num].EffMode));
+
+			KeyScan_Object.Comps[num].Trg  = (KeyScan_Object.Comps[num].ReadValue ^ KeyScan_Object.Comps[num].Cont) 
+											  &	KeyScan_Object.Comps[num].ReadValue; 
+			
+			KeyScan_Object.Comps[num].Cont = KeyScan_Object.Comps[num].ReadValue;
+			
+		    if(KeyScan_Object.Comps[num].Pin == KeyScan_Object.Comps[num].Trg)
+			{
+				KeyScan_Object.Comps[num].Flag = 1;
+			}
+		}
+	}
+
 }
 
+#endif
+
+#endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/
