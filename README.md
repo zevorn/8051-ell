@@ -97,9 +97,11 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 
 
-[开发者文档(总览)](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
+[ELL库概要介绍](https://zeweni.gitee.io/2021/02/18/8051ell-ku-gai-yao-jie-shao/)
 
 [ELL库工程创建](https://zeweni.gitee.io/2021/02/18/8051ell-ku-gong-cheng-chuang-jian/)
+
+[ELL库代码烧录](https://zeweni.gitee.io/2021/03/16/8051ell-ku-dai-ma-shao-lu/)
 
 
 
@@ -109,11 +111,21 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 [时钟管理](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-shi-zhong-guan-li/)
 
+[中断管理](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-zhong-duan-guan-li/)
+
+[电源管理](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-dian-yuan-guan-li/)
+
+[复位功能](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-fu-wei-gong-neng/)
+
+[看门狗](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-kan-men-gou/)
+
 [IO口](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-io-kou/)
 
 [定时器](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-ding-shi-qi/)
 
 [串口](https://zeweni.gitee.io/2021/03/04/8051ell-ku-pian-nei-wai-she-pian-chuan-kou/)
+
+[比较器](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-bi-jiao-qi/)
 
 [可编程计数器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ke-bian-cheng-ji-shu-qi/)
 
@@ -166,6 +178,11 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 # 更新记录
 
+
+### 2021.03.16 更新
+
+* 更新开发者文档
+* 修复比较器读取标志位的宏函数bug
 
 ### 2021.03.14 更新
 

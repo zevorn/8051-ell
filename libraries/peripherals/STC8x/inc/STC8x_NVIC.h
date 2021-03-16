@@ -243,7 +243,7 @@ FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,FUNSTATE run);
 
 #define COMP_ISRQ_Handler(void)  COMP_ISR(void) interrupt  21
 
-#define COMP_GET_FLAG()        (CMPCR1 &= 0x40)
+#define COMP_GET_FLAG()        (CMPCR1 & 0x40)
 #define COMP_CLEAR_FLAG()        CMPCR1 &= 0xBF
 #define COMP_GET_RES()          (CMPCR1 & 0x01)
 
