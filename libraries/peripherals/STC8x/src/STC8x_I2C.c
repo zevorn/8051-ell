@@ -159,9 +159,9 @@ FSCSTATE I2C_Send_Btye(uint8_t dat)
   * @name    I2C_Read_byte
   * @brief   I2C read data function
   * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @return  data of recive
 ***/
-uint8_t I2C_Read_Byte()       
+uint8_t I2C_Read_Byte(void)       
 {
     I2CMSCR = 0x04;     //发送RECV命令
     I2C_Wait();

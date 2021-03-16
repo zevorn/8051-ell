@@ -83,7 +83,7 @@
   * @param   rem  remainder
   * @return  none
 ***/
-#define DIV_16_BIT(mol, den, quo, mod) 		do{ \
+#define DIV_16_BIT(mol, den, quo, rem) 		do{ \
                                                 EAXFR_ENABLE();  \
                                                 MD1U16 = mol;   MD5U16 = den; \
                                                 ARCON = 0x06 << 5; OPCON = 1; \
@@ -101,7 +101,7 @@
   * @param   rem  remainder
   * @return  none
 ***/
-#define DIV_32_BIT(mol, den, quo, mod) 		do{ \
+#define DIV_32_BIT(mol, den, quo, rem) 		do{ \
                                                 EAXFR_ENABLE();  \
                                                 MD3U32 = mol;   MD5U16 = den; \
                                                 ARCON = 0x06 << 5; OPCON = 1; \
@@ -145,6 +145,7 @@
                                                 }   while (0) 
 
 #endif
+
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 

@@ -83,8 +83,8 @@ FSCSTATE I2C_Stop(void);
 FSCSTATE I2C_Send_ACK(void);
 FSCSTATE I2C_Send_NACK(void);
 FSCSTATE I2C_Read_ACK(void);
-FSCSTATE I2C_Send_Data(uint8 Dat);
-
+FSCSTATE I2C_Send_Btye(uint8_t dat);
+uint8_t I2C_Read_Byte(void);
 
 #endif
 /*-----------------------------------------------------------------------

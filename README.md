@@ -133,6 +133,12 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 [增强型PWM](https://zeweni.gitee.io/2021/03/14/8051ell-ku-pian-nei-wai-she-pian-zeng-qiang-xing-pwm/)
 
+[SPI](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-spi/)
+
+[I2C](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-i2c/)
+
+[MDU16](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-mdu16/)
+
 [其他暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
 
 
