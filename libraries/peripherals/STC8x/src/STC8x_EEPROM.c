@@ -40,7 +40,7 @@ static void nop(void)
 static void EEPROM_WT_Time(void)
 {	
 	extern uint32 Get_Sysclk_FRE(void);
-    uint32 sysClk_FRE;
+    uint32_t sysClk_FRE;
 	/* Get system clock frequency */
 	sysClk_FRE = Get_Sysclk_FRE();
     #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
@@ -80,6 +80,7 @@ FSCSTATE EEPROM_Ctrl(FUNSTATE run)
 uint8_t EEPROM_Read_Byte(uint16_t addr)
 {
 	uint8_t dat;
+    IAP_CONTR |= 0x80;
 	IAP_CMD = 1;  //Set IAP read command
 	IAP_ADDRH = addr >> 8; 	//Set IAP high address
 	IAP_ADDRL = addr; 		//Set IAP low address
@@ -87,6 +88,7 @@ uint8_t EEPROM_Read_Byte(uint16_t addr)
 	IAP_TRIG  = 0xA5; 		//Write trigger command (0xa5)
 	dat = IAP_DATA;
 	nop();
+    IAP_CONTR &= 0x7F;
 	return dat;
 }
 
@@ -98,7 +100,7 @@ uint8_t EEPROM_Read_Byte(uint16_t addr)
   * @param   len    arry length  (uint8_t) 
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *arry,uint8_t len)
+FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t* arry,uint8_t len)
 {
 	while(len--)
 	{
@@ -116,13 +118,15 @@ FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *arry,uint8_t len)
 ***/
 FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte)
 {
+    IAP_CONTR |= 0x80;
 	IAP_CMD = 2;  //Set IAP write command
 	IAP_ADDRH = addr >> 8; 	//Set IAP high address
 	IAP_ADDRL = addr; 		//Set IAP low address
 	IAP_DATA =  byte; 		//Read IAP data	
     IAP_TRIG  = 0x5A; 		//Write trigger command (0x5a)
 	IAP_TRIG  = 0xA5; 		//Write trigger command (0xa5)
-	nop(); 
+	nop();
+    IAP_CONTR &= 0x7F;
 	return FSC_SUCCESS;
 }
 
@@ -133,7 +137,7 @@ FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte)
   * @param   *str    data of string (uint8_t)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t *str)
+FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t* str)
 {
 	while(*str)
 	{
@@ -150,7 +154,7 @@ FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t *str)
   * @param   len     arry length  (uint8_t) 
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t *arry,uint8_t len)
+FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t* arry,uint8_t len)
 {
 	while(len--)
 	{
@@ -167,12 +171,14 @@ FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t *arry,uint8_t len)
 ***/
 FSCSTATE EEPROM_Erase_Page(uint16_t addr)
 {
+    IAP_CONTR |= 0x80;
 	IAP_CMD = 3;            //Set IAP write command
 	IAP_ADDRH = addr >> 8; 	//Set IAP high address
 	IAP_ADDRL = addr; 		//Set IAP low address
 	IAP_TRIG = 0x5A; 		//Write trigger command (0x5a)
 	IAP_TRIG = 0xA5; 		//Write trigger command (0x5a)	
-	nop(); 
+	nop();
+    IAP_CONTR &= 0x7F;
 	return FSC_SUCCESS;
 }
 

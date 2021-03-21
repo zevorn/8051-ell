@@ -25,7 +25,7 @@
   * @param   *spix    SPIInit_Type
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE SPI_Init(SPIInit_Type *spix)
+FSCSTATE SPI_Init(SPIInit_Type* spix)
 {
     SPDAT = 0;
     SPSTAT = SPIF | WCOL;          

@@ -55,7 +55,7 @@ typedef enum
 
 /* Hardware SPI init option */
 #define   SPI_SPEED          SPI_SCLK_DIV_4
-#define   SPI_PORT_SWITCH    SW_PORT4  
+#define   SPI_PORT_SWITCH    SW_PORT3  
 
 /*--------------------------------------------------------
 | @Description: OLED Software SPI init define            |

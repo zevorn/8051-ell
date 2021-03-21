@@ -39,7 +39,7 @@
   * @param   *compx : COMP_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE COMP_Init(const COMP_InitType *compx)
+FSCSTATE COMP_Init(const COMP_InitType* compx)
 {
     if(compx -> DC_FTW > 0x3F) return FSC_FAIL;
     COMP_PEINPUT_CFG(compx -> PEPin);

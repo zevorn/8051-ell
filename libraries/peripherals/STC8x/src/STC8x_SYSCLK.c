@@ -26,7 +26,7 @@
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
 
-FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn)
+FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 {
 		EAXFR_ENABLE(); /* Enable access to the internal extended RAM area */
 #if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)

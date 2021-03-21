@@ -34,20 +34,19 @@ void Key_Handle(void)
 ***/
 int main(void)
 {
-	KeyScan_Type KeyScan_P54 = {0};
+	KeyScan_Type KeyHandle = {0};
 	
     STC8x_System_Init();
 	TMT_Init();
 	
 	TMT.Create(KeyScan.ReadPin_P5,20);
 	
-	KeyScan_P54.GPIO = GPIO_P5;
-	KeyScan_P54.Pin = Pin_4;
-	KeyScan_P54.EffMode = Effect_Release;
-	KeyScan_P54.TriMode = Tri_Low_level;
-	KeyScan_P54.HandleFunc = Key_Handle;
-	
-	KeyScan_Init(&KeyScan_P54);
+	KeyHandle.GPIO = GPIO_P5;
+	KeyHandle.Pin = Pin_4;
+	KeyHandle.EffMode = Effect_Release;
+	KeyHandle.TriMode = Tri_Low_level;
+	KeyHandle.HandleFunc = Key_Handle;
+	KeyScan_Init(&KeyHandle);
 	
     for(;;)
     {

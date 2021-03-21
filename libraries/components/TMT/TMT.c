@@ -28,7 +28,7 @@ TMT_Object TMT;
 
 typedef struct 
 {
-	void (*TaskFunction) (void); //Task function to run
+	void (* TaskFunction) (void); //Task function to run
     uint16_t TIMCount;         //Time counter
 	uint16_t TRITime;          //Task running interval
 	uint8_t Run;               //Program running flag
@@ -124,7 +124,7 @@ void TMT_Run_t(void)
   * @param   triTime  task run time (ticks)
   * @return  None
 ***/
-FSCSTATE TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
+FSCSTATE TMT_Create_t(void (* taskFunc) (void),uint16_t triTime)
 {	
     static uint8_t task_num = 0; /* Initialize to 0 */
 	if(task_num>=0 && task_num < TASKS_MAX)
@@ -149,7 +149,7 @@ FSCSTATE TMT_Create_t(void (*taskFunc) (void),uint16_t triTime)
   * @param   *taskFunc (void)   A pointer function without formal parameters.
   * @return  None
 ***/
-FSCSTATE TMT_Delete_t(void (*taskFunc) (void))
+FSCSTATE TMT_Delete_t(void (* taskFunc) (void))
 {	
 	uint8_t i;
 	if(Task_Object.Number_Max > 0 && Task_Object.Number_Max < Task_Object.Number_Max)
@@ -184,7 +184,7 @@ FSCSTATE TMT_Delete_t(void (*taskFunc) (void))
   * @param   state   Task_Continue | Task_Stop
   * @return  None
 ***/
-FSCSTATE TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
+FSCSTATE TMT_RunCtrl_t(void (* taskFunc) (void),TaskState_Type state)
 {
 	uint8_t i;
 	for(i=0; i<Task_Object.Number_Max; i++)
@@ -205,7 +205,7 @@ FSCSTATE TMT_RunCtrl_t(void (*taskFunc) (void),TaskState_Type state)
   * @param   triTime  task run time (ticks)
   * @return  None
 ***/
-FSCSTATE TMT_TimeCtrl_t(void (*taskFunc) (void),uint16_t triTime)
+FSCSTATE TMT_TimeCtrl_t(void (* taskFunc) (void),uint16_t triTime)
 {	
 	uint8_t i;
 	for(i=0; i<Task_Object.Number_Max; i++)

@@ -85,7 +85,7 @@ while(0)
   * @param   *uartx: UART_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE UART1_Init(const UART_InitType *uartx)
+FSCSTATE UART1_Init(const UART_InitType* uartx)
 {
     extern uint32 Get_SysClk_FRE(void);
     uint32 sysClk_FRE;
@@ -138,7 +138,7 @@ FSCSTATE UART1_Init(const UART_InitType *uartx)
   * @param   *uartx: UART_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE UART2_Init(const UART_InitType *uartx)
+FSCSTATE UART2_Init(const UART_InitType* uartx)
 {
     extern uint32 Get_SysClk_FRE(void);
     uint32 sysClk_FRE;
@@ -171,7 +171,7 @@ FSCSTATE UART2_Init(const UART_InitType *uartx)
   * @param   *uartx: UART_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE UART3_Init(const UART_InitType *uartx)
+FSCSTATE UART3_Init(const UART_InitType* uartx)
 {
     extern uint32 Get_SysClk_FRE(void);
     uint32 sysClk_FRE;
@@ -224,7 +224,7 @@ FSCSTATE UART3_Init(const UART_InitType *uartx)
   * @param   *uartx: UART_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE UART4_Init(const UART_InitType *uartx)
+FSCSTATE UART4_Init(const UART_InitType* uartx)
 {
     extern uint32 Get_SysClk_FRE(void);
     uint32 sysClk_FRE;
@@ -405,7 +405,7 @@ void UART2_Send_String(uint8_t *str)
   * @param   *str  String first address (uint8_t)
   * @return  None 
 ***/
-void UART3_Send_String(uint8_t *str)
+void UART3_Send_String(uint8_t* str)
 {
     while(*str)
   	{
@@ -434,7 +434,7 @@ void UART4_Send_String(uint8_t *str)
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART1_Send_Array(const uint8_t *str,uint16 len)
+void UART1_Send_Array(const uint8_t* str,uint16 len)
 {
   	while(len--)
   	{
@@ -449,7 +449,7 @@ void UART1_Send_Array(const uint8_t *str,uint16 len)
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART2_Send_Array(const uint8_t *str,uint16 len)
+void UART2_Send_Array(const uint8_t* str,uint16 len)
 {
     while(len--)
   	{
@@ -464,7 +464,7 @@ void UART2_Send_Array(const uint8_t *str,uint16 len)
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART3_Send_Array(const uint8_t *str,uint16 len)
+void UART3_Send_Array(const uint8_t* str,uint16 len)
 {
   	while(len--)
     {
@@ -479,7 +479,7 @@ void UART3_Send_Array(const uint8_t *str,uint16 len)
   * @param   len   Array length (uint16)
   * @return  None 
 ***/
-void UART4_Send_Array(const uint8_t *str,uint16 len)
+void UART4_Send_Array(const uint8_t* str,uint16 len)
 {
   	while(len--)
   	{

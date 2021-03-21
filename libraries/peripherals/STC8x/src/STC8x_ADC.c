@@ -37,7 +37,7 @@ static void nop(void)
   * @param   *adcx  ADC_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE ADC_Init(const ADC_InitType *adcx)
+FSCSTATE ADC_Init(const ADC_InitType* adcx)
 {
     if(adcx -> Speed <= 0x0F) 
     {

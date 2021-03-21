@@ -82,7 +82,7 @@ value = (65536UL - (sysClk_FRE / (1000000UL /  value \
   * @param   *timerx: TIMER_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE TIMER0_Init(const TIMER_InitType *timerx)
+FSCSTATE TIMER0_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
@@ -106,7 +106,7 @@ FSCSTATE TIMER0_Init(const TIMER_InitType *timerx)
   * @param   *timerx: TIMER_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE TIMER1_Init(const TIMER_InitType *timerx)
+FSCSTATE TIMER1_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
 	uint32_t sysClk_FRE;
@@ -132,7 +132,7 @@ FSCSTATE TIMER1_Init(const TIMER_InitType *timerx)
   * @param   *timerx: TIMER_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE TIMER2_Init(const TIMER_InitType *timerx)
+FSCSTATE TIMER2_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
 	uint32_t sysClk_FRE;
@@ -160,7 +160,7 @@ FSCSTATE TIMER2_Init(const TIMER_InitType *timerx)
   * @param   *timerx: TIMER_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE TIMER3_Init(const TIMER_InitType *timerx)
+FSCSTATE TIMER3_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
@@ -188,7 +188,7 @@ FSCSTATE TIMER3_Init(const TIMER_InitType *timerx)
   * @param   *timerx: TIMER_InitType
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE TIMER4_Init(const TIMER_InitType *timerx)
+FSCSTATE TIMER4_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
