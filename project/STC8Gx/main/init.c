@@ -103,12 +103,6 @@ static void STC8x_TIMER_Config(void)
 	TIMER0_Init(&TIMER_InitStruct);
 	NVIC_TIMER0_Init(NVIC_PR0,ENABLE);
 
-	TIMER_InitStruct.Mode = TIMER_16BitAutoReload;
-	TIMER_InitStruct.Value = 20000;     //20ms
-	TIMER_InitStruct.Run = ENABLE;
-	TIMER2_Init(&TIMER_InitStruct);
-	NVIC_TIMER2_Init(ENABLE);
-	
 }
 
 /**

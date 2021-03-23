@@ -27,18 +27,7 @@
 ***/
 void TIMER0_ISRQ_Handler(void)
 {
-	TMT.Tick();
-}
 
-/**
-  * @name    TIMER2_ISRQ_Handler
-  * @brief   MCU TIMER0 Interrupt request service function
-  * @param   None
-  * @return  None
-***/
-void TIMER2_ISRQ_Handler(void)
-{
-	
 }
 
 
