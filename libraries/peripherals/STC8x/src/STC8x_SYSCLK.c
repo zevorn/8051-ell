@@ -167,8 +167,8 @@ uint32_t Get_SysClk_FRE(void)
 	Count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 	/* Frequency deviation, calculate the approximate data */
-    if(IRCBAND)    Count = 36000000UL + ((int32)((int32)IRTRIM - (int32)IRC_22_1184M) * 0x128E0UL); 
-	else           Count = 24000000UL + ((int32)((int32)IRTRIM - (int32)IRC_24M) * 0xBB80UL); 
+    if(IRCBAND)    Count = 36000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_22_1184M) * 0x128E0UL); 
+	else           Count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xBB80UL); 
 	Count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
 #endif
 	return Count;

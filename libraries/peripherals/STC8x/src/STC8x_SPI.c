@@ -62,7 +62,7 @@ FSCSTATE SPI_Init(SPIInit_Type* spix)
   * @param   dat    data of SPI (uint8)
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE SPI_Send_Data(uint8 dat)
+FSCSTATE SPI_Send_Data(uint8_t dat)
 {
     SPDAT = dat;			//Data register assignment
     while (!(SPSTAT & 0x80));  //Query completion flag
@@ -76,7 +76,7 @@ FSCSTATE SPI_Send_Data(uint8 dat)
   * @param   None
   * @return  receive data (uint8) 
 ***/
-uint8 SPI_Rev_Data(void)
+uint8_t SPI_Rev_Data(void)
 {
     while (!(SPSTAT & 0x80));  //Query completion flag
     SPSTAT = 0xC0;         //Clear interrupt flag

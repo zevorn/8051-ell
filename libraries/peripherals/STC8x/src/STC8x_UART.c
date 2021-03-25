@@ -106,8 +106,8 @@ while(0)
 ***/
 FSCSTATE UART1_Init(const UART_InitType* uartx)
 {
-    extern uint32 Get_SysClk_FRE(void);
-    uint32 sysClk_FRE;
+    extern uint32_t Get_SysClk_FRE(void);
+    uint32_t sysClk_FRE;
 	  /* Get system clock frequency */
   	sysClk_FRE = Get_SysClk_FRE();
     UART1_MODE_CFG(uartx -> Mode);
@@ -159,8 +159,8 @@ FSCSTATE UART1_Init(const UART_InitType* uartx)
 ***/
 FSCSTATE UART2_Init(const UART_InitType* uartx)
 {
-    extern uint32 Get_SysClk_FRE(void);
-    uint32 sysClk_FRE;
+    extern uint32_t Get_SysClk_FRE(void);
+    uint32_t sysClk_FRE;
   	/* Get system clock frequency */
    	sysClk_FRE = Get_SysClk_FRE();
     UART2_MODE_CFG(uartx -> Mode);
@@ -192,8 +192,8 @@ FSCSTATE UART2_Init(const UART_InitType* uartx)
 ***/
 FSCSTATE UART3_Init(const UART_InitType* uartx)
 {
-    extern uint32 Get_SysClk_FRE(void);
-    uint32 sysClk_FRE;
+    extern uint32_t Get_SysClk_FRE(void);
+    uint32_t sysClk_FRE;
   	/* Get system clock frequency */
   	sysClk_FRE = Get_SysClk_FRE();
     UART3_MODE_CFG(uartx -> Mode);
@@ -245,8 +245,8 @@ FSCSTATE UART3_Init(const UART_InitType* uartx)
 ***/
 FSCSTATE UART4_Init(const UART_InitType* uartx)
 {
-    extern uint32 Get_SysClk_FRE(void);
-    uint32 sysClk_FRE;
+    extern uint32_t Get_SysClk_FRE(void);
+    uint32_t sysClk_FRE;
   	/* Get system clock frequency */
   	sysClk_FRE = Get_SysClk_FRE();
     UART4_MODE_CFG(uartx -> Mode);
@@ -450,10 +450,10 @@ void UART4_Send_String(uint8_t *str)
   * @name    UART1_Send_Array
   * @brief   UART1 send arry function  
   * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16)
+  * @param   len   Array length (uint16_t)
   * @return  None 
 ***/
-void UART1_Send_Array(const uint8_t* str,uint16 len)
+void UART1_Send_Array(const uint8_t* str,uint16_t len)
 {
   	while(len--)
   	{
@@ -465,10 +465,10 @@ void UART1_Send_Array(const uint8_t* str,uint16 len)
   * @name    UART2_Send_Array
   * @brief   UART2 send arry function  
   * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16)
+  * @param   len   Array length (uint16_t)
   * @return  None 
 ***/
-void UART2_Send_Array(const uint8_t* str,uint16 len)
+void UART2_Send_Array(const uint8_t* str,uint16_t len)
 {
     while(len--)
   	{
@@ -480,10 +480,10 @@ void UART2_Send_Array(const uint8_t* str,uint16 len)
   * @name    UART3_Send_Array
   * @brief   UART3 send arry function  
   * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16)
+  * @param   len   Array length (uint16_t)
   * @return  None 
 ***/
-void UART3_Send_Array(const uint8_t* str,uint16 len)
+void UART3_Send_Array(const uint8_t* str,uint16_t len)
 {
   	while(len--)
     {
@@ -495,10 +495,10 @@ void UART3_Send_Array(const uint8_t* str,uint16 len)
   * @name    UART4_Send_Array
   * @brief   UART4 send arry function  
   * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16)
+  * @param   len   Array length (uint16_t)
   * @return  None 
 ***/
-void UART4_Send_Array(const uint8_t* str,uint16 len)
+void UART4_Send_Array(const uint8_t* str,uint16_t len)
 {
   	while(len--)
   	{

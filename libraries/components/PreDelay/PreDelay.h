@@ -84,7 +84,7 @@
 	
 	FSCSTATE Pre_Delay_init(void);
 	FSCSTATE Pre_Delay_Pos(void); 
-	void Pre_Delay_ms(uint16 nms);
+	void Pre_Delay_ms(uint16_t nms);
 	
 #endif
 #endif

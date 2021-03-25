@@ -35,62 +35,54 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+/*
+ * If there is a conflict between the redefinition of RTOS and this, 
+ * you can call the redefinition header file of RTO to replace it, 
+ * or add this header file to RTOS and comment out the conflict.
+**/
+#if 1
 
-/*--------------------------------------------------------
-| @Description: Exact width signed integer types         |
---------------------------------------------------------*/
-						
-typedef signed char     int8;	    //  8 bits 
-typedef signed int      int16;	// 16 bits 
-typedef signed long     int32;	// 32 bits 
+	/*--------------------------------------------------------
+	| @Description: Exact width signed integer types         |
+	--------------------------------------------------------*/
+							
+	typedef  signed char  int8_t;	//  8 bits 
+	typedef  signed int  int16_t;	// 16 bits 
+	typedef  signed long int32_t;	// 32 bits 
 
-typedef  int8    int8_t;	//  8 bits 
-typedef  int16  int16_t;	// 16 bits 
-typedef  int32  int32_t;	// 32 bits 
+	/*--------------------------------------------------------
+	| @Description: Volatile width signed integer types      |
+	--------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: Volatile width signed integer types      |
---------------------------------------------------------*/
+	typedef  volatile int8_t    vint8_t; //  8 bits 
+	typedef  volatile int16_t  vint16_t; // 16 bits 
+	typedef  volatile int32_t  vint32_t; // 32 bits 
 
-typedef volatile int8   vint8;	//  8 bits 
-typedef volatile int16  vint16;	// 16 bits 
-typedef volatile int32  vint32;	// 32 bits 
+	/*--------------------------------------------------------
+	| @Description: Exact width unsigned integer types       |
+	--------------------------------------------------------*/
 
-typedef  vint8    vint8_t; //  8 bits 
-typedef  vint16  vint16_t; // 16 bits 
-typedef  vint32  vint32_t; // 32 bits 
+	typedef  unsigned char   uint8_t; //  8 bits 
+	typedef  unsigned int   uint16_t; // 16 bits 
+	typedef  unsigned long  uint32_t; // 32 bits 
 
-/*--------------------------------------------------------
-| @Description: Exact width unsigned integer types       |
---------------------------------------------------------*/
+	/*--------------------------------------------------------
+	| @Description: Volatile width unsigned integer types    |
+	--------------------------------------------------------*/
 
-typedef unsigned char   uint8;	//  8 bits 
-typedef unsigned int    uint16;	// 16 bits 
-typedef unsigned long   uint32;	// 32 bits 
+	typedef  volatile uint8_t    vuint8_t; //  8 bits 
+	typedef  volatile uint16_t  vuint16_t; // 16 bits 
+	typedef  volatile uint32_t  vuint32_t; // 32 bits 
 
-typedef  uint8    uint8_t; //  8 bits 
-typedef  uint16  uint16_t; // 16 bits 
-typedef  uint32  uint32_t; // 32 bits 
+	/*--------------------------------------------------------
+	| @Description: IO definitions                           |
+	--------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: Volatile width unsigned integer types    |
---------------------------------------------------------*/
+	#define    __I    volatile   // 'read only' permissions 
+	#define    __O    volatile   // 'write only'  permissions 
+	#define    __IO   volatile   // 'read / write' permissions 
 
-typedef volatile uint8  vuint8;	//  8 bits 
-typedef volatile uint16 vuint16;	// 16 bits 
-typedef volatile uint32 vuint32;	// 32 bits 
-
-typedef  vuint8    vuint8_t; //  8 bits 
-typedef  vuint16  vuint16_t; // 16 bits 
-typedef  vuint32  vuint32_t; // 32 bits 
-
-/*--------------------------------------------------------
-| @Description: IO definitions                           |
---------------------------------------------------------*/
-
-#define    __I    volatile   // 'read only' permissions 
-#define    __O    volatile   // 'write only'  permissions 
-#define    __IO   volatile   // 'read / write' permissions 
+#endif
 
 #endif
 /*-----------------------------------------------------------------------

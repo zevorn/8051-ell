@@ -56,7 +56,7 @@ FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode)
   * @param   None
   * @return  POWER state (uint8)
 ***/
-uint8 Get_POWER_State(void)
+uint8_t Get_POWER_State(void)
 {
   return (PCON & 0x10);
 }

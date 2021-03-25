@@ -74,7 +74,7 @@ FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv, FUNSTATE run)
 ***/
 void Auto_RST_download(void)
 {
-  static uint8 semCont = 0;
+  static uint8_t semCont = 0;
   if(SBUF == 0x7F || SBUF == 0x80) 
   {
     if(++semCont >= 10)

@@ -127,8 +127,8 @@ typedef struct
 -----------------------------------------------------------------------*/
 
 FSCSTATE SPI_Init(SPIInit_Type *spix);
-FSCSTATE SPI_Send_Data(uint8 dat);
-uint8 SPI_Rev_Data(void);
+FSCSTATE SPI_Send_Data(uint8_t dat);
+uint8_t SPI_Rev_Data(void);
 
 #endif
 /*-----------------------------------------------------------------------

@@ -78,7 +78,7 @@ typedef enum
 | @Description: I2C init function                        |
 --------------------------------------------------------*/
 
-FSCSTATE I2C_Init(I2CType_Type type, uint8 wTime, FUNSTATE state);
+FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, FUNSTATE state);
 
 /*--------------------------------------------------------
 | @Description: I2C working control function             |

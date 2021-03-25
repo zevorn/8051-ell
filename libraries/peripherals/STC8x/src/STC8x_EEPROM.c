@@ -33,22 +33,7 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-/*--------------------------------------------------------
-| @Description: UART get sysclk fre function             |
---------------------------------------------------------*/
 
-#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
-
-    #define Get_SYSCLK_FRE(count) \
-        count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL); \
-	    count /= SYSCLK.CLKDIV_REG;  \
-    
-#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-    #define Get_SYSCLK_FRE(count) \
-        if(IRCBAND)    count = 36000000UL + ((int32)((int32)IRTRIM - (int32)IRC_22_1184M) * 0x128E0UL); \
-	    else           count = 24000000UL + ((int32)((int32)IRTRIM - (int32)IRC_24M) * 0xBB80UL); \
-	    count /= SYSCLK.CLKDIV_REG; 
-#endif
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -73,9 +58,10 @@ static void nop(void)
 ***/
 static void EEPROM_WT_Time(void)
 {	
-    uint32 sysClk_FRE;
+    extern uint32_t Get_SysClk_FRE(void);
+    uint32_t sysClk_FRE;
 	  /* Get system clock frequency */
-	Get_SYSCLK_FRE(sysClk_FRE);
+  	sysClk_FRE = Get_SysClk_FRE();
     #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
         IAP_CONTR &= 0xF8;
         if (sysClk_FRE >= 30000000UL) IAP_CONTR |= 0x00;	

@@ -44,8 +44,8 @@ static uint16_t MS_Count = 0;
 
 FSCSTATE Pre_Delay_init(void)
 {
-	extern uint32 Get_SysClk_FRE(void);
-    uint32 sysClk_FRE;
+	extern uint32_t Get_SysClk_FRE(void);
+    uint32_t sysClk_FRE;
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	MS_Count = sysClk_FRE / DELAY_COUNT;
@@ -60,7 +60,7 @@ FSCSTATE Pre_Delay_init(void)
 
 FSCSTATE Pre_Delay_Pos(void) 
 {
-	vuint16_t i = 1000;
+	uint16_t i = 1000;
 	for(; i>0; i--) ;
 	return FSC_SUCCESS;
 }
@@ -71,7 +71,7 @@ FSCSTATE Pre_Delay_Pos(void)
 | @return     : None                                     |
 --------------------------------------------------------*/
 
-void Pre_Delay_ms(uint16 nms)
+void Pre_Delay_ms(uint16_t nms)
 {
 	uint16_t i;
 	 for(; nms>0; nms--)

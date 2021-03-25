@@ -143,7 +143,7 @@ typedef struct
 | @Description: TIMER5 peripheral Drivice function       |
 --------------------------------------------------------*/
 
-FSCSTATE TIMER5_Wake_Up_Power(uint16 value,FUNSTATE run);
+FSCSTATE TIMER5_Wake_Up_Power(uint16_t value,FUNSTATE run);
 
 /*--------------------------------------------------------
 | @Description: TIMER peripheral init function           |

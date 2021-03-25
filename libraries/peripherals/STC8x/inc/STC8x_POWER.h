@@ -80,7 +80,7 @@ typedef enum
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
-uint8 Get_POWER_State(void);
+uint8_t Get_POWER_State(void);
 FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode);
 
 #endif
