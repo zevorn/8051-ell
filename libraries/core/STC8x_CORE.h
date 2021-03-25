@@ -24,8 +24,8 @@
  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
  * Apache-2.0 License License for more details.
 
- * You should have received a copy of the Apache-2.0 License.Ant Real Time
- * Operating System. If not, see <http://www.apache.org/licenses/>.
+ * You should have received a copy of the Apache-2.0 License.8051 ELL 
+ * low-layer libraries. If not, see <http://www.apache.org/licenses/>.
 **/
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
