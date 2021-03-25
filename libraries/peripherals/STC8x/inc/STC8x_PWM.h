@@ -7,27 +7,31 @@
   - Update date   : 2020.02.06
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------
-|                               UPDATE NOTE                             |
------------------------------------------------------------------------*/
-/**
-  * ------------   ---------------   ----------------------------------
-  *     Date            Author                       Note
-  * ------------   ---------------   ----------------------------------
-  *  2020.12.20         zeweni       Wrote PWM chip internal peripheral 
-  *                                  related driver, support stc8a series 
-  *                                  model.
-  *  2020.01.11         zeweni       Update code comment format.
-  *  2020.01.29         zeweni       Optimize library architecture.
-  *  2020.02.06         zeweni       Update code style.
-  *
-***/
+/*------------------------------------------------------------------------
+|                            COPYRIGHT NOTICE                            |
+------------------------------------------------------------------------*/
+/*
+ * Copyright (C) 2021, zeweni (17870070675@163.com)
 
-#ifndef __STC8x_PWM_H_
-#define __STC8x_PWM_H_
+ * This file is part of 8051 ELL low-layer libraries.
+
+ * 8051 ELL low-layer libraries is free software: you can redistribute 
+ * it and/or modify it under the terms of the Apache-2.0 License.
+
+ * 8051 ELL low-layer libraries is distributed in the hope that it will 
+ * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * Apache-2.0 License License for more details.
+
+ * You should have received a copy of the Apache-2.0 License.Ant Real Time
+ * Operating System. If not, see <http://www.apache.org/licenses/>.
+**/
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
+#ifndef __STC8x_PWM_H_
+#define __STC8x_PWM_H_
+
 #include "Lib_CFG.h"
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax

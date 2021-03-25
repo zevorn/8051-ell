@@ -7,6 +7,25 @@
   - Update date   : 2020.02.06
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+|                            COPYRIGHT NOTICE                            |
+------------------------------------------------------------------------*/
+/*
+ * Copyright (C) 2021, zeweni (17870070675@163.com)
+
+ * This file is part of 8051 ELL low-layer libraries.
+
+ * 8051 ELL low-layer libraries is free software: you can redistribute 
+ * it and/or modify it under the terms of the Apache-2.0 License.
+
+ * 8051 ELL low-layer libraries is distributed in the hope that it will 
+ * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * Apache-2.0 License License for more details.
+
+ * You should have received a copy of the Apache-2.0 License.Ant Real Time
+ * Operating System. If not, see <http://www.apache.org/licenses/>.
+**/
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
@@ -14,7 +33,22 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-/* None */
+/*--------------------------------------------------------
+| @Description: UART get sysclk fre function             |
+--------------------------------------------------------*/
+
+#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
+
+    #define Get_SYSCLK_FRE(count) \
+        count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL); \
+	    count /= SYSCLK.CLKDIV_REG;  \
+    
+#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+    #define Get_SYSCLK_FRE(count) \
+        if(IRCBAND)    count = 36000000UL + ((int32)((int32)IRTRIM - (int32)IRC_22_1184M) * 0x128E0UL); \
+	    else           count = 24000000UL + ((int32)((int32)IRTRIM - (int32)IRC_24M) * 0xBB80UL); \
+	    count /= SYSCLK.CLKDIV_REG; 
+#endif
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -39,10 +73,9 @@ static void nop(void)
 ***/
 static void EEPROM_WT_Time(void)
 {	
-	extern uint32 Get_Sysclk_FRE(void);
-    uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_Sysclk_FRE();
+    uint32 sysClk_FRE;
+	  /* Get system clock frequency */
+	Get_SYSCLK_FRE(sysClk_FRE);
     #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
         IAP_CONTR &= 0xF8;
         if (sysClk_FRE >= 30000000UL) IAP_CONTR |= 0x00;	
@@ -185,6 +218,3 @@ FSCSTATE EEPROM_Erase_Page(uint16_t addr)
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/
-
-
-

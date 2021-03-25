@@ -7,24 +7,30 @@
   - Update date   : 2020.01.19                  
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------
-|                               UPDATE NOTE                             |
------------------------------------------------------------------------*/
-/**
-  * Update note:
-  * ------------   ---------------   ----------------------------------
-  *     Date            Author                       Note
-  * ------------   ---------------   ----------------------------------
-  *  2020.12.20         zeweni       Woite call list of peripheral driver.
-  *  2020.01.19         zeweni       Update code comment format.
-  * 
-***/
+/*------------------------------------------------------------------------
+|                            COPYRIGHT NOTICE                            |
+------------------------------------------------------------------------*/
+/*
+ * Copyright (C) 2021, zeweni (17870070675@163.com)
 
-#ifndef __8051_ELL_Lib_H_
-#define __8051_ELL_Lib_H_
+ * This file is part of 8051 ELL low-layer libraries.
+
+ * 8051 ELL low-layer libraries is free software: you can redistribute 
+ * it and/or modify it under the terms of the Apache-2.0 License.
+
+ * 8051 ELL low-layer libraries is distributed in the hope that it will 
+ * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * Apache-2.0 License License for more details.
+
+ * You should have received a copy of the Apache-2.0 License.Ant Real Time
+ * Operating System. If not, see <http://www.apache.org/licenses/>.
+**/
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
+#ifndef __8051_ELL_Lib_H_
+#define __8051_ELL_Lib_H_
 
 /*--------------------------------------------------------
 | @Description: STC8x Peripheral config                  |
