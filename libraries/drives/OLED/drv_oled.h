@@ -38,7 +38,7 @@
 #include "STC8x_CORE.h"
 #include "STC8x_SPI.h"
 #include "STC8x_NVIC.h"
-#include "com_pre_delay.h"
+#include "PreDelay.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -69,7 +69,7 @@ typedef enum
 
 /* Hardware SPI init option */
 #define   SPI_SPEED          SPI_SCLK_DIV_4
-#define   SPI_PORT_SWITCH    SW_PORT3 
+#define   SPI_PORT_SWITCH    SW_Port2 
 
 /*--------------------------------------------------------
 | @Description: OLED Software SPI init define            |
