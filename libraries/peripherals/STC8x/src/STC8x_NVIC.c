@@ -355,33 +355,33 @@ FSCSTATE NVIC_UART4_Init(FUNSTATE run)
 
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
-/**
-  * @name    NVIC_UART3_Init
-  * @brief   UART3 NVIC function  
-  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run    ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,FUNSTATE run)
-{
-	IE2 = (IE2 & 0xF7) | (run << 3);
-    UART3_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+	/**
+	  * @name    NVIC_UART3_Init
+	  * @brief   UART3 NVIC function  
+	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+	  * @param   run    ENABLE | DISABLE
+	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+	***/
+	FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,FUNSTATE run)
+	{
+		IE2 = (IE2 & 0xF7) | (run << 3);
+		UART3_NVIC_PRI(priority);
+		return FSC_SUCCESS;
+	}
 
-/**
-  * @name    NVIC_UART4_Init
-  * @brief   UART4 NVIC function  
-  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run    ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,FUNSTATE run)
-{
-	IE2 = (IE2 & 0xEF) | (run << 4);
-    UART4_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+	/**
+	  * @name    NVIC_UART4_Init
+	  * @brief   UART4 NVIC function  
+	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+	  * @param   run    ENABLE | DISABLE
+	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+	***/
+	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,FUNSTATE run)
+	{
+		IE2 = (IE2 & 0xEF) | (run << 4);
+		UART4_NVIC_PRI(priority);
+		return FSC_SUCCESS;
+	}
 
 #endif
 /**
@@ -400,19 +400,19 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode)
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
-/**
-  * @name    NVIC_ADC_Init
-  * @brief   ADC NVIC function
-  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run      ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,FUNSTATE run)
-{
-	EADC = run;
-	ADC_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+	/**
+	  * @name    NVIC_ADC_Init
+	  * @brief   ADC NVIC function
+	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+	  * @param   run      ENABLE | DISABLE
+	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+	***/
+	FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,FUNSTATE run)
+	{
+		EADC = run;
+		ADC_NVIC_PRI(priority);
+		return FSC_SUCCESS;
+	}
 
 #endif
 /**
