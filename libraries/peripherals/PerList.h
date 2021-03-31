@@ -81,6 +81,12 @@
     
 #endif
 
+#if  (PER_LIB_MCU_MUODEL == STC8Hx)
+
+    #include "STC8x_ADC.h"
+    
+#endif
+
 #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     #include "STC8x_MDU16.h"
