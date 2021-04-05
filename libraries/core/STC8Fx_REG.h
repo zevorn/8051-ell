@@ -65,15 +65,15 @@ sfr P_SW2 =       PER_SW2_ADDRESS;
 
 typedef struct
 {
-	__IO uint8 CKSEL_REG   ; /*----Clock selection  */
+	__IO uint8_t CKSEL_REG   ; /*----Clock selection  */
 	
-	__IO uint8 CLKDIV_REG  ; /*----Clock frequency division */
+	__IO uint8_t CLKDIV_REG  ; /*----Clock frequency division */
 	
-	__IO uint8 IRC24MCR_REG  ; /*----High internal 24MHz oscillator control */	
+	__IO uint8_t IRC24MCR_REG  ; /*----High internal 24MHz oscillator control */	
 	
-	__IO uint8 XOSCCR_REG  ; /*----External oscillator control */
+	__IO uint8_t XOSCCR_REG  ; /*----External oscillator control */
 	
-	__IO uint8 IRC32KCR_REG; /*----Internal 32KHz oscillator control */
+	__IO uint8_t IRC32KCR_REG; /*----Internal 32KHz oscillator control */
 
 } SYSCLK_TypeDef;
 
@@ -101,18 +101,18 @@ internal expansion RAM area */
 
 /* SYSCLIL register */
 
-#define    CKSEL       ( *(__IO uint8 xdata *)   CKSEL_ADDRESS)
-#define    CLKDIV      ( *(__IO uint8 xdata *)  CLKDIV_ADDRESS)
-#define    IRC24MCR    ( *(__IO uint8 xdata *)  HIRCCR_ADDRESS)
-#define    XOSCCR      ( *(__IO uint8 xdata *)  XOSCCR_ADDRESS)
-#define    IRC32KCR    ( *(__IO uint8 xdata *)IRC32KCR_ADDRESS)
+#define    CKSEL       ( *(__IO uint8_t xdata *)   CKSEL_ADDRESS)
+#define    CLKDIV      ( *(__IO uint8_t xdata *)  CLKDIV_ADDRESS)
+#define    IRC24MCR    ( *(__IO uint8_t xdata *)  HIRCCR_ADDRESS)
+#define    XOSCCR      ( *(__IO uint8_t xdata *)  XOSCCR_ADDRESS)
+#define    IRC32KCR    ( *(__IO uint8_t xdata *)IRC32KCR_ADDRESS)
 
 /* IRC frequency adjustment register */
 
 sfr IRTRIM      =   IRTRIM_ADDRESS;
 sfr LIRTRIM     =   LIRTRIM_ADDRESS;
 
-#define IRC_24M (*(__I uint8 idata *)0xFB)
+#define IRC_24M (*(__I uint8_t idata *)0xFB)
 
 /*--------------------------------------------------------
 | @Description: Power peripherals                        |
@@ -481,56 +481,56 @@ sfr GPIO_P7M0 = P7M0_ADDRESS;
 sfr BUS_SPEED = BUS_SPEED_ADDRESS;
 
 /* GPIO Driver register */
-#define   PxPU(PxPU_ADDRESS)    ( *(__IO uint8_t xdata *)    PxPU_ADDRESS)
-#define   PxSR(PxSR_ADDRESS)    ( *(__IO uint8_t xdata *)    PxSR_ADDRESS)
-#define   PxDR(PxDR_ADDRESS)    ( *(__IO uint8_t xdata *)    PxDR_ADDRESS)
-#define   PxIE(PxDR_ADDRESS)    ( *(__IO uint8_t xdata *)    PxIE_ADDRESS)
-#define   PxNCS(PxNCS_ADDRESS)  ( *(__IO uint8_t xdata *)   PxNCS_ADDRESS)
+#define   PxPU(PxPU_ADDRESS)    ( *(__IO uint8_t_t xdata *)    PxPU_ADDRESS)
+#define   PxSR(PxSR_ADDRESS)    ( *(__IO uint8_t_t xdata *)    PxSR_ADDRESS)
+#define   PxDR(PxDR_ADDRESS)    ( *(__IO uint8_t_t xdata *)    PxDR_ADDRESS)
+#define   PxIE(PxDR_ADDRESS)    ( *(__IO uint8_t_t xdata *)    PxIE_ADDRESS)
+#define   PxNCS(PxNCS_ADDRESS)  ( *(__IO uint8_t_t xdata *)   PxNCS_ADDRESS)
 
-#define    P0PU    ( *(__IO uint8_t xdata *) P0PU_ADDRESS)
-#define    P1PU    ( *(__IO uint8_t xdata *) P1PU_ADDRESS)
-#define    P2PU    ( *(__IO uint8_t xdata *) P2PU_ADDRESS)
-#define    P3PU    ( *(__IO uint8_t xdata *) P3PU_ADDRESS)
-#define    P4PU    ( *(__IO uint8_t xdata *) P4PU_ADDRESS)
-#define    P5PU    ( *(__IO uint8_t xdata *) P5PU_ADDRESS)
-#define    P6PU    ( *(__IO uint8_t xdata *) P6PU_ADDRESS)
-#define    P7PU    ( *(__IO uint8_t xdata *) P7PU_ADDRESS)
+#define    P0PU    ( *(__IO uint8_t_t xdata *) P0PU_ADDRESS)
+#define    P1PU    ( *(__IO uint8_t_t xdata *) P1PU_ADDRESS)
+#define    P2PU    ( *(__IO uint8_t_t xdata *) P2PU_ADDRESS)
+#define    P3PU    ( *(__IO uint8_t_t xdata *) P3PU_ADDRESS)
+#define    P4PU    ( *(__IO uint8_t_t xdata *) P4PU_ADDRESS)
+#define    P5PU    ( *(__IO uint8_t_t xdata *) P5PU_ADDRESS)
+#define    P6PU    ( *(__IO uint8_t_t xdata *) P6PU_ADDRESS)
+#define    P7PU    ( *(__IO uint8_t_t xdata *) P7PU_ADDRESS)
 								   
-#define    P0SR    ( *(__IO uint8_t xdata *) P0SR_ADDRESS)
-#define    P1SR    ( *(__IO uint8_t xdata *) P1SR_ADDRESS)
-#define    P2SR    ( *(__IO uint8_t xdata *) P2SR_ADDRESS)
-#define    P3SR    ( *(__IO uint8_t xdata *) P3SR_ADDRESS)
-#define    P4SR    ( *(__IO uint8_t xdata *) P4SR_ADDRESS)
-#define    P5SR    ( *(__IO uint8_t xdata *) P5SR_ADDRESS)
-#define    P6SR    ( *(__IO uint8_t xdata *) P6SR_ADDRESS)
-#define    P7SR    ( *(__IO uint8_t xdata *) P7SR_ADDRESS)
+#define    P0SR    ( *(__IO uint8_t_t xdata *) P0SR_ADDRESS)
+#define    P1SR    ( *(__IO uint8_t_t xdata *) P1SR_ADDRESS)
+#define    P2SR    ( *(__IO uint8_t_t xdata *) P2SR_ADDRESS)
+#define    P3SR    ( *(__IO uint8_t_t xdata *) P3SR_ADDRESS)
+#define    P4SR    ( *(__IO uint8_t_t xdata *) P4SR_ADDRESS)
+#define    P5SR    ( *(__IO uint8_t_t xdata *) P5SR_ADDRESS)
+#define    P6SR    ( *(__IO uint8_t_t xdata *) P6SR_ADDRESS)
+#define    P7SR    ( *(__IO uint8_t_t xdata *) P7SR_ADDRESS)
 								   
-#define    P0DR    ( *(__IO uint8_t xdata *) P0DR_ADDRESS)
-#define    P1DR    ( *(__IO uint8_t xdata *) P1DR_ADDRESS)
-#define    P2DR    ( *(__IO uint8_t xdata *) P2DR_ADDRESS)
-#define    P3DR    ( *(__IO uint8_t xdata *) P3DR_ADDRESS)
-#define    P4DR    ( *(__IO uint8_t xdata *) P4DR_ADDRESS)
-#define    P5DR    ( *(__IO uint8_t xdata *) P5DR_ADDRESS)
-#define    P6DR    ( *(__IO uint8_t xdata *) P6DR_ADDRESS)
-#define    P7DR    ( *(__IO uint8_t xdata *) P7DR_ADDRESS)
+#define    P0DR    ( *(__IO uint8_t_t xdata *) P0DR_ADDRESS)
+#define    P1DR    ( *(__IO uint8_t_t xdata *) P1DR_ADDRESS)
+#define    P2DR    ( *(__IO uint8_t_t xdata *) P2DR_ADDRESS)
+#define    P3DR    ( *(__IO uint8_t_t xdata *) P3DR_ADDRESS)
+#define    P4DR    ( *(__IO uint8_t_t xdata *) P4DR_ADDRESS)
+#define    P5DR    ( *(__IO uint8_t_t xdata *) P5DR_ADDRESS)
+#define    P6DR    ( *(__IO uint8_t_t xdata *) P6DR_ADDRESS)
+#define    P7DR    ( *(__IO uint8_t_t xdata *) P7DR_ADDRESS)
 								   
-#define    P0IE    ( *(__IO uint8_t xdata *) P0IE_ADDRESS)
-#define    P1IE    ( *(__IO uint8_t xdata *) P1IE_ADDRESS)
-#define    P3IE    ( *(__IO uint8_t xdata *) P3IE_ADDRESS)
-//#define  P2IE    ( *(__IO uint8_t xdata *) P2IE_ADDRESS)
-//#define  P4IE    ( *(__IO uint8_t xdata *) P4IE_ADDRESS)
-//#define  P5IE    ( *(__IO uint8_t xdata *) P5IE_ADDRESS)
-//#define  P6IE    ( *(__IO uint8_t xdata *) P6IE_ADDRESS)
-//#define  P7IE    ( *(__IO uint8_t xdata *) P7IE_ADDRESS)
+#define    P0IE    ( *(__IO uint8_t_t xdata *) P0IE_ADDRESS)
+#define    P1IE    ( *(__IO uint8_t_t xdata *) P1IE_ADDRESS)
+#define    P3IE    ( *(__IO uint8_t_t xdata *) P3IE_ADDRESS)
+//#define  P2IE    ( *(__IO uint8_t_t xdata *) P2IE_ADDRESS)
+//#define  P4IE    ( *(__IO uint8_t_t xdata *) P4IE_ADDRESS)
+//#define  P5IE    ( *(__IO uint8_t_t xdata *) P5IE_ADDRESS)
+//#define  P6IE    ( *(__IO uint8_t_t xdata *) P6IE_ADDRESS)
+//#define  P7IE    ( *(__IO uint8_t_t xdata *) P7IE_ADDRESS)
 								   
-#define    P0NCS  ( *(__IO uint8_t xdata *) P0NCS_ADDRESS)
-#define    P1NCS  ( *(__IO uint8_t xdata *) P1NCS_ADDRESS)
-#define    P2NCS  ( *(__IO uint8_t xdata *) P2NCS_ADDRESS)
-#define    P3NCS  ( *(__IO uint8_t xdata *) P3NCS_ADDRESS)
-#define    P4NCS  ( *(__IO uint8_t xdata *) P4NCS_ADDRESS)
-#define    P5NCS  ( *(__IO uint8_t xdata *) P5NCS_ADDRESS)
-#define    P6NCS  ( *(__IO uint8_t xdata *) P6NCS_ADDRESS)
-#define    P7NCS  ( *(__IO uint8_t xdata *) P7NCS_ADDRESS)
+#define    P0NCS  ( *(__IO uint8_t_t xdata *) P0NCS_ADDRESS)
+#define    P1NCS  ( *(__IO uint8_t_t xdata *) P1NCS_ADDRESS)
+#define    P2NCS  ( *(__IO uint8_t_t xdata *) P2NCS_ADDRESS)
+#define    P3NCS  ( *(__IO uint8_t_t xdata *) P3NCS_ADDRESS)
+#define    P4NCS  ( *(__IO uint8_t_t xdata *) P4NCS_ADDRESS)
+#define    P5NCS  ( *(__IO uint8_t_t xdata *) P5NCS_ADDRESS)
+#define    P6NCS  ( *(__IO uint8_t_t xdata *) P6NCS_ADDRESS)
+#define    P7NCS  ( *(__IO uint8_t_t xdata *) P7NCS_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: WDT peripherals                          |
@@ -626,8 +626,8 @@ sbit IE0  =  TCON^1;
 
 /* Clock frequency address of timer5 */
 
-#define FWTH    (*(__I uint8 idata *)0xF8)
-#define FWTL    (*(__I uint8 idata *)0xF9)
+#define FWTH    (*(__I uint8_t idata *)0xF8)
+#define FWTL    (*(__I uint8_t idata *)0xF9)
 
 /*--------------------------------------------------------
 | @Description: EXTI peripherals                         |
@@ -754,7 +754,7 @@ sfr ADC_RES    =  ADC_RESH_ADDRESS;
 sfr ADC_RESL   =  ADC_RESL_ADDRESS;
 sfr ADCCFG     =    ADCCFG_ADDRESS;
 
-#define ADCTIM    (*(__IO uint8_t xdata *)ADCTIM_ADDRESS)
+#define ADCTIM    (*(__IO uint8_t_t xdata *)ADCTIM_ADDRESS)
 
 /*--------------------------------------------------------
 | @Description: EEPROM peripherals                       |
@@ -875,14 +875,14 @@ sfr SPDAT    =   SPDAT_ADDRESS;
 
 /* SPI register */
 
-#define I2CCFG      (*(__IO uint8 xdata *)  I2CCFG_ADDRESS)
-#define I2CMSCR     (*(__IO uint8 xdata *) I2CMSCR_ADDRESS)
-#define I2CMSST     (*(__IO uint8 xdata *) I2CMSST_ADDRESS)
-#define I2CSLCR     (*(__IO uint8 xdata *) I2CSLCR_ADDRESS)
-#define I2CSLST     (*(__IO uint8 xdata * )I2CSLST_ADDRESS)
-#define I2CSLADR    (*(__IO uint8 xdata *)I2CSLADR_ADDRESS)
-#define I2CTXD      (*(__IO uint8 xdata *)  I2CTXD_ADDRESS)
-#define I2CRXD      (*(__IO uint8 xdata *)  I2CRXD_ADDRESS)
+#define I2CCFG      (*(__IO uint8_t xdata *)  I2CCFG_ADDRESS)
+#define I2CMSCR     (*(__IO uint8_t xdata *) I2CMSCR_ADDRESS)
+#define I2CMSST     (*(__IO uint8_t xdata *) I2CMSST_ADDRESS)
+#define I2CSLCR     (*(__IO uint8_t xdata *) I2CSLCR_ADDRESS)
+#define I2CSLST     (*(__IO uint8_t xdata * )I2CSLST_ADDRESS)
+#define I2CSLADR    (*(__IO uint8_t xdata *)I2CSLADR_ADDRESS)
+#define I2CTXD      (*(__IO uint8_t xdata *)  I2CTXD_ADDRESS)
+#define I2CRXD      (*(__IO uint8_t xdata *)  I2CRXD_ADDRESS)
 
 
 #endif
