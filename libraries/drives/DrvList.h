@@ -33,6 +33,7 @@
 #define __DrvList_H_
 
 #include "KeyScan.h"
+#include "drv_oled.h"
 
 #endif
 /*-----------------------------------------------------------------------

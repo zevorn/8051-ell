@@ -61,12 +61,12 @@ void UART1_ISRQ_Handler(void)
 	if(UART1_GET_RX_FLAG())
 	{
 		  UART1_CLEAR_RX_FLAG();
-      Auto_RST_download();
+		  Auto_RST_download();
 	}
 	else if(UART1_GET_TX_FLAG())
 	{
 		  UART1_CLEAR_TX_FLAG();
-      UART1_CLEAR_BUSY_FLAG();
+		  UART1_CLEAR_BUSY_FLAG();
 	}
 }
 

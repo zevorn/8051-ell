@@ -50,19 +50,23 @@ FSCSTATE OLED_Init(void)
 	/* Hardware SPI init */
 	#if   ((OLED_SPI_HARDWARE == 1) && ( OLED_SPI_SOFTWARE  == 0))
 	{
-		SPIInit_Type SPI_InitStruct;
+		SPIInit_Type SPI_InitStruct = {0};
+
+		GPIO_MODE_OUT_PP(GPIO_P3,OLED_GPIO_SCL | OLED_GPIO_SDA | OLED_GPIO_RST | OLED_GPIO_DC | OLED_GPIO_CS);
+		
+		GPIO_SPI_SWPort(SPI_PORT_SWITCH);
+		
 		SPI_InitStruct.Type = SPI_Type_Master;
 		SPI_InitStruct.ClkSrc = SPI_SPEED;
 		SPI_InitStruct.Mode = SPI_Mode_0;
 		SPI_InitStruct.Tran = SPI_Tran_MSB;
 		SPI_InitStruct.Run = ENABLE;
 		SPI_Init(&SPI_InitStruct);
-		GPIO_SPI_SWPort(SPI_PORT_SWITCH);
-
 	}
 	/* Software SPI init */
 	#elif ((OLED_SPI_HARDWARE == 0) && ( OLED_SPI_SOFTWARE  == 1))
 	{
+		GPIO_MODE_OUT_PP(GPIO_P3,OLED_GPIO_SCL | OLED_GPIO_SDA | OLED_GPIO_RST | OLED_GPIO_DC | OLED_GPIO_CS); 
 	}
 	#endif
 
@@ -112,17 +116,50 @@ FSCSTATE OLED_Init(void)
 
 /*--------------------------------------------------------
 | @Description: OLED write byte function                 |
-| @param      : uint8 Dat,OLEDTran_Type State            |
+| @param      : uint8_t Dat,OLEDTran_Type State            |
 | @return     : SPI data                                 |
 --------------------------------------------------------*/
 
-uint8 OLED_Write_Byte(uint8 dat,OLEDTran_Type state)
+uint8_t OLED_Write_Byte(uint8_t dat,OLEDTran_Type state)
 {
-  	OLED_DC = state;
-	SPDAT = dat;                   
-  	while (!(SPI_GET_FLAG()));      
-  	SPI_CLEAR_FLAG();        
-  	return SPDAT;                    
+  	
+	
+	#if   ((OLED_SPI_HARDWARE == 1) && ( OLED_SPI_SOFTWARE  == 0))
+	{
+		OLED_DC = state;
+		OLED_CS = 0;
+		SPDAT = dat;
+		while (!(SPI_GET_FLAG()));      
+		SPI_CLEAR_FLAG();
+		OLED_CS = 1;
+	}
+	/* Software SPI init */
+	#elif ((OLED_SPI_HARDWARE == 0) && ( OLED_SPI_SOFTWARE  == 1))
+	{
+		uint8_t i;
+		OLED_DC = state;
+		OLED_CS = 0;
+		
+		for(i=0;i<8;i++)
+		{			  
+			OLED_SCL = 0;
+			if(dat&0x80)
+			{
+				OLED_SDA = 1;
+			}
+			else
+			{
+				OLED_SDA = 0;
+			}
+			
+			OLED_SCL = 1;
+			dat<<=1;   		
+		}
+		OLED_CS = 1;
+	}
+	#endif
+
+  	return SPDAT;
 }
 
 /*--------------------------------------------------------
@@ -133,7 +170,7 @@ uint8 OLED_Write_Byte(uint8 dat,OLEDTran_Type state)
 
 void OLED_Refresh_Gram(void)
 {
-	uint8 i,n;		    
+	uint8_t i,n;		    
 	for(i=0;i<8;i++)  
 	{  
 		OLED_Write_Byte(0xB0+i,OLED_Tran_Cmd);    //Set page address (0 ~ 7)
@@ -145,11 +182,11 @@ void OLED_Refresh_Gram(void)
 
 /*--------------------------------------------------------
 | @Description: OLED set pos function                    |
-| @param      : uint8 x, uint8 y                         |
+| @param      : uint8_t x, uint8_t y                         |
 | @return     : None                                     |
 --------------------------------------------------------*/
 
-void OLED_Set_Pos(uint8 x, uint8 y) 
+void OLED_Set_Pos(uint8_t x, uint8_t y) 
 { 
 	OLED_Write_Byte(0xB0+y,OLED_Tran_Cmd);
 	OLED_Write_Byte(((x&0xF0)>>4)|0x10,OLED_Tran_Cmd);
@@ -192,7 +229,7 @@ void OLED_Display_Off(void)
 
 void OLED_Clear(void)  
 {  
-	uint8 i,n;		    
+	uint8_t i,n;		    
 	for(i=0;i<8;i++)  
 	{  
 		OLED_Write_Byte(0xB0+i,OLED_Tran_Cmd);    //Set page address (0 ~ 7)
@@ -204,11 +241,11 @@ void OLED_Clear(void)
 
 /*--------------------------------------------------------
 | @Description: OLED draw point function                 |
-| @param      : uint8 x,uint8 y,uint8 t                  |
+| @param      : uint8_t x,uint8_t y,uint8_t t                  |
 | @return     : FSCSTATE : Success / Fail                |
 --------------------------------------------------------*/
 
-FSCSTATE OLED_Draw_Point(uint8 x,uint8 y,uint8 t)
+FSCSTATE OLED_Draw_Point(uint8_t x,uint8_t y,uint8_t t)
 {
 	if(x<=127 && y<=63)
 	{
@@ -221,14 +258,14 @@ FSCSTATE OLED_Draw_Point(uint8 x,uint8 y,uint8 t)
 
 /*--------------------------------------------------------
 | @Description: OLED Fill function                       |
-| @param      : uint8 x1,uint8 y1,uint8 x2,uint8 y2,     |
-|               uint8 dot                                |
+| @param      : uint8_t x1,uint8_t y1,uint8_t x2,uint8_t y2,     |
+|               uint8_t dot                                |
 | @return     : None                                     |
 --------------------------------------------------------*/
 
-void OLED_Fill(uint8 x1,uint8 y1,uint8 x2,uint8 y2,uint8 dot)  
+void OLED_Fill(uint8_t x1,uint8_t y1,uint8_t x2,uint8_t y2,uint8_t dot)  
 {  
-	uint8 x,y;  
+	uint8_t x,y;  
 	for(x=x1;x<=x2;x++)
 	{
 		for(y=y1;y<=y2;y++)
@@ -241,13 +278,13 @@ void OLED_Fill(uint8 x1,uint8 y1,uint8 x2,uint8 y2,uint8 dot)
 
 /*--------------------------------------------------------
 | @Description: OLED show char 1608 function             |
-| @param      : uint8 x,uint8 y,uint8 Chr                |
+| @param      : uint8_t x,uint8_t y,uint8_t Chr                |
 | @return     : None                                     |
 --------------------------------------------------------*/
 
-void OLED_Show_Char_1608(uint8 x,uint8 y,uint8 Chr)
+void OLED_Show_Char_1608(uint8_t x,uint8_t y,uint8_t Chr)
 {
-	uint8 i;
+	uint8_t i;
 	y = 6 - y;
 	Chr = Chr - ' ';
 	OLED_Set_Pos(x, y);
@@ -258,11 +295,11 @@ void OLED_Show_Char_1608(uint8 x,uint8 y,uint8 Chr)
 
 /*--------------------------------------------------------
 | @Description: OLED show string 1608 function           |
-| @param      : uint8 x,uint8 y,uint8 Chr                |
+| @param      : uint8_t x,uint8_t y,uint8_t Chr                |
 | @return     : FSCSTATE : Success / Fail                |
 --------------------------------------------------------*/
 
-void OLED_Show_String_1608(uint8 x,uint8 y,const uint8 *Str)
+void OLED_Show_String_1608(uint8_t x,uint8_t y,const uint8_t *Str)
 {
 	while (*Str != '\0')
 	{
@@ -273,13 +310,13 @@ void OLED_Show_String_1608(uint8 x,uint8 y,const uint8 *Str)
 
 /*--------------------------------------------------------
 | @Description: OLED show number 1608 function           |
-| @param      : uint8 x,uint8 y,uint8 Chr                |
+| @param      : uint8_t x,uint8_t y,uint8_t Chr                |
 | @return     : FSCSTATE : Success / Fail                |
 --------------------------------------------------------*/
 
-void OLED_Show_Num_1608(uint8 x,uint8 y,uint32 num,uint8 len)
+void OLED_Show_Num_1608(uint8_t x,uint8_t y,uint32_t num,uint8_t len)
 {         	
-	uint8 i,Dat;
+	uint8_t i,Dat;
 	for(i=0;i<len;i++)
 	{
 		Dat = num % 10;
@@ -295,14 +332,14 @@ void OLED_Show_Num_1608(uint8 x,uint8 y,uint32 num,uint8 len)
 
 /*--------------------------------------------------------
 | @Description: OLED show float 1608 function            |
-| @param      : uint8 x,uint8 y,uint8 Chr,uint8 Acc      |
+| @param      : uint8_t x,uint8_t y,uint8_t Chr,uint8_t Acc      |
 | @return     : FSCSTATE : Success / Fail                |
 --------------------------------------------------------*/
 
-void OLED_Show_Float_1608(uint8 x,uint8 y,float num,uint8 len,uint8 acc)
+void OLED_Show_Float_1608(uint8_t x,uint8_t y,float num,uint8_t len,uint8_t acc)
 {
-	uint8 i,Dat;
-	uint32 Num;
+	uint8_t i,Dat;
+	uint32_t Num;
 	for(i=0;i<acc;i++) num *= 10;
 	Num = num;
 	for(i=0;i<=len;i++)

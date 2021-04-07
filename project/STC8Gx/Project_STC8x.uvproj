@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application;..\..\libraries\drives\OLED</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -500,6 +500,21 @@
               <FileName>KeyScan.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drives\KeyScan\KeyScan.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_oled.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\drives\OLED\drv_oled.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_oled.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\drives\OLED\drv_oled.h</FilePath>
+            </File>
+            <File>
+              <FileName>drv_oled_font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\drives\OLED\drv_oled_font.h</FilePath>
             </File>
           </Files>
         </Group>
