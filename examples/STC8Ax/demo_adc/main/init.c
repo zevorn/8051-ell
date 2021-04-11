@@ -98,7 +98,7 @@ static void STC8x_ADC_Config(void)
 	ADC_InitType ADC_InitStruct = {0};
 
 	ADC_InitStruct.Power = ENABLE; // ADC power control bit
-	ADC_InitStruct.Road = ADC_Road_P01; // ADC channel selection
+	ADC_InitStruct.Road = ADC_Road_P11_8Ax; // ADC channel selection
 	ADC_InitStruct.Speed = 0X0F; // The maximum ADC conversion speed (working clock frequency) is 0x0f
 	ADC_InitStruct.Align = ADC_Right; // ADC data format alignment
 	ADC_InitStruct.Run = ENABLE; //  ADC conversion operation control bit
