@@ -28,7 +28,7 @@ bit Time500MsFlag = 0;
 ***/
 void TIMER0_ISRQ_Handler(void)
 {
-  static uint16 tim500msCont;
+  static uint16_t tim500msCont;
 
   if(++tim500msCont >= 500)
   {
