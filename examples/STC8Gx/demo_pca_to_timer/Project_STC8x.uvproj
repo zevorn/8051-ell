@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,7 +137,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\libraries;..\..\..\libraries\core;..\..\..\libraries\drives;..\..\..\libraries\drives\KeyScan;..\..\..\libraries\peripherals;..\..\..\libraries\peripherals\STC8x\inc;..\..\..\libraries\peripherals\STC8x\src;..\..\..\libraries\components;..\..\..\libraries\components\TMT;..\..\..\libraries\components\PrintfRed;..\..\..\libraries\components\PreDelay;.\main;.\application;..\..\..\libraries\drives\OLED</IncludePath>
+              <IncludePath>..\..\..\libraries;..\..\..\libraries\core;..\..\..\libraries\drives;..\..\..\libraries\drives\KeyScan;..\..\..\libraries\peripherals;..\..\..\libraries\peripherals\STC8x\inc;..\..\..\libraries\peripherals\STC8x\src;..\..\..\libraries\components;..\..\..\libraries\components\TMT;..\..\..\libraries\components\PrintfRed;..\..\..\libraries\components\PreDelay;.\main;.\application</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>

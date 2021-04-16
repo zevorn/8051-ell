@@ -14,30 +14,10 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-/* None */
-bit Time500MsFlag = 0;
+
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-
-/**
-  * @name    TIMER0_ISRQ_Handler
-  * @brief   MCU TIMER0 Interrupt request service function
-  * @param   None
-  * @return  None
-***/
-void TIMER0_ISRQ_Handler(void)
-{
-  static uint16_t tim500msCont;
-
-  if(++tim500msCont >= 500)
-  {
-    tim500msCont = 0;
-    Time500MsFlag = 1;
-  }
-  /* Task time handler callback */
-  
-}
 
 /**
   * @name    UART1_ISRQ_Handler
@@ -59,7 +39,28 @@ void UART1_ISRQ_Handler(void)
 	}
 }
 
+/**
+  * @name    PCA_ISRQ_Handler
+  * @brief   MCU PCA Interrupt request service function
+  * @param   None
+  * @return  None
+***/
+void PCA_ISRQ_Handler(void)
+{
+	static uint16_t i;
+	if(PCA0_GET_FLAG()) 
+	{ 
+		PCA0_CLEAR_FLAG(); 
+		PCA0_TIM_POP_ReValue(); //计数器重装载 
+		if(++i >= 500)
+		{
+			i = 0;
+			P55 = !P55; 
+		}
+		
+	}
 
+}
 /*--------------------------------------------------------
 | @Description: Interrupt service function               |
 --------------------------------------------------------*/

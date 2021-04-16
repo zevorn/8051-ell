@@ -2,7 +2,7 @@
 |                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
 /*----------------------------------------------------------------------
-  - File name     : main.c
+  - File name     : app.c
   - Author        : zeweni
   - Update date   : 2020.01.11
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
@@ -14,44 +14,22 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-extern bit Time500MsFlag;
+/* None */
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    LOGO
-  * @brief   printf logo
+  * @name    led_entry
+  * @brief   led twinkle function
   * @param   None
   * @return  None
 ***/
-void LOGO(void)
+void led_entry(void)
 {
-	printf("Timer0 500MS \r\n");
+    //P20 = !P20;
+  printf("demo\r\n");
 }
-
-/**
-  * @name    main
-  * @brief   main program
-  * @param   None
-  * @return  None
-***/
-int main(void)
-{
-	STC8x_System_Init();
-
-	for(;;)
-	{
-      if(Time500MsFlag == 1)
-      {
-        Time500MsFlag = 0;
-        //LOGO();
-		  P15 = P15;
-      }
-	}
-
-}
-
 
 
 /*-----------------------------------------------------------------------
