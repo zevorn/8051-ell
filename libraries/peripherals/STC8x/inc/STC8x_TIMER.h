@@ -62,36 +62,28 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: TIMER number                             |
---------------------------------------------------------*/
-/*
-TIMER0: 16 Bit timer has four working modes
-TIMER1: Same as timer 0, but invalid in 16 bit auto reload 
-        mode without maskable interrupt, stop counting
-TIMER2: The working mode is fixed in 16 bit auto reload mode
-TIMER3: The working mode is fixed in 16 bit auto reload mode
-TIMER4: The working mode is fixed in 16 bit auto reload mode
-*/
-
-/*--------------------------------------------------------
-| @Description: TIMER type                               |
---------------------------------------------------------*/
+/**
+  * @name    TIMERType_Type
+  * @brief   定时器类型状态枚举体。
+  *          Timer type state enumeration body.
+  * @param   TIMER_Type_Timer    [uint8_t] 工作在定时器状态。Working in timer state.
+  * @param   TIMER_Type_Counter  [uint8_t] 工作在计数器状态。Working in counter state.
+***/
 typedef enum
 {
     TIMER_Type_Timer   = 0x00, 
     TIMER_Type_Counter = 0x01
 }   TIMERType_Type;
 
-/*--------------------------------------------------------
-| @Description: TIMER mode enum                          |
---------------------------------------------------------*/
-/*
-Mode 0: 16 Bit auto reload timer
-Mode 1: 16 Bit non auto reload timer
-Mode 2:  8 Bit auto reload timer
-Mode 3: 16 Bit auto reload non maskable interrupt
-*/
+/**
+  * @name    TIMERMode_Type
+  * @brief   定时器工作模式枚举体。
+  *          Timer work mode enumeration body.
+  * @param   TIMER_16BitAutoReload       [uint8_t] 十六位自动重装载模式。16 Bit auto reload timer.
+  * @param   TIMER_16Bit                 [uint8_t] 十六位手动重装载模式。16 Bit non auto reload timer.
+  * @param   TIMER_8BitAutoReload        [uint8_t] 八位自动重装载模式。8 Bit auto reload timer.
+  * @param   TIMER_16BitAutoReloadNoMask [uint8_t] 十六位自动重装载不可被打断模式。16 Bit auto reload non maskable interrupt.
+***/
 typedef enum
 {
 	TIMER_16BitAutoReload       = 0x00, 
@@ -100,13 +92,13 @@ typedef enum
 	TIMER_16BitAutoReloadNoMask = 0x03 
 }	TIMERMode_Type;
 
-/*--------------------------------------------------------
-| @Description: TIME Clock mode enum                     |
---------------------------------------------------------*/
-/*
-Timing 12t mode: The machine executes 12 cycles
-Timing  1t mode: The machine executes 1 cycles
-*/
+/**
+  * @name    TIMERTCycle_Type
+  * @brief   定时器指令周期枚举体。
+  *          Timer instruction cycle enumeration body.
+  * @param   TIMER_TCY_1T   [uint8_t] 1T指令周期。The machine executes 1 cycles.
+  * @param   TIMER_TCY_12T  [uint8_t] 12T指令周期（其实是1T的十二分频）。The machine executes 12 cycles
+***/
 typedef enum
 {
 	TIMER_TCY_1T  = 0x00,	
@@ -115,26 +107,28 @@ typedef enum
 
 /**
   * @name    TIMER_InitType
-  * @brief   TIME Init structure
-  * @param   SysClokDiv  system clock division to timer use
-  * @param   Type        timer type
-  * @param   Mode        Working mode
-  * @param   TCycle      Instruction cycle
-  * @param   ClkOut      Programmable clock output
-  * @param   Value       Loading initial value
-  * @param   Run         Operation control bit
+  * @brief   定时器初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+  *          The timer initializes the structure handle. When initializing, 
+  *          please define the handle and use its address to pass parameters.
+  * @param   SysClokDiv [uint8_t] 定时器时钟源八分频。system clock division to timer use.
+  * @param   Type       [TIMERType_Type] 定时器类型状态。timer type.
+  * @param   Mode       [TIMERMode_Type] 定时器工作模式。Working mode.
+  * @param   TCycle     [TIMERTCycle_Type] 定时器指令周期。Instruction cycle.
+  * @param   ClkOut     [FUNSTATE] 定时器可编程时钟输出控制位。Programmable clock output.
+  * @param   Time       [uint16_t] 定时器定时时间。Loading initial value.
+  * @param   Run        [FUNSTATE] 定时器运行控制位。Operation control bit.
 ***/
 typedef struct 
 {
 #if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
     uint8_t SysClkDiv;   /* just STC8G、STC8H */
 #endif
-    TIMERType_Type Type;       
+    TIMERType_Type Type;
     TIMERMode_Type Mode;
-    TIMERTCycle_Type TCycle;   
-    FUNSTATE ClkOut;           
-    uint16_t Value;              
-    FUNSTATE Run;              
+    TIMERTCycle_Type TCycle;
+    FUNSTATE ClkOut;
+    uint16_t Time;
+    FUNSTATE Run;
 }   TIMER_InitType;
 
 /*-----------------------------------------------------------------------

@@ -99,7 +99,7 @@ static void STC8x_TIMER_Config(void)
 	TIMER_InitType TIMER_InitStruct={0};
 	
 	TIMER_InitStruct.Mode = TIMER_16BitAutoReload;
-	TIMER_InitStruct.Value = 1000;     //1ms
+	TIMER_InitStruct.Time = 1000;     //1ms
 	TIMER_InitStruct.Run = ENABLE;
 	TIMER0_Init(&TIMER_InitStruct);
 	NVIC_TIMER0_Init(NVIC_PR0,ENABLE);

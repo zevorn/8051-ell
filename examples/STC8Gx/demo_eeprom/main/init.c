@@ -105,7 +105,7 @@ void STC8x_TIMER_Config(void)
     TIMER_InitStruct.Mode = TIMER_16BitAutoReload;       //Working mode
     TIMER_InitStruct.TCycle = TIMER_TCY_1T;   //Instruction cycle
     TIMER_InitStruct.ClkOut = DISABLE;           //Programmable clock output
-    TIMER_InitStruct.Value = 1000;              //Loading initial value
+    TIMER_InitStruct.Time = 1000;              //Loading initial value
     TIMER_InitStruct.Run = ENABLE;              //Operation control bit
 	
 	if(TIMER0_Init(&TIMER_InitStruct) != FSC_SUCCESS)

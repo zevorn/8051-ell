@@ -55,14 +55,14 @@ void STC8x_System_Init(void)
 static void STC8x_PCA_Config(void)
 {
 
-   /* ÏÈ³õÊ¼»¯PCA_TIM */ 
-	PCA0_TIM_Init(1); //¶¨Ê±1ms 
-	NVIC_PCA0_TIM_POP_Init(ENABLE); //Æô¶¯ÖÐ¶Ï 
+   /* ï¿½È³ï¿½Ê¼ï¿½ï¿½PCA_TIM */ 
+	PCA0_TIM_Init(1); //ï¿½ï¿½Ê±1ms 
+	NVIC_PCA0_TIM_POP_Init(ENABLE); //ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ 
 	
-	/* ÔÙ³õÊ¼»¯ PCA_CNT */ 
+	/* ï¿½Ù³ï¿½Ê¼ï¿½ï¿½ PCA_CNT */ 
 	
 	PCA_CNT_Init(PCA_SCLK_DIV_1,ENABLE); 
-	NVIC_PCA_CNT_Init(NVIC_PR1,DISABLE); //Æô¶¯PCA¼ÆÊýÆ÷
+	NVIC_PCA_CNT_Init(NVIC_PR1,DISABLE); //ï¿½ï¿½ï¿½ï¿½PCAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   
 }
 
