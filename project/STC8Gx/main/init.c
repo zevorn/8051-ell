@@ -69,7 +69,7 @@ void STC8x_System_Init(void)
 	/*
 		Add hardware driver initialization code here.
 	*/
-	OLED_Init();
+	
 	
 }
 

@@ -50,9 +50,7 @@ int main(void)
 	
     for(;;)
     {
-		OLED_Show_String_1608(10,3,"Vin =");
-		OLED_Show_Float_1608(55,3,(float)(ADC_Get_Sample(ADC_Acc_10Bit,ADC_Road_P10_8G1K08_T) * 5.0f / 1024),4,3);
-        delay_ms(500);
+
     }
 
 }
