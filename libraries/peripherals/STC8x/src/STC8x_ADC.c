@@ -40,7 +40,8 @@
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 /**
   * @name    nop
-  * @brief   working wait nop function
+  * @brief   空延时函数，帮助稳定ADC外设切换工作状态。
+  *          Working wait nop function.
   * @param   None
   * @return  None
 ***/
@@ -52,8 +53,11 @@ static void nop(void)
 
 /**
   * @name    ADC_Init
-  * @brief   ADC peripheral init function
-  * @param   *adcx  ADC_InitType
+  * @brief   ADC外设初始化函数。
+  *          ADC peripheral init function.
+  * @param   *adcx  [IN] ADC结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+  *                      ADC structure handle. When initializing, 
+  *                      please define the handle and use its address to pass parameters.
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
 FSCSTATE ADC_Init(const ADC_InitType* adcx)

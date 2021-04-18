@@ -32,6 +32,7 @@
 -----------------------------------------------------------------------*/
 #ifndef __STC8x_CORE_H_
 #define __STC8x_CORE_H_
+
 /*--------------------------------------------------------
 | @Description: STC8Hx Data type                         |
 --------------------------------------------------------*/
@@ -42,10 +43,14 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: Functional State                         |
---------------------------------------------------------*/
-
+/**
+  * @name    FUNSTATE
+  * @brief   功能状态枚举体，常用于指示硬件的某个寄存器工作状态。
+  *          Function state enumerator is often used to 
+  *          indicate the working state of a register of hardware.
+  * @param   DISABLE  [0] 未使能。 Not enabled.
+  * @param   ENABLE   [1] 使能。 enabled.
+***/
 typedef enum 
 {
 	DISABLE = 0, ENABLE = !DISABLE
@@ -54,10 +59,17 @@ typedef enum
 /*--------------------------------------------------------
 | @Description: Function self checking                   |
 --------------------------------------------------------*/
-
+/**
+  * @name    FSCSTATE
+  * @brief   函数自检枚举体，指示函数是否正常执行。
+  *          Function self checks enumerator, 
+  *          indicating whether the function is normally executed.
+  * @param   FSC_SUCCESS  [0] 函数执行成功。 Function executed successfully.
+  * @param   FSC_FAIL     [1] 函数执行失败。 Function executed failed.
+***/
 typedef enum
 {
-    FSC_FAIL= 0, /* Function self checking failed */
+    FSC_FAIL= 1, /* Function self checking failed */
     FSC_SUCCESS = !FSC_FAIL /* Function self checking successfed */ 
 }   FSCSTATE; 
 
