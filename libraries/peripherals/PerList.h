@@ -35,6 +35,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
+
 #include "Lib_CFG.h"
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
@@ -51,9 +52,11 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
 | @Description: STC8x MCU peripheral                     |
 --------------------------------------------------------*/
+
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || \
       PER_LIB_MCU_MUODEL == STC8Fx || PER_LIB_MCU_MUODEL == STC8Gx || \
       PER_LIB_MCU_MUODEL == STC8Hx)
@@ -95,6 +98,7 @@
 #endif
 
 #endif
+
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/

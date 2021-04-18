@@ -31,12 +31,11 @@
 -----------------------------------------------------------------------*/
 #ifndef __STC8x_TIMER_H_
 #define __STC8x_TIMER_H_
-/*-----------------------------------------------------------------------
-|                               INCLUDES                                |
------------------------------------------------------------------------*/
+
 /*--------------------------------------------------------
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
+
 #include "Lib_CFG.h"
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
@@ -53,9 +52,11 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
+
 #include "STC8x_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -72,6 +73,7 @@ TIMER2: The working mode is fixed in 16 bit auto reload mode
 TIMER3: The working mode is fixed in 16 bit auto reload mode
 TIMER4: The working mode is fixed in 16 bit auto reload mode
 */
+
 /*--------------------------------------------------------
 | @Description: TIMER type                               |
 --------------------------------------------------------*/
@@ -139,20 +141,69 @@ typedef struct
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: TIMER5 peripheral Drivice function       |
---------------------------------------------------------*/
-
+/**
+  * @name    TIMER5_Wake_Up_Power
+  * @brief   调电唤醒定时器5初始化函数。 
+  *          Power up timer 5 initialization function.
+  * @param   value  [IN] 定时器5调电唤醒时间值。Timer power up time value.
+  * @param   run    [IN] 定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE TIMER5_Wake_Up_Power(uint16_t value,FUNSTATE run);
 
-/*--------------------------------------------------------
-| @Description: TIMER peripheral init function           |
---------------------------------------------------------*/
-
+/**
+  * @name    TIMER0_Init
+  * @brief   定时器0初始化函数。 
+  *          TIMER0 peripheral init function. 
+  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+  *                        The timer initializes the structure handle. When initializing, 
+  *                        please define the handle and pass its address to the parameter.
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE TIMER0_Init(const TIMER_InitType *timerx);
+
+/**
+  * @name    TIMER1_Init
+  * @brief   定时器1初始化函数。 
+  *          TIMER1 peripheral init function. 
+  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+  *                        The timer initializes the structure handle. When initializing, 
+  *                        please define the handle and pass its address to the parameter.
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE TIMER1_Init(const TIMER_InitType *timerx);
+
+/**
+  * @name    TIMER2_Init
+  * @brief   定时器2初始化函数。 
+  *          TIMER2 peripheral init function. 
+  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+  *                        The timer initializes the structure handle. When initializing, 
+  *                        please define the handle and pass its address to the parameter.
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE TIMER2_Init(const TIMER_InitType *timerx);
+
+/**
+  * @name    TIMER3_Init
+  * @brief   定时器3初始化函数。 
+  *          TIMER3 peripheral init function. 
+  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+  *                        The timer initializes the structure handle. When initializing, 
+  *                        please define the handle and pass its address to the parameter.
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE TIMER3_Init(const TIMER_InitType *timerx);
+
+/**
+  * @name    TIMER4_Init
+  * @brief   定时器4初始化函数。 
+  *          TIMER4 peripheral init function. 
+  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+  *                        The timer initializes the structure handle. When initializing, 
+  *                        please define the handle and pass its address to the parameter.
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE TIMER4_Init(const TIMER_InitType *timerx);
 
 #endif

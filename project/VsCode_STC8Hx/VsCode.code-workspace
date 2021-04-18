@@ -22,7 +22,8 @@
             "stc8x_mdu16.h": "c",
             "stc8x_hpwm.h": "c",
             "stc8x_eeprom.h": "c",
-            "stc8x_pwm.h": "c"
+            "stc8x_pwm.h": "c",
+            "stc8x_timer.h": "c"
         },
         "C_Cpp.default.intelliSenseMode": "gcc-arm",
         "files.autoGuessEncoding": true,
