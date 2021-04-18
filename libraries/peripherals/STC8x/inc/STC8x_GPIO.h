@@ -81,6 +81,8 @@
 #define	Pin_5    0x20  //IO Pin Px.5
 #define	Pin_6    0x40  //IO Pin Px.6
 #define	Pin_7    0x80  //IO Pin Px.7
+#define	Pin_Low  0x0F  //IO Pin Px.0~4
+#define	Pin_High 0xF0  //IO Pin Px.5~7
 #define	Pin_All  0xFF  //IO All  Pin	
 
 /*--------------------------------------------------------
