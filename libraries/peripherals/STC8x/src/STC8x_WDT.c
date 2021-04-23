@@ -45,7 +45,7 @@
   * @param   Run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE WDT_Init(uint8_t clKDiv, FUNSTATE run)
+FSCSTATE WDT_Init(uint8_t clKDiv, BOOL run)
 {
 	WDT_CONTR = clKDiv;
 	if(run == ENABLE) WDT_CONTR |= 0x20;

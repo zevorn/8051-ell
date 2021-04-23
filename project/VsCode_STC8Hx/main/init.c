@@ -80,10 +80,10 @@ static void STC8x_SYSCLK_Config(void)
 ***/
 static void STC8x_GPIO_Config(void)
 {
-	RST_P54_ENABLE();
+	//RST_P54_ENABLE();
 	
     /* Run lamp */
-	GPIO_MODE_OUT_PP(GPIO_P2,Pin_0);  //P20
+	GPIO_MODE_OUT_PP(GPIO_P5,Pin_5);  //P20
 }
 
 /**

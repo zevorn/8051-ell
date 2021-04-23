@@ -27,8 +27,15 @@ float G_VinDat,G_VinDat2;
 ***/
 void ADC_ISRQ_Handler(void)
 {
-  G_VinDat = (float)(ADC_Get_Sample_interrupt(ADC_Road_P01,ADC_Acc_12Bit) * 5 )/ 4096;
-  G_VinDat2 = (float)(ADC_Get_Sample_interrupt(ADC_Road_P11,ADC_Acc_12Bit) * 5 )/ 4096;
+	if(ADC_GET_CHANNEL() == ADC_Channel_P01_8Ax)
+	{
+		G_VinDat = (float)(ADC_Get_Sample_Interrupt(ADC_Channel_P11_8Ax,ADC_Acc_12Bit) * 5 ) / 4096;
+	}
+	if(ADC_GET_CHANNEL() == ADC_Channel_P11_8Ax)
+	{
+		G_VinDat2 = (float)(ADC_Get_Sample_Interrupt(ADC_Channel_P01_8Ax,ADC_Acc_12Bit) * 5 ) / 4096;
+	}
+  
 }
 
 /**

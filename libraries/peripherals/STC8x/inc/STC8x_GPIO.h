@@ -54,7 +54,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -86,16 +86,16 @@
 #define	Pin_All  0xFF  //IO All  Pin	
 
 /*--------------------------------------------------------
-| @Description: Peripheral IO define                     |
+| @Description: External interrupt Trigger define        |
 --------------------------------------------------------*/
 
 typedef enum
 {
-	SW_Port1 = 0x00 ,
-	SW_Port2 = 0x01 ,
-	SW_Port3 = 0x02 ,
-	SW_Port4 = 0x03 
-}   GPIOSWPort_Type;
+  EXTI_Tri_Edge    = 0x00,  //Both rising and falling edges triggered
+  EXTI_Tri_Falling = 0x01    //Falling edge trigger
+} EXTITri_Type;
+
+
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
@@ -144,41 +144,26 @@ typedef enum
 #define GPIO_DRIVE_MEDIUM(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxDR(GPIO_x##DR_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
 #define GPIO_DRIVE_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxDR(GPIO_x##DR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
 
+FSCSTATE EXTI0_Init(EXTITri_Type triMode);
+FSCSTATE EXTI1_Init(EXTITri_Type triMode);
+
+FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_EXTI2_Init(BOOL run);
+FSCSTATE NVIC_EXTI3_Init(BOOL run);
+FSCSTATE NVIC_EXTI4_Init(BOOL run);
+
+#define    NVIC_EXTI0_CTRL(run)     do{ EX0 = run; }while(0)
+#define    NVIC_EXTI1_CTRL(run)     do{ EX1 = run; }while(0)
+#define    NVIC_EXTI2_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xEF) | (run << 4); }while(0)
+#define    NVIC_EXTI3_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xDF) | (run << 5); }while(0)
+#define    NVIC_EXTI4_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xBF) | (run << 6); }while(0)
+
 /*--------------------------------------------------------
 | @Description: GPIO Pin switching function              |
 --------------------------------------------------------*/
 
-/* UART */
-FSCSTATE GPIO_UART1_SWPort(GPIOSWPort_Type port);
-FSCSTATE GPIO_UART2_SWPort(GPIOSWPort_Type port);
-FSCSTATE GPIO_UART3_SWPort(GPIOSWPort_Type port);
-FSCSTATE GPIO_UART4_SWPort(GPIOSWPort_Type port);
 
-/* COMP */
-FSCSTATE GPIO_COMP_SWPort(GPIOSWPort_Type port);
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
-	/* PCA */
-	FSCSTATE GPIO_PCA_SWPort(GPIOSWPort_Type port);
-#endif
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-	/* PWM */
-	FSCSTATE GPIO_PWM0_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM1_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM2_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM3_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM4_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM5_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM6_SWPort(GPIOSWPort_Type port);
-	FSCSTATE GPIO_PWM7_SWPort(GPIOSWPort_Type port);
-#endif
-
-/* SPI */
-FSCSTATE GPIO_SPI_SWPort(GPIOSWPort_Type port);
-
-/* I2C */
-FSCSTATE GPIO_I2C_SWPort(GPIOSWPort_Type port);
 
 #endif
 /*-----------------------------------------------------------------------

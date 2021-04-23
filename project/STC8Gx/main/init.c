@@ -59,7 +59,7 @@ void STC8x_System_Init(void)
 	
 	DELAY_POS(); /* Power on stability delay */	
 	//STC8x_SYSCLK_Config(); /* Initialize system clock */
-    NVIC_GLOBAL_ENABLE();	
+    
     delay_init();
 	
 	STC8x_GPIO_Config();
@@ -69,7 +69,7 @@ void STC8x_System_Init(void)
 	/*
 		Add hardware driver initialization code here.
 	*/
-	
+	NVIC_GLOBAL_ENABLE();
 	
 }
 
@@ -104,7 +104,7 @@ static void STC8x_GPIO_Config(void)
 {
     /* Run lamp */
 	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);  //P54
-	GPIO_MODE_OUT_PP(GPIO_P3,Pin_All);  //P55
+	GPIO_MODE_OUT_PP(GPIO_P5,Pin_5);  //P55
 }
 
 /**
@@ -163,7 +163,7 @@ static void STC8x_ADC_Config(void)
     GPIO_MODE_IN_FLOATING(GPIO_P1,Pin_0);
 	
 	ADC_InitStruct.Power = ENABLE; // ADC power control bit
-	ADC_InitStruct.Road = ADC_Road_P10_8G1K08_T; // ADC channel selection
+	ADC_InitStruct.Channel = ADC_Channel_P10_8G1K08_T; // ADC channel selection
 	ADC_InitStruct.Speed = 0x0F; // The maximum ADC conversion speed (working clock frequency) is 0x0f
 	ADC_InitStruct.Align = ADC_Right; // ADC data format alignment
 	ADC_InitStruct.Run = ENABLE; //  ADC conversion operation control bit

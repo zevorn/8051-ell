@@ -56,7 +56,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -70,6 +70,19 @@ typedef enum
   I2C_Type_Slave  = 0x00
 } I2CType_Type;
 
+
+/*--------------------------------------------------------
+| @Description: I2C slave interrupt Trigger enum         |
+--------------------------------------------------------*/
+
+typedef enum
+{
+  I2C_STri_RevStart_Done  = 0x40,
+  I2C_STri_RevData_Done   = 0x20,
+  I2C_STri_SendData_Done  = 0x10,
+  I2C_STri_RevStop_Done   = 0x80
+} I2CSTri_Type;
+
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
@@ -78,7 +91,25 @@ typedef enum
 | @Description: I2C init function                        |
 --------------------------------------------------------*/
 
-FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, FUNSTATE state);
+FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, BOOL state);
+
+#define I2C_GET_MASTER_FLAG()           (I2CMSST & 0x40)
+#define I2C_GET_REVSTART_FLAG()         (I2CMLST & 0x40)
+#define I2C_GET_REVDATA_FLAG()          (I2CMLST & 0x20)
+#define I2C_GET_SENDATA_FLAG()          (I2CMLST & 0x10)
+#define I2C_GET_REVSTOP_FLAG()          (I2CMLST & 0x08)
+
+#define I2C_CLEAR_MASTER_FLAG()          I2CMSST &= 0xBF
+#define I2C_CLEAR_REVSTART_FLAG()        I2CMLST &= 0xBF
+#define I2C_CLEAR_REVDATA_FLAG()         I2CMLST &= 0xDF
+#define I2C_CLEAR_SENDATA_FLAG()         I2CMLST &= 0xEF
+#define I2C_CLEAR_REVSTOP_FLAG()         I2CMLST &= 0xF7
+
+FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triMode);
+
+#define    NVIC_I2C_MASTER_CTRL(run)    do{ EAXFR_ENABLE();	I2CMSCR = run << 7; EAXFR_DISABLE(); }while(0)
+#define    NVIC_I2C_SLAVE_CTRL(run)     do{ EAXFR_ENABLE(); I2CSLCR &= (I2CSLCR & 0x01 )| (run << 6) | (run << 5) | (run << 4) | (run << 3); EAXFR_DISABLE(); }while(0)
 
 /*--------------------------------------------------------
 | @Description: I2C working control function             |
@@ -92,6 +123,10 @@ FSCSTATE I2C_Read_ACK(void);
 FSCSTATE I2C_Send_Btye(uint8_t dat);
 uint8_t I2C_Read_Byte(void);
 
+
+/* I2C */
+FSCSTATE GPIO_I2C_SWPort(GPIOSWPort_Type port);
+	
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

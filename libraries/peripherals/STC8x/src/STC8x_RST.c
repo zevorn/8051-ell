@@ -45,7 +45,7 @@
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, FUNSTATE run)
+FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, BOOL run)
 {
 	IAP_CONTR = (IAP_CONTR & 0xBF) | (choice << 6);
 	IAP_CONTR = (IAP_CONTR & 0xDF) | (run << 5);
@@ -59,7 +59,7 @@ FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, FUNSTATE run)
   * @param   run     ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv, FUNSTATE run)
+FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv, BOOL run)
 {
 	RSTCFG = (RSTCFG & 0xFC) | lvDiv;
 	RSTCFG = (RSTCFG & 0xEF) | (run << 6);

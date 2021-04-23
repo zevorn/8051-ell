@@ -26,12 +26,13 @@
 ***/
 int main(void)
 {
-    extern uint16_t G_VinDat;
+    extern float G_VinDat,G_VinDat2;
 	STC8x_System_Init();
 
 	for(;;)
 	{
-        printf("Vin = %0.2f V\r\n", (float)(G_VinDat * 5.0f / 1024));
+        printf("Vin = %0.5f V\r\n", (float)(G_VinDat * 5.0f / 1024));
+		printf("Vin2 = %0.5f V\r\n", (float)(G_VinDat2 * 5.0f / 1024));
         delay_ms(500);
 	}
 

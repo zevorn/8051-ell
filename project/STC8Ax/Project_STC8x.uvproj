@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\build\</OutputDirectory>
-          <OutputName>Project_STC8x</OutputName>
+          <OutputName>output</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application;..\..\libraries\core\startup\STC8x</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -374,6 +374,16 @@
       </TargetOption>
       <Groups>
         <Group>
+          <GroupName>lib/startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_stc8a.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\libraries\core\startup\STC8x\startup_stc8a.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lib/peripherals</GroupName>
           <Files>
             <File>
@@ -405,11 +415,6 @@
               <FileName>STC8x_I2C.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_NVIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_PCA.c</FileName>
@@ -497,9 +502,9 @@
           <GroupName>user/main</GroupName>
           <Files>
             <File>
-              <FileName>Lib_CFG.h</FileName>
+              <FileName>lib_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\main\Lib_CFG.h</FilePath>
+              <FilePath>.\main\lib_cfg.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>

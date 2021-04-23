@@ -54,7 +54,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -101,8 +101,8 @@ typedef enum
 | @Description: Reset  control functions                 |
 --------------------------------------------------------*/
 
-FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, FUNSTATE run);
-FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv,FUNSTATE run);
+FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, BOOL run);
+FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv,BOOL run);
 void Auto_RST_download(void);
 
 #endif

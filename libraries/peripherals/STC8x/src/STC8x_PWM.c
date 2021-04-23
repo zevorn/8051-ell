@@ -31,13 +31,28 @@
 -----------------------------------------------------------------------*/
 #include "STC8x_PWM.h"
 /*-----------------------------------------------------------------------
+|                             DECLARATION                               |
+-----------------------------------------------------------------------*/
+/*--------------------------------------------------------
+| @Description: PWM priority define function             |
+--------------------------------------------------------*/
+
+#define PWM_CNT_NVIC_PRI(pri) { \
+IP2H = (IP2H & 0xFB) | ((pri & 0x02) << 1); \
+IP2  = (IP2  & 0xFB) | ((pri & 0x01) << 2); }
+
+#define PWM_ABD_NVIC_PRI(pri) { \
+IP2H = (IP2H & 0xF7) | ((pri & 0x02) << 2); \
+IP2  = (IP2  & 0xF7) | ((pri & 0x01) << 3); }
+
+/*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 /* None */
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL != STC8Fx)
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /**
   * @name    PWM_CNT_Init
   * @brief   PWM counter init function,it must be initialized last
@@ -49,7 +64,7 @@
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM_CNT_Init(PWMCLKSrc_Type clkSrc,uint16_t value,FUNSTATE run)
+FSCSTATE PWM_CNT_Init(PWMCLKSrc_Type clkSrc,uint16_t value,BOOL run)
 {
   if(value <= 0x7FFF)
   {
@@ -72,7 +87,7 @@ FSCSTATE PWM_CNT_Init(PWMCLKSrc_Type clkSrc,uint16_t value,FUNSTATE run)
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM0_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM0_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -96,7 +111,7 @@ FSCSTATE PWM0_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM1_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM1_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -120,7 +135,7 @@ FSCSTATE PWM1_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM2_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM2_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -144,7 +159,7 @@ FSCSTATE PWM2_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM3_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM3_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -168,7 +183,7 @@ FSCSTATE PWM3_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM4_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM4_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -192,7 +207,7 @@ FSCSTATE PWM4_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM5_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM5_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -216,7 +231,7 @@ FSCSTATE PWM5_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM6_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM6_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -240,7 +255,7 @@ FSCSTATE PWM6_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM7_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNSTATE run)
+FSCSTATE PWM7_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 {
   if(fValue <= 0x7FFF && sValue <= 0x7FFF)
   {
@@ -264,7 +279,7 @@ FSCSTATE PWM7_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,FUNS
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM_ABD_Init(PWMADSMode_Type mode,PWMABSignal_Type signal,FUNSTATE run)
+FSCSTATE PWM_ABD_Init(PWMADSMode_Type mode,PWMABSignal_Type signal,BOOL run)
 {
   EAXFR_ENABLE();
   PWMFDCR = (PWMFDCR & 0xF9) | (mode);
@@ -281,7 +296,7 @@ FSCSTATE PWM_ABD_Init(PWMADSMode_Type mode,PWMABSignal_Type signal,FUNSTATE run)
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PWM_ETADC_Init(uint16_t tValue,FUNSTATE run)
+FSCSTATE PWM_ETADC_Init(uint16_t tValue,BOOL run)
 {
   if(tValue <= 0x7FFF)
   {
@@ -293,6 +308,320 @@ FSCSTATE PWM_ETADC_Init(uint16_t tValue,FUNSTATE run)
   }
   else return FSC_FAIL;  
 }
+
+/**
+  * @name    NVIC_PWM_CNT_Init
+  * @brief   PWM CNT return to zero NVIC function 
+  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run        ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM_CNT_Init(NVICPri_Type priority,BOOL run)
+{
+	PWM_CNT_NVIC_PRI(priority);
+	PWMCR = (PWMCR & 0xBF) | (run << 6);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM_ABD_Init
+  * @brief   PWM abnormal detection NVIC function 
+  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run        ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM_ABD_Init(NVICPri_Type priority,BOOL run)
+{
+	EAXFR_ENABLE();
+	PWM_ABD_NVIC_PRI(priority);
+	PWMFDCR = (PWMFDCR & 0xF7) | (run << 3);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM0_Init
+  * @brief   PWM0 road flip NVIC function 
+  * @param   flipMode    PWM_Flip_None   | PWM_Flip_First
+  *                      PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM0_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM0CR_ADDRESS) = (PWMxCR(PWM0CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM1_Init
+  * @brief   PWM1 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM1_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM1CR_ADDRESS) = (PWMxCR(PWM1CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM2_Init
+  * @brief   PWM2 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM2_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM2CR_ADDRESS) = (PWMxCR(PWM2CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM3_Init
+  * @brief   PWM3 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM3_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM3CR_ADDRESS) = (PWMxCR(PWM3CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM4_Init
+  * @brief   PWM4 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM4_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM4CR_ADDRESS) = (PWMxCR(PWM4CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM5_Init
+  * @brief   PWM5 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM5_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM5CR_ADDRESS) = (PWMxCR(PWM5CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM6_Init
+  * @brief   PWM6 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM6_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM6CR_ADDRESS) = (PWMxCR(PWM6CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PWM7_Init
+  * @brief   PWM7 road flip NVIC function 
+  * @param   flipMode     PWM_Flip_None   | PWM_Flip_First
+  *                       PWM_Flip_Second | PWM_Flip_Both
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PWM7_Init(PWMFlip_Type flipMode)
+{
+	EAXFR_ENABLE();
+	PWMxCR(PWM7CR_ADDRESS) = (PWMxCR(PWM7CR_ADDRESS) & 0xF8) | (flipMode);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
+/**
+  * @name    GPIO_PWM0_SWPort
+  * @brief   PWM0 switch port control function 
+  * @param   port    SW_Port1: P2.0
+  *                  SW_Port2: P1.0
+  *                  SW_Port3: P6.0
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM0_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM0CR_ADDRESS) = (PWMxCR(PWM0CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_PWM1_SWPort
+  * @brief   PWM1 switch port control function 
+  * @param   port    SW_Port1: P2.1
+  *                  SW_Port2: P1.1
+  *                  SW_Port3: P6.1
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM1_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM1CR_ADDRESS) = (PWMxCR(PWM1CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_PWM2_SWPort
+  * @brief   PWM2 switch port control function 
+  * @param   port    SW_Port1: P2.2
+  *                  SW_Port2: P1.2
+  *                  SW_Port3: P6.2
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM2_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM2CR_ADDRESS) = (PWMxCR(PWM2CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_PWM3_SWPort
+  * @brief   PWM3 switch port control function 
+  * @param   port    SW_Port1: P2.3
+  *                  SW_Port2: P1.3
+  *                  SW_Port3: P6.3
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM3_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM3CR_ADDRESS) = (PWMxCR(PWM3CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_PWM4_SWPort
+  * @brief   PWM4 switch port control function 
+  * @param   port    SW_Port1: P2.4
+  *                  SW_Port2: P1.4
+  *                  SW_Port3: P6.4
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM4_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM4CR_ADDRESS) = (PWMxCR(PWM4CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_PWM5_SWPort
+  * @brief   PWM5 switch port control function 
+  * @param   port    SW_Port1: P2.5
+  *                  SW_Port2: P1.5
+  *                  SW_Port3: P6.5
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM5_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM5CR_ADDRESS) = (PWMxCR(PWM5CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+
+/**
+  * @name    GPIO_PWM6_SWPort
+  * @brief   PWM6 switch port control function 
+  * @param   port    SW_Port1: P2.6
+  *                  SW_Port2: P1.6
+  *                  SW_Port3: P6.6
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM6_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM6CR_ADDRESS) = (PWMxCR(PWM6CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_PWM7_SWPort
+  * @brief   PWM7 switch port control function 
+  * @param   port    SW_Port1: P2.7
+  *                  SW_Port2: P1.7
+  *                  SW_Port3: P6.7
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_PWM7_SWPort(GPIOSWPort_Type port)
+{
+	if(port <= SW_Port3)
+	{
+		EAXFR_ENABLE();
+		PWMxCR(PWM7CR_ADDRESS) = (PWMxCR(PWM7CR_ADDRESS) & 0xC7) | (port << 3);
+		EAXFR_DISABLE();
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+#endif
 
 #endif
 /*-----------------------------------------------------------------------

@@ -62,7 +62,6 @@
       PER_LIB_MCU_MUODEL == STC8Hx)
 
     #include "STC8x_SYSCLK.h"
-    #include "STC8x_NVIC.h"
     #include "STC8x_GPIO.h"
     #include "STC8x_WDT.h"
     #include "STC8x_POWER.h"
@@ -72,12 +71,14 @@
     #include "STC8x_SPI.h"
     #include "STC8x_I2C.h"
     #include "STC8x_EEPROM.h"
-
+    #include "STC8x_COMP.h"
+	
 #endif
+
+
 
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
-    #include "STC8x_COMP.h"
     #include "STC8x_ADC.h"
     #include "STC8x_PCA.h"
     #include "STC8x_PWM.h"

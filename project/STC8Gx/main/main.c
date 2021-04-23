@@ -46,6 +46,7 @@
 ***/
 int main(void)
 {
+
     STC8x_System_Init();
 	
     for(;;)

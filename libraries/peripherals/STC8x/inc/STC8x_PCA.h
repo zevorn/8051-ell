@@ -51,7 +51,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -108,6 +108,18 @@ typedef enum
 	PCA_PWM_10Bits  = 0x03	//10-bit PCA_PWM mode
 }	PCA_PWMBits_Type;
 
+/*--------------------------------------------------------
+| @Description: COMP interrupt Trigger enum              |
+--------------------------------------------------------*/
+
+typedef enum
+{
+  PCA_Tri_Null    = 0x00,
+  PCA_Tri_Falling = 0x10,
+  PCA_Tri_Rising  = 0x20,
+  PCA_Tri_Edge    = 0x30
+} PCATri_Type;
+
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
@@ -116,7 +128,7 @@ typedef enum
 | @Description: PCA Counter working function             |
 --------------------------------------------------------*/
 
-FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,FUNSTATE run);
+FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,BOOL run);
 
 /*--------------------------------------------------------
 | @Description: PCA PWM mode working function            |
@@ -346,6 +358,61 @@ void PCA2_TIM_POP_ReValue(void);
     #define    PCA3_WORK_STOP()   CCAPM3 = 0
 #endif
 
+
+
+#define PCA_CNT_GET_FLAG()      CF
+#define PCA_CNT_CLEAR_FLAG()    CF = 0
+
+#define PCA0_GET_FLAG()           CCF0
+#define PCA1_GET_FLAG()           CCF1
+#define PCA2_GET_FLAG()           CCF2
+#define PCA3_GET_FLAG()           CCF3
+
+#define PCA0_CLEAR_FLAG()     CCF0 = 0
+#define PCA1_CLEAR_FLAG()     CCF1 = 0
+#define PCA2_CLEAR_FLAG()     CCF2 = 0
+#define PCA3_CLEAR_FLAG()     CCF3 = 0
+
+FSCSTATE NVIC_PCA_CNT_Init(NVICPri_Type priority,BOOL run);
+
+FSCSTATE NVIC_PCA0_TIM_POP_Init(BOOL run);
+FSCSTATE NVIC_PCA1_TIM_POP_Init(BOOL run);
+FSCSTATE NVIC_PCA2_TIM_POP_Init(BOOL run);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+	FSCSTATE NVIC_PCA3_TIM_POP_Init(BOOL run);
+#endif
+
+FSCSTATE NVIC_PCA0_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
+FSCSTATE NVIC_PCA1_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
+FSCSTATE NVIC_PCA2_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+	FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
+#endif
+
+#define    NVIC_PCA_CNT_CTRL(run)     do{ CMOD = (CMOD & 0xFE) | run; }while(0)
+
+#define    NVIC_PCA0_TIM_POP_CTRL(run)     do{ CCAPM0 = (CCAPM0 & 0xFE) | (run); }while(0)
+#define    NVIC_PCA1_TIM_POP_CTRL(run)     do{ CCAPM1 = (CCAPM0 & 0xFE) | (run); }while(0)
+#define    NVIC_PCA2_TIM_POP_CTRL(run)     do{ CCAPM2 = (CCAPM0 & 0xFE) | (run); }while(0)
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+	#define    NVIC_PCA3_TIM_POP_CTRL(run)     do{ CCAPM3 = (CCAPM0 & 0xFE) | (run); }while(0)
+#endif
+
+#define    NVIC_PCA0_PWM_CAP_CTRL(run)     do{ CCAPM0 = (CCAPM0 & 0xFE) | (run); }while(0)
+#define    NVIC_PCA1_PWM_CAP_CTRL(run)     do{ CCAPM1 = (CCAPM0 & 0xFE) | (run); }while(0)
+#define    NVIC_PCA2_PWM_CAP_CTRL(run)     do{ CCAPM2 = (CCAPM0 & 0xFE) | (run); }while(0)
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)    
+	#define    NVIC_PCA3_PWM_CAP_CTRL(run)     do{ CCAPM3 = (CCAPM0 & 0xFE) | (run); }while(0)
+#endif
+
+/* PCA */
+FSCSTATE GPIO_PCA_SWPort(GPIOSWPort_Type port);
+
+	
 #endif
 
 #endif

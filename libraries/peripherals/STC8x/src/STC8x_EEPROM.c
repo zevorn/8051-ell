@@ -33,16 +33,17 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-
+/* None. */
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    nop
-  * @brief   working wait nop  function
-  * @param   None
-  * @return  None 
+ * @name    nop
+ * @brief   空延时函数，帮助稳定EEPROM外设切换工作状态。
+ *          Working wait nop function.
+ * @param   None
+ * @retval  None
 ***/
 static void nop(void)
 {
@@ -52,7 +53,9 @@ static void nop(void)
 
 /**
   * @name    EEPROM_WT_Time
-  * @brief   EEPROM working wait time function
+  * @brief   EEPROM工作等待时间设置函数，仅限本文件内调用。
+  *          EEPROM working wait time function.
+  *          only this file call.
   * @param   None
   * @return  None 
 ***/
@@ -78,23 +81,48 @@ static void EEPROM_WT_Time(void)
 }
 
 /**
-  * @name    EEPROM_Ctrl
-  * @brief   EEPROM control function
-  * @param   run  ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @name    EEPROM_Init
+  * @brief   EEPROM初始化函数。
+  *          EEPROM initialization function.
+  * @param   run  [IN] 运行控制位。Operation control bit.
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE EEPROM_Ctrl(FUNSTATE run)
+FSCSTATE EEPROM_Init(BOOL run)
 {
 	IAP_CONTR = (IAP_CONTR & 0x7F) | (run << 7);
     EEPROM_WT_Time();
 	return FSC_SUCCESS;
 }
 
+
+/**
+  * @name    EEPROM_Erase_Page
+  * @brief   EEPROM 擦除扇区函数。
+  *          EEPROM erase page function.
+  * @param   addr [IN] 扇区首地址（64字节为一个扇区，地址要能被64整除）。
+  *                    The first address of a sector (64 bytes is a sector, 
+  *                    and the address should be divisible by 64).
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
+FSCSTATE EEPROM_Erase_Page(uint16_t addr)
+{
+    IAP_CONTR |= 0x80;
+	IAP_CMD = 3;            //Set IAP write command
+	IAP_ADDRH = addr >> 8; 	//Set IAP high address
+	IAP_ADDRL = addr; 		//Set IAP low address
+	IAP_TRIG = 0x5A; 		//Write trigger command (0x5a)
+	IAP_TRIG = 0xA5; 		//Write trigger command (0x5a)	
+	nop();
+    IAP_CONTR &= 0x7F;
+	return FSC_SUCCESS;
+}
+
 /**
   * @name    EEPROM_Read_Byte
-  * @brief   EEPROM read byte function  
-  * @param   addr   falsh address (uint16_t)
-  * @return  data of byte (uint8_t) 
+  * @brief   EEPROM读取一个字节函数。
+  *          EEPROM reads a byte function.  
+  * @param   addr [IN] flash地址。Falsh address.
+  * @return  [uint8_t] 一个字节的数据。Data of byte.  
 ***/
 uint8_t EEPROM_Read_Byte(uint16_t addr)
 {
@@ -111,15 +139,17 @@ uint8_t EEPROM_Read_Byte(uint16_t addr)
 	return dat;
 }
 
+
 /**
   * @name    EEPROM_Read_Arry
-  * @brief   EEPROM read byte function  
-  * @param   addr   falsh address (uint16_t)
-  * @param   *arry  data of arry (uint8_t)
-  * @param   len    arry length  (uint8_t) 
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   EEPROM读取一个数组函数。
+  *          EEPROM read a Arry function.  
+  * @param   addr  [IN] Falsh地址。falsh address.
+  * @param   *arry [OUT] 数组的首地址。The first address of the array.
+  * @param   len   [IN] 数组长度。arry length. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t* arry,uint8_t len)
+FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *arry,uint8_t len)
 {
 	while(len--)
 	{
@@ -130,10 +160,11 @@ FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t* arry,uint8_t len)
 
 /**
   * @name    EEPROM_Write_Byte
-  * @brief   EEPROM write byte function  
-  * @param   addr  falsh address (uint16_t)
-  * @param   byte  data of byte (uint8_t)
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   EEPROM写一个字节函数。
+  *          EEPROM writes a byte function.  
+  * @param   addr [IN] flash地址。Falsh address.
+  * @param   byte [IN] 一个字节的数据。Data of byte.  
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte)
 {
@@ -149,16 +180,18 @@ FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte)
 	return FSC_SUCCESS;
 }
 
+
 /**
   * @name    EEPROM_Write_Str
-  * @brief   EEPROM write string function 
-  * @param   addr    falsh address (uint16_t)
-  * @param   *str    data of string (uint8_t)
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   EEPROM写一个字符串。
+  *          EEPROM write string function .  
+  * @param   addr  [IN] Falsh地址。falsh address.
+  * @param   *arry [IN] 字符串的首地址。The first address of the string.
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t* str)
 {
-	while(*str)
+	while(*str != '\0')
 	{
 		EEPROM_Write_Byte(addr++,*str++);
 	}
@@ -166,12 +199,13 @@ FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t* str)
 }
 
 /**
-  * @name    EEPROM_Write_arry
-  * @brief   EEPROM write byte function  
-  * @param   addr    falsh address (uint16_t)
-  * @param   *arry   data of arry (uint8_t)
-  * @param   len     arry length  (uint8_t) 
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @name    EEPROM_Write_Arry
+  * @brief   EEPROM写一个数组函数。
+  *          EEPROM write a Arry function.  
+  * @param   addr  [IN] Falsh地址。falsh address.
+  * @param   *arry [IN] 数组的首地址。The first address of the array.
+  * @param   len   [IN] 数组长度。arry length. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t* arry,uint8_t len)
 {
@@ -179,25 +213,6 @@ FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t* arry,uint8_t len)
 	{
 		EEPROM_Write_Byte(addr++,*arry++);
 	}
-	return FSC_SUCCESS;
-}
-
-/**
-  * @name    EEPROM_Erase_Page
-  * @brief   EEPROM erase page function
-  * @param   addr    falsh address (uint16_t)
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE EEPROM_Erase_Page(uint16_t addr)
-{
-    IAP_CONTR |= 0x80;
-	IAP_CMD = 3;            //Set IAP write command
-	IAP_ADDRH = addr >> 8; 	//Set IAP high address
-	IAP_ADDRL = addr; 		//Set IAP low address
-	IAP_TRIG = 0x5A; 		//Write trigger command (0x5a)
-	IAP_TRIG = 0xA5; 		//Write trigger command (0x5a)	
-	nop();
-    IAP_CONTR &= 0x7F;
 	return FSC_SUCCESS;
 }
 

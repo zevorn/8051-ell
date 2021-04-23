@@ -54,7 +54,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -119,7 +119,7 @@ typedef struct
   SPIClkSrc_Type ClkSrc;
   SPIMode_Type Mode;
   SPITran_Type Tran;
-  FUNSTATE Run;
+  BOOL Run;
 } SPIInit_Type;
 
 /*-----------------------------------------------------------------------
@@ -129,6 +129,23 @@ typedef struct
 FSCSTATE SPI_Init(SPIInit_Type *spix);
 FSCSTATE SPI_Send_Data(uint8_t dat);
 uint8_t SPI_Rev_Data(void);
+
+#define SPI_GET_FLAG()                  (SPSTAT & 0x80)
+#define SPI_CLEAR_FLAG()                 SPSTAT = 0xC0
+
+FSCSTATE NVIC_SPI_Init(NVICPri_Type priority,BOOL run);
+
+#define    NVIC_SPI_CTRL(run)    do{ IE2 = (IE2 & 0xFD) | (run << 1); }while(0)
+
+
+
+
+/* SPI */
+FSCSTATE GPIO_SPI_SWPort(GPIOSWPort_Type port);
+
+
+
+
 
 #endif
 /*-----------------------------------------------------------------------

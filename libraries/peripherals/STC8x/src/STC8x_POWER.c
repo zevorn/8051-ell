@@ -31,6 +31,16 @@
 -----------------------------------------------------------------------*/
 #include "STC8x_POWER.h"
 /*-----------------------------------------------------------------------
+|                             DECLARATION                               |
+-----------------------------------------------------------------------*/
+/*--------------------------------------------------------
+| @Description: LVD priority define function             |
+--------------------------------------------------------*/
+#define LVD_NVIC_PRI(pri) { \
+IPH = (IPH & 0xBF) | ((pri & 0x02) << 5); \
+IP  = (IP  & 0xBF) | ((pri & 0x01) << 6); }
+
+/*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 /* None */
@@ -59,6 +69,20 @@ FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode)
 uint8_t Get_POWER_State(void)
 {
   return (PCON & 0x10);
+}
+
+/**
+  * @name    NVIC_LVD_Init
+  * @brief   LVD NVIC function
+  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,BOOL run)
+{
+	ELVD = run;
+	LVD_NVIC_PRI(priority);
+	return FSC_SUCCESS;
 }
 
 /*-----------------------------------------------------------------------

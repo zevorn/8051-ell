@@ -34,8 +34,7 @@
 #define __DEV_OLED_H_
 
 #include "STC8x_GPIO.h"
-#include "STC8x_TYPE.h"
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 #include "STC8x_SPI.h"
 #include "STC8x_NVIC.h"
 #include "PreDelay.h"

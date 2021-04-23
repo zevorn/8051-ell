@@ -30,10 +30,11 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_UART.h"
+
 /*-----------------------------------------------------------------------
-|                                 datA                                  |
+|                             DECLARATION                               |
 -----------------------------------------------------------------------*/
-vuint8_t UART_BUSY_FLAG[4] = {0,0,0,0};		 //Busy flag of receive
+
 /*--------------------------------------------------------
 | @Description: UART mode configure define function      |
 --------------------------------------------------------*/
@@ -93,7 +94,33 @@ while(0)
 	T4H = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
 	while(0)
 		
-#endif     
+#endif
+
+/*--------------------------------------------------------
+| @Description: UART priority define function            |
+--------------------------------------------------------*/
+
+#define UART1_NVIC_PRI(pri) { \
+IPH = (IPH & 0xEF) | ((pri & 0x02) << 3); \
+IP  = (IP  & 0xEF) | ((pri & 0x01) << 4); }
+
+#define UART2_NVIC_PRI(pri) { \
+IP2H = (IP2H & 0xFE) | ((pri & 0x02) >> 1); \
+IP2  = (IP2  & 0xFE) | (pri & 0x01); }
+
+#define UART3_NVIC_PRI(pri) { \
+IP3H = (IP3H & 0xFE) | ((pri & 0x02) >> 1); \
+IP3  = (IP3  & 0xFE) | (pri & 0x01); }
+
+#define UART4_NVIC_PRI(pri) { \
+IP3H = (IP3H & 0xFD) | (pri & 0x02); \
+IP3  = (IP3  & 0xFD) | (pri & 0x01) << 1;}
+
+/*-----------------------------------------------------------------------
+|                                 DATA                                  |
+-----------------------------------------------------------------------*/
+uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
+
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -288,6 +315,157 @@ FSCSTATE UART4_Init(const UART_InitType* uartx)
     S4CON = (S4CON & 0xEF) | (uartx -> RxEnable << 4);
     UART4_CLEAR_BUSY_FLAG();
     return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_UART1_Init
+  * @brief   UART1 NVIC function  
+  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,BOOL run)
+{
+	ES = run;
+	UART1_NVIC_PRI(priority); 
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_UART2_Init
+  * @brief   UART2 NVIC function  
+  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run)
+{
+	IE2 = (IE2 & 0xFE) | (run);
+    UART2_NVIC_PRI(priority);
+	return FSC_SUCCESS;
+}
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+/**
+  * @name    NVIC_UART3_Init
+  * @brief   UART3 NVIC function  
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_UART3_Init(BOOL run)
+{
+	IE2 = (IE2 & 0xF7) | (run << 3);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_UART4_Init
+  * @brief   UART4 NVIC function  
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_UART4_Init(BOOL run)
+{
+	IE2 = (IE2 & 0xEF) | (run << 4);
+	return FSC_SUCCESS;
+}
+
+#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+	/**
+	  * @name    NVIC_UART3_Init
+	  * @brief   UART3 NVIC function  
+	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+	  * @param   run    ENABLE | DISABLE
+	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+	***/
+	FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,BOOL run)
+	{
+		IE2 = (IE2 & 0xF7) | (run << 3);
+		UART3_NVIC_PRI(priority);
+		return FSC_SUCCESS;
+	}
+
+	/**
+	  * @name    NVIC_UART4_Init
+	  * @brief   UART4 NVIC function  
+	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+	  * @param   run    ENABLE | DISABLE
+	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+	***/
+	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,BOOL run)
+	{
+		IE2 = (IE2 & 0xEF) | (run << 4);
+		UART4_NVIC_PRI(priority);
+		return FSC_SUCCESS;
+	}
+
+#endif
+
+/**
+  * @name    GPIO_UART1_SWPort
+  * @brief   UART1 switch port control function    
+  * @param   port    SW_Port1: RXD/P3.0 TXD/P3.1
+  *                  SW_Port2: RXD/P3.6 TXD/P3.7
+  *                  SW_Port3: RXD/P1.6 TXD/P1.7
+  *                  SW_Port4: RXD/P4.3 TXD/P4.4
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_UART1_SWPort(GPIOSWPort_Type port)
+{
+	P_SW1 = (P_SW1 & 0x3F) | (port << 6);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    GPIO_UART2_SWPort
+  * @brief   UART2 switch port control function    
+  * @param   port    SW_Port1: RXD/P1.0 TXD/P1.1
+  *                  SW_Port2: RXD/P4.1 TXD/P4.2
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_UART2_SWPort(GPIOSWPort_Type port)
+{
+	if(port < SW_Port3)
+	{
+		P_SW2 = (P_SW2 & 0xFE) | (port);
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_UART3_SWPort
+  * @brief   UART3 switch port control function    
+  * @param   port    SW_Port1: RXD/P0.0 TXD/P0.1
+  *                  SW_Port2: RXD/P5.0 TXD/P5.1
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_UART3_SWPort(GPIOSWPort_Type port)
+{
+	if(port < SW_Port3)
+	{
+		P_SW2 = (P_SW2 & 0xFD) | (port << 1);
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
+}
+
+/**
+  * @name    GPIO_UART4_SWPort
+  * @brief   UART4 switch port control function    
+  * @param   port    SW_Port1: RXD/P0.2 TXD/P0.3
+  *                  SW_Port2: RXD/P5.2 TXD/P5.3
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_UART4_SWPort(GPIOSWPort_Type port)
+{
+	if(port < SW_Port3)
+	{
+		P_SW2 = (P_SW2 & 0xFB) | (port << 2);
+		return FSC_SUCCESS;
+	}
+	else return FSC_FAIL;
 }
 
 /**

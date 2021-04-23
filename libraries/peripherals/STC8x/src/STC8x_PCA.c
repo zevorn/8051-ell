@@ -31,6 +31,19 @@
 -----------------------------------------------------------------------*/
 #include "STC8x_PCA.h"
 /*-----------------------------------------------------------------------
+|                             DECLARATION                               |
+-----------------------------------------------------------------------*/
+
+/*--------------------------------------------------------
+| @Description: PCA priority define function             |
+--------------------------------------------------------*/
+
+#define PCA_NVIC_PRI(pri) { \
+IPH = (IPH & 0x7F) | ((pri & 0x02) << 6); \
+IP  = (IP  & 0x7F) | ((pri & 0x01) << 7); }
+
+
+/*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx )
@@ -50,7 +63,7 @@ static vuint16_t PCA_Rvalue[4];
   * @param   run      ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,FUNSTATE run) 
+FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,BOOL run) 
 {
     CMOD = (CMOD & 0xF1)|(clkSrc);
     CL = 0;
@@ -531,6 +544,168 @@ void PCA3_TIM_POP_ReValue(void)
     CCAP3H = PCA_Rvalue[3] >> 8;
 }
 #endif
+
+
+/**
+  * @name    NVIC_PCA_CNT_Init
+  * @brief   PCA Counter NVIC function
+  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA_CNT_Init(NVICPri_Type priority,BOOL run)
+{
+	CMOD = (CMOD & 0xFE) | run;
+	PCA_NVIC_PRI(priority);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PCA0_TIM_POP_Init
+  * @brief   PCA0 Timer and POP NVIC function 
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA0_TIM_POP_Init(BOOL run)
+{
+	CCAPM0 = (CCAPM0 & 0xFE) | (run);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PCA1_TIM_POP_Init
+  * @brief   PCA1 Timer and POP NVIC function  
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA1_TIM_POP_Init(BOOL run)
+{
+	CCAPM1 = (CCAPM1 & 0xFE) | (run);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PCA2_TIM_POP_Init
+  * @brief   PCA2 Timer and POP NVIC function  
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA2_TIM_POP_Init(BOOL run)
+{
+	CCAPM2 = (CCAPM2 & 0xFE) | (run);
+	return FSC_SUCCESS;
+}
+
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+
+/**
+  * @name    NVIC_PCA3_TIM_POP_Init
+  * @brief   PCA3 Timer and POP NVIC function  
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA3_TIM_POP_Init(BOOL run)
+{
+	CCAPM3 = (CCAPM3 & 0xFE) | (run);
+	return FSC_SUCCESS;
+}
+
+#endif
+
+/**
+  * @name    NVIC_PCA0_PWM_CAP_Init
+  * @brief   PCA0 Timer and POP NVIC function  
+  * @param   triMode    PCA_Tri_None   | PCA_Tri_Falling 
+  *                     PCA_Tri_Rising | PCA_Tri_Edge
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA0_PWM_CAP_Init(PCATri_Type triMode,BOOL run)
+{
+	CCAPM0 = (CCAPM0 & 0xCE) | (triMode) | (run);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PCA1_PWM_CAP_Init
+  * @brief   PCA1 Timer and POP NVIC function  
+  * @param   triMode    PCA_Tri_None   | PCA_Tri_Falling 
+  *                     PCA_Tri_Rising | PCA_Tri_Edge
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA1_PWM_CAP_Init(PCATri_Type triMode,BOOL run)
+{
+	CCAPM1 = (CCAPM1 & 0xCE) | (triMode) | (run);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_PCA2_PWM_CAP_Init
+  * @brief   PCA2 Timer and POP NVIC function  
+  * @param   triMode    PCA_Tri_None   | PCA_Tri_Falling 
+  *                     PCA_Tri_Rising | PCA_Tri_Edge
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA2_PWM_CAP_Init(PCATri_Type triMode,BOOL run)
+{
+	CCAPM2 = (CCAPM2 & 0xCE) | (triMode) | (run);
+	return FSC_SUCCESS;
+}
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
+
+/**
+  * @name    NVIC_PCA3_PWM_CAP_Init
+  * @brief   PCA3 Timer and POP NVIC function  
+  * @param   triMode    PCA_Tri_None   | PCA_Tri_Falling 
+  *                     PCA_Tri_Rising | PCA_Tri_Edge
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,BOOL run)
+{
+	CCAPM3 = (CCAPM3 & 0xCE) | (triMode) | (run);
+	return FSC_SUCCESS;
+}
+
+#endif
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
+
+#if( PER_LIB_MCU_MUODEL == STC8Ax)
+/**
+  * @name    GPIO_PCA_SWPort
+  * @brief   PCA switch port control function  
+  * @param   port    SW_Port1: ECI/P1.2 CCP0/P1.7 CCP1/P1.6 CCP2/P1.5 CCP3/P1.4
+  *                  SW_Port2: ECI/P2.2 CCP0/P2.3 CCP1/P2.4 CCP2/P2.5 CCP3/P2.6
+  *                  SW_Port3: ECI/P7.4 CCP0/P7.0 CCP1/P7.1 CCP2/P7.2 CCP3/P7.3
+  *                  SW_Port4: ECI/P3.5 CCP0/P3.3 CCP1/P3.2 CCP2/P3.1 CCP3/P3.0
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+#elif (PER_LIB_MCU_MUODEL == STC8Gx)
+/**
+  * @name    GPIO_PCA_SWPort
+  * @brief   PCA switch port control function  
+  * @param   port    SW_Port1: ECI/P1.2 CCP0/P1.1 CCP1/P1.0 CCP2/P3.7 
+  *                  SW_Port2: ECI/P3.4 CCP0/P3.5 CCP1/P3.6 CCP2/P3.7 
+  *                  SW_Port3: ECI/P2.4 CCP0/P2.5 CCP1/P2.6 CCP2/P2.7 
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+#endif
+FSCSTATE GPIO_PCA_SWPort(GPIOSWPort_Type port)
+{
+    #if (PER_LIB_MCU_MUODEL == STC8Gx)
+    if(port > SW_Port3) return FSC_FAIL;
+    #endif
+	P_SW1 = (P_SW1 & 0xCF) | (port << 4);
+	return FSC_SUCCESS;
+}
+#endif
+
+
 
 #endif
 

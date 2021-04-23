@@ -18,6 +18,7 @@
     "asm-compiler": {},
     "linker": {
         "remove-unused": true,
-        "output-format": "elf"
+        "output-format": "elf",
+        "use-RTX": "None"
     }
 }

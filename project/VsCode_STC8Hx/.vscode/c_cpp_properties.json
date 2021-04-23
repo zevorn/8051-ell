@@ -18,6 +18,8 @@
                 ".\\..\\..\\libraries\\components\\PreDelay",
                 ".\\main",
                 ".\\application",
+                ".\\..\\..\\libraries\\core\\register\\STC8x",
+                ".\\..\\..\\libraries\\core\\startup\\STC8x",
                 "E:\\Keil5\\C51\\INC"
             ],
             "defines": [

@@ -34,7 +34,7 @@
 
 #include "Lib_CFG.h"
 #include "stdio.h"
-#include "STC8x_TYPE.h"
+#include "ELL_TYPE.h"
 #include "STC8x_UART.h"
 
 #ifndef DEBUG_CTRL

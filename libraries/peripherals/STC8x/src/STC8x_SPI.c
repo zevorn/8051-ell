@@ -31,7 +31,19 @@
 -----------------------------------------------------------------------*/
 #include "STC8x_SPI.h"
 /*-----------------------------------------------------------------------
-|                                 datA                                  |
+|                             DECLARATION                               |
+-----------------------------------------------------------------------*/
+
+/*--------------------------------------------------------
+| @Description: SPI priority define function             |
+--------------------------------------------------------*/
+
+#define SPI_NVIC_PRI(pri) { \
+IP2H = (IP2H & 0xFD) |  (pri & 0x02); \
+IP2  = (IP2  & 0xFD) | ((pri & 0x01) << 1); }
+
+/*-----------------------------------------------------------------------
+|                                 DATA                                  |
 -----------------------------------------------------------------------*/
 /* None */
 /*-----------------------------------------------------------------------
@@ -82,6 +94,37 @@ uint8_t SPI_Rev_Data(void)
     SPSTAT = 0xC0;         //Clear interrupt flag
     return SPDAT;  //Data register assignment
 }
+
+/**
+  * @name    NVIC_SPI_Init
+  * @brief   SPI init NVIC function 
+  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run        ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_SPI_Init(NVICPri_Type priority,BOOL run)
+{
+	SPI_NVIC_PRI(priority);
+	IE2 = (IE2 & 0xFD) | (run << 1);
+	return FSC_SUCCESS;
+}
+
+
+/**
+  * @name    GPIO_SPI_SWPort
+  * @brief   SPI switch port control function 
+  * @param   port    SW_Port1: SS/P1.2 MOSI/P1.3 MISO/P1.4 SCLK/P1.5
+  *                  SW_Port2: SS/P2.2 MOSI/P2.3 MISO/P2.4 SCLK/P2.5
+  *                  SW_Port3: SS/P7.4 MOSI/P7.5 MISO/P7.6 SCLK/P7.7
+  *                  SW_Port4: SS/P3.5 MOSI/P3.4 MISO/P3.3 SCLK/P3.2
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_SPI_SWPort(GPIOSWPort_Type port)
+{
+	P_SW1 = (P_SW1 & 0xF3) | (port << 2);
+	return FSC_FAIL;
+}
+
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

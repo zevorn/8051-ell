@@ -48,7 +48,7 @@
 FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 {
 		EAXFR_ENABLE(); /* Enable access to the internal extended RAM area */
-#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
+#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 
 		    if(sysClkn -> MCLKSrc != AUTO)
 		    {
@@ -104,7 +104,7 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 			    IRTRIM = sysClkn -> IRCTRIM;  /* Internal IRC adjust frequency IRTRIM  */
                 LIRTRIM = sysClkn -> LIRCTRIM; /* Internal IRC adjust frequency LIRTRIM */
 			    
-			    if(sysClkn -> MCLKDiv == 0) SYSCLK.CLKDIV_REG = sysClkn -> MCLKDiv + 1;  /* Master clock frequency division */
+			    if(sysClkn -> MCLKDiv == 0) SYSCLK.CLKDIV_REG = 1;  /* Master clock frequency division */
 				else SYSCLK.CLKDIV_REG = sysClkn -> MCLKDiv;
 	        }
 		
@@ -140,7 +140,7 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 			    IRTRIM = sysClkn -> IRCTRIM;  /* Internal IRC adjust frequency IRTRIM  */
                 LIRTRIM = sysClkn -> LIRCTRIM; /* Internal IRC adjust frequency LIRTRIM */
 			    
-			    if(sysClkn -> MCLKDiv == 0) SYSCLK.CLKDIV_REG = sysClkn -> MCLKDiv + 1;  /* Master clock frequency division */
+			    if(sysClkn -> MCLKDiv == 0) SYSCLK.CLKDIV_REG = 1;  /* Master clock frequency division */
 				else SYSCLK.CLKDIV_REG = sysClkn -> MCLKDiv;
 	        }
 		
@@ -160,18 +160,17 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 ***/
 uint32_t Get_SysClk_FRE(void)
 {
-	uint32_t Count;
-#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
+	uint32_t count;
+#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 	/* Frequency deviation, calculate the approximate data */
-	Count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL);
-	Count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
+	count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL);
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 	/* Frequency deviation, calculate the approximate data */
-    if(IRCBAND)    Count = 36000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_22_1184M) * 0x128E0UL); 
-	else           Count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xBB80UL); 
-	Count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
+    if(IRCBAND)    count = 36000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_22_1184M) * 0x128E0UL); 
+	else           count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xBB80UL); 
 #endif
-	return Count;
+	count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
+	return count;
 }
 
 /*-----------------------------------------------------------------------

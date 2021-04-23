@@ -29,17 +29,10 @@
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
-
 #include "STC8x_TIMER.h"
-
-/*-----------------------------------------------------------------------
-|                                 DATA                                  |
------------------------------------------------------------------------*/
-/* None. */
 /*-----------------------------------------------------------------------
 |                             DECLARATION                               |
 -----------------------------------------------------------------------*/
-
 /**
   * @name    TIMER0_MODE_CFG
   * @brief   定时器0工作模式选择宏函数（作用域为本文件）。
@@ -176,7 +169,24 @@ time = (65536UL - (sysClk_FRE / (1000000UL /  time \
     time = (65536UL - ( (sysClk_FRE / (TM2PS + 1) ) / (1000000UL /  time \
 	          * (11 * (!(T4T3M & 0x20)) + 1)) ) );}while(0)	
     
-#endif             
+#endif            
+			  
+/*--------------------------------------------------------
+| @Description: TIMER priority define function           |
+--------------------------------------------------------*/
+
+#define TIMER0_NVIC_PRI(pri) { \
+IPH = (IPH & 0xFD) |  (pri & 0x02) ; \
+IP  = (IP  & 0xFD) | ((pri & 0x01) << 1);}
+
+#define TIMER1_NVIC_PRI(pri) { \
+IPH = (IPH & 0xF7) | ((pri & 0x02) << 2); \
+IP  = (IP  & 0xF7) | ((pri & 0x01) << 3); }
+
+/*-----------------------------------------------------------------------
+|                                 DATA                                  |
+-----------------------------------------------------------------------*/
+/* None. */
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -338,7 +348,7 @@ FSCSTATE TIMER4_Init(const TIMER_InitType* timerx)
   * @param   run    [IN] 定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
   * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE TIMER5_Wake_Up_Power(uint16_t Time,FUNSTATE run)
+FSCSTATE TIMER5_Wake_Up_Power(uint16_t Time,BOOL run)
 {
 	uint16_t fwt;
 	fwt = (uint16_t)((FWTH << 8) | FWTL);    //Calculate the clock frequency 
@@ -349,6 +359,69 @@ FSCSTATE TIMER5_Wake_Up_Power(uint16_t Time,FUNSTATE run)
 	return FSC_SUCCESS;
 }
 
+/**
+  * @name    NVIC_TIMER0_Init
+  * @brief   TIMER0 NVIC function  
+  * @param   priority  NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run       ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_TIMER0_Init(NVICPri_Type priority,BOOL run)
+{
+	ET0 = run;
+    TIMER0_NVIC_PRI(priority);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_TIMER1_Init
+  * @brief   TIMER1 NVIC function  
+  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run        ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_TIMER1_Init(NVICPri_Type priority,BOOL run)
+{
+	ET1 = run;
+    TIMER1_NVIC_PRI(priority);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_TIMER2_Init
+  * @brief   TIMER2 NVIC function  
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_TIMER2_Init(BOOL run)
+{
+	IE2 = (IE2 & 0xFB) | (run << 2);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_TIMER3_Init
+  * @brief   TIMER3 NVIC function  
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_TIMER3_Init(BOOL run)
+{
+	IE2 = (IE2 & 0xDF) | (run << 5);
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVIC_TIMER4_Init
+  * @brief   TIMER4 NVIC function  
+  * @param   run    ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_TIMER4_Init(BOOL run)
+{
+	IE2 = (IE2 & 0xBF) | (run << 6);
+	return FSC_SUCCESS;
+}
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

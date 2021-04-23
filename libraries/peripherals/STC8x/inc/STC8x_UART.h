@@ -52,9 +52,15 @@
     #include "STC8Hx_REG.h"
 #endif
 /*--------------------------------------------------------
-| @Description: STC8x core                               |
+| @Description: ELL library core                         |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
+
+/*--------------------------------------------------------
+| @Description: STC8x NVIC                               |
+--------------------------------------------------------*/
+#include "STC8x_NVIC.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -113,15 +119,15 @@ typedef struct
 {
 	UARTMode_Type Mode;
 	UART_BRTGen_Type BRTGen;
-	#if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+	#if  (PER_LIB_MCU_MUODEL == STC8Cx ||PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 		uint8_t BRTGenClkDiv;   /* just STC8G、STC8H */
 	#endif
 	UART_BRTMode_Type BRTMode;
-	FUNSTATE BRTDouble;
+	BOOL BRTDouble;
 	uint32_t BaudRate;
-	FUNSTATE MulitComm;
-	FUNSTATE Relay;
-	FUNSTATE RxEnable;
+	BOOL MulitComm;
+	BOOL Relay;
+	BOOL RxEnable;
 }	UART_InitType;
 
 /*-----------------------------------------------------------------------
@@ -132,28 +138,22 @@ typedef struct
 | @Description: UART busy flag of receive                |
 --------------------------------------------------------*/
 
-extern vuint8_t UART_BUSY_FLAG[4];		
+extern uint8_t UART_BUSY_FLAG;		
 
-#define      UART1_GET_BUSY_FLAG()    UART_BUSY_FLAG[0]
-#define      UART2_GET_BUSY_FLAG()    UART_BUSY_FLAG[1]
-#define      UART3_GET_BUSY_FLAG()    UART_BUSY_FLAG[2]
-#define      UART4_GET_BUSY_FLAG()    UART_BUSY_FLAG[3]
+#define      UART1_GET_BUSY_FLAG()    UART_BUSY_FLAG & 0x01
+#define      UART2_GET_BUSY_FLAG()    UART_BUSY_FLAG & 0x02
+#define      UART3_GET_BUSY_FLAG()    UART_BUSY_FLAG & 0x04
+#define      UART4_GET_BUSY_FLAG()    UART_BUSY_FLAG & 0x08
 
-#define      UART1_SET_BUSY_FLAG()    UART_BUSY_FLAG[0] = 1
-#define      UART2_SET_BUSY_FLAG()    UART_BUSY_FLAG[1] = 1
-#define      UART3_SET_BUSY_FLAG()    UART_BUSY_FLAG[2] = 1
-#define      UART4_SET_BUSY_FLAG()    UART_BUSY_FLAG[3] = 1
+#define      UART1_SET_BUSY_FLAG()    UART_BUSY_FLAG |= 0x01
+#define      UART2_SET_BUSY_FLAG()    UART_BUSY_FLAG |= 0x02
+#define      UART3_SET_BUSY_FLAG()    UART_BUSY_FLAG |= 0x04
+#define      UART4_SET_BUSY_FLAG()    UART_BUSY_FLAG |= 0x08
 
-#define    UART1_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG[0] = 0
-#define    UART2_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG[1] = 0
-#define    UART3_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG[2] = 0
-#define    UART4_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG[3] = 0
-
-/*--------------------------------------------------------
-| @Description: UART busy flag of receive                |
---------------------------------------------------------*/
-
-#define     CHAR_MAX     64
+#define    UART1_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG &= 0xFE
+#define    UART2_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG &= 0xFD
+#define    UART3_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG &= 0xFB
+#define    UART4_CLEAR_BUSY_FLAG()    UART_BUSY_FLAG &= 0xF7
 
 /*--------------------------------------------------------
 | @Description: UART init function                       |
@@ -163,6 +163,53 @@ FSCSTATE UART1_Init(const UART_InitType *uartx);
 FSCSTATE UART2_Init(const UART_InitType *uartx);
 FSCSTATE UART3_Init(const UART_InitType *uartx);
 FSCSTATE UART4_Init(const UART_InitType *uartx);
+
+
+#define    UART1_GET_RX_FLAG()    (SCON  & 0x01)
+#define    UART2_GET_RX_FLAG()    (S2CON & 0x01)
+#define    UART3_GET_RX_FLAG()    (S3CON & 0x01)
+#define    UART4_GET_RX_FLAG()    (S4CON & 0x01)
+				   		    
+#define    UART1_GET_TX_FLAG()    (SCON  & 0x02)
+#define    UART2_GET_TX_FLAG()    (S2CON & 0x02)
+#define    UART3_GET_TX_FLAG()    (S3CON & 0x02)
+#define    UART4_GET_TX_FLAG()    (S4CON & 0x02)
+
+#define	   UART1_CLEAR_RX_FLAG()  SCON  &= ~0x01
+#define	   UART2_CLEAR_RX_FLAG()  S2CON &= ~0x01
+#define	   UART3_CLEAR_RX_FLAG()  S3CON &= ~0x01
+#define	   UART4_CLEAR_RX_FLAG()  S4CON &= ~0x01
+   
+#define	   UART1_CLEAR_TX_FLAG()  SCON  &= ~0x02
+#define	   UART2_CLEAR_TX_FLAG()  S2CON &= ~0x02
+#define	   UART3_CLEAR_TX_FLAG()  S3CON &= ~0x02
+#define	   UART4_CLEAR_TX_FLAG()  S4CON &= ~0x02
+
+FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run);
+
+#define    NVIC_UART1_CTRL(run)     do{ ES = run; }while(0)
+#define    NVIC_UART2_CTRL(run)     do{ IE2 = (IE2 & 0xFE) | (run); }while(0)
+#define    NVIC_UART3_CTRL(run)     do{ IE2 = (IE2 & 0xF7) | (run << 3); }while(0)
+#define    NVIC_UART4_CTRL(run)     do{ IE2 = (IE2 & 0xEF) | (run << 4); }while(0)
+
+#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+
+	FSCSTATE NVIC_UART3_Init(BOOL run);
+	FSCSTATE NVIC_UART4_Init(BOOL run);
+
+#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+	FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,BOOL run);
+	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,BOOL run);
+
+#endif
+
+/* UART */
+FSCSTATE GPIO_UART1_SWPort(GPIOSWPort_Type port);
+FSCSTATE GPIO_UART2_SWPort(GPIOSWPort_Type port);
+FSCSTATE GPIO_UART3_SWPort(GPIOSWPort_Type port);
+FSCSTATE GPIO_UART4_SWPort(GPIOSWPort_Type port);
 
 /*--------------------------------------------------------
 | @Description: UART working function                    |

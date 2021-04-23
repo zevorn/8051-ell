@@ -30,8 +30,17 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_I2C.h"
+
+/*--------------------------------------------------------
+| @Description: I2C priority define function             |
+--------------------------------------------------------*/
+
+#define I2C_NVIC_PRI(pri) { \
+IP2H = (IP2H & 0xBF) | ((pri & 0x02) << 5); \
+IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); }
+
 /*-----------------------------------------------------------------------
-|                                 datA                                  |
+|                                 DATA                                  |
 -----------------------------------------------------------------------*/
 /* None */
 /*-----------------------------------------------------------------------
@@ -84,7 +93,7 @@ static FSCSTATE I2C_Wait(void)
   * @param   run   ENABLE | DISABLE
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
-FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, FUNSTATE run)
+FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, BOOL run)
 {
   if(wTime <= 0x3F)
   {
@@ -97,6 +106,40 @@ FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, FUNSTATE run)
   }
   else return FSC_FAIL;
 }
+
+/**
+  * @name    NVCI_I2C_Master_Init
+  * @brief   I2C Master init NVIC function
+  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   run        ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,BOOL run)
+{
+	EAXFR_ENABLE();
+	I2C_NVIC_PRI(priority);
+	I2CMSCR = run << 7;
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
+/**
+  * @name    NVCI_I2C_Slave_Init
+  * @brief   I2C Slave init NVIC function
+  * @param   priority    NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
+  * @param   triState    I2C_STri_RevStart_Done | I2C_STri_RevData_Done
+  *                      I2C_STri_SendData_Done | I2C_STri_RevStop_Done 
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triState)
+{
+	EAXFR_ENABLE();
+	I2C_NVIC_PRI(priority);
+	I2CSLCR &= (I2CSLCR & 0x01 )| (triState);
+	EAXFR_DISABLE();
+	return FSC_SUCCESS;
+}
+
 
 /**
   * @name    I2C_Start
@@ -188,6 +231,20 @@ uint8_t I2C_Read_Byte(void)
 }
 
 
+/**
+  * @name    GPIO_I2C_SWPort
+  * @brief   I2C switch port control function   
+  * @param   port    SW_Port1: SCL/P1.5 SDA/P1.4 
+  *                  SW_Port2: SCL/P2.5 SDA/P2.4 
+  *                  SW_Port3: SCL/P7.7 SDA/P7.6 
+  *                  SW_Port4: SCL/P3.2 SDA/P3.3 
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_I2C_SWPort(GPIOSWPort_Type port)
+{
+	P_SW2 = (P_SW2 & 0xC0) | (port << 4);
+	return FSC_FAIL;
+}
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

@@ -53,7 +53,7 @@
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -82,6 +82,14 @@ typedef enum
 
 uint8_t Get_POWER_State(void);
 FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode);
+
+
+#define LVD_GET_FLAG()       (PCON & 0x20)
+#define LVD_CLEAR_FLAG()      PCON &= 0xDF
+
+FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,BOOL run);
+
+#define    NVIC_LVD_CTRL(run)     do{ ELVD = run; }while(0)
 
 #endif
 /*-----------------------------------------------------------------------

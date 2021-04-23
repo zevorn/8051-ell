@@ -37,7 +37,7 @@
 #define    STC8Gx      (3)
 #define    STC8Hx      (4)
 
-#define    PER_LIB_MCU_MUODEL     STC8Hx
+#define    PER_LIB_MCU_MUODEL     STC8Gx
 
 /*--------------------------------------------------------
 | @Description: STC8x Driver config                      |

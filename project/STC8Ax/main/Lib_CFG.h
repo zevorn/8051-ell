@@ -2,7 +2,7 @@
 |                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
 /*----------------------------------------------------------------------
-  - File name     : Lib_CFG.h
+  - File name     : lib_cfg.h
   - Author        : zeweni
   - Update date   : 2020.02.06                  
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.

@@ -58,7 +58,7 @@
   * @name    KeyScan
   * @brief   You need to config key scan.  
 ***/
-#define  DRV_LIB_KEYSCAN_CTRL        (1)    // "1" is enable, "0" is disable 
+#define  DRV_LIB_KEYSCAN_CTRL        (0)    // "1" is enable, "0" is disable 
 #define  DRV_LIB_KEYSCAN_NUM_MAX     (8)    // key scan number max
 
 
@@ -78,7 +78,7 @@
   * @name    TMT
   * @brief   Task time tool
 ***/
-#define  COM_LIB_TMT_CTRL              (1)    // "1" is enable, "0" is disable 
+#define  COM_LIB_TMT_CTRL              (0)    // "1" is enable, "0" is disable 
 #define  COM_LIB_TMT_TASK_NUM_MAX      (8)    // task number max
 #define  COM_LIB_NVIC_TIMER_ISR_ENABLE    ET0 = 1
 #define  COM_LIB_NVIC_TIMER_ISR_DISABLE   ET0 = 0
@@ -88,7 +88,7 @@
   * @brief   Precision delay
 ***/
 #define  COM_LIB_PREDELAY_CTRL        (1)     // "1" is enable, "0" is disable 
-#define  COM_LIB_PREDELAY_BASE        (11000UL) // task number max
+#define  COM_LIB_PREDELAY_BASE        (11000UL) // PREDELAY number max
 
 
 #endif

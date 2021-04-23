@@ -64,7 +64,7 @@
 #endif
 
 
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 #include "STC8x_GPIO.h"
 
 /*-----------------------------------------------------------------------

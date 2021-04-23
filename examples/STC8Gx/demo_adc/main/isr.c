@@ -14,7 +14,7 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-uint16_t G_VinDat;
+float G_VinDat,G_VinDat2;
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -27,7 +27,15 @@ uint16_t G_VinDat;
 ***/
 void ADC_ISRQ_Handler(void)
 {
-  G_VinDat = ADC_Get_Sample_interrupt(ADC_Road_P10,ADC_Acc_10Bit);
+	if(ADC_GET_CHANNEL() == ADC_Channel_P10_8G1K08_T)
+	{
+		G_VinDat = (float)(ADC_Get_Sample_Interrupt(ADC_Channel_P11_8G1K08_T,ADC_Acc_10Bit) * 5 ) / 1024;
+	}
+	if(ADC_GET_CHANNEL() == ADC_Channel_P11_8G1K08_T)
+	{
+		G_VinDat2 = (float)(ADC_Get_Sample_Interrupt(ADC_Channel_P10_8G1K08_T,ADC_Acc_10Bit) * 5 ) / 1024;
+	}
+  
 }
 
 /**
@@ -41,12 +49,12 @@ void UART1_ISRQ_Handler(void)
 	if(UART1_GET_RX_FLAG())
 	{
 		UART1_CLEAR_RX_FLAG();
-        Auto_RST_download();
+    Auto_RST_download();
 	}
 	else if(UART1_GET_TX_FLAG())
 	{
 		UART1_CLEAR_TX_FLAG();
-        UART1_CLEAR_BUSY_FLAG();
+    UART1_CLEAR_BUSY_FLAG();
 	}
 }
 

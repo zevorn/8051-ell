@@ -59,7 +59,7 @@ void UART1_ISRQ_Handler(void)
 ***/
 void EXTI0_ISRQ_Handler(void) 
 {
-  static uint16 cont=0;
+  static uint16_t cont=0;
   printf("Trigger INT0 cont = %d\r\n",(int)cont);
   cont++;
 }

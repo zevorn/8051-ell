@@ -61,7 +61,7 @@
     #include "STC8Hx_REG.h"
 #endif
 
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |

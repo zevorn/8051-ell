@@ -54,10 +54,17 @@
 #endif
 
 /*--------------------------------------------------------
-| @Description: STC8x core                               |
+| @Description: ELL library core                         |
 --------------------------------------------------------*/
 
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
+
+/*--------------------------------------------------------
+| @Description: STC8x NVIC                               |
+--------------------------------------------------------*/
+
+#include "STC8x_NVIC.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -114,21 +121,21 @@ typedef enum
   * @param   Type       [TIMERType_Type] 定时器类型状态。timer type.
   * @param   Mode       [TIMERMode_Type] 定时器工作模式。Working mode.
   * @param   TCycle     [TIMERTCycle_Type] 定时器指令周期。Instruction cycle.
-  * @param   ClkOut     [FUNSTATE] 定时器可编程时钟输出控制位。Programmable clock output.
+  * @param   ClkOut     [BOOL] 定时器可编程时钟输出控制位。Programmable clock output.
   * @param   Time       [uint16_t] 定时器定时时间。Loading initial value.
-  * @param   Run        [FUNSTATE] 定时器运行控制位。Operation control bit.
+  * @param   Run        [BOOL] 定时器运行控制位。Operation control bit.
 ***/
 typedef struct 
 {
-#if  (PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if  (PER_LIB_MCU_MUODEL == STC8Cx ||PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
     uint8_t SysClkDiv;   /* just STC8G、STC8H */
 #endif
     TIMERType_Type Type;
     TIMERMode_Type Mode;
     TIMERTCycle_Type TCycle;
-    FUNSTATE ClkOut;
+    BOOL ClkOut;
     uint16_t Time;
-    FUNSTATE Run;
+    BOOL Run;
 }   TIMER_InitType;
 
 /*-----------------------------------------------------------------------
@@ -143,7 +150,7 @@ typedef struct
   * @param   run    [IN] 定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
   * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE TIMER5_Wake_Up_Power(uint16_t value,FUNSTATE run);
+FSCSTATE TIMER5_Wake_Up_Power(uint16_t value,BOOL run);
 
 /**
   * @name    TIMER0_Init
@@ -199,6 +206,23 @@ FSCSTATE TIMER3_Init(const TIMER_InitType *timerx);
   * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE TIMER4_Init(const TIMER_InitType *timerx);
+
+FSCSTATE NVIC_TIMER0_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_TIMER1_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_TIMER2_Init(BOOL run);
+FSCSTATE NVIC_TIMER3_Init(BOOL run);
+FSCSTATE NVIC_TIMER4_Init(BOOL run);
+
+#define    TIMER2_CLEAR_FLAG()    do{ AUXINTIF &= 0xFE; }while(0)
+#define    TIMER3_CLEAR_FLAG()    do{ AUXINTIF &= 0xFD; }while(0)
+#define    TIMER4_CLEAR_FLAG()    do{ AUXINTIF &= 0xFB; }while(0)
+
+#define    NVIC_TIMER0_CTRL(run)     do{ ET0 = run; }while(0)
+#define    NVIC_TIMER1_CTRL(run)     do{ ET1 = run; }while(0)
+#define    NVIC_TIMER2_CTRL(run)     do{ IE2 = (IE2 & 0xFB) | (run << 2); }while(0)
+#define    NVIC_TIMER3_CTRL(run)     do{ IE2 = (IE2 & 0xDF) | (run << 5); }while(0)
+#define    NVIC_TIMER4_CTRL(run)     do{ IE2 = (IE2 & 0xBF) | (run << 6); }while(0)
+
 
 #endif
 /*-----------------------------------------------------------------------

@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : STC8Ax_COMP.h
   - Author        : zeweni
-  - Update date   : 2020.02.06
+  - Update date   : 2020.04.23
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -50,10 +50,12 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
-| @Description: STC8x core                               |
+| @Description: ELL library core                         |
 --------------------------------------------------------*/
-#include "STC8x_CORE.h"
+#include "ELL_CORE.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -189,43 +191,152 @@ Test the internal 1.344v refv voltage.
 */
 #define	 COMP_IN_REV     0x0F
 
-/*--------------------------------------------------------
-| @Description: COMP output direction enumerator         |
---------------------------------------------------------*/
 
+/**
+  * @name    COMPDIRPut_Type
+  * @brief   COMP输出方向枚举体。
+  *          COMP output direction enumerator.
+  * @param   COMP_DIR_Forward [uint8_t] 比较器结果正向输出，若结果为0，
+  *                                     则对外输出低电平，反之输出高电平。
+  *                                     The result of comparator is forward output, 
+  *                                     if the result is 0,
+  *                                     Output low level, otherwise output high level.
+  * @param   COMP_DIR_Reverse [uint8_t] 比较器结果反向输出，若结果为0，
+                                        则对外输出高电平，反之输出低电平。
+  *                                     The result of comparator is Reverse output, 
+  *                                     if the result is 0,
+  *                                     Output low high, otherwise output low level.
+***/
 typedef enum
 {
     COMP_DIR_Forward = 0x00, 
 	COMP_DIR_Reverse = 0x01       
 }   COMPDIRPut_Type;
 
+
+/**
+  * @name    COMPTri_Type
+  * @brief   COMP中断触发方式枚举体。
+  *          COMP interrupt Trigger enum .
+  * @param   COMP_Tri_Null    [uint8_t] 比较器无中断触发，不使能中断。
+  *                                     The comparator is triggered 
+  *                                     without interruption and can not be interrupted.
+  * @param   COMP_Tri_Falling [uint8_t] 比较器下降沿触发中断，使能中断。
+  *                                     The falling edge of the comparator triggers 
+  *                                     he interrupt to enable the interrupt. 
+  * @param   COMP_Tri_Rising  [uint8_t] 比较器上升沿触发中断，使能中断。
+  *                                     The rising edge of the comparator triggers 
+  *                                     he interrupt to enable the interrupt. 
+  * @param   COMP_Tri_Edge    [uint8_t] 比较器边沿沿触发中断，使能中断。
+  *                                     The edge edge of the comparator triggers 
+  *                                     he interrupt to enable the interrupt. 
+***/
+typedef enum
+{
+  COMP_Tri_Null    = 0x00,
+  COMP_Tri_Falling = 0x10,
+  COMP_Tri_Rising  = 0x20,
+  COMP_Tri_Edge    = 0x30
+} COMPTri_Type;
+
 /**
   * @name    COMP_InitType
-  * @brief   COMP init struct
-  * @param   PEPin   COMP positive input selection bit
-  * @param   NEPin   COMP negative input selection bit
-  * @param   AC_FTW  COMP 0.1us analog filter control bit
-  * @param   DC_FTW  COMP digital filter clock number. 0 for off
-  * @param   DIRPut  COMP output direction
-  * @param   Output  COMP result output control bit
-  * @param   Run     COMP operation control bit
+  * @brief   COMP初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+  *          The COMP initializes the structure handle. When initializing, 
+  *          please define the handle and use its address to pass parameters.
+  * @param   PEPin   [uint8_t] 负极输入脚。COMP positive input selection bit.
+  * @param   NEPin   [uint8_t] 正极输入脚。COMP negative input selection bit.
+  * @param   AC_FTW  [BOOL]    模拟滤波控制位。 COMP 0.1us analog filter control bit.
+  * @param   DC_FTW  [uint16_t] 数字滤波控制时间参数，0为关闭数字滤波。
+  *                             COMP digital filter clock number.
+  * @param   DIRPut  [COMPDIRPut_Type] 比较结果输出方向。COMP output direction.
+  * @param   Output  [BOOL]   比较结果输出控制位。COMP result output control bit.
+  * @param   Run     [BOOL]   比较器运行控制位。 COMP operation control bit.
 ***/
 typedef struct
 {
     uint8_t PEPin;            
     uint8_t NEPin;	          
-    FUNSTATE AC_FTW;        
+    BOOL AC_FTW;        
     uint16_t DC_FTW;          
     COMPDIRPut_Type DIRPut; 
-    FUNSTATE Output;        
-    FUNSTATE Run;           
+    BOOL Output;        
+    BOOL Run;           
 }   COMP_InitType;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-
+/**
+  * @name    COMP_Init
+  * @brief   COMP初始化函数
+  *          COMP init function
+  * @param   *compx [IN] COMP结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+  *                      COMP structure handle. When initializing, 
+  *                      please define the handle and use its address 
+  *                      to pass parameters.
+  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
 FSCSTATE COMP_Init(const COMP_InitType *compx);
+
+
+/**
+  * @name    NVIC_COMP_Init
+  * @brief   COMP中断初始化函数
+  *          COMP interrupt initialization function.
+  * @param   priority [IN] 优先级。Priority.
+  * @param   triMode  [IN] 触发模式。Trigger mode.
+  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
+
+
+/**
+  * @name    COMP_GET_FLAG
+  * @brief   获取比较完成（中断）标志位宏函数
+  *          Comp gets compare complete (interrupt) 
+  *          flag bit macro function.
+  * @retval  [bit] 完成（中断）标志位。Completion (interrupt) flag bit.
+***/
+#define COMP_GET_FLAG()        (CMPCR1 & 0x40)
+
+
+/**
+  * @name    COMP_CLEAR_FLAG
+  * @brief   COMP清除比较完成（中断）标志位宏函数
+  *          Comp clears compare complete (interrupt) 
+  *          flag bit macro function.
+***/
+#define COMP_CLEAR_FLAG()      do{CMPCR1 &= 0xBF;}while(0)
+
+
+/**
+  * @name    COMP_GET_RESULT
+  * @brief   COMP获取比较结果宏函数
+  *          Comp gets the macro function of the comparison result.
+  * @retval  [bit] 比较结果。Comparison result.
+***/
+#define COMP_GET_RESULT()         (CMPCR1 & 0x01)
+
+
+/**
+  * @name    NVIC_COMP_CTRL
+  * @brief   COMP中断开关控制宏函数。
+  *          COMP interrupt switch control macro function.
+  * @param   run [BOOL] 使能控制位。Enable control bit.
+***/
+#define NVIC_COMP_CTRL(run)    do{ CMPCR1 = (CMPCR1 & 0xCF)|(run << 4); }while(0)
+
+
+/**
+  * @name    GPIO_COMP_SWPort
+  * @brief   COMP切换复用IO函数。
+  *          COMP switch out port control function.  
+  * @param   port [IN] 复用IO枚举体。IO switch enumerator.
+  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+FSCSTATE GPIO_COMP_SWPort(GPIOSWPort_Type port);
+
 
 #endif
 /*-----------------------------------------------------------------------
