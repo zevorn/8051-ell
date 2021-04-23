@@ -26,7 +26,7 @@
 ***/
 int main(void)
 {
-  uint8 rDat;
+  uint8_t rDat;
 	STC8x_System_Init();
 
 	for(;;)

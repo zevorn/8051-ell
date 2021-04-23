@@ -322,7 +322,7 @@ FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run);
   *          ADC clears macro function of acquisition 
   *          completion (interrupt) flag bit.
 ***/
-#define ADC_CLEAR_FLAG()      do{ADC_CONTR &= 0xDF;}while(0)
+#define ADC_CLEAR_FLAG()      {ADC_CONTR &= 0xDF;}
 
 
 /**
@@ -339,9 +339,8 @@ FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run);
   *          ADC interrupt switch control macro function.
   * @param   run [BOOL] 使能控制位。Enable control bit.
 ***/
-#define NVIC_ADC_CTRL(run)     do{EADC = run;}while(0)
+#define NVIC_ADC_CTRL(run)     {EADC = run;}
 	
-
 
 
 #endif

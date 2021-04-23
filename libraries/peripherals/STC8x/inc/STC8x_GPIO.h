@@ -101,56 +101,314 @@ typedef enum
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: GPIO control define function             |
---------------------------------------------------------*/
+/**
+  * @name    GPIO_MODE_WEAK_PULL
+  * @brief   GPIO设置为准双向口（若上拉）模式宏函数。
+  *          GPIO is set as macro function in quasi 
+  *          bidirectional port (if pull-up) mode.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/
+#define  GPIO_MODE_WEAK_PULL(gpio_x,pin)            \
+{                                                   \
+		gpio_x##M1 &= ~(pin), gpio_x##M0 &= ~(pin); \
+}
 
-#define  GPIO_MODE_WEAK_PULL(GPIO_x,Pin)    do{ GPIO_x##M1 &= ~(Pin), GPIO_x##M0 &= ~(Pin); }while(0)
-#define  GPIO_MODE_IN_FLOATING(GPIO_x,Pin)  do{ GPIO_x##M1 |=  (Pin), GPIO_x##M0 &= ~(Pin); }while(0)
-#define  GPIO_MODE_OUT_OD(GPIO_x,Pin)       do{ GPIO_x##M1 |=  (Pin), GPIO_x##M0 |=  (Pin); }while(0)
-#define  GPIO_MODE_OUT_PP(GPIO_x,Pin)       do{ GPIO_x##M1 &= ~(Pin), GPIO_x##M0 |=  (Pin); }while(0)
+	
+/**
+  * @name    GPIO_MODE_IN_FLOATING
+  * @brief   GPIO设置为浮空输入模式宏函数。
+  *          GPIO is set to float input mode macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/	
+#define  GPIO_MODE_IN_FLOATING(gpio_x,pin)          \
+{                                                   \
+		gpio_x##M1 |=  (pin), gpio_x##M0 &= ~(pin); \
+}
 
-/*--------------------------------------------------------
-| @Description: GPIO toggel pin control define function  |
---------------------------------------------------------*/
+	
+/**
+  * @name    GPIO_MODE_OUT_OD
+  * @brief   GPIO设置为开漏输出模式宏函数。
+  *          GPIO is set to open drain output mode macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/		
+#define  GPIO_MODE_OUT_OD(gpio_x,pin)               \
+{                                                   \
+		gpio_x##M1 |=  (pin), gpio_x##M0 |=  (pin); \
+}
 
-#define  GPIO_TOGGLE_PIN(GPIO_x,Pin)    {GPIO_x##_IO ^= Pin;}
 
-/*--------------------------------------------------------
-| @Description: GPIO pull up control define              |
---------------------------------------------------------*/
+/**
+  * @name    GPIO_MODE_OUT_PP
+  * @brief   GPIO设置为推挽输出模式宏函数。
+  *          GPIO is set to push-pull output mode macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/			
+#define  GPIO_MODE_OUT_PP(gpio_x,pin)               \
+{                                                   \
+		gpio_x##M1 &= ~(pin), gpio_x##M0 |=  (pin); \
+}
 
-#define GPIO_PULL_UP_ENABLE(GPIO_x,Pin)    do{EAXFR_ENABLE(); PxPU(GPIO_x##PU_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
-#define GPIO_PULL_UP_DISABLE(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxPU(GPIO_x##PU_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+
+/**
+  * @name    GPIO_FLIP_PIN_LEVEL
+  * @brief   GPIO翻转端口电平状态宏函数。
+  *          GPIO flip port level state macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/		
+#define  GPIO_FLIP_PIN_LEVEL(gpio_x,pin)    \
+{                                           \
+		gpio_x##_IO ^= pin;                 \
+}
+
+
+/**
+  * @name    GPIO_PULL_UP_ENABLE
+  * @brief   GPIO使能上拉电阻宏函数。
+  *          GPIO enable pull-up resistor macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/		
+#define GPIO_PULL_UP_ENABLE(gpio_x,pin)         \
+{                                               \
+		EAXFR_ENABLE();                         \
+		PxPU(gpio_x##PU_ADDRESS) |=  (pin);     \
+		EAXFR_DISABLE();                        \
+}
+
+
+/**
+  * @name    GPIO_PULL_UP_DISABLE
+  * @brief   GPIO不使能上拉电阻宏函数。
+  *          GPIO disable pull-up resistor macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/		
+#define GPIO_PULL_UP_DISABLE(gpio_x,pin)        \
+{                                               \
+		EAXFR_ENABLE();                         \
+		PxPU(gpio_x##PU_ADDRESS) &= ~(pin);     \
+		EAXFR_DISABLE();                        \
+}
 																	
-/*--------------------------------------------------------
-| @Description: GPIO schmidt trigger control define      |
---------------------------------------------------------*/
 
-#define GPIO_ST_ENABLE(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxNCS(GPIO_x##NCS_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
-#define GPIO_ST_DISABLE(GPIO_x,Pin)    do{EAXFR_ENABLE(); PxNCS(GPIO_x##NCS_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+/**
+  * @name    GPIO_ST_ENABLE
+  * @brief   GPIO使能施密特触发器宏函数。
+  *          GPIO enable schmidt trigger macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/		
+#define GPIO_ST_ENABLE(gpio_x,pin)         \
+{                                          \
+	EAXFR_ENABLE();                        \
+	PxNCS(gpio_x##NCS_ADDRESS) |=  (pin);  \
+	EAXFR_DISABLE();                       \
+}
 
-/*--------------------------------------------------------
-| @Description: GPIO level conversion speed define       |
---------------------------------------------------------*/
 
-#define GPIO_SPEED_LOW(GPIO_x,Pin)      do{EAXFR_ENABLE(); PxSR(GPIO_x##SR_ADDRESS) |= (Pin);  EAXFR_DISABLE();}while(0)
-#define GPIO_SPEED_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxSR(GPIO_x##SR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
+/**
+  * @name    GPIO_ST_DISABLE
+  * @brief   GPIO不使能施密特触发器宏函数。
+  *          GPIO disable schmidt trigger macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/	
+#define GPIO_ST_DISABLE(gpio_x,pin)        \
+{                                          \
+	EAXFR_ENABLE();                        \
+	PxNCS(gpio_x##NCS_ADDRESS) &= ~(pin);  \
+	EAXFR_DISABLE();                       \
+}
+
+
+/**
+  * @name    GPIO_SPEED_LOW
+  * @brief   GPIO电平低速翻转宏函数。
+  *          GPIO level low speed flip macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/	
+#define GPIO_SPEED_LOW(gpio_x,pin)         \
+{                                          \
+	EAXFR_ENABLE();                        \
+	PxSR(gpio_x##SR_ADDRESS) |= (pin);     \
+	EAXFR_DISABLE();                       \
+}
+
+
+/**
+  * @name    GPIO_SPEED_HIGH
+  * @brief   GPIO电平高速翻转宏函数。
+  *          GPIO level high speed flip macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/	
+#define GPIO_SPEED_HIGH(gpio_x,pin)        \
+{                                          \
+	EAXFR_ENABLE();                        \
+	PxSR(gpio_x##SR_ADDRESS) &= ~(pin);    \
+	EAXFR_DISABLE();                       \
+}
 
 /*--------------------------------------------------------
 | @Description: GPIO drive current control define        |
 --------------------------------------------------------*/
+/**
+  * @name    GPIO_DRIVE_MEDIUM
+  * @brief   GPIO普通驱动电流宏函数。
+  *          GPIO general drive current macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/	
+#define GPIO_DRIVE_MEDIUM(gpio_x,pin)     \
+{                                         \
+	EAXFR_ENABLE();                       \
+	PxDR(gpio_x##DR_ADDRESS) |=  (pin);   \
+	EAXFR_DISABLE();                      \
+}
 
-#define GPIO_DRIVE_MEDIUM(GPIO_x,Pin)   do{EAXFR_ENABLE(); PxDR(GPIO_x##DR_ADDRESS) |=  (Pin); EAXFR_DISABLE();}while(0)
-#define GPIO_DRIVE_HIGH(GPIO_x,Pin)     do{EAXFR_ENABLE(); PxDR(GPIO_x##DR_ADDRESS) &= ~(Pin); EAXFR_DISABLE();}while(0)
 
+/**
+  * @name    GPIO_DRIVE_HIGH
+  * @brief   GPIO高驱动电流宏函数。
+  *          GPIO high drive current macro function.
+  * @param   gpio_x [define]  GPIO组，只能是宏名称。
+  *                           GPIO group, can only be macro name.
+  * @param   pin    [uint8_t] 端口号，可以同时传参多个， 用或运算符号连接。
+  *                           Port number, which can transfer multiple 
+  *                           parameters at the same time and connect 
+  *                           with or operation symbol.
+***/	
+#define GPIO_DRIVE_HIGH(gpio_x,pin)       \
+{                                         \
+	EAXFR_ENABLE();                       \
+	PxDR(gpio_x##DR_ADDRESS) &= ~(pin);   \
+	EAXFR_DISABLE();                      \
+}
+
+/**
+  * @name    EXTI0_Init
+  * @brief   外部中断0初始化函数。
+  *          EXTI0 trigger mode function.
+  * @param   triMode [IN] 触发模式。Trigger mode. 
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
+FSCSTATE EXTI0_Init(EXTITri_Type triMode);
+
+
+/**
+  * @name    EXTI1_Init
+  * @brief   外部中断1初始化函数。
+  *          EXTI1 trigger mode function.
+  * @param   triMode [IN] 触发模式。Trigger mode. 
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE EXTI0_Init(EXTITri_Type triMode);
 FSCSTATE EXTI1_Init(EXTITri_Type triMode);
 
+
+/**
+  * @name    NVIC_EXTI0_Init
+  * @brief   外部中断0中断初始化函数。
+  *          EXTI0 NVIC function  
+  * @param   priority [IN] 中断优先级。interrupt priority.
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run);
+
+
+/**
+  * @name    NVIC_EXTI1_Init
+  * @brief   外部中断1中断初始化函数。
+  *          EXTI1 NVIC function  
+  * @param   priority [IN] 中断优先级。interrupt priority.
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run);
+
+
+/**
+  * @name    NVIC_EXTI2_Init
+  * @brief   外部中断2中断初始化函数。
+  *          EXTI2 NVIC function  
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE NVIC_EXTI2_Init(BOOL run);
+
+
+/**
+  * @name    NVIC_EXTI3_Init
+  * @brief   EXTI3 NVIC function  
+  * @param   run      ENABLE | DISABLE
+  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
 FSCSTATE NVIC_EXTI3_Init(BOOL run);
+
+
+/**
+  * @name    NVIC_EXTI4_Init
+  * @brief   外部中断4中断初始化函数。
+  *          EXTI4 NVIC function  
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @return  [FSC_SUCCESS / FSC_FAIL]
+***/
 FSCSTATE NVIC_EXTI4_Init(BOOL run);
 
 #define    NVIC_EXTI0_CTRL(run)     do{ EX0 = run; }while(0)

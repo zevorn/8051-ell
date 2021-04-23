@@ -50,7 +50,7 @@ void TIMER0_ISRQ_Handler(void)
 	if(++i>=500)
 	{
 		i = 0;
-		GPIO_TOGGLE_PIN(GPIO_P5,Pin_5);
+		GPIO_FLIP_PIN_LEVEL(GPIO_P5,Pin_5);
 	}
 }
 

@@ -54,6 +54,7 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
@@ -71,7 +72,7 @@
   * @brief   EEPROM获取工作状态宏函数。
   *          EEPROM gets working state macro functions.
 ***/
-#define EEPROM_GET_STATE() (IAP_CONTR & 0x01)
+#define EEPROM_GET_STATE()  (IAP_CONTR & 0x01)
 
 /**
   * @name    EEPROM_Init
@@ -88,7 +89,7 @@ FSCSTATE EEPROM_Init(BOOL run);
   *          EEPROM runs control macro functions.
   * @param   run  [IN] 运行控制位。Operation control bit.
 ***/
-#define EEPROM_CTRL(run)  do{IAP_CONTR = (IAP_CONTR & 0x7F) | (run << 7);}while(0)
+#define EEPROM_CTRL(run)  {IAP_CONTR = (IAP_CONTR & 0x7F) | (run << 7);}
 
 
 /**

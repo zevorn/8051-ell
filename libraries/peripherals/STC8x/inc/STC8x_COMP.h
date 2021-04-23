@@ -307,7 +307,7 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
   *          Comp clears compare complete (interrupt) 
   *          flag bit macro function.
 ***/
-#define COMP_CLEAR_FLAG()      do{CMPCR1 &= 0xBF;}while(0)
+#define COMP_CLEAR_FLAG()      {CMPCR1 &= 0xBF;}
 
 
 /**
@@ -325,7 +325,7 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
   *          COMP interrupt switch control macro function.
   * @param   run [BOOL] 使能控制位。Enable control bit.
 ***/
-#define NVIC_COMP_CTRL(run)    do{ CMPCR1 = (CMPCR1 & 0xCF)|(run << 4); }while(0)
+#define NVIC_COMP_CTRL(run)    { CMPCR1 = (CMPCR1 & 0xCF)|(run << 4); }
 
 
 /**
