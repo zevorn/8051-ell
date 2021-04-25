@@ -1,3 +1,5 @@
+![](https://zeweni.gitee.io/images/8051_ell_lib/doc/icon.png)
+
 # 8051 ELL函数库简介
 
 <font color=#0ddff>[ <u>**从gitee下载8051-ELL**</u>](https://gitee.com/zeweni/ELL-8051-LIB) </font> 
