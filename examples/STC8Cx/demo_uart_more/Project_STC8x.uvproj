@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\build\</OutputDirectory>
-          <OutputName>Project_STC8x</OutputName>
+          <OutputName>output</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -415,11 +415,6 @@
               <FileName>STC8x_I2C.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_NVIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_PCA.c</FileName>

@@ -34,7 +34,7 @@
 
 #include "Lib_CFG.h"
 #ifndef PER_LIB_MCU_MUODEL
-    #define PER_LIB_MCU_MUODEL STC8Ax
+    #define PER_LIB_MCU_MUODEL STC8Gx
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)

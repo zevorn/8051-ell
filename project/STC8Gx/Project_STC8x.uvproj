@@ -427,11 +427,6 @@
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_POWER.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_PWM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_PWM.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_RST.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_RST.c</FilePath>
@@ -465,6 +460,11 @@
               <FileName>STC8x_MDU16.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_MDU16.c</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_MPWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_MPWM.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -36,7 +36,6 @@
 #include "STC8x_GPIO.h"
 #include "ELL_CORE.h"
 #include "STC8x_SPI.h"
-#include "STC8x_NVIC.h"
 #include "PreDelay.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |

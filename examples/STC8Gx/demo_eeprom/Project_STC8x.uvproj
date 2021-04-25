@@ -417,11 +417,6 @@
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_NVIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_PCA.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_PCA.c</FilePath>
@@ -430,11 +425,6 @@
               <FileName>STC8x_POWER.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_POWER.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_PWM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_PWM.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_RST.c</FileName>
@@ -465,6 +455,11 @@
               <FileName>STC8x_WDT.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_WDT.c</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_MPWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_MPWM.c</FilePath>
             </File>
           </Files>
         </Group>

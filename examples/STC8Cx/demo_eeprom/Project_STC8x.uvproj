@@ -417,11 +417,6 @@
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_NVIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_PCA.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_PCA.c</FilePath>

@@ -13,13 +13,13 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STC8G1K08 Series</Device>
+          <Device>STC8H8K64U Series</Device>
           <Vendor>STC</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0x03FF) IROM(0-0x1FF8) CLOCK(35000000) MODP2</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0-0x1FFF) IROM(0-0xFFF8) CLOCK(35000000) MODP2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>63316</DeviceId>
+          <DeviceId>63364</DeviceId>
           <RegisterFile>STC8.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -273,7 +273,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x1ff9</Size>
+                <Size>0xfff9</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -283,7 +283,7 @@
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x400</Size>
+                <Size>0x2000</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -377,9 +377,9 @@
           <GroupName>lib/startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_stc8g.s</FileName>
+              <FileName>startup_stc8h.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\libraries\core\startup\STC8x\startup_stc8g.s</FilePath>
+              <FilePath>..\..\..\libraries\core\startup\STC8x\startup_stc8h.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -417,11 +417,6 @@
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_NVIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_PCA.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_PCA.c</FilePath>
@@ -430,11 +425,6 @@
               <FileName>STC8x_POWER.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_POWER.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_PWM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_PWM.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_RST.c</FileName>
@@ -465,6 +455,16 @@
               <FileName>STC8x_WDT.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_WDT.c</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_HPWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_HPWM.c</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_MDU16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_MDU16.c</FilePath>
             </File>
           </Files>
         </Group>
