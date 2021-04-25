@@ -323,7 +323,10 @@
              *                    the channel is different, 
              *                    please check the macro definition of the header file
             **/
-            #define ADC_CHANGE_CHANNEL(channel)     {ADC_CONTR = (ADC_CONTR & 0xF0) | (channel);}
+            #define ADC_CHANGE_CHANNEL(channel)              \
+			do{                                              \
+				ADC_CONTR = (ADC_CONTR & 0xF0) | (channel);  \
+			}while(0)
 			
 		#endif
 		
@@ -354,7 +357,7 @@
              * @details ADC clears macro function of acquisition 
              *          completion (interrupt) flag bit.
             **/
-            #define ADC_CLEAR_FLAG()      {ADC_CONTR &= 0xDF;}
+            #define ADC_CLEAR_FLAG()      do{ADC_CONTR &= 0xDF;}while(0)
 
 
             /**
@@ -362,7 +365,7 @@
              * @details   ADC interrupt switch control macro function.
              * @param[in] run  使能控制位。Enable control bit.
             **/
-            #define NVIC_ADC_CTRL(run)     {EADC = run;}
+            #define NVIC_ADC_CTRL(run)     do{EADC = run;}while(0)
 			
         #endif
 

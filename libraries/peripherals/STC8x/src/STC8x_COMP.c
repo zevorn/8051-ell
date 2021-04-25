@@ -39,19 +39,21 @@
  * @details COMP select interrupt priority macro function, 
  *          only this file call.
 **/
-#define COMP_NVIC_PRI(pri)                          \
-	do{                                             \
-		IP2H = (IP2H & 0xEF) | ((pri & 0x02) << 3); \
-	    IP2  = (IP2  & 0xEF) | ((pri & 0x01) << 4); \
-	}while(0)
+#define COMP_NVIC_PRI(pri)                      \
+do{                                             \
+	IP2H = (IP2H & 0xEF) | ((pri & 0x02) << 3); \
+	IP2  = (IP2  & 0xEF) | ((pri & 0x01) << 4); \
+}while(0)
 
 /**
  * @brief   COMP选择触发模式宏函数，仅限本文件调用。
  * @details Comp select trigger state macro function, 
  *          only this file call.
 **/
-#define COMP_TRISTATE_SELECT(triMode)              \
-	do {CMPCR1 = (CMPCR1 & 0xCF)|(triMode);}while(0)
+#define COMP_TRISTATE_SELECT(triMode)    \
+do{                                      \
+	CMPCR1 = (CMPCR1 & 0xCF)|(triMode);  \
+}while(0)
 
 /**
  * @brief   COMP选择正极输入脚宏函数，仅限本文件调用。
@@ -61,11 +63,11 @@
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 	
 	#define  COMP_PEINPUT_SELECT(PEPin)                   \
-		{                                                 \
+	do{                                                   \
 			if(PEPin == COMP_PE_P37) {CMPCR1 &= 0xF7;}    \
 			else {CMPCR1 |= 0x08;                         \
 			ADC_CONTR = (ADC_CONTR & 0xF0)|(PEPin)|0x80;} \
-		}
+	}while(0)
 	
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
 		
@@ -78,7 +80,10 @@
  * @details Comp select negative input pin macro function, 
  *          only this file call.
 **/
-#define  COMP_NEINPUT_SELECT(NEPin)   {CMPCR1 = (CMPCR1 & 0xFB) | ((NEPin & 0xF0) >> 2);}
+#define  COMP_NEINPUT_SELECT(NEPin)                   \
+do{                                                   \
+	CMPCR1 = (CMPCR1 & 0xFB) | ((NEPin & 0xF0) >> 2); \
+}while(0)
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |

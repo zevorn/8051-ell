@@ -141,9 +141,9 @@ typedef enum
   *                           with or operation symbol.
 ***/
 #define  GPIO_MODE_WEAK_PULL(gpio_x,pin)            \
-{                                                   \
+do{                                                 \
 		gpio_x##M1 &= ~(pin), gpio_x##M0 &= ~(pin); \
-}
+}while(0)
 
 	
 /**
@@ -158,9 +158,9 @@ typedef enum
   *                           with or operation symbol.
 ***/	
 #define  GPIO_MODE_IN_FLOATING(gpio_x,pin)          \
-{                                                   \
+do{                                                 \
 		gpio_x##M1 |=  (pin), gpio_x##M0 &= ~(pin); \
-}
+}while(0)
 
 	
 /**
@@ -175,9 +175,9 @@ typedef enum
   *                           with or operation symbol.
 ***/		
 #define  GPIO_MODE_OUT_OD(gpio_x,pin)               \
-{                                                   \
+do{                                                 \
 		gpio_x##M1 |=  (pin), gpio_x##M0 |=  (pin); \
-}
+}while(0)
 
 
 /**
@@ -192,9 +192,9 @@ typedef enum
   *                           with or operation symbol.
 ***/			
 #define  GPIO_MODE_OUT_PP(gpio_x,pin)               \
-{                                                   \
+do{                                                 \
 		gpio_x##M1 &= ~(pin), gpio_x##M0 |=  (pin); \
-}
+}while(0)
 
 
 /**
@@ -209,9 +209,9 @@ typedef enum
   *                           with or operation symbol.
 ***/		
 #define  GPIO_FLIP_PIN_LEVEL(gpio_x,pin)    \
-{                                           \
+do{                                         \
 		gpio_x##_IO ^= pin;                 \
-}
+}while(0)
 
 
 /**
@@ -226,11 +226,11 @@ typedef enum
   *                           with or operation symbol.
 ***/		
 #define GPIO_PULL_UP_ENABLE(gpio_x,pin)         \
-{                                               \
+do{                                             \
 		EAXFR_ENABLE();                         \
 		PxPU(gpio_x##PU_ADDRESS) |=  (pin);     \
 		EAXFR_DISABLE();                        \
-}
+}while(0)
 
 
 /**
@@ -245,11 +245,11 @@ typedef enum
   *                           with or operation symbol.
 ***/		
 #define GPIO_PULL_UP_DISABLE(gpio_x,pin)        \
-{                                               \
+do{                                             \
 		EAXFR_ENABLE();                         \
 		PxPU(gpio_x##PU_ADDRESS) &= ~(pin);     \
 		EAXFR_DISABLE();                        \
-}
+}while(0)
 																	
 
 /**
@@ -264,11 +264,11 @@ typedef enum
   *                           with or operation symbol.
 ***/		
 #define GPIO_ST_ENABLE(gpio_x,pin)         \
-{                                          \
+do{                                        \
 	EAXFR_ENABLE();                        \
 	PxNCS(gpio_x##NCS_ADDRESS) |=  (pin);  \
 	EAXFR_DISABLE();                       \
-}
+}while(0)
 
 
 /**
@@ -283,11 +283,11 @@ typedef enum
   *                           with or operation symbol.
 ***/	
 #define GPIO_ST_DISABLE(gpio_x,pin)        \
-{                                          \
+do{                                        \
 	EAXFR_ENABLE();                        \
 	PxNCS(gpio_x##NCS_ADDRESS) &= ~(pin);  \
 	EAXFR_DISABLE();                       \
-}
+}while(0)
 
 
 /**
@@ -302,11 +302,11 @@ typedef enum
   *                           with or operation symbol.
 ***/	
 #define GPIO_SPEED_LOW(gpio_x,pin)         \
-{                                          \
+do{                                        \
 	EAXFR_ENABLE();                        \
 	PxSR(gpio_x##SR_ADDRESS) |= (pin);     \
 	EAXFR_DISABLE();                       \
-}
+}while(0)
 
 
 /**
@@ -321,11 +321,11 @@ typedef enum
   *                           with or operation symbol.
 ***/	
 #define GPIO_SPEED_HIGH(gpio_x,pin)        \
-{                                          \
+do{                                        \
 	EAXFR_ENABLE();                        \
 	PxSR(gpio_x##SR_ADDRESS) &= ~(pin);    \
 	EAXFR_DISABLE();                       \
-}
+}while(0)
 
 
 /**
@@ -340,11 +340,11 @@ typedef enum
   *                           with or operation symbol.
 ***/	
 #define GPIO_DRIVE_MEDIUM(gpio_x,pin)     \
-{                                         \
+do{                                       \
 	EAXFR_ENABLE();                       \
 	PxDR(gpio_x##DR_ADDRESS) |=  (pin);   \
 	EAXFR_DISABLE();                      \
-}
+}while(0)
 
 
 /**
@@ -359,11 +359,11 @@ typedef enum
   *                           with or operation symbol.
 ***/	
 #define GPIO_DRIVE_HIGH(gpio_x,pin)       \
-{                                         \
+do{                                       \
 	EAXFR_ENABLE();                       \
 	PxDR(gpio_x##DR_ADDRESS) &= ~(pin);   \
 	EAXFR_DISABLE();                      \
-}
+}while(0)
 
 /**
   * @name    EXTI0_Init
@@ -443,7 +443,7 @@ FSCSTATE NVIC_EXTI4_Init(BOOL run);
   *          External interrupt 0 controls interrupt switch macro function. 
   * @param   run      [BOOL] 使能控制位。enable control. 
 ***/
-#define    NVIC_EXTI0_CTRL(run)     {EX0 = run;}
+#define    NVIC_EXTI0_CTRL(run)     do{EX0 = run;}while(0)
 
 
 /**
@@ -452,7 +452,7 @@ FSCSTATE NVIC_EXTI4_Init(BOOL run);
   *          External interrupt 1 controls interrupt switch macro function. 
   * @param   run      [BOOL] 使能控制位。enable control. 
 ***/
-#define    NVIC_EXTI1_CTRL(run)     {EX1 = run;}
+#define    NVIC_EXTI1_CTRL(run)     do{EX1 = run;}while(0)
 
 
 /**
@@ -461,7 +461,7 @@ FSCSTATE NVIC_EXTI4_Init(BOOL run);
   *          External interrupt 2 controls interrupt switch macro function. 
   * @param   run      [BOOL] 使能控制位。enable control. 
 ***/
-#define    NVIC_EXTI2_CTRL(run)     {INTCLKO = (INTCLKO & 0xEF) | (run << 4);}
+#define    NVIC_EXTI2_CTRL(run)     do{INTCLKO = (INTCLKO & 0xEF) | (run << 4);}while(0)
 
 
 /**
@@ -470,7 +470,7 @@ FSCSTATE NVIC_EXTI4_Init(BOOL run);
   *          External interrupt 3 controls interrupt switch macro function. 
   * @param   run      [BOOL] 使能控制位。enable control. 
 ***/
-#define    NVIC_EXTI3_CTRL(run)     {INTCLKO = (INTCLKO & 0xDF) | (run << 5);}
+#define    NVIC_EXTI3_CTRL(run)     do{INTCLKO = (INTCLKO & 0xDF) | (run << 5);}while(0)
 
 
 /**
@@ -479,7 +479,7 @@ FSCSTATE NVIC_EXTI4_Init(BOOL run);
   *          External interrupt 4 controls interrupt switch macro function. 
   * @param   run      [BOOL] 使能控制位。enable control. 
 ***/
-#define    NVIC_EXTI4_CTRL(run)     {INTCLKO = (INTCLKO & 0xBF) | (run << 6);}
+#define    NVIC_EXTI4_CTRL(run)    do{INTCLKO = (INTCLKO & 0xBF) | (run << 6);}while(0)
 
 
 #endif

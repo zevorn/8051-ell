@@ -303,7 +303,7 @@
          * @details   COMP interrupt switch control macro function.
          * @param[in] run 使能控制位。Enable control bit.
         ***/
-        #define NVIC_COMP_CTRL(run)    { CMPCR1 = (CMPCR1 & 0xCF)|(run << 4); }
+        #define NVIC_COMP_CTRL(run)    do{CMPCR1 = (CMPCR1 & 0xCF)|(run << 4);}while(0)
 
     #endif
 
@@ -324,7 +324,7 @@
          * @details Comp clears compare complete (interrupt) 
          *          flag bit macro function.
         ***/
-        #define COMP_CLEAR_FLAG()      {CMPCR1 &= 0xBF;}
+        #define COMP_CLEAR_FLAG()      do{CMPCR1 &= 0xBF;}while(0)
 
 
         /**

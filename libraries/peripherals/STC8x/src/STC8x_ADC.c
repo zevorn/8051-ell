@@ -40,9 +40,11 @@
  * @details ADC select interrupt priority macro function, 
  *          only this file call.
 ***/
-#define ADC_NVIC_PRI(pri) { \
-IPH = (IPH & 0xDF) | ((pri & 0x02) << 4); \
-IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); }
+#define ADC_NVIC_PRI(pri)                     \
+do{                                           \
+	IPH = (IPH & 0xDF) | ((pri & 0x02) << 4); \
+	IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); \
+}while(0)
 
  
 /*-----------------------------------------------------------------------
