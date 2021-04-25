@@ -30,11 +30,16 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_I2C.h"
+/*-----------------------------------------------------------------------
+|                             DECLARATION                               |
+-----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: I2C priority define function             |
---------------------------------------------------------*/
-
+/**
+ * @name    I2C_NVIC_PRI
+ * @brief   I2C选择中断优先级宏函数，仅限本文件调用。
+ *          I2C select interrupt priority macro function, 
+ *          only this file call.
+***/
 #define I2C_NVIC_PRI(pri) { \
 IP2H = (IP2H & 0xBF) | ((pri & 0x02) << 5); \
 IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); }
@@ -48,10 +53,11 @@ IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); }
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    I2C_Delay_us
-  * @brief   I2C delay function
-  * @param   nus   us (uint8_t)
-  * @return  None 
+ * @name    I2C_Delay_us
+ * @brief   延时us函数，帮助稳定I2C外设切换工作状态。
+ *          I2C delay us function.
+ * @param   nus [IN] 延时us的时间。The time of delay.
+ * @retval  None.
 ***/
 static void I2C_Delay_us(uint8_t nus)
 {
@@ -63,11 +69,13 @@ static void I2C_Delay_us(uint8_t nus)
 	}  
 }
 
+
 /**
-  * @name    I2C_Wait
-  * @brief   I2C wait time function 
-  * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+ * @name    I2C_Wait
+ * @brief   计算I2C等待时间函数。
+ *          I2C wait time function .
+ * @param   None.
+ * @retval  [FSC_SUCCESS / FSC_FAIL].
 ***/
 static FSCSTATE I2C_Wait(void)
 {
@@ -85,13 +93,15 @@ static FSCSTATE I2C_Wait(void)
     return FSC_SUCCESS;  
 }
 
+
 /**
-  * @name    I2C_Init
-  * @brief   I2C init function
-  * @param   type  I2C_Type_Master | I2C_Type_Slave
-  * @param   wTime value of wait time (uint8_t)
-  * @param   run   ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+ * @name    I2C_Init
+ * @brief   I2C初始化函数。
+ *          I2C initialization function.
+ * @param   type  [IN] I2C工作模式（主从机）。I2C working mode (master-slave).
+ * @param   wTime [IN] I2C等待时间。value of wait time.
+ * @param   run   [IN] 运行控制位。Operation control bit.
+ * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, BOOL run)
 {
@@ -107,12 +117,14 @@ FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, BOOL run)
   else return FSC_FAIL;
 }
 
+
 /**
   * @name    NVCI_I2C_Master_Init
-  * @brief   I2C Master init NVIC function
-  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run        ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   I2C主机中断初始化函数。
+  *          I2C Master init NVIC function.  
+  * @param   priority [IN] 中断优先级。interrupt priority.
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,BOOL run)
 {
@@ -123,13 +135,14 @@ FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,BOOL run)
 	return FSC_SUCCESS;
 }
 
+
 /**
   * @name    NVCI_I2C_Slave_Init
-  * @brief   I2C Slave init NVIC function
-  * @param   priority    NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   triState    I2C_STri_RevStart_Done | I2C_STri_RevData_Done
-  *                      I2C_STri_SendData_Done | I2C_STri_RevStop_Done 
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   I2C从机中断初始化函数。
+  *          I2C Slave init NVIC function.  
+  * @param   priority [IN] 中断优先级。interrupt priority.
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triState)
 {
@@ -142,24 +155,27 @@ FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triState)
 
 
 /**
-  * @name    I2C_Start
-  * @brief   I2C signal of start function 
-  * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @name    I2C_Send_Start
+  * @brief   I2C发送开始信号函数。
+  *          I2C sends signal of start function.  
+  * @param   None. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE I2C_Start(void)
+FSCSTATE I2C_Send_Start(void)
 {
   I2CMSCR = 0x01;    
   return I2C_Wait();
 }
 
+
 /**
-  * @name    I2C_Stop
-  * @brief   I2C signal of stop function 
-  * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @name    I2C_Send_Stop
+  * @brief   I2C发送停止信号函数。
+  *          I2C sends signal of stop function.  
+  * @param   None. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE I2C_Stop(void)
+FSCSTATE I2C_Send_Stop(void)
 {
   I2CMSCR = 0x06;                          
   return I2C_Wait();
@@ -167,9 +183,16 @@ FSCSTATE I2C_Stop(void)
 
 /**
   * @name    I2C_Send_ACK
-  * @brief   I2C send signal of ACK function 
+  * @brief    
   * @param   None
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+***/
+/**
+  * @name    I2C_Send_ACK
+  * @brief   I2C发送ACK信号函数。
+  *          I2C sends signal of ACK function.  
+  * @param   None. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE I2C_Send_ACK(void)
 {
@@ -180,7 +203,7 @@ FSCSTATE I2C_Send_ACK(void)
 
 /**
   * @name    I2C_Send_NACK
-  * @brief   I2C send signal of NACK function 
+  * @brief   I2C sends signal of NACK function 
   * @param   None
   * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/

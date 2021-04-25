@@ -99,10 +99,10 @@ FSCSTATE EEPROM_Init(BOOL run)
   * @name    EEPROM_Erase_Page
   * @brief   EEPROM 擦除扇区函数。
   *          EEPROM erase page function.
-  * @param   addr [IN] 扇区首地址（64字节为一个扇区，地址要能被64整除）。
-  *                    The first address of a sector (64 bytes is a sector, 
-  *                    and the address should be divisible by 64).
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @param   addr [IN] 扇区首地址（512字节为一个扇区，地址要能被512整除）。
+  *                    The first address of a sector (512 bytes is a sector, 
+  *                    and the address should be divisible by 512).
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EEPROM_Erase_Page(uint16_t addr)
 {
@@ -122,7 +122,7 @@ FSCSTATE EEPROM_Erase_Page(uint16_t addr)
   * @brief   EEPROM读取一个字节函数。
   *          EEPROM reads a byte function.  
   * @param   addr [IN] flash地址。Falsh address.
-  * @return  [uint8_t] 一个字节的数据。Data of byte.  
+  * @retval  [uint8_t] 一个字节的数据。Data of byte.  
 ***/
 uint8_t EEPROM_Read_Byte(uint16_t addr)
 {

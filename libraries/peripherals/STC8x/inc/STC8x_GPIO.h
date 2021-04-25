@@ -95,8 +95,6 @@ typedef enum
   EXTI_Tri_Falling = 0x01    //Falling edge trigger
 } EXTITri_Type;
 
-
-
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
@@ -300,9 +298,7 @@ typedef enum
 	EAXFR_DISABLE();                       \
 }
 
-/*--------------------------------------------------------
-| @Description: GPIO drive current control define        |
---------------------------------------------------------*/
+
 /**
   * @name    GPIO_DRIVE_MEDIUM
   * @brief   GPIO普通驱动电流宏函数。
@@ -345,7 +341,7 @@ typedef enum
   * @brief   外部中断0初始化函数。
   *          EXTI0 trigger mode function.
   * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EXTI0_Init(EXTITri_Type triMode);
 
@@ -355,19 +351,18 @@ FSCSTATE EXTI0_Init(EXTITri_Type triMode);
   * @brief   外部中断1初始化函数。
   *          EXTI1 trigger mode function.
   * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
-FSCSTATE EXTI0_Init(EXTITri_Type triMode);
 FSCSTATE EXTI1_Init(EXTITri_Type triMode);
 
 
 /**
   * @name    NVIC_EXTI0_Init
   * @brief   外部中断0中断初始化函数。
-  *          EXTI0 NVIC function  
+  *          EXTI0 NVIC function.
   * @param   priority [IN] 中断优先级。interrupt priority.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run);
 
@@ -375,10 +370,10 @@ FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run);
 /**
   * @name    NVIC_EXTI1_Init
   * @brief   外部中断1中断初始化函数。
-  *          EXTI1 NVIC function  
+  *          EXTI1 NVIC function.
   * @param   priority [IN] 中断优先级。interrupt priority.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run);
 
@@ -386,18 +381,19 @@ FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run);
 /**
   * @name    NVIC_EXTI2_Init
   * @brief   外部中断2中断初始化函数。
-  *          EXTI2 NVIC function  
+  *          EXTI2 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI2_Init(BOOL run);
 
 
 /**
   * @name    NVIC_EXTI3_Init
-  * @brief   EXTI3 NVIC function  
-  * @param   run      ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   外部中断3中断初始化函数。
+  *          EXTI3 NVIC function.
+  * @param   run      [IN] 使能控制位。enable control. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI3_Init(BOOL run);
 
@@ -405,22 +401,56 @@ FSCSTATE NVIC_EXTI3_Init(BOOL run);
 /**
   * @name    NVIC_EXTI4_Init
   * @brief   外部中断4中断初始化函数。
-  *          EXTI4 NVIC function  
+  *          EXTI4 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI4_Init(BOOL run);
 
-#define    NVIC_EXTI0_CTRL(run)     do{ EX0 = run; }while(0)
-#define    NVIC_EXTI1_CTRL(run)     do{ EX1 = run; }while(0)
-#define    NVIC_EXTI2_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xEF) | (run << 4); }while(0)
-#define    NVIC_EXTI3_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xDF) | (run << 5); }while(0)
-#define    NVIC_EXTI4_CTRL(run)     do{ INTCLKO = (INTCLKO & 0xBF) | (run << 6); }while(0)
 
-/*--------------------------------------------------------
-| @Description: GPIO Pin switching function              |
---------------------------------------------------------*/
+/**
+  * @name    NVIC_EXTI0_CTRL
+  * @brief   外部中断0控制中断开关宏函数。
+  *          External interrupt 0 controls interrupt switch macro function. 
+  * @param   run      [BOOL] 使能控制位。enable control. 
+***/
+#define    NVIC_EXTI0_CTRL(run)     {EX0 = run;}
 
+
+/**
+  * @name    NVIC_EXTI1_CTRL
+  * @brief   外部中断1控制中断开关宏函数。
+  *          External interrupt 1 controls interrupt switch macro function. 
+  * @param   run      [BOOL] 使能控制位。enable control. 
+***/
+#define    NVIC_EXTI1_CTRL(run)     {EX1 = run;}
+
+
+/**
+  * @name    NVIC_EXTI2_CTRL
+  * @brief   外部中断2控制中断开关宏函数。
+  *          External interrupt 2 controls interrupt switch macro function. 
+  * @param   run      [BOOL] 使能控制位。enable control. 
+***/
+#define    NVIC_EXTI2_CTRL(run)     {INTCLKO = (INTCLKO & 0xEF) | (run << 4);}
+
+
+/**
+  * @name    NVIC_EXTI3_CTRL
+  * @brief   外部中断3控制中断开关宏函数。
+  *          External interrupt 3 controls interrupt switch macro function. 
+  * @param   run      [BOOL] 使能控制位。enable control. 
+***/
+#define    NVIC_EXTI3_CTRL(run)     {INTCLKO = (INTCLKO & 0xDF) | (run << 5);}
+
+
+/**
+  * @name    NVIC_EXTI4_CTRL
+  * @brief   外部中断4控制中断开关宏函数。
+  *          External interrupt 4 controls interrupt switch macro function. 
+  * @param   run      [BOOL] 使能控制位。enable control. 
+***/
+#define    NVIC_EXTI4_CTRL(run)     {INTCLKO = (INTCLKO & 0xBF) | (run << 6);}
 
 
 #endif

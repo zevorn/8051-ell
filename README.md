@@ -1,8 +1,8 @@
 # 8051 ELL函数库简介
 
-[![Fork me on Gitee](https://gitee.com/zeweni/ELL-8051-LIB/widgets/widget_6.svg?color=381296)](https://gitee.com/zeweni/ELL-8051-LIB)
+ <font color=#0ddff>[ <u>**从gitee下载8051-ELL**</u>](https://gitee.com/zeweni/ELL-8051-LIB) </font> 
 
-[![star](https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=dark)](https://gitee.com/zeweni/ELL-8051-LIB/stargazers)[![fork](https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=white)](https://gitee.com/zeweni/ELL-8051-LIB/members)
+[![](https://badgen.net/github/license/zewen-i/8051-ELL-LIB?color=orange)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/stars/zewen-i/8051-ELL-LIB?color=green)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/forks/zewen-i/8051-ELL-LIB)](https://github.com/zewen-i/8051-ELL-LIB) <a href='https://gitee.com/zeweni/ELL-8051-LIB/stargazers'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=white' alt='star'></img></a> <a href='https://gitee.com/zeweni/ELL-8051-LIB/members'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=gray' alt='fork'></img></a>
 
 
 
@@ -213,6 +213,20 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 # 更新记录
 
 ## 2021年04月
+
+### 2021-04-25
+
+* 修改ADC中断采集函数，去掉通道参数，增加切换采集通道宏函数
+
+  
+
+### 2021-04-24
+
+* 增加GPIO代码中文注释
+
+* 修改端口电平翻转函数名
+
+  
 
 ### 2021-04-23
 

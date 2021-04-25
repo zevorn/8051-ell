@@ -127,17 +127,13 @@ uint16_t ADC_Get_Sample(uint8_t channel, ADCAcc_Type acc)
  * @name    ADC_Get_Sample_Interrupt
  * @brief   ADC获取采集结果函数（中断法）。
  *          ADC get sample function.
- * @param   nchannel [IN] ADC下一次要采集的通道,注意请查看头文件的宏定义选择通道。
- *                        Next acquisition channel of ADC, different chip models, 
- *                        the channel is different, 
- *                        please check the macro definition of the header file
  * @param   acc      [IN] ADC采集精度，不同的芯片型号，最高精度有所不同，请查看头文件的宏定义。
  *                        ADC acquisition accuracy, different chip models, 
  *                        the highest accuracy is different, 
  *                        please check the macro definition of the header file.
  * @retval  [uint16_t]    返回采集到的ADC值。Returns the collected ADC value.
 ***/
-uint16_t ADC_Get_Sample_Interrupt(uint8_t nchannel, ADCAcc_Type acc)
+uint16_t ADC_Get_Sample_Interrupt(ADCAcc_Type acc)
 {	
 	uint16_t value;
 	ADC_RES = 0;
@@ -145,7 +141,6 @@ uint16_t ADC_Get_Sample_Interrupt(uint8_t nchannel, ADCAcc_Type acc)
 	ADC_CONTR &= 0xDF;  //Completion mark
 	value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
 	value >>= acc; //Selection accuracy
-	ADC_CONTR = (ADC_CONTR & 0xF0) | (nchannel);
 	ADC_CONTR |= 0x40; //Restart
 	return value;
 }
