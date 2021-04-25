@@ -8,16 +8,11 @@
 [![](https://badgen.net/github/license/zewen-i/8051-ELL-LIB?color=orange)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/stars/zewen-i/8051-ELL-LIB?color=green)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/forks/zewen-i/8051-ELL-LIB)](https://github.com/zewen-i/8051-ELL-LIB) <a href='https://gitee.com/zeweni/ELL-8051-LIB/stargazers'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=white' alt='star'></img></a> <a href='https://gitee.com/zeweni/ELL-8051-LIB/members'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=gray' alt='fork'></img></a>
 
 
-
-
-8051-ELL库，是我根据新一代增强型8051，针对其丰富的芯片资源，基于keil开发的软件包。函数库采用了LL库的编程思想，充分考虑8051的特性，结合硬件条件，提供大量标准的API函数，供开发者访问底层硬件细节。并且函数库的大小可裁剪，在代码密度和执行效率上做了很好的平衡。
-
+8051-ELL库，是根据新一代增强型8051为内核的MCU，基于keil开发的软件包。函数库采用了LL库的编程思想，充分考虑8051的特性，结合硬件条件，提供大量标准的API函数，供开发者访问底层硬件细节。并且函数库的大小可裁剪，在代码密度和执行效率上做了很好的平衡。
 
 
 为考虑函数库的兼容性，我在编写规则及注释上面选择了全英文的方式，若开发者不习惯全英文，可以通过库函数提供的开发者文档了解API函数的具体使用方法，我们在文档里提供了详细丰富的中文注解和说明。
 （下一个版本讲在库代码中引入中文注释！编码格式为UTF-8，支持Keil和VScode 无缝切换）
-
-
 
 
 函数库遵循 Apache 许可证 2.0 版本，可免费在商业产品中使用，不需要公布应用程序源码，没有潜在商业风险。
