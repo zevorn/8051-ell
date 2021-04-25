@@ -35,11 +35,10 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @name    COMP_NVIC_PRI
  * @brief   COMP选择中断优先级宏函数，仅限本文件调用。
- *          COMP select interrupt priority macro function, 
+ * @details COMP select interrupt priority macro function, 
  *          only this file call.
-***/
+**/
 #define COMP_NVIC_PRI(pri)                          \
 	do{                                             \
 		IP2H = (IP2H & 0xEF) | ((pri & 0x02) << 3); \
@@ -47,28 +46,26 @@
 	}while(0)
 
 /**
- * @name    COMP_TRIState_Select
  * @brief   COMP选择触发模式宏函数，仅限本文件调用。
- *          Comp select trigger state macro function, 
+ * @details Comp select trigger state macro function, 
  *          only this file call.
-***/
+**/
 #define COMP_TRISTATE_SELECT(triMode)              \
 	do {CMPCR1 = (CMPCR1 & 0xCF)|(triMode);}while(0)
 
 /**
- * @name    COMP_PEINPUT_CFG
  * @brief   COMP选择正极输入脚宏函数，仅限本文件调用。
- *          Comp select positive input pin macro function, 
+ * @details Comp select positive input pin macro function, 
  *          only this file call.
-***/
+**/
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 	
 	#define  COMP_PEINPUT_SELECT(PEPin)                   \
-		do{                                               \ 
+		{                                                 \
 			if(PEPin == COMP_PE_P37) {CMPCR1 &= 0xF7;}    \
 			else {CMPCR1 |= 0x08;                         \
 			ADC_CONTR = (ADC_CONTR & 0xF0)|(PEPin)|0x80;} \
-		}while(0)
+		}
 	
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
 		
@@ -77,13 +74,11 @@
 #endif	
 
 /**
- * @name    COMP_NEINPUT_SELECT
  * @brief   COMP选择负极输入脚宏函数，仅限本文件调用。
- *          Comp select negative input pin macro function, 
+ * @details Comp select negative input pin macro function, 
  *          only this file call.
-***/
-#define  COMP_NEINPUT_SELECT(NEPin)                             \
-	do{CMPCR1 = (CMPCR1 & 0xFB) | ((NEPin & 0xF0) >> 2);}while(0)
+**/
+#define  COMP_NEINPUT_SELECT(NEPin)   {CMPCR1 = (CMPCR1 & 0xFB) | ((NEPin & 0xF0) >> 2);}
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -92,62 +87,77 @@
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_COMP_CTRL == 1)
 
-/**
-  * @name    COMP_Init
-  * @brief   COMP初始化函数
-  *          COMP init function
-  * @param   *compx [IN] COMP结构体句柄，初始化时请定义该句柄，并用其地址来传参。
-  *                      COMP structure handle. When initializing, 
-  *                      please define the handle and use its address 
-  *                      to pass parameters.
-  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE COMP_Init(const COMP_InitType* compx)
-{
-    if(compx -> DC_FTW > 0x3F) return FSC_FAIL;
-    COMP_PEINPUT_SELECT(compx -> PEPin);
-    COMP_NEINPUT_SELECT(compx -> NEPin);
-    CMPCR2 = (CMPCR2 & 0xBF) | (compx -> AC_FTW << 6);
-    CMPCR2 = (CMPCR2 & 0xC0) | (compx -> DC_FTW);
-    CMPCR2 = (CMPCR2 & 0x7F) | (compx -> DIRPut << 7);
-    CMPCR1 = (CMPCR1 & 0xFD) | (compx -> Output << 1);
-    CMPCR1 = (CMPCR1 & 0x7F) | (compx -> Run << 7);
-    return FSC_SUCCESS;
-}
+    #if (PER_LIB_COMP_INIT_CTRL == 1)
 
-/**
-  * @name    NVIC_COMP_Init
-  * @brief   COMP中断初始化函数
-  *          COMP interrupt initialization function.
-  * @param   priority [IN] 优先级。Priority.
-  * @param   triMode  [IN] 触发模式。Trigger mode.
-  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode)
-{
-	COMP_TRISTATE_SELECT(triMode);
-	COMP_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+        /**
+         * @brief     COMP初始化函数。
+         * @details   COMP initialization function.
+         * @param[in] compx  COMP结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+         *                   COMP structure handle. When initializing, 
+         *                   please define the handle and use its address 
+         *                   to pass parameters.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        ***/
+        FSCSTATE COMP_Init(const COMP_InitType* compx)
+        {
+            if(compx -> DC_FTW > 0x3F) return FSC_FAIL;
+            COMP_PEINPUT_SELECT(compx -> PEPin);
+            COMP_NEINPUT_SELECT(compx -> NEPin);
+            CMPCR2 = (CMPCR2 & 0xBF) | (compx -> AC_FTW << 6);
+            CMPCR2 = (CMPCR2 & 0xC0) | (compx -> DC_FTW);
+            CMPCR2 = (CMPCR2 & 0x7F) | (compx -> DIRPut << 7);
+            CMPCR1 = (CMPCR1 & 0xFD) | (compx -> Output << 1);
+            CMPCR1 = (CMPCR1 & 0x7F) | (compx -> Run << 7);
+            return FSC_SUCCESS;
+        }
 
-/**
-  * @name    GPIO_COMP_SWPort
-  * @brief   COMP切换复用IO函数。
-  *          COMP switch out port control function.  
-  * @param   port [IN] 复用IO枚举体。IO switch enumerator.
-  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE GPIO_COMP_SWPort(GPIOSWPort_Type port)
-{
-	if(port < SW_Port3)
-	{
-		P_SW2 = (P_SW2 & 0xF7) | (port << 3);
-		return FSC_SUCCESS;
-	}
-	else return FSC_FAIL;
-}
+    #endif
 
+
+    #if (PER_LIB_COMP_NVIC_CTRL == 1)
+
+        /**
+         * @brief       COMP中断初始化函数。
+         * @details     COMP interrupt initialization function.
+         * @param[in]   priority 优先级。Priority.
+         * @param[in]   triMode  触发模式。Trigger mode.
+         * @return      FSC_SUCCESS 返回成功。Return to success.
+         * @return      FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode)
+        {
+            COMP_TRISTATE_SELECT(triMode);
+            COMP_NVIC_PRI(priority);
+            return FSC_SUCCESS;
+        }
+
+    #endif
+
+    #if (PER_LIB_COMP_WORK_CTRL == 1)
+
+        /**
+         * @brief   COMP切换复用IO函数。
+         * @details COMP switch out port control function.  
+         * @param   port [IN] 复用IO枚举体。IO switch enumerator.
+         * @return  FSC_SUCCESS 返回成功。Return to success.
+         * @return  FSC_FAIL    返回失败。Return to fail.
+        ***/
+        FSCSTATE GPIO_COMP_SWPort(GPIOSWPort_Type port)
+        {
+            if(port < SW_Port3)
+            {
+                P_SW2 = (P_SW2 & 0xF7) | (port << 3);
+                return FSC_SUCCESS;
+            }
+            else return FSC_FAIL;
+        }
+
+    #endif
+
+#endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/

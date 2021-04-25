@@ -39,8 +39,30 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_EEPROM_CTRL
+    #define PER_LIB_EEPROM_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_EEPROM_INIT_CTRL
+    #define PER_LIB_EEPROM_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_EEPROM_WORK_CTRL
+    #define PER_LIB_EEPROM_WORK_CTRL 1
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -66,97 +88,106 @@
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_EEPROM_CTRL == 1)
 
-/**
-  * @name    EEPROM_GET_STATE
-  * @brief   EEPROM获取工作状态宏函数。
-  *          EEPROM gets working state macro functions.
-***/
-#define EEPROM_GET_STATE()  (IAP_CONTR & 0x01)
+    #if (PER_LIB_EEPROM_INIT_CTRL == 1)
 
-/**
-  * @name    EEPROM_Init
-  * @brief   EEPROM初始化函数。
-  *          EEPROM initialization function.
-  * @param   run  [IN] 运行控制位。Operation control bit.
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EEPROM_Init(BOOL run);
+        /**
+         * @brief     EEPROM初始化函数。
+         * @details   EEPROM initialization function.
+         * @param[in] run  运行控制位。Operation control bit.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE EEPROM_Init(BOOL run);
 
-/**
-  * @name    EEPROM_CTRL
-  * @brief   EEPROM运行控制宏函数。
-  *          EEPROM runs control macro functions.
-  * @param   run  [IN] 运行控制位。Operation control bit.
-***/
-#define EEPROM_CTRL(run)  {IAP_CONTR = (IAP_CONTR & 0x7F) | (run << 7);}
+    #endif
 
 
-/**
-  * @name    EEPROM_Erase_Page
-  * @brief   EEPROM 擦除扇区函数。
-  *          EEPROM erase page function.
-  * @param   addr [IN] 扇区首地址（512字节为一个扇区，地址要能被512整除）。
-  *                    The first address of a sector (512 bytes is a sector, 
-  *                    and the address should be divisible by 512).
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EEPROM_Erase_Page(uint16_t addr);
+    #if (PER_LIB_EEPROM_WORK_CTRL == 1)
+
+        /**
+         * @brief   EEPROM获取工作状态宏函数。
+         * @details EEPROM gets working state macro functions.
+        **/
+        #define EEPROM_GET_STATE()  (IAP_CONTR & 0x01)
 
 
-/**
-  * @name    EEPROM_Write_Byte
-  * @brief   EEPROM写一个字节函数。
-  *          EEPROM writes a byte function.  
-  * @param   addr [IN] flash地址。Falsh address.
-  * @param   byte [IN] 一个字节的数据。Data of byte.  
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte);
+        /**
+         * @brief     EEPROM运行控制宏函数。
+         * @details   EEPROM runs control macro functions.
+         * @param[in] run 运行控制位。Operation control bit.
+        **/
+        #define EEPROM_CTRL(run)  {IAP_CONTR = (IAP_CONTR & 0x7F) | (run << 7);}
 
 
-/**
-  * @name    EEPROM_Write_Str
-  * @brief   EEPROM写一个字符串。
-  *          EEPROM write string function .  
-  * @param   addr  [IN] Falsh地址。falsh address.
-  * @param   *arry [IN] 字符串的首地址。The first address of the string.
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t *str);
-
-/**
-  * @name    EEPROM_Write_Arry
-  * @brief   EEPROM写一个数组函数。
-  *          EEPROM write a Arry function.  
-  * @param   addr  [IN] Falsh地址。falsh address.
-  * @param   *arry [IN] 数组的首地址。The first address of the array.
-  * @param   len   [IN] 数组长度。arry length. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t *str,uint8_t len);
-
-/**
-  * @name    EEPROM_Read_Byte
-  * @brief   EEPROM读取一个字节函数。
-  *          EEPROM reads a byte function.  
-  * @param   addr [IN] flash地址。Falsh address.
-  * @retval  [uint8_t] 一个字节的数据。Data of byte.  
-***/
-uint8_t EEPROM_Read_Byte(uint16_t addr);
+        /**
+         * @brief     EEPROM 擦除扇区函数。
+         * @details   EEPROM erase page function.
+         * @param[in] addr  扇区首地址（512字节为一个扇区，地址要能被512整除）。
+         *                    The first address of a sector (512 bytes is a sector, 
+         *                    and the address should be divisible by 512).
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE EEPROM_Erase_Page(uint16_t addr);
 
 
-/**
-  * @name    EEPROM_Read_Arry
-  * @brief   EEPROM读取一个数组函数。
-  *          EEPROM read Arry function.  
-  * @param   addr  [IN] Falsh地址。falsh address.
-  * @param   *arry [OUT] 数组的首地址。The first address of the array.
-  * @param   len   [IN] 数组长度。arry length. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *str,uint8_t len);
+        /**
+         * @brief     EEPROM写一个字节函数。
+         * @details   EEPROM writes a byte function.  
+         * @param[in] addr flash地址。Falsh address.
+         * @param[in] byte  一个字节的数据。Data of byte.  
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE EEPROM_Write_Byte(uint16_t addr,uint8_t byte);
 
+
+        /**
+         * @brief     EEPROM写一个字符串。
+         * @details   EEPROM write string function .  
+         * @param[in] addr   Falsh地址。falsh address.
+         * @param[in] str  字符串的首地址。The first address of the string.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE EEPROM_Write_Str(uint16_t addr,const uint8_t *str);
+
+
+        /**
+         * @brief      EEPROM写一个数组函数。
+         * @details    EEPROM write a Arry function.  
+         * @param[in]  addr  Falsh地址。falsh address.
+         * @param[in]  arry  数组的首地址。The first address of the array.
+         * @param[in]  len   数组长度。arry length. 
+         * @return     FSC_SUCCESS 返回成功。Return to success.
+         * @return     FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE EEPROM_Write_Arry(uint16_t addr,const uint8_t *arry,uint8_t len);
+
+
+        /**
+         * @brief     EEPROM读取一个字节函数。
+         * @details   EEPROM reads a byte function.  
+         * @param[in] addr flash地址。Falsh address.
+         * @return    [uint8_t] 一个字节的数据。Data of byte.  
+        **/
+        uint8_t EEPROM_Read_Byte(uint16_t addr);
+
+
+        /**
+         * @brief       EEPROM读取一个数组函数。
+         * @details     EEPROM read Arry function.  
+         * @param[in]   addr   Falsh地址。falsh address.
+         * @param[out]  arry   数组的首地址。The first address of the array.
+         * @param[in]   len    数组长度。arry length. 
+         * @return     FSC_SUCCESS 返回成功。Return to success.
+         * @return     FSC_FAIL    返回失败。Return to fail.
+        ***/
+        FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *arry,uint8_t len);
+
+    #endif
 
 
 
@@ -164,4 +195,4 @@ FSCSTATE EEPROM_Read_Arry(uint16_t addr,uint8_t *str,uint8_t len);
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/
-
+#endif

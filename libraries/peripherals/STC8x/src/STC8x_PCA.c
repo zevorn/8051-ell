@@ -55,14 +55,14 @@ static vuint16_t PCA_Rvalue[4];
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    PCA_CNT_Init
-  * @brief   PCA0 counter init function,It must be initialized last
-  * @param   clkSrc   PCA_SCLK_DIV_1 | PCA_SCLK_DIV_2 | PCA_SCLK_DIV_4
-  *                   PCA_SCLK_DIV_6 | PCA_SCLK_DIV_8 | PCA_SCLK_DIV_12
-  *                   PCA_TIMER0     | PCA_ECI
-  * @param   run      ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+* @name    PCA_CNT_Init
+* @brief   PCA0 counter init function,It must be initialized last
+* @param   clkSrc   PCA_SCLK_DIV_1 | PCA_SCLK_DIV_2 | PCA_SCLK_DIV_4
+*                   PCA_SCLK_DIV_6 | PCA_SCLK_DIV_8 | PCA_SCLK_DIV_12
+*                   PCA_TIMER0     | PCA_ECI
+* @param   run      ENABLE | DISABLE
+* @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+*/
 FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,BOOL run) 
 {
     CMOD = (CMOD & 0xF1)|(clkSrc);

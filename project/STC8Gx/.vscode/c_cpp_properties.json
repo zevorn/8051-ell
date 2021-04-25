@@ -5,8 +5,11 @@
             "includePath": [
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries",
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\core",
+                "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\core\\register\\STC8x",
+                "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\core\\startup\\STC8x",
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\drives",
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\drives\\KeyScan",
+                "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\drives\\OLED",
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\peripherals",
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\peripherals\\STC8x\\inc",
                 "d:\\OneDrive\\Desktop\\ELL-8051-LIB\\libraries\\peripherals\\STC8x\\src",

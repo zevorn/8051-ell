@@ -42,7 +42,6 @@ static void STC8x_SYSCLK_Config(void);
 static void STC8x_UART_Config(void);
 static void STC8x_GPIO_Config(void);
 static void STC8x_TIMER_Config(void);
-static void STC8x_ADC_Config(void);
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
@@ -65,7 +64,7 @@ void STC8x_System_Init(void)
 	STC8x_GPIO_Config();
 	STC8x_UART_Config();
 	STC8x_TIMER_Config();
-	STC8x_ADC_Config();
+	
 	/*
 		Add hardware driver initialization code here.
 	*/
@@ -148,26 +147,6 @@ static void STC8x_UART_Config(void)
 	UART1_Init(&UART_InitStruct);
 	NVIC_UART1_Init(NVIC_PR0,ENABLE);
 
-}
-
-/**
-  * @name    STC8x_ADC_Config
-  * @brief   MCU ADC initialization function
-  * @param   None
-  * @return  None
-***/
-static void STC8x_ADC_Config(void)
-{
-	ADC_InitType ADC_InitStruct = {0};
-	
-    GPIO_MODE_IN_FLOATING(GPIO_P1,Pin_0);
-	
-	ADC_InitStruct.Power = ENABLE; // ADC power control bit
-	ADC_InitStruct.Channel = ADC_Channel_P10_8G1K08_T; // ADC channel selection
-	ADC_InitStruct.Speed = 0x0F; // The maximum ADC conversion speed (working clock frequency) is 0x0f
-	ADC_InitStruct.Align = ADC_Right; // ADC data format alignment
-	ADC_InitStruct.Run = ENABLE; //  ADC conversion operation control bit
-	ADC_Init(&ADC_InitStruct);
 }
 
 /*-----------------------------------------------------------------------

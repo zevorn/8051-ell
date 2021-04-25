@@ -53,118 +53,130 @@ IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); }
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_ADC_CTRL == 1)
 
-/**
- * @name    nop
- * @brief   空延时函数，帮助稳定ADC外设切换工作状态。
- *          Working wait nop function.
- * @param   None
- * @retval  None
-***/
-static void nop(void)
-{
-	uint8_t i = 255;
-	while(i--);
-}
+	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
-/**
- * @name    ADC_Init
- * @brief   ADC外设初始化函数。
- *          ADC peripheral init function.
- * @param   *adcx  [IN] ADC结构体句柄，初始化时请定义该句柄，并用其地址来传参。
- *                      ADC structure handle. When initializing, 
- *                      please define the handle and use its address 
- *                      to pass parameters.
- * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE ADC_Init(const ADC_InitType* adcx)
-{
-	if(adcx -> Speed <= 0x0F) 
-	{
-		EAXFR_ENABLE();
-		ADCTIM = 0x3F;
-		EAXFR_DISABLE();
-		ADC_CONTR = (ADC_CONTR & 0x70)|(adcx -> Power << 7)|(adcx -> Channel);
-		nop();
-		ADCCFG = (ADCCFG & 0xF0) | (adcx -> Speed);	
-		ADCCFG = (ADCCFG & 0xDF) | (adcx -> Align << 5);	
-		ADC_CONTR = (ADC_CONTR & 0xBF) | (adcx -> Run << 6);
-		return FSC_SUCCESS;
-	}
-	else return FSC_FAIL;
-}
+		/**
+		 * @details	空延时函数，帮助稳定ADC外设切换工作状态。
+		 *          Working wait nop function.
+		 * @param   None
+		 * @return  None
+		***/
+		static void nop(void)
+		{
+			uint8_t i = 255;
+			while(i--);
+		}
+		
+		#if (PER_LIB_ADC_INIT_CTRL == 1)
+		
+			/**
+			 * @brief		ADC外设初始化函数。
+			 * @details	    This is a ADC peripheral init function. 
+			 * @param[in]	adcx  ADC结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+			 *                    ADC structure handle. When initializing, 
+			 *                    please define the handle and use its address
+			 *                    to pass parameters.
+             * @return      FSC_SUCCESS 返回成功。Return to success.
+             * @return      FSC_FAIL    返回失败。Return to fail.
+			 **/
+			FSCSTATE ADC_Init(const ADC_InitType* adcx)
+			{
+				if(adcx -> Speed <= 0x0F) 
+				{
+					EAXFR_ENABLE();
+					ADCTIM = 0x3F;
+					EAXFR_DISABLE();
+					ADC_CONTR = (ADC_CONTR & 0x70)|(adcx -> Power << 7)|(adcx -> Channel);
+					nop();
+					ADCCFG = (ADCCFG & 0xF0) | (adcx -> Speed);	
+					ADCCFG = (ADCCFG & 0xDF) | (adcx -> Align << 5);	
+					ADC_CONTR = (ADC_CONTR & 0xBF) | (adcx -> Run << 6);
+					return FSC_SUCCESS;
+				}
+				else return FSC_FAIL;
+			}
+			
+		#endif
+		
+		#if (PER_LIB_ADC_WORK_CTRL == 1)
+			
+			/**
+			 * @brief	   ADC获取采集结果函数（查询法）。
+			 * @details	   This is a ADC get sample function. 
+			 * @param[in]  channel  ADC采集通道,不同的芯片型号，通道有所不同，请查看头文件的宏定义。
+			 *                      ADC acquisition accuracy, different chip models, 
+			 *                      the highest accuracy is different, 
+			 *                      please check the macro definition of the header file.
+			 * @param[in]  acc      ADC采集精度，不同的芯片型号，最高精度有所不同，请查看头文件的宏定义。
+			 *                      ADC acquisition accuracy, different chip models, 
+			 *                      the highest accuracy is different, 
+			 *                      please check the macro definition of the header file.
+			 * @return	   uint16_t 返回采集到的ADC值。Returns the collected ADC value.
+			 **/
+			uint16_t ADC_Get_Sample(uint8_t channel, ADCAcc_Type acc)
+			{	
+				uint16_t value;
+				ADC_RES = 0;
+				ADC_RESL = 0;
+				ADC_CONTR = (ADC_CONTR & 0xF0) | ADC_POWER | (channel);
+				while (!(ADC_CONTR & 0x20));  //Query ADC completion flag
+				ADC_CONTR &= 0xDF;  //Completion mark
+				value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
+				value >>= acc; //Selection accuracy
+				ADC_CONTR |= 0x40; //Restart
+				return value;
+			}
 
-/**
- * @name    ADC_Get_Sample
- * @brief   ADC获取采集结果函数（查询法）。
- *          ADC get sample function.
- * @param   channel[IN] ADC采集通道,不同的芯片型号，通道有所不同，请查看头文件的宏定义。
- *                      ADC acquisition channel, different chip models, 
- *                      the channel is different, 
- *                      please check the macro definition of the header file
- * @param   acc    [IN] ADC采集精度，不同的芯片型号，最高精度有所不同，请查看头文件的宏定义。
- *                      ADC acquisition accuracy, different chip models, 
- *                      the highest accuracy is different, 
- *                      please check the macro definition of the header file.
- * @retval  [uint16_t]  返回采集到的ADC值。Returns the collected ADC value.
-***/
-uint16_t ADC_Get_Sample(uint8_t channel, ADCAcc_Type acc)
-{	
-	uint16_t value;
-	ADC_RES = 0;
-	ADC_RESL = 0;
-	ADC_CONTR = (ADC_CONTR & 0xF0) | ADC_POWER | (channel);
-	while (!(ADC_CONTR & 0x20));  //Query ADC completion flag
-	ADC_CONTR &= 0xDF;  //Completion mark
-	value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
-	value >>= acc; //Selection accuracy
-	ADC_CONTR |= 0x40; //Restart
-	return value;
-}
+			
+			/**
+			 * @brief	   ADC获取采集结果函数（中断法）。
+			 * @details	   This is a ADC get sample function in interrupt. 
+			 * @param[in]  acc      ADC采集精度，不同的芯片型号，最高精度有所不同，请查看头文件的宏定义。
+			 *                      ADC acquisition accuracy, different chip models, 
+			 *                      the highest accuracy is different, 
+			 *                      please check the macro definition of the header file.
+			 * @return	   uint16_t 返回采集到的ADC值。Returns the collected ADC value.
+			 **/
+			uint16_t ADC_Get_Sample_Interrupt(ADCAcc_Type acc)
+			{	
+				uint16_t value;
+				ADC_RES = 0;
+				ADC_RESL = 0;
+				ADC_CONTR &= 0xDF;  //Completion mark
+				value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
+				value >>= acc; //Selection accuracy
+				ADC_CONTR |= 0x40; //Restart
+				return value;
+			}
+			
+		#endif
+			
 
-/**
- * @name    ADC_Get_Sample_Interrupt
- * @brief   ADC获取采集结果函数（中断法）。
- *          ADC get sample function.
- * @param   acc      [IN] ADC采集精度，不同的芯片型号，最高精度有所不同，请查看头文件的宏定义。
- *                        ADC acquisition accuracy, different chip models, 
- *                        the highest accuracy is different, 
- *                        please check the macro definition of the header file.
- * @retval  [uint16_t]    返回采集到的ADC值。Returns the collected ADC value.
-***/
-uint16_t ADC_Get_Sample_Interrupt(ADCAcc_Type acc)
-{	
-	uint16_t value;
-	ADC_RES = 0;
-	ADC_RESL = 0;
-	ADC_CONTR &= 0xDF;  //Completion mark
-	value = (uint16_t)(ADC_RES << 8) | ADC_RESL;  
-	value >>= acc; //Selection accuracy
-	ADC_CONTR |= 0x40; //Restart
-	return value;
-}
+		#if (PER_LIB_ADC_WORK_CTRL == 1)
+			
+            /**
+             * @brief	   ADC优先级初始化函数。
+             * @details	   This is a ADC priority initialization function. 
+             * @param[in]  priority 中断优先级。
+             * @param[in]  run      中断运行控制位。
+             * @return  FSC_SUCCESS 返回成功。Return to success.
+             * @return  FSC_FAIL    返回失败。Return to fail.
+             **/
+            FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run)
+            {
+                EADC = run;
+                ADC_NVIC_PRI(priority);
+                return FSC_SUCCESS;
+            }
 
-/**
-  * @name    NVIC_ADC_Init
-  * @brief   ADC中断初始化函数。
-  *          ADC interrupt initialization function.
-  * @param   priority [IN] 优先级。Priority.
-  * @param   run      [IN] 使能控制位。Enable control bit.
-  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run)
-{
-	EADC = run;
-	ADC_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+        #endif
 
-#endif
-	
+	#endif
+		
+#endif	
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
-
 

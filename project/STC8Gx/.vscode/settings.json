@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "stc8x_adc.h": "c",
+        "stc8x_comp.h": "c",
+        "stc8x_eeprom.h": "c",
+        "stc8x_gpio.h": "c"
+    },
+    "C_Cpp.files.exclude": {
+        "**/.vscode": true
+    },
+    "C_Cpp.clang_format_sortIncludes": true
+}

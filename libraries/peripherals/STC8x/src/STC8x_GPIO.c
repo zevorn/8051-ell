@@ -68,7 +68,7 @@ IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); }
   * @brief   外部中断0初始化函数。
   *          EXTI0 trigger mode function.
   * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EXTI0_Init(EXTITri_Type triMode)
 {
@@ -82,7 +82,7 @@ FSCSTATE EXTI0_Init(EXTITri_Type triMode)
   * @brief   外部中断1初始化函数。
   *          EXTI1 trigger mode function.
   * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EXTI1_Init(EXTITri_Type triMode)
 {
@@ -97,7 +97,7 @@ FSCSTATE EXTI1_Init(EXTITri_Type triMode)
   *          EXTI0 NVIC function.
   * @param   priority [IN] 中断优先级。interrupt priority.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run)
 {
@@ -113,7 +113,7 @@ FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run)
   *          EXTI1 NVIC function.  
   * @param   priority [IN] 中断优先级。interrupt priority.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run)
 {
@@ -128,7 +128,7 @@ FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run)
   * @brief   外部中断2中断初始化函数。
   *          EXTI2 NVIC function.  
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI2_Init(BOOL run)
 {
@@ -142,7 +142,7 @@ FSCSTATE NVIC_EXTI2_Init(BOOL run)
   * @brief   外部中断3中断初始化函数。
   *          EXTI3 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI3_Init(BOOL run)
 {
@@ -157,7 +157,7 @@ FSCSTATE NVIC_EXTI3_Init(BOOL run)
   * @brief   外部中断4中断初始化函数。
   *          EXTI4 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI4_Init(BOOL run)
 {

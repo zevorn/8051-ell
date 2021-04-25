@@ -32,12 +32,39 @@
 #ifndef __STC8x_GPIO_H_
 #define __STC8x_GPIO_H_
 
+#include "Lib_CFG.h"
 /*--------------------------------------------------------
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
-#include "Lib_CFG.h"
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_CTRL
+    #define PER_LIB_GPIO_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_INIT_CTRL
+    #define PER_LIB_GPIO_INIT_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_NVIC_CTRL
+    #define PER_LIB_GPIO_NVIC_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_WORK_CTRL
+    #define PER_LIB_GPIO_WORK_CTRL 1
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -51,6 +78,7 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
@@ -62,6 +90,7 @@
 /*--------------------------------------------------------
 | @Description: GPIO Pin define                          |
 --------------------------------------------------------*/
+
 /* GPIO */
 #define	GPIO_P0      0x00 //IO P0
 #define	GPIO_P1      0x01 //IO P1
@@ -341,7 +370,7 @@ typedef enum
   * @brief   外部中断0初始化函数。
   *          EXTI0 trigger mode function.
   * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EXTI0_Init(EXTITri_Type triMode);
 
@@ -351,7 +380,7 @@ FSCSTATE EXTI0_Init(EXTITri_Type triMode);
   * @brief   外部中断1初始化函数。
   *          EXTI1 trigger mode function.
   * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE EXTI1_Init(EXTITri_Type triMode);
 
@@ -362,7 +391,7 @@ FSCSTATE EXTI1_Init(EXTITri_Type triMode);
   *          EXTI0 NVIC function.
   * @param   priority [IN] 中断优先级。interrupt priority.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run);
 
@@ -373,7 +402,7 @@ FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run);
   *          EXTI1 NVIC function.
   * @param   priority [IN] 中断优先级。interrupt priority.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run);
 
@@ -383,7 +412,7 @@ FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run);
   * @brief   外部中断2中断初始化函数。
   *          EXTI2 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI2_Init(BOOL run);
 
@@ -393,7 +422,7 @@ FSCSTATE NVIC_EXTI2_Init(BOOL run);
   * @brief   外部中断3中断初始化函数。
   *          EXTI3 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI3_Init(BOOL run);
 
@@ -403,7 +432,7 @@ FSCSTATE NVIC_EXTI3_Init(BOOL run);
   * @brief   外部中断4中断初始化函数。
   *          EXTI4 NVIC function.
   * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
+  * @return  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVIC_EXTI4_Init(BOOL run);
 

@@ -50,6 +50,49 @@
 
 #define    PER_LIB_MCU_MUODEL     STC8Gx
 
+/**
+ * @brief		配置ADC片内外设。
+ * @details	    Configure ADC chip internal  peripheral.
+**/
+#define   PER_LIB_ADC_CTRL         (1) /*!< ADC模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_ADC_INIT_CTRL    (1) /*!< ADC模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_ADC_NVIC_CTRL    (1) /*!< ADC模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_ADC_WORK_CTRL    (1) /*!< ADC模块工作相关宏，写1开启，写0关闭。*/
+
+
+/**
+ * @brief		配置COMP片内外设。
+ * @details	    Configure COMP chip internal  peripheral.
+**/
+#define   PER_LIB_COMP_CTRL         (1) /*!< COMP模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_COMP_INIT_CTRL    (1) /*!< COMP模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_COMP_NVIC_CTRL    (1) /*!< COMP模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_COMP_WORK_CTRL    (1) /*!< COMP模块工作相关宏，写1开启，写0关闭。*/
+
+
+/**
+ * @brief		配置EEPROM片内外设。
+ * @details	    Configure EEPROM chip internal  peripheral.
+**/
+#define   PER_LIB_EEPROM_CTRL         (1) /*!< EEPROM模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_EEPROM_INIT_CTRL    (1) /*!< EEPROM模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_EEPROM_WORK_CTRL    (1) /*!< EEPROM模块工作相关宏，写1开启，写0关闭。*/
+
+/**
+ * @brief		配置GPIO片内外设。
+ * @details	    Configure GPIO chip internal  peripheral.
+**/
+#define   PER_LIB_GPIO_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_GPIO_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_GPIO_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_GPIO_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
+
+
+
 /*--------------------------------------------------------
 | @Description: STC8x Driver config                      |
 --------------------------------------------------------*/
