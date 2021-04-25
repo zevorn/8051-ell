@@ -37,16 +37,8 @@
     #define PER_LIB_MCU_MUODEL STC8Gx
 #endif
 
-#if    (PER_LIB_MCU_MUODEL == STC8Ax)
-    #include "STC8Ax_REG.h"  
-#elif  (PER_LIB_MCU_MUODEL == STC8Cx)
-    #include "STC8Cx_REG.h"
-#elif  (PER_LIB_MCU_MUODEL == STC8Fx)
-    #include "STC8Fx_REG.h"
-#elif  (PER_LIB_MCU_MUODEL == STC8Gx)
+if (PER_LIB_MCU_MUODEL == STC8Gx)
     #include "STC8Gx_REG.h"
-#elif  (PER_LIB_MCU_MUODEL == STC8Hx)
-    #include "STC8Hx_REG.h"
 #endif 
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
