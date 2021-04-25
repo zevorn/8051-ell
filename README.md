@@ -22,13 +22,13 @@
 
 ****
 
+<font color=#0BBEE>[ <u>**全新的API文档中心**</u>](https://zewen-i.github.io/8051-ELL-library-API-Document-Center/) </font> 
+
 [下载连接(gitee仓库)](https://gitee.com/zeweni/ELL-8051-LIB)
 
 [下载连接(github仓库)](https://github.com/zewen-i/8051-ELL-LIB)
 
 [开发指南视频链接](https://www.bilibili.com/video/BV1EU4y1s736?from=search&seid=5098754810768350553)
-
-[开发者文档(最下方有细则)](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
 
 配套核心板购买连接（待上架）
 
