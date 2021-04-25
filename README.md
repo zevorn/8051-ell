@@ -1,4 +1,4 @@
-![](https://zeweni.gitee.io/images/8051_ell_lib/doc/icon.png)
+![](doc/image/icon.png)
 
 # 8051 ELL函数库简介
 
@@ -118,7 +118,7 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 下面是ELL函数库的框架图:
 
-![img](https://zeweni.gitee.io/images/8051_ell_lib/doc/ELL-framework.png)
+![img](doc/image/8051-ELL-FrameWork.png)
 
 整个固件库，充分利用了keil的一些特性，比如使用LX51扩展链接器/定位器，优化了BL51的功能，可以生成更小的目标文件等
 
