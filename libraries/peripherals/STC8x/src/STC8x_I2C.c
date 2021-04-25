@@ -141,7 +141,9 @@ FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,BOOL run)
   * @brief   I2C从机中断初始化函数。
   *          I2C Slave init NVIC function.  
   * @param   priority [IN] 中断优先级。interrupt priority.
-  * @param   run      [IN] 使能控制位。enable control. 
+  * @param   triMode  [IN] 触发模式，可以选择多个，并用或运算符连接。
+  *                        Trigger mode, multiple can be selected 
+  *                        and connected with or operator.
   * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triState)
@@ -181,12 +183,7 @@ FSCSTATE I2C_Send_Stop(void)
   return I2C_Wait();
 }
 
-/**
-  * @name    I2C_Send_ACK
-  * @brief    
-  * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+
 /**
   * @name    I2C_Send_ACK
   * @brief   I2C发送ACK信号函数。
@@ -203,9 +200,10 @@ FSCSTATE I2C_Send_ACK(void)
 
 /**
   * @name    I2C_Send_NACK
-  * @brief   I2C sends signal of NACK function 
-  * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   I2C发送NACK信号函数。
+  *          I2C sends signal of NACK function.  
+  * @param   None. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE I2C_Send_NACK(void)
 {
@@ -217,9 +215,10 @@ FSCSTATE I2C_Send_NACK(void)
 
 /**
   * @name    I2C_Read_ACK
-  * @brief   I2C read signal of ACK function 
-  * @param   None
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   I2C读取NACK信号函数。
+  *          I2C reads signal of NACK function.  
+  * @param   None. 
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE I2C_Read_ACK(void)
 {
@@ -227,11 +226,13 @@ FSCSTATE I2C_Read_ACK(void)
   return I2C_Wait();
 }
 
+
 /**
   * @name    I2C_Send_Btye
-  * @brief   I2C send data function
-  * @param   dat byte data
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   I2C发送一个字节函数。
+  *          I2C sends a byte data function.  
+  * @param   dat [IN] 字节数据。byte data.
+  * @retval  [FSC_SUCCESS / FSC_FAIL]
 ***/
 FSCSTATE I2C_Send_Btye(uint8_t dat)
 {
@@ -240,11 +241,13 @@ FSCSTATE I2C_Send_Btye(uint8_t dat)
   return I2C_Wait();
 }
 
+
 /**
-  * @name    I2C_Read_byte
-  * @brief   I2C read data function
-  * @param   None
-  * @return  data of recive
+  * @name    I2C_Read_Byte
+  * @brief   I2C读取一个字节函数。
+  *          I2C reads a byte data function.  
+  * @param   None.
+  * @retval  [uint8_t]data of recive
 ***/
 uint8_t I2C_Read_Byte(void)       
 {
@@ -256,12 +259,10 @@ uint8_t I2C_Read_Byte(void)
 
 /**
   * @name    GPIO_I2C_SWPort
-  * @brief   I2C switch port control function   
-  * @param   port    SW_Port1: SCL/P1.5 SDA/P1.4 
-  *                  SW_Port2: SCL/P2.5 SDA/P2.4 
-  *                  SW_Port3: SCL/P7.7 SDA/P7.6 
-  *                  SW_Port4: SCL/P3.2 SDA/P3.3 
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
+  * @brief   I2C切换复用IO函数。
+  *          I2C switch out port control function.  
+  * @param   port [IN] 复用IO枚举体。IO switch enumerator.
+  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
 ***/
 FSCSTATE GPIO_I2C_SWPort(GPIOSWPort_Type port)
 {

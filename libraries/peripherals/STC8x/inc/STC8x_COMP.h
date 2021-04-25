@@ -269,8 +269,8 @@ typedef struct
 -----------------------------------------------------------------------*/
 /**
   * @name    COMP_Init
-  * @brief   COMP初始化函数
-  *          COMP init function
+  * @brief   COMP初始化函数。
+  *          COMP init function.
   * @param   *compx [IN] COMP结构体句柄，初始化时请定义该句柄，并用其地址来传参。
   *                      COMP structure handle. When initializing, 
   *                      please define the handle and use its address 
@@ -282,7 +282,7 @@ FSCSTATE COMP_Init(const COMP_InitType *compx);
 
 /**
   * @name    NVIC_COMP_Init
-  * @brief   COMP中断初始化函数
+  * @brief   COMP中断初始化函数。
   *          COMP interrupt initialization function.
   * @param   priority [IN] 优先级。Priority.
   * @param   triMode  [IN] 触发模式。Trigger mode.
@@ -293,7 +293,7 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
 
 /**
   * @name    COMP_GET_FLAG
-  * @brief   获取比较完成（中断）标志位宏函数
+  * @brief   获取比较完成（中断）标志位宏函数。
   *          Comp gets compare complete (interrupt) 
   *          flag bit macro function.
   * @retval  [bit] 完成（中断）标志位。Completion (interrupt) flag bit.
@@ -303,7 +303,7 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
 
 /**
   * @name    COMP_CLEAR_FLAG
-  * @brief   COMP清除比较完成（中断）标志位宏函数
+  * @brief   COMP清除比较完成（中断）标志位宏函数。
   *          Comp clears compare complete (interrupt) 
   *          flag bit macro function.
 ***/
@@ -312,7 +312,7 @@ FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
 
 /**
   * @name    COMP_GET_RESULT
-  * @brief   COMP获取比较结果宏函数
+  * @brief   COMP获取比较结果宏函数。
   *          Comp gets the macro function of the comparison result.
   * @retval  [bit] 比较结果。Comparison result.
 ***/
