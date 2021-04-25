@@ -37,7 +37,7 @@
     #define PER_LIB_MCU_MUODEL STC8Gx
 #endif
 
-if (PER_LIB_MCU_MUODEL == STC8Gx)
+#if (PER_LIB_MCU_MUODEL == STC8Gx)
     #include "STC8Gx_REG.h"
 #endif 
 /*--------------------------------------------------------

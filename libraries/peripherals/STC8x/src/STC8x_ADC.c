@@ -37,14 +37,14 @@
 /**
  * @name    ADC_NVIC_PRI
  * @brief   ADC选择中断优先级宏函数，仅限本文件调用。
- *          ADC select interrupt priority macro function, 
+ * @details ADC select interrupt priority macro function, 
  *          only this file call.
 ***/
 #define ADC_NVIC_PRI(pri) { \
 IPH = (IPH & 0xDF) | ((pri & 0x02) << 4); \
 IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); }
 
-
+ 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -58,8 +58,8 @@ IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); }
 	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
 		/**
-		 * @details	空延时函数，帮助稳定ADC外设切换工作状态。
-		 *          Working wait nop function.
+		 * @brief	空延时函数，帮助稳定ADC外设切换工作状态。
+		 * @details Working wait nop function.
 		 * @param   None
 		 * @return  None
 		***/
