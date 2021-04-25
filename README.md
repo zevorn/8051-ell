@@ -1,4 +1,5 @@
-![](doc/image/icon.png)
+
+<img src='doc/image/icon.png' align='left'/>
 
 # 8051-ELL 库简介
 
