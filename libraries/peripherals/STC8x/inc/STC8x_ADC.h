@@ -335,8 +335,12 @@ FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run);
   * @brief   ADC改变采集通道宏函数。
   *          ADC change the macro function of 
   *          the current acquisition channel.
+  * @param   channel[IN] ADC采集通道,不同的芯片型号，通道有所不同，请查看头文件的宏定义。
+  *                      ADC acquisition channel, different chip models, 
+  *                      the channel is different, 
+  *                      please check the macro definition of the header file
 ***/
-#define ADC_CHANGE_CHANNEL()     {ADC_CONTR = (ADC_CONTR & 0xF0) | (nchannel);}
+#define ADC_CHANGE_CHANNEL(channel)     {ADC_CONTR = (ADC_CONTR & 0xF0) | (channel);}
 
 
 /**
