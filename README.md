@@ -1,6 +1,6 @@
 ![](doc/image/icon.png)
 
-# 8051 ELL库简介
+# 8051-ELL库
 
 <font color=#0ddff>[ <u>**从gitee下载8051-ELL**</u>](https://gitee.com/zeweni/ELL-8051-LIB) </font> 
 
@@ -127,6 +127,7 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 # 开发者文档
 
 
+<font color=#0BBEE>[ <u>**全新的API文档中心**</u>](https://zewen-i.github.io/8051-ELL-library-API-Document-Center/) </font> 
 
 [ELL库概要介绍](https://zeweni.gitee.io/2021/02/18/8051ell-ku-gai-yao-jie-shao/)
 
