@@ -108,82 +108,11 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 ****
 
 
-
 下面是ELL库的框架图:
 
 ![img](doc/image/8051-ELL-FrameWork.png)
 
 整个固件库，充分利用了keil的一些特性，比如使用LX51扩展链接器/定位器，优化了BL51的功能，可以生成更小的目标文件等
-
-
-
-# 开发者文档
-
-<font color=#0BBEE>[ <u>**全新的API文档中心**</u>](https://zewen-i.github.io/8051-ELL-API/) </font> 
-
-[ELL库概要介绍](https://zeweni.gitee.io/2021/02/18/8051ell-ku-gai-yao-jie-shao/)
-
-[ELL库工程创建](https://zeweni.gitee.io/2021/02/18/8051ell-ku-gong-cheng-chuang-jian/)
-
-[ELL库代码烧录](https://zeweni.gitee.io/2021/03/16/8051ell-ku-dai-ma-shao-lu/)
-
-
-
-## 片内外设库
-
-
-
-[时钟管理](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-shi-zhong-guan-li/)
-
-[中断管理](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-zhong-duan-guan-li/)
-
-[电源管理](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-dian-yuan-guan-li/)
-
-[复位功能](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-fu-wei-gong-neng/)
-
-[看门狗](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-kan-men-gou/)
-
-[IO口](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-io-kou/)
-
-[定时器](https://zeweni.gitee.io/2021/03/02/8051ell-ku-pian-nei-wai-she-pian-ding-shi-qi/)
-
-[串口](https://zeweni.gitee.io/2021/03/04/8051ell-ku-pian-nei-wai-she-pian-chuan-kou/)
-
-[ADC](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-12-wei-adc/)
-
-[比较器](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-bi-jiao-qi/)
-
-[可编程计数器](https://zeweni.gitee.io/2021/03/01/8051ell-ku-pian-nei-wai-she-pian-ke-bian-cheng-ji-shu-qi/)
-
-[增强型PWM](https://zeweni.gitee.io/2021/03/14/8051ell-ku-pian-nei-wai-she-pian-zeng-qiang-xing-pwm/)
-
-[SPI](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-spi/)
-
-[I2C](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-i2c/)
-
-[MDU16](https://zeweni.gitee.io/2021/03/16/8051ell-ku-pian-nei-wai-she-pian-mdu16/)
-
-[其他暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
-
-
-
-## 组件库
-
-
-
-[任务管理工具](https://zeweni.gitee.io/2021/03/01/8051ell-ku-zu-jian-pian-ren-wu-guan-li-gong-ju/)
-
-[其他暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
-
-
-
-## 设备驱动库
-
-
-[按键扫描](https://zeweni.gitee.io/2021/03/14/8051ell-ku-she-bei-qu-dong-pian-an-jian-sao-miao-dan-jian/)
-
-[暂未更新](https://zeweni.gitee.io/categories/8051-ELL%E5%87%BD%E6%95%B0%E5%BA%93%E6%8C%87%E5%8D%97/)
-
 
 
 # 支持的型号及外设
@@ -203,8 +132,6 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 | STC8F系列 | √      | √    | √    | √       |    |      |      |      | √      |      |       | √      |      |      |      |      |
 | STC8G系列 | √      | √    | √    | √       | √    |   | X |      | √      | √    | √     | √      | X | X |      |      |
 | STC8H系列 | √      | √    | √    | √       |     |      |  | X | √      | √    | √     | √      | X | X | X | X |
-
-
 
 
 
