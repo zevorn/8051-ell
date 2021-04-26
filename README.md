@@ -20,29 +20,15 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 
 大家觉得好用的话，记得给个Star，我想上自荐！！！！
 
-****
-
-<font color=#02222>[ <u>**全新的API文档中心**</u>](https://zewen-i.github.io/8051-ELL-API/) </font> 
-
-[下载连接(gitee仓库)](https://gitee.com/zeweni/ELL-8051-LIB)
-
-[下载连接(github仓库)](https://github.com/zewen-i/8051-ELL-LIB)
-
-[开发指南视频链接](https://www.bilibili.com/video/BV1EU4y1s736?from=search&seid=5098754810768350553)
-
-配套核心板购买连接（待上架）
-
 
 ****
 当前版本为：`1.1.6`
 
 版本更新时间：`2021.04.23`
 
-
 作者微信：ze_wenu
 
 B站账号：泽文i
-
 
 ****
 
