@@ -37,7 +37,7 @@ void STC8x_System_Init(void)
 {
 	DELAY_POS(); /* Power on stability delay */	
 	delay_init(); /* Initialization delay function */
-
+	
 	STC8x_UART_Config();
 	STC8x_GPIO_Config();
 	

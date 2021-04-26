@@ -66,7 +66,7 @@ XDATASTART      EQU     0
 ; @name    XDATALEN
 ; @brief   XDATA的内存范围是<0x0-0x1FFF>.
 ;          XDATA memory size <0x0-0x1FFF>.
-; @Note    这里设置XDATA内存的字节长度。
+; @Note    设置XDATA内存的字节长度,根据你实际的芯片XRAM大小来确定。
 ;          target on keil's configuration page.
 XDATALEN        EQU     01FFFH     
 
