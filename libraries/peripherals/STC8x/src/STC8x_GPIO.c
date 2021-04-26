@@ -35,25 +35,29 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @name    EXTI0_NVIC_PRI
- * @brief   EXTI0选择中断优先级宏函数，仅限本文件调用。
- *          EXTI0 select interrupt priority macro function, 
- *          only this file call.
-***/
-#define EXTI0_NVIC_PRI(pri) { \
-IPH = (IPH & 0xFE) | ((pri & 0x02) >> 1); \
-IP  = (IP  & 0xFE) | (pri & 0x01); }
+ * @brief      EXTI0选择中断优先级宏函数，仅限本文件调用。
+ * @details    EXTI0 select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
+#define EXTI0_NVIC_PRI(pri)                   \
+do{                                           \
+	IPH = (IPH & 0xFE) | ((pri & 0x02) >> 1); \
+	IP  = (IP  & 0xFE) | (pri & 0x01);        \
+}while(0)
 
 
 /**
- * @name    EXTI1_NVIC_PRI
- * @brief   EXTI1选择中断优先级宏函数，仅限本文件调用。
- *          EXTI1 select interrupt priority macro function, 
- *          only this file call.
-***/
-#define EXTI1_NVIC_PRI(pri) { \
-IPH = (IPH & 0xFB) | ((pri & 0x02) << 1); \
-IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); }
+ * @brief      EXTI1选择中断优先级宏函数，仅限本文件调用。
+ * @details    EXTI1 select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
+#define EXTI1_NVIC_PRI(pri)                   \
+do{                                           \
+	IPH = (IPH & 0xFB) | ((pri & 0x02) << 1); \
+	IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); \
+}while(0)
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -62,110 +66,89 @@ IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); }
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_GPIO_CTRL == 1)
 
-/**
-  * @name    EXTI0_Init
-  * @brief   外部中断0初始化函数。
-  *          EXTI0 trigger mode function.
-  * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EXTI0_Init(EXTITri_Type triMode)
-{
-	IT0 = triMode;
-	return FSC_SUCCESS;
-}
+	#if (PER_LIB_GPIO_NVIC_CTRL == 1)
 
-
-/**
-  * @name    EXTI1_Init
-  * @brief   外部中断1初始化函数。
-  *          EXTI1 trigger mode function.
-  * @param   triMode [IN] 触发模式。Trigger mode. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE EXTI1_Init(EXTITri_Type triMode)
-{
-	IT1 = triMode;
-	return FSC_SUCCESS;
-}
+		/**
+		 * @brief     外部中断0中断初始化函数。
+		 * @details   EXTI0 NVIC function.
+		 * @param[in] triMode  触发模式。Trigger mode. 
+		 * @param[in] pri 中断优先级。interrupt priority.
+		 * @param[in] run 使能控制位。enable control. 
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_EXTI0_Init(EXTITri_Type triMode,NVICPri_Type pri,BOOL run)
+		{
+			IT0 = triMode;
+			EX0 = run;
+			EXTI0_NVIC_PRI(pri);
+			return FSC_SUCCESS;
+		}
 
 
-/**
-  * @name    NVIC_EXTI0_Init
-  * @brief   外部中断0中断初始化函数。
-  *          EXTI0 NVIC function.
-  * @param   priority [IN] 中断优先级。interrupt priority.
-  * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVIC_EXTI0_Init(NVICPri_Type priority,BOOL run)
-{
-	EX0 = run;
-    EXTI0_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+		/**
+		 * @brief      外部中断1中断初始化函数。
+		 * @details    EXTI1 NVIC function.
+		 * @param[in] triMode  触发模式。Trigger mode. 
+		 * @param[in]  pri 中断优先级。interrupt priority.
+		 * @param[in]  run 使能控制位。enable control. 
+		 * @return     FSC_SUCCESS 返回成功。Return to success.
+		 * @return     FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_EXTI1_Init(EXTITri_Type triMode,NVICPri_Type pri,BOOL run)
+		{
+			IT1 = triMode;
+			EX1 = run;
+			EXTI1_NVIC_PRI(pri);
+			return FSC_SUCCESS;
+		}
+
+		/**
+		 * @brief      外部中断2中断初始化函数。
+		 * @details    EXTI2 NVIC function.
+		 * @param[in]  run 使能控制位。enable control. 
+		 * @return     FSC_SUCCESS 返回成功。Return to success.
+		 * @return     FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_EXTI2_Init(BOOL run)
+		{
+			INTCLKO = (INTCLKO & 0xEF) | (run << 4);
+			return FSC_SUCCESS;
+		}
 
 
-/**
-  * @name    NVIC_EXTI1_Init
-  * @brief   外部中断1中断初始化函数。
-  *          EXTI1 NVIC function.  
-  * @param   priority [IN] 中断优先级。interrupt priority.
-  * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVIC_EXTI1_Init(NVICPri_Type priority,BOOL run)
-{
-	EX1 = run;
-    EXTI1_NVIC_PRI(priority);
-	return FSC_SUCCESS;
-}
+		/**
+		 * @brief      外部中断3中断初始化函数。
+		 * @details    EXTI3 NVIC function.
+		 * @param[in]  run 使能控制位。enable control. 
+		 * @return     FSC_SUCCESS 返回成功。Return to success.
+		 * @return     FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_EXTI3_Init(BOOL run)
+		{
+			INTCLKO = (INTCLKO & 0xDF) | (run << 5);
+			return FSC_SUCCESS;
+		}
 
 
-/**
-  * @name    NVIC_EXTI2_Init
-  * @brief   外部中断2中断初始化函数。
-  *          EXTI2 NVIC function.  
-  * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVIC_EXTI2_Init(BOOL run)
-{
-	INTCLKO = (INTCLKO & 0xEF) | (run << 4);
-	return FSC_SUCCESS;
-}
-
-
-/**
-  * @name    NVIC_EXTI3_Init
-  * @brief   外部中断3中断初始化函数。
-  *          EXTI3 NVIC function.
-  * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVIC_EXTI3_Init(BOOL run)
-{
-
-	INTCLKO = (INTCLKO & 0xDF) | (run << 5);
-	return FSC_SUCCESS;
-}
-
-
-/**
-  * @name    NVIC_EXTI4_Init
-  * @brief   外部中断4中断初始化函数。
-  *          EXTI4 NVIC function.
-  * @param   run      [IN] 使能控制位。enable control. 
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVIC_EXTI4_Init(BOOL run)
-{
-	INTCLKO = (INTCLKO & 0xBF) | (run << 6);
-	return FSC_SUCCESS;
-}
-
-
+		/**
+		 * @brief      外部中断4中断初始化函数。
+		 * @details    EXTI4 NVIC function.
+		 * @param[in]  run 使能控制位。enable control. 
+		 * @return     FSC_SUCCESS 返回成功。Return to success.
+		 * @return     FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_EXTI4_Init(BOOL run)
+		{
+			INTCLKO = (INTCLKO & 0xBF) | (run << 6);
+			return FSC_SUCCESS;
+		}
+		
+	#endif
+		
+#endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/

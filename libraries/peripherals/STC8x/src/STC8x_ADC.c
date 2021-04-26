@@ -35,11 +35,11 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @name    ADC_NVIC_PRI
- * @brief   ADC选择中断优先级宏函数，仅限本文件调用。
- * @details ADC select interrupt priority macro function, 
- *          only this file call.
-***/
+ * @brief      ADC选择中断优先级宏函数，仅限本文件调用。
+ * @details    ADC select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
 #define ADC_NVIC_PRI(pri)                     \
 do{                                           \
 	IPH = (IPH & 0xDF) | ((pri & 0x02) << 4); \
@@ -161,15 +161,15 @@ do{                                           \
             /**
              * @brief	   ADC优先级初始化函数。
              * @details	   This is a ADC priority initialization function. 
-             * @param[in]  priority 中断优先级。
-             * @param[in]  run      中断运行控制位。
+             * @param[in]  pri 中断优先级。Interrupt priority.
+             * @param[in]  run 中断运行控制位。Interrupt operation control bit.
              * @return  FSC_SUCCESS 返回成功。Return to success.
              * @return  FSC_FAIL    返回失败。Return to fail.
              **/
-            FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run)
+            FSCSTATE NVIC_ADC_Init(NVICPri_Type pri,BOOL run)
             {
                 EADC = run;
-                ADC_NVIC_PRI(priority);
+                ADC_NVIC_PRI(pri);
                 return FSC_SUCCESS;
             }
 

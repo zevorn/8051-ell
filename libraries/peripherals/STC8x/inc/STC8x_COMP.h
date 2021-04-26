@@ -290,12 +290,12 @@
         /**
          * @brief       COMP中断初始化函数。
          * @details     COMP interrupt initialization function.
-         * @param[in]   priority 优先级。Priority.
+         * @param[in]   pri 中断优先级。Interrupt priority.
          * @param[in]   triMode  触发模式。Trigger mode.
          * @return      FSC_SUCCESS 返回成功。Return to success.
          * @return      FSC_FAIL    返回失败。Return to fail.
         **/
-        FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode);
+        FSCSTATE NVIC_COMP_Init(NVICPri_Type pri,COMPTri_Type triMode);
 
 
         /**

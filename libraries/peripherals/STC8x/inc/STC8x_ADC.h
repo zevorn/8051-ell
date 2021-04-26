@@ -336,12 +336,12 @@
             /**
              * @brief	   ADC优先级初始化函数。
              * @details	   This is a ADC priority initialization function. 
-             * @param[in]  priority 中断优先级。
-             * @param[in]  run      中断运行控制位。
+             * @param[in]  pri 中断优先级。Interrupt priority.
+             * @param[in]  run 中断运行控制位。Interrupt operation control bit.
              * @return  FSC_SUCCESS 返回成功。Return to success.
              * @return  FSC_FAIL    返回失败。Return to fail.
             **/
-            FSCSTATE NVIC_ADC_Init(NVICPri_Type priority,BOOL run);
+            FSCSTATE NVIC_ADC_Init(NVICPri_Type pri,BOOL run);
 
 
             /**

@@ -86,7 +86,7 @@
  * @brief		配置GPIO片内外设。
  * @details	    Configure GPIO chip internal  peripheral.
 **/
-#define   PER_LIB_GPIO_CTRL         (0) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
+#define   PER_LIB_GPIO_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
 
 #define   PER_LIB_GPIO_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_GPIO_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/

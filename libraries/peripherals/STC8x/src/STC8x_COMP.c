@@ -35,9 +35,10 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @brief   COMP选择中断优先级宏函数，仅限本文件调用。
- * @details COMP select interrupt priority macro function, 
- *          only this file call.
+ * @brief      COMP选择中断优先级宏函数，仅限本文件调用。
+ * @details    COMP select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
 **/
 #define COMP_NVIC_PRI(pri)                      \
 do{                                             \
@@ -46,9 +47,10 @@ do{                                             \
 }while(0)
 
 /**
- * @brief   COMP选择触发模式宏函数，仅限本文件调用。
- * @details Comp select trigger state macro function, 
- *          only this file call.
+ * @brief     COMP选择触发模式宏函数，仅限本文件调用。
+ * @details   Comp select trigger state macro function, 
+ *            only this file call.
+ * @param[in] triMode 触发模式。 Mode of trigeer.
 **/
 #define COMP_TRISTATE_SELECT(triMode)    \
 do{                                      \
@@ -56,33 +58,35 @@ do{                                      \
 }while(0)
 
 /**
- * @brief   COMP选择正极输入脚宏函数，仅限本文件调用。
- * @details Comp select positive input pin macro function, 
- *          only this file call.
+ * @brief     COMP选择正极输入脚宏函数，仅限本文件调用。
+ * @details   Comp select positive input pin macro function, 
+ *            only this file call.
+ * @param[in] pePin 正极输入引脚。Positive input pin.
 **/
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 	
-	#define  COMP_PEINPUT_SELECT(PEPin)                   \
+	#define  COMP_PEINPUT_SELECT(pePin)                   \
 	do{                                                   \
-			if(PEPin == COMP_PE_P37) {CMPCR1 &= 0xF7;}    \
+			if(pePin == COMP_PE_P37) {CMPCR1 &= 0xF7;}    \
 			else {CMPCR1 |= 0x08;                         \
-			ADC_CONTR = (ADC_CONTR & 0xF0)|(PEPin)|0x80;} \
+			ADC_CONTR = (ADC_CONTR & 0xF0)|(pePin)|0x80;} \
 	}while(0)
 	
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Fx)
 		
-	#define  COMP_PEINPUT_SELECT(PEPin)  do{CMPCR1 &= PEPin;}while(0)
+	#define  COMP_PEINPUT_SELECT(pePin)  do{CMPCR1 &= pePin;}while(0)
 		
 #endif	
 
 /**
- * @brief   COMP选择负极输入脚宏函数，仅限本文件调用。
- * @details Comp select negative input pin macro function, 
- *          only this file call.
+ * @brief     COMP选择负极输入脚宏函数，仅限本文件调用。
+ * @details   Comp select negative input pin macro function, 
+ *            only this file call.
+ * @param[in] nePin 负极输入引脚。Negative input pin.
 **/
-#define  COMP_NEINPUT_SELECT(NEPin)                   \
+#define  COMP_NEINPUT_SELECT(nePin)                   \
 do{                                                   \
-	CMPCR1 = (CMPCR1 & 0xFB) | ((NEPin & 0xF0) >> 2); \
+	CMPCR1 = (CMPCR1 & 0xFB) | ((nePin & 0xF0) >> 2); \
 }while(0)
 
 /*-----------------------------------------------------------------------
@@ -127,15 +131,15 @@ do{                                                   \
         /**
          * @brief       COMP中断初始化函数。
          * @details     COMP interrupt initialization function.
-         * @param[in]   priority 优先级。Priority.
+         * @param[in]   pri 中断优先级。Interrupt priority.
          * @param[in]   triMode  触发模式。Trigger mode.
          * @return      FSC_SUCCESS 返回成功。Return to success.
          * @return      FSC_FAIL    返回失败。Return to fail.
         **/
-        FSCSTATE NVIC_COMP_Init(NVICPri_Type priority,COMPTri_Type triMode)
+        FSCSTATE NVIC_COMP_Init(NVICPri_Type pri,COMPTri_Type triMode)
         {
             COMP_TRISTATE_SELECT(triMode);
-            COMP_NVIC_PRI(priority);
+            COMP_NVIC_PRI(pri);
             return FSC_SUCCESS;
         }
 

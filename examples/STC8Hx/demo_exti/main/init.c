@@ -95,9 +95,8 @@ static void STC8x_GPIO_Config(void)
 ***/
 static void STC8x_EXTI_Config(void)
 {
-	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_3);
-	EXTI0_Init(EXTI_Tri_Falling);
-	NVIC_EXTI0_Init(NVIC_PR0,ENABLE);
+	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_3);   
+	NVIC_EXTI0_Init(EXTI_Tri_Falling,NVIC_PR0,ENABLE);
 }
 
 /*-----------------------------------------------------------------------

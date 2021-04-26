@@ -35,10 +35,10 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @name    I2C_NVIC_PRI
- * @brief   I2C选择中断优先级宏函数，仅限本文件调用。
- *          I2C select interrupt priority macro function, 
- *          only this file call.
+ * @brief      I2C选择中断优先级宏函数，仅限本文件调用。
+ * @details    I2C select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
 ***/
 #define I2C_NVIC_PRI(pri) { \
 IP2H = (IP2H & 0xBF) | ((pri & 0x02) << 5); \
