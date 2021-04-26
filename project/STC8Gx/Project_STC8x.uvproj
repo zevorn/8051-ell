@@ -506,21 +506,6 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\drives\KeyScan\KeyScan.c</FilePath>
             </File>
-            <File>
-              <FileName>drv_oled.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\drives\OLED\drv_oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>drv_oled.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\OLED\drv_oled.h</FilePath>
-            </File>
-            <File>
-              <FileName>drv_oled_font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\OLED\drv_oled_font.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

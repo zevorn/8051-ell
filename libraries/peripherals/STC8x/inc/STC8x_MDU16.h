@@ -2,7 +2,7 @@
 |                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
 /*----------------------------------------------------------------------
-  - File name     : STC8Ax_ADC.h
+  - File name     : STC8Ax_MDU16.h
   - Author        : zeweni
   - Update date   : 2020.03.01
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
@@ -36,9 +36,19 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
-#ifndef PER_LIB_MCU_MUODEL
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_MDU16_CTRL
+    #define PER_LIB_MDU16_CTRL 1
+#endif
+
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -62,99 +72,104 @@
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if (PER_LIB_MDU16_CTRL == 1)
 
-/**
-  * @name    MUL_16_BIT
-  * @brief   16 bit multiplication
-  * @param   mul1  multiplier
-  * @param   mul2  multiplier 
-  * @param   pro  product
-  * @return  none
-***/
-#define MUL_16_BIT(mul1, mul2, pro) 		do{ \
-                                                EAXFR_ENABLE();  \
-                                                MD1U16 = mul1; MD5U16 = mul2; \
-                                                ARCON = 0x04 << 5; OPCON = 1; \
-                                                while((OPCON & 0x01) != 0);   \
-                                                pro = MD3U32;    \
-                                                EAXFR_DISABLE(); \
-                                            }   while (0)
+	#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
-/**
-  * @name    DIV_16_BIT
-  * @brief   16 bit Division
-  * @param   mol  molecule
-  * @param   den  denominator 
-  * @param   quo  quotient
-  * @param   rem  remainder
-  * @return  none
-***/
-#define DIV_16_BIT(mol, den, quo, rem) 		do{ \
-                                                EAXFR_ENABLE();  \
-                                                MD1U16 = mol;   MD5U16 = den; \
-                                                ARCON = 0x06 << 5; OPCON = 1; \
-                                                while((OPCON & 0x01) != 0);   \
-                                                quo = MD1U16;   mod = MD5U16; \
-                                                EAXFR_DISABLE(); \
-                                            }   while (0)
+		/**
+		 * @brief      16位乘法宏函数。
+		 * @details    16 bit multiplier macro functions.
+		 * @param[in]  mul1 乘数1。multiplier 1.
+		 * @param[in]  mul2 乘数2。multiplier 2.
+		 * @param[out] pro  乘积。product.
+		**/
+		#define MUL_16_BIT(mul1, mul2, pro) \		
+		do{                                 \
+			EAXFR_ENABLE();                 \
+			MD1U16 = mul1; MD5U16 = mul2;   \
+			ARCON = 0x04 << 5; OPCON = 1;   \
+			while((OPCON & 0x01) != 0);     \
+			pro = MD3U32;                   \
+			EAXFR_DISABLE();                \
+		}while(0)
 
-/**
-  * @name    DIV_32_BIT
-  * @brief   32 bit Division
-  * @param   mol  molecule
-  * @param   den  denominator 
-  * @param   quo  quotient
-  * @param   rem  remainder
-  * @return  none
-***/
-#define DIV_32_BIT(mol, den, quo, rem) 		do{ \
-                                                EAXFR_ENABLE();  \
-                                                MD3U32 = mol;   MD5U16 = den; \
-                                                ARCON = 0x06 << 5; OPCON = 1; \
-                                                while((OPCON & 0x01) != 0);   \
-                                                quo = MD3U32;   mod = MD5U16; \
-                                                EAXFR_DISABLE(); \
-                                            }   while (0)
+		
+		/**
+		 * @brief      16位除法宏函数。
+		 * @details    16 bit division macro functions.
+		 * @param[in]  mol 分子。molecule.
+		 * @param[in]  den 分母。denominator.
+		 * @param[out] quo 商。quotient.
+		 * @param[out] rem 余数。remainder.
+		**/
+		#define DIV_16_BIT(mol, den, quo, rem) 	\	
+		do{ 							        \
+			EAXFR_ENABLE();                     \
+			MD1U16 = mol;   MD5U16 = den;       \
+			ARCON = 0x06 << 5; OPCON = 1;       \
+			while((OPCON & 0x01) != 0);         \
+			quo = MD1U16;   mod = MD5U16;       \
+			EAXFR_DISABLE();                    \
+		}while (0)
 
-/**
-  * @name    SHIFT_LEFT
-  * @brief   Move data to the left
-  * @param   mdata  Data that needs to be moved
-  * @param   digits  Number of digits moved
-  * @param   result   Number of result move
-  * @return  none
-***/
-#define MOVE_LEFT_SHIFT(mdata, digits, result) 	do{ \
-                                                    EAXFR_ENABLE();  \
-                                                    ARCON = (0x02 << 5) + digits; \
-                                                    MD3U32  = mdata; OPCON = 1;   \
-                                                    while((OPCON & 0x01) != 0);   \
-                                                    result = MD3U32;   \
-                                                    EAXFR_DISABLE(); \
-                                                }   while (0) 
+		/**
+		 * @brief      32位除法宏函数。
+		 * @details    32 bit division macro functions.
+		 * @param[in]  mol 分子。molecule.
+		 * @param[in]  den 分母。denominator.
+		 * @param[out] quo 商。quotient.
+		 * @param[out] rem 余数。remainder.
+		**/
+		#define DIV_32_BIT(mol, den, quo, rem) \
+		do{                                    \
+			EAXFR_ENABLE();                    \
+			MD3U32 = mol;   MD5U16 = den;      \
+			ARCON = 0x06 << 5; OPCON = 1;      \
+			while((OPCON & 0x01) != 0);        \
+			quo = MD3U32;   mod = MD5U16;      \
+			EAXFR_DISABLE();                   \
+		}while (0)
 
-/**
-  * @name    SHIFT_RIGHT
-  * @brief   Move data to the right
-  * @param   mdata  Data that needs to be moved
-  * @param   digits  Number of digits moved
-  * @param   result   Number of result move
-  * @return  none
-***/
-#define MOVE_RIGHT_SHIFT(mdata, digits, result) 	do{ \
-                                                    EAXFR_ENABLE();  \
-                                                    ARCON = (0x01 << 5) + digits; \
-                                                    MD3U32  = mdata; OPCON = 1;   \
-                                                    while((OPCON & 0x01) != 0);   \
-                                                    result = MD3U32;   \
-                                                    EAXFR_DISABLE(); \
-                                                }   while (0) 
+		
+		/**
+		 * @brief      左移宏函数。
+		 * @details    Move data to the left functions.
+		 * @param[in]  mdata  需要被左移的数据。Data that needs to be moved.
+		 * @param[in]  digits 被左移的位数。Number of digits moved.
+		 * @param[out] result 左移完的结果。Data of result.
+		**/
+		#define MOVE_LEFT_SHIFT(mdata, digits, result) 	\
+		do{                                             \
+			EAXFR_ENABLE();                             \
+			ARCON = (0x02 << 5) + digits;               \
+			MD3U32  = mdata; OPCON = 1;                 \
+			while((OPCON & 0x01) != 0);                 \
+			result = MD3U32;                            \
+			EAXFR_DISABLE();                            \
+		}while (0) 
 
-#endif
+		
+		/**
+		 * @brief      右移宏函数。
+		 * @details    Move data to the left functions.
+		 * @param[in]  mdata  需要被右移的数据。Data that needs to be moved.
+		 * @param[in]  digits 被右移的位数。Number of digits moved.
+		 * @param[out] result 右移完的结果。Data of result.
+		**/
+		#define MOVE_RIGHT_SHIFT(mdata, digits, result)  \	
+		do{                                              \
+			EAXFR_ENABLE();                              \
+			ARCON = (0x01 << 5) + digits;                \
+			MD3U32  = mdata; OPCON = 1;                  \
+			while((OPCON & 0x01) != 0);                  \
+			result = MD3U32;                             \
+			EAXFR_DISABLE();                             \
+		}while (0) 
+
+	#endif
 
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  | 
 -----------------------------------------------------------------------*/
-
+#endif

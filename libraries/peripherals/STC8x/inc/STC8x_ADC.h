@@ -68,6 +68,7 @@
     #define PER_LIB_ADC_WORK_CTRL 1
 #endif
 
+
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx)

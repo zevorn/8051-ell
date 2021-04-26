@@ -92,27 +92,27 @@
 --------------------------------------------------------*/
 
 /* GPIO */
-#define	GPIO_P0      0x00 //IO P0
-#define	GPIO_P1      0x01 //IO P1
-#define	GPIO_P2      0x02 //IO P2
-#define	GPIO_P3      0x03 //IO P3
-#define	GPIO_P4      0x04 //IO P4
-#define	GPIO_P5      0x05 //IO P5
-#define	GPIO_P6      0x06 //IO P6
-#define	GPIO_P7      0x07 //IO P7
+#define	GPIO_P0      0x00 /*!< IO P0. */
+#define	GPIO_P1      0x01 /*!< IO P1. */
+#define	GPIO_P2      0x02 /*!< IO P2. */
+#define	GPIO_P3      0x03 /*!< IO P3. */
+#define	GPIO_P4      0x04 /*!< IO P4. */
+#define	GPIO_P5      0x05 /*!< IO P5. */
+#define	GPIO_P6      0x06 /*!< IO P6. */
+#define	GPIO_P7      0x07 /*!< IO P7. */
 
 /* Pin */
-#define	Pin_0    0x01  //IO Pin Px.0
-#define	Pin_1    0x02  //IO Pin Px.1
-#define	Pin_2    0x04  //IO Pin Px.2
-#define	Pin_3    0x08  //IO Pin Px.3
-#define	Pin_4    0x10  //IO Pin Px.4
-#define	Pin_5    0x20  //IO Pin Px.5
-#define	Pin_6    0x40  //IO Pin Px.6
-#define	Pin_7    0x80  //IO Pin Px.7
-#define	Pin_Low  0x0F  //IO Pin Px.0~3
-#define	Pin_High 0xF0  //IO Pin Px.4~7
-#define	Pin_All  0xFF  //IO All  Pin	
+#define	Pin_0    0x01  /*!< IO Pin Px.0 . */
+#define	Pin_1    0x02  /*!< IO Pin Px.1 . */
+#define	Pin_2    0x04  /*!< IO Pin Px.2 . */
+#define	Pin_3    0x08  /*!< IO Pin Px.3 . */
+#define	Pin_4    0x10  /*!< IO Pin Px.4 . */
+#define	Pin_5    0x20  /*!< IO Pin Px.5 . */
+#define	Pin_6    0x40  /*!< IO Pin Px.6 . */
+#define	Pin_7    0x80  /*!< IO Pin Px.7 . */
+#define	Pin_Low  0x0F  /*!< IO Pin Px.0~3 . */
+#define	Pin_High 0xF0  /*!< IO Pin Px.4~7 . */
+#define	Pin_All  0xFF  /*!< IO Pin All . */
 
 /*--------------------------------------------------------
 | @Description: External interrupt Trigger define        |
@@ -120,8 +120,8 @@
 
 typedef enum
 {
-  EXTI_Tri_Edge    = 0x00,  //Both rising and falling edges triggered
-  EXTI_Tri_Falling = 0x01    //Falling edge trigger
+  EXTI_Tri_Edge    = 0x00,  /*!< Both rising and falling edges triggered. */
+  EXTI_Tri_Falling = 0x01    /*!< //Falling edge trigger. */
 } EXTITri_Type;
 
 /*-----------------------------------------------------------------------
