@@ -142,7 +142,7 @@ typedef enum
 ***/
 #define  GPIO_MODE_WEAK_PULL(gpio_x,pin)            \
 do{                                                 \
-		gpio_x##M1 &= ~(pin), gpio_x##M0 &= ~(pin); \
+		gpio_x##M1 &= ~(pin); gpio_x##M0 &= ~(pin); \
 }while(0)
 
 	
@@ -159,7 +159,7 @@ do{                                                 \
 ***/	
 #define  GPIO_MODE_IN_FLOATING(gpio_x,pin)          \
 do{                                                 \
-		gpio_x##M1 |=  (pin), gpio_x##M0 &= ~(pin); \
+		gpio_x##M1 |=  (pin); gpio_x##M0 &= ~(pin); \
 }while(0)
 
 	
@@ -176,7 +176,7 @@ do{                                                 \
 ***/		
 #define  GPIO_MODE_OUT_OD(gpio_x,pin)               \
 do{                                                 \
-		gpio_x##M1 |=  (pin), gpio_x##M0 |=  (pin); \
+		gpio_x##M1 |=  (pin); gpio_x##M0 |=  (pin); \
 }while(0)
 
 
@@ -193,7 +193,7 @@ do{                                                 \
 ***/			
 #define  GPIO_MODE_OUT_PP(gpio_x,pin)               \
 do{                                                 \
-		gpio_x##M1 &= ~(pin), gpio_x##M0 |=  (pin); \
+		gpio_x##M1 &= ~(pin); gpio_x##M0 |=  (pin); \
 }while(0)
 
 

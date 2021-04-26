@@ -183,10 +183,6 @@ FSCSTATE UART4_Init(const UART_InitType *uartx);
 FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,BOOL run);
 FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run);
 
-#define    NVIC_UART1_CTRL(run)     do{ ES = run; }while(0)
-#define    NVIC_UART2_CTRL(run)     do{ IE2 = (IE2 & 0xFE) | (run); }while(0)
-#define    NVIC_UART3_CTRL(run)     do{ IE2 = (IE2 & 0xF7) | (run << 3); }while(0)
-#define    NVIC_UART4_CTRL(run)     do{ IE2 = (IE2 & 0xEF) | (run << 4); }while(0)
 
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 
@@ -199,6 +195,11 @@ FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run);
 	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,BOOL run);
 
 #endif
+
+#define    NVIC_UART1_CTRL(run)     do{ ES = run; }while(0)
+#define    NVIC_UART2_CTRL(run)     do{ IE2 = (IE2 & 0xFE) | (run); }while(0)
+#define    NVIC_UART3_CTRL(run)     do{ IE2 = (IE2 & 0xF7) | (run << 3); }while(0)
+#define    NVIC_UART4_CTRL(run)     do{ IE2 = (IE2 & 0xEF) | (run << 4); }while(0)
 
 /* UART */
 FSCSTATE GPIO_UART1_SWPort(GPIOSWPort_Type port);

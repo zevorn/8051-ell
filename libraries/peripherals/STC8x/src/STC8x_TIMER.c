@@ -33,12 +33,14 @@
 /*-----------------------------------------------------------------------
 |                             DECLARATION                               |
 -----------------------------------------------------------------------*/
+
 /**
  * @brief      定时器0工作模式选择宏函数（作用域为本文件）。
  * @details    Timer 0 working mode selection macro function (scope for this file).
  * @param[in]  mode 工作模式。working mode.
 **/
 #define TIMER0_MODE_CFG(mode)  do{TMOD = (TMOD & 0xFC) | (mode);}while(0)
+
 
 /**
  * @brief     定时器1工作模式选择宏函数（作用域为本文件）。
@@ -47,33 +49,38 @@
 **/
 #define TIMER1_MODE_CFG(mode)  do{TMOD = (TMOD & 0xCF) | (mode << 4);}while(0)
 
+
 /**
  * @brief     定时器0指令周期选择宏函数（作用域为本文件）。
  * @details   Timer 0 instruction cycle selects macro function (scope is this file).
- * @param[in] tCycle 指令周期 instruction cycle.
+ * @param[in] tCycle 指令周期。 instruction cycle.
 **/
 #define  TIMER0_TCY_CFG(tCycle)  do{AUXR  = (AUXR  & 0x7F) | ( !tCycle << 7 );}while(0)
+
 
 /**
  * @brief     定时器1指令周期选择宏函数（作用域为本文件）。
  * @details   Timer 1 instruction cycle selects macro function (scope is this file).
- * @param[in] tCycle 指令周期 instruction cycle.
+ * @param[in] tCycle 指令周期。 instruction cycle.
 **/
 #define  TIMER1_TCY_CFG(tCycle) do{AUXR  = (AUXR  & 0xBF) | ( !tCycle << 6 );}while(0)
+
 
 /**
  * @brief   定时器2指令周期选择宏函数（作用域为本文件）。
  * @details   Timer 2 instruction cycle selects macro function (scope is this file).
- * @param[in] tCycle 指令周期 instruction cycle.
+ * @param[in] tCycle 指令周期。 instruction cycle.
 **/
 #define  TIMER2_TCY_CFG(tCycle) do{AUXR  = (AUXR  & 0xFB) | ( !tCycle << 2 );}while(0)
+
 
 /**
  * @brief     定时器3指令周期选择宏函数（作用域为本文件）。
  * @details   Timer 3 instruction cycle selects macro function (scope is this file).
- * @param[in] tCycle 指令周期 instruction cycle.
+ * @param[in] tCycle 指令周期。 instruction cycle.
 **/
 #define  TIMER3_TCY_CFG(tCycle) do{T4T3M = (T4T3M & 0xFD) | ( !tCycle << 1 );}while(0)
+
 
 /**
  * @brief   定时器4指令周期选择宏函数（作用域为本文件）。
@@ -82,10 +89,11 @@
 **/
 #define  TIMER4_TCY_CFG(tCycle) do{T4T3M = (T4T3M & 0xDF) | ( !tCycle << 5 );}while(0)
 
+
 /**
- * @brief    定时器0定时时间设置函数（作用域为本文件）。
+ * @brief     定时器0定时时间设置函数（作用域为本文件）。
  * @details   Timer 0 timing time setting function (scope is this file).
- * @param[in] time [uint16_t] 定时时间 timing time.
+ * @param[in] time 定时时间。 timing time.
 **/
 #define TIMER0_TIM_CFG(time)                           \
 do{                                                    \
@@ -93,26 +101,27 @@ do{                                                    \
 	       * (11 * (!(AUXR & 0x80)) + 1)) ) );         \
 }while(0)
 
+
 /**
-  * @name    TIMER1_TIM_CFG
-  * @brief   定时器1定时时间设置函数（作用域为本文件）。
-  *          Timer 1 timing time setting function (scope is this file).
-  * @param[in] time [uint16_t] 定时时间 timing time.
-***/
+ * @brief     定时器1定时时间设置函数（作用域为本文件）。
+ * @details   Timer 1 timing time setting function (scope is this file).
+ * @param[in] time 定时时间。 timing time.
+**/
 #define TIMER1_TIM_CFG(time)                           \
 do{                                                    \
 	time = (65536UL - (sysClk_FRE / (1000000UL /  time \
 	       * (11 * (!(AUXR & 0x40)) + 1)) ) );         \
 }while(0)
 
+
+
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
     
     /**
-      * @name    TIMER2_TIM_CFG
-      * @brief   定时器2定时时间设置函数（作用域为本文件）。
-      *          Timer 2 timing time setting function (scope is this file).
-      * @param   time [uint16_t] 定时时间 timing time.
-    ***/
+     * @brief   定时器2定时时间设置函数（作用域为本文件）。
+     * @details Timer 2 timing time setting function (scope is this file).
+     * @param   time 定时时间。 timing time.
+    **/
     #define TIMER2_TIM_CFG(time)                           \
 	do{                                                    \
 		time = (65536UL - (sysClk_FRE / (1000000UL /  time \
@@ -121,11 +130,10 @@ do{                                                    \
 	
 	
     /**
-      * @name    TIMER3_TIM_CFG
-      * @brief   定时器3定时时间设置函数（作用域为本文件）。
-      *          Timer 3 timing time setting function (scope is this file).
-      * @param   time [uint16_t] 定时时间 timing time.
-    ***/
+     * @brief   定时器3定时时间设置函数（作用域为本文件）。
+     * @details Timer 3 timing time setting function (scope is this file).
+     * @param   time 定时时间。 timing time.
+    **/
     #define TIMER3_TIM_CFG(time)                           \
 	do{                                                    \
 		time = (65536UL - (sysClk_FRE / (1000000UL /  time \
@@ -134,11 +142,10 @@ do{                                                    \
 	
 	
     /**
-      * @name    TIMER3_TIM_CFG
-      * @brief   定时器3定时时间设置函数（作用域为本文件）。
-      *          Timer 3 timing time setting function (scope is this file).
-      * @param   time [uint16_t] 定时时间 timing time.
-    ***/
+     * @brief   定时器3定时时间设置函数（作用域为本文件）。
+     *          Timer 3 timing time setting function (scope is this file).
+     * @param   time 定时时间。 timing time.
+    **/
     #define TIMER4_TIM_CFG(time)                           \
 	do{                                                    \
 		time = (65536UL - (sysClk_FRE / (1000000UL /  time \
@@ -148,11 +155,11 @@ do{                                                    \
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     /**
-      * @name    TIMER2_TIM_CFG
-      * @brief   定时器2定时时间设置函数（作用域为本文件）。
-      *          Timer 2 timing time setting function (scope is this file).
-      * @param   time [uint16_t] 定时时间 timing time.
-    ***/
+     * @name    TIMER2_TIM_CFG
+     * @brief   定时器2定时时间设置函数（作用域为本文件）。
+     *          Timer 2 timing time setting function (scope is this file).
+     * @param   time 定时时间。 timing time.
+    **/
     #define TIMER2_TIM_CFG(time)                                             \
 	do{                                                                      \
 		time = (65536UL - ( (sysClk_FRE / (TM2PS + 1) ) / (1000000UL /  time \
@@ -161,11 +168,11 @@ do{                                                    \
 	
 	
     /**
-      * @name    TIMER3_TIM_CFG
-      * @brief   定时器3定时时间设置函数（作用域为本文件）。
-      *          Timer 3 timing time setting function (scope is this file).
-      * @param   time [uint16_t] 定时时间 timing time.
-    ***/
+     * @name    TIMER3_TIM_CFG
+     * @brief   定时器3定时时间设置函数（作用域为本文件）。
+     *          Timer 3 timing time setting function (scope is this file).
+     * @param   time 定时时间。 timing time.
+    **/
     #define TIMER3_TIM_CFG(time)                                             \
 	do{ 															         \
 		time = (65536UL - ( (sysClk_FRE / (TM3PS + 1) ) / (1000000UL /  time \
@@ -174,11 +181,11 @@ do{                                                    \
 	
 	
     /**
-      * @name    TIMER4_TIM_CFG
-      * @brief   定时器4定时时间设置函数（作用域为本文件）。
-      *          Timer 4 timing time setting function (scope is this file).
-      * @param   time [uint16_t] 定时时间 timing time.
-    ***/
+     * @name    TIMER4_TIM_CFG
+     * @brief   定时器4定时时间设置函数（作用域为本文件）。
+     *          Timer 4 timing time setting function (scope is this file).
+     * @param   time 定时时间。 timing time.
+    **/
     #define TIMER4_TIM_CFG(time)                                             \
 	do{                                                                      \
 		time = (65536UL - ( (sysClk_FRE / (TM2PS + 1) ) / (1000000UL /  time \
@@ -186,14 +193,16 @@ do{                                                    \
 	}while(0)
     
 #endif            
-			  
-/*--------------------------------------------------------
-| @Description: TIMER priority define function           |
---------------------------------------------------------*/
 
-#define TIMER0_NVIC_PRI(pri) { \
+	
+/**
+ * @brief   定时器4定时时间设置函数（作用域为本文件）。
+ *          Timer 4 timing time setting function (scope is this file).
+ * @param   time [uint16_t] 定时时间 timing time.
+**/
+#define TIMER0_NVIC_PRI(pri) do{ \
 IPH = (IPH & 0xFD) |  (pri & 0x02) ; \
-IP  = (IP  & 0xFD) | ((pri & 0x01) << 1);}
+IP  = (IP  & 0xFD) | ((pri & 0x01) << 1);}while(0)
 
 #define TIMER1_NVIC_PRI(pri) { \
 IPH = (IPH & 0xF7) | ((pri & 0x02) << 2); \
