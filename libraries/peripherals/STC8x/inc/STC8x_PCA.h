@@ -104,9 +104,9 @@ typedef enum
 **/
 typedef enum
 {
-	PCA_CAP_Mode_Falling = 0x01, /*!< ÏÂ½µÑØ²¶»ñ¡£Capture on falling edge.*/
-	PCA_CAP_Mode_Rising  = 0X02, /*!< ÉÏÉýÑØ²¶»ñ¡£Rising edge capture. */
-	PCA_CAP_Mode_Edge    = 0x03  /*!< ±ßÑØ²¶»ñ¡£Edge capture. */
+	PCA_CAP_Mode_Falling = 0x01, /*!< ä¸‹é™æ²¿æ•èŽ·ã€‚Capture on falling edge.*/
+	PCA_CAP_Mode_Rising  = 0X02, /*!< ä¸Šå‡æ²¿æ•èŽ·ã€‚Rising edge capture. */
+	PCA_CAP_Mode_Edge    = 0x03  /*!< è¾¹æ²¿æ•èŽ·ã€‚Edge capture. */
 } PCA_CAPMode_Type;
 
 
