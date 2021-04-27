@@ -156,13 +156,20 @@ FSCSTATE UART1_Init(const UART_InitType* uartx)
         AUXR &= 0xEF;  //Turn off timer2
         IE2 &= 0xFB;   //Ban timer2 interrupt
         AUXR |= 0x01;  //Select timer2 as baud rate generator
-		#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		  
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+		  
+			uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate); 
+		  
+		#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		  
 			EAXFR_ENABLE();
 			TM2PS = uartx -> BRTGenClkDiv;
+		    uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate);     
 			EAXFR_DISABLE();
+		  
 		#endif	
-        uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
-                               uartx -> BaudRate);   
+  
         AUXR |= 0X10;  //Turn on timer2
         break;
       }
@@ -195,13 +202,20 @@ FSCSTATE UART2_Init(const UART_InitType* uartx)
     {
 		AUXR &= 0xEF;  //Turn off timer2
 		IE2 &= 0xFB;   //Ban timer2 interrupt
-		#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+		  
+			uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate); 
+		  
+		#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		  
 			EAXFR_ENABLE();
 			TM2PS = uartx -> BRTGenClkDiv;
+		    uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate);     
 			EAXFR_DISABLE();
+		  
 		#endif	
-		uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
-                               uartx -> BaudRate);     
+  
 		AUXR |= 0X10;  //Turn on timer2
     }
     else return FSC_FAIL;
@@ -231,13 +245,20 @@ FSCSTATE UART3_Init(const UART_InitType* uartx)
             AUXR &= 0xEF;  //Turn off timer2
             IE2 &= 0xFB;   //Ban timer2 interrupt
             S3CON &= 0xBF;  //Select timer2 as baud rate generator
-			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			  
+				uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate); 
+			  
+			#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			  
 				EAXFR_ENABLE();
 				TM2PS = uartx -> BRTGenClkDiv;
+				uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate);     
 				EAXFR_DISABLE();
+			  
 			#endif	
-            uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
-                                   uartx -> BaudRate);     
+  
             AUXR |= 0X10;  //Turn on timer2
             break;
         }
@@ -246,13 +267,20 @@ FSCSTATE UART3_Init(const UART_InitType* uartx)
             T4T3M &= 0xF7;  //Turn off timer3
             IE2 &= 0xDF;  //Ban timer3 interrupt
             S3CON |= 0x40;    //Select timer3 as baud rate generator
-			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			  
+				UART3_TIMER3_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate); 
+			  
+			#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			  
 				EAXFR_ENABLE();
 				TM3PS = uartx -> BRTGenClkDiv;
+				UART3_TIMER3_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate);     
 				EAXFR_DISABLE();
+			  
 			#endif	
-            UART3_TIMER3_BRTMODE_CFG(uartx -> BRTMode,
-                                   uartx -> BaudRate);
+  
             T4T3M |= 0x08; //Turn on timer3 
             break;
          }
@@ -284,13 +312,20 @@ FSCSTATE UART4_Init(const UART_InitType* uartx)
             AUXR &= 0xEF;  //Turn off timer2
             IE2 &= 0xFB;   //Ban timer2 interrupt
             S4CON &= 0xBF;  //Select timer2 as baud rate generator
-			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			  
+				uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate); 
+			  
+			#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			  
 				EAXFR_ENABLE();
 				TM2PS = uartx -> BRTGenClkDiv;
+				uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate);     
 				EAXFR_DISABLE();
+			  
 			#endif	
-            uartx_TIMER2_BRTMODE_CFG(uartx -> BRTMode,
-                                   uartx -> BaudRate);     
+  
             AUXR |= 0X10;  //Turn on timer2
             break;
         }
@@ -299,13 +334,20 @@ FSCSTATE UART4_Init(const UART_InitType* uartx)
             T4T3M &= 0x7F;  //Turn off timer3
             IE2 &= 0xBF;  //Ban timer4 interrupt
             S4CON |= 0x40;   //Select timer3 as baud rate generator
-			#if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			  
+				UART4_TIMER4_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate); 
+			  
+			#elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			  
 				EAXFR_ENABLE();
 				TM4PS = uartx -> BRTGenClkDiv;
+				UART4_TIMER4_BRTMODE_CFG(uartx -> BRTMode,uartx -> BaudRate);     
 				EAXFR_DISABLE();
+			  
 			#endif	
-            UART4_TIMER4_BRTMODE_CFG(uartx -> BRTMode,
-                                   uartx -> BaudRate);
+  
             T4T3M |= 0x80; //Turn on timer4
             break;
         } 

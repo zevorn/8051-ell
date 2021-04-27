@@ -54,7 +54,7 @@
   * @brief   You need to initialize the uart bay yourself.  
 ***/
 #define  COM_LIB_PRINTFRED_CTRL        (1)    // "1" is enable, "0" is disable 
-#define  COM_LIB_PRINTFRED_ROAD        (1)    // Select printf uart(1\2\3\4)
+#define  COM_LIB_PRINTFRED_ROAD        (2)    // Select printf uart(1\2\3\4)
 
 /**
   * @name    TMT

@@ -285,17 +285,25 @@ FSCSTATE TIMER2_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
 	uint32_t sysClk_FRE;
-    #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-        EAXFR_ENABLE();
-        TM2PS = timerx -> SysClkDiv;
-        EAXFR_DISABLE();
-    #endif
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	AUXR &= 0xEF; //Turn off timer2
 	AUXR = (AUXR & 0xF7) | (timerx -> Type << 3);
 	TIMER2_TCY_CFG(timerx -> TCycle);
-	TIMER2_TIM_CFG(timerx -> Time);	
+	
+	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+	
+		TIMER2_TIM_CFG(timerx -> Time);
+	
+    #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+	
+        EAXFR_ENABLE();
+        TM3PS = timerx -> SysClkDiv;
+	    TIMER2_TIM_CFG(timerx -> Time);
+        EAXFR_DISABLE();
+	
+    #endif	
+	
 	T2L = (uint8_t)(timerx -> Time);
 	T2H = (uint8_t)(timerx -> Time >> 8);
 	INTCLKO = (INTCLKO & 0xFB) | (timerx -> ClkOut << 2);	
@@ -316,17 +324,25 @@ FSCSTATE TIMER3_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
-    #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-        EAXFR_ENABLE();
-        TM3PS = timerx -> SysClkDiv;
-        EAXFR_DISABLE();
-    #endif
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	T4T3M &= 0XF7;//Turn off timer3
 	T4T3M = (T4T3M & 0xFB) | (timerx -> Type << 2);
 	TIMER3_TCY_CFG(timerx -> TCycle);
-	TIMER3_TIM_CFG(timerx -> Time);
+	
+	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+	
+		TIMER3_TIM_CFG(timerx -> Time);
+	
+    #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+	
+        EAXFR_ENABLE();
+        TM3PS = timerx -> SysClkDiv;
+	    TIMER3_TIM_CFG(timerx -> Time);
+        EAXFR_DISABLE();
+	
+    #endif	
+	
 	T3L = (uint8_t)(timerx -> Time);
 	T3H = (uint8_t)(timerx -> Time >> 8);
 	T4T3M = (T4T3M & 0xFE) | (timerx -> ClkOut);
@@ -347,17 +363,25 @@ FSCSTATE TIMER4_Init(const TIMER_InitType* timerx)
 {
 	extern uint32_t Get_SysClk_FRE(void);
     uint32_t sysClk_FRE;
-    #if  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-        EAXFR_ENABLE();
-        TM4PS = timerx -> SysClkDiv;
-        EAXFR_DISABLE();
-    #endif
 	/* Get system clock frequency */
 	sysClk_FRE = Get_SysClk_FRE();
 	T4T3M &= 0X7F; //Turn off timer4
 	T4T3M = (T4T3M & 0xBF) | (timerx -> Type << 6);
 	TIMER4_TCY_CFG(timerx -> TCycle);
-	TIMER4_TIM_CFG(timerx -> Time);	
+	
+	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+	
+		TIMER3_TIM_CFG(timerx -> Time);
+	
+    #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+	
+        EAXFR_ENABLE();
+        TM3PS = timerx -> SysClkDiv;
+	    TIMER3_TIM_CFG(timerx -> Time);
+        EAXFR_DISABLE();
+	
+    #endif	
+	
 	T4L = (uint8_t)(timerx -> Time);
 	T4H = (uint8_t)(timerx -> Time >> 8);
 	T4T3M = (T4T3M & 0xEF) | (timerx -> ClkOut << 4);

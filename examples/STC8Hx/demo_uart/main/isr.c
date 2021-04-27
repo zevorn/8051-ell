@@ -26,7 +26,7 @@ bit Time500MsFlag = 0;
   * @param   None
   * @return  None
 ***/
-void TIMER0_ISRQ_Handler(void)
+void TIMER3_ISRQ_Handler(void)
 {
   static uint16_t tim500msCont;
 
@@ -59,7 +59,25 @@ void UART1_ISRQ_Handler(void)
 	}
 }
 
-
+/**
+  * @name    UART1_ISRQ_Handler
+  * @brief   MCU UART1 Interrupt request service function
+  * @param   None
+  * @return  None
+***/
+void UART2_ISRQ_Handler(void)
+{
+	if(UART2_GET_RX_FLAG())
+	{
+		UART2_CLEAR_RX_FLAG();
+    
+	}
+	else if(UART2_GET_TX_FLAG())
+	{
+		UART2_CLEAR_TX_FLAG();
+    UART2_CLEAR_BUSY_FLAG();
+	}
+}
 /*--------------------------------------------------------
 | @Description: Interrupt service function               |
 --------------------------------------------------------*/

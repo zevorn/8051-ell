@@ -69,6 +69,18 @@ static void STC8x_UART_Config(void)
 
 	UART1_Init(&UART_InitStruct);
 	NVIC_UART1_Init(NVIC_PR3,ENABLE);
+	
+	GPIO_UART2_SWPort(SW_Port2);
+	
+	UART_InitStruct.Mode = UART_8bit_BRTx;  // 8位波特率
+	UART_InitStruct.BRTGen = UART_BRT_TIM2; //定时器2
+	UART_InitStruct.BRTMode = UART_BRT_1T;  // 1T模式
+	UART_InitStruct.BRTGenClkDiv = 4;  //预分频数
+	UART_InitStruct.BaudRate = 9600;  // 波特率960
+	UART_InitStruct.RxEnable = ENABLE; //接收使能
+
+	UART2_Init(&UART_InitStruct);
+	NVIC_UART2_Init(NVIC_PR2,ENABLE);	
 }
 
 /**
@@ -98,23 +110,24 @@ void STC8x_TIMER_Config(void)
 {
 	TIMER_InitType  TIMER_InitStruct = {0};
 	
+	TIMER_InitStruct.SysClkDiv = 10;
     TIMER_InitStruct.Type = TIMER_Type_Timer;       //timer type
     TIMER_InitStruct.Mode = TIMER_16BitAutoReload;       //Working mode
     TIMER_InitStruct.TCycle = TIMER_TCY_1T;   //Instruction cycle
     TIMER_InitStruct.ClkOut = DISABLE;           //Programmable clock output
-    TIMER_InitStruct.Time = 1000;              //Loading initial value
+    TIMER_InitStruct.Time = 10000;              //Loading initial value 
     TIMER_InitStruct.Run = ENABLE;              //Operation control bit
 	
-	if(TIMER0_Init(&TIMER_InitStruct) != FSC_SUCCESS)
+	if(TIMER3_Init(&TIMER_InitStruct) != FSC_SUCCESS)
 	{
-		printf("Timer0 init erro! \r\n");
+		printf("Timer3 init erro! \r\n");
 	}
 	else
 	{
-		printf("Timer0 init success! \r\n");
+		printf("Timer3 init success! \r\n");
 	}
 	
-	NVIC_TIMER0_Init(NVIC_PR1,ENABLE);
+	NVIC_TIMER3_Init(ENABLE);
 
 }
 

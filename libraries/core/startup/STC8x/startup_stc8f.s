@@ -52,7 +52,7 @@ $NOMOD51
 ; @Note    IDATA内存的绝对起始地址始终为0,IDATA空间在物理上与数据和位区域重叠。
 ;          The absolute start-address of IDATA memory is always 0
 ;          The IDATA space overlaps physically the DATA and BIT areas.
-IDATALEN        EQU     0F9H  /*注意：最后几个字节保存了IRC参数，不得清零和访问！*/
+IDATALEN        EQU     0F0H  /*注意：最后几个字节保存了IRC参数，不得清零和访问！*/
 
 
 ; @name    XDATASTART
