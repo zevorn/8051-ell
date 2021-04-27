@@ -1,7 +1,7 @@
 
 <img src='doc/image/icon.png' align='left'/>
 
-# 8051-ELL 库简介
+
 
 <font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://zewen-i.github.io/8051-ELL-WEB/)</font> <font color=#0BBEE>[<u>**全新的API文档中心**</u>](https://zewen-i.github.io/8051-ELL-API/)</font>  
 
@@ -13,10 +13,21 @@
 
 ## 2021年04月
 
+
+
+### 2021-04-28
+
+* 新增PCA中文代码注释
+
+
+
 ### 2021-04-27
 
 * 修复串口2 串口3 串口4 预分频器问题
+
 * 调整启动文件 IDATA初始化范围， 保留存放系统时钟信息的RAM
+
+  
 
 ### 2021-04-25
 

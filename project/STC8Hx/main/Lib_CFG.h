@@ -60,7 +60,7 @@
   * @name    TMT
   * @brief   Task time tool
 ***/
-#define  COM_LIB_TMT_CTRL              (1)    // "1" is enable, "0" is disable 
+#define  COM_LIB_TMT_CTRL              (0)    // "1" is enable, "0" is disable 
 #define  COM_LIB_TMT_TASK_NUM_MAX      (8)    // task number max
 #define  COM_LIB_NVIC_TIMER_ISR_ENABLE    ET0 = 1
 #define  COM_LIB_NVIC_TIMER_ISR_DISABLE   ET0 = 0

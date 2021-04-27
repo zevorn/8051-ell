@@ -79,6 +79,7 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 		
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKDiv;   /* System clock frequency division */
 		    SYSCLK.CKSEL_REG |= sysClkn -> SCLKOutPin << 3;
+			
 #elif ( PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx ) 		
 		
 		    if(sysClkn -> MCLKSrc != AUTO)

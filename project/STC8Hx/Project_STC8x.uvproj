@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -133,11 +133,11 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -308,17 +308,17 @@
             </OnChipMemories>
           </Target51Misc>
           <C51>
-            <RegisterColoring>0</RegisterColoring>
+            <RegisterColoring>1</RegisterColoring>
             <VariablesInOrder>0</VariablesInOrder>
             <IntegerPromotion>1</IntegerPromotion>
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
-            <Fuzzy>3</Fuzzy>
-            <Optimize>8</Optimize>
+            <Fuzzy>7</Fuzzy>
+            <Optimize>9</Optimize>
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
-            <ACallAJmp>0</ACallAJmp>
+            <ACallAJmp>1</ACallAJmp>
             <InterruptVectorAddress>0</InterruptVectorAddress>
             <VariousControls>
               <MiscControls></MiscControls>
@@ -442,11 +442,6 @@
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_SYSCLK.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_TIMER.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_TIMER.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_UART.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_UART.c</FilePath>
@@ -460,6 +455,11 @@
               <FileName>STC8x_HPWM.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_HPWM.c</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_TIMER.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_TIMER.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -477,14 +477,14 @@
               <FilePath>..\..\libraries\components\PreDelay\PreDelay.c</FilePath>
             </File>
             <File>
-              <FileName>PrintfRed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PrintfRed\PrintfRed.c</FilePath>
-            </File>
-            <File>
               <FileName>TMT.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\components\TMT\TMT.c</FilePath>
+            </File>
+            <File>
+              <FileName>PrintfRed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\components\PrintfRed\PrintfRed.c</FilePath>
             </File>
           </Files>
         </Group>

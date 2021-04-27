@@ -38,9 +38,37 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
-#ifndef PER_LIB_MCU_MUODEL
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_CTRL
+    #define PER_LIB_I2C_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_INIT_CTRL
+    #define PER_LIB_I2C_INIT_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_NVIC_CTRL
+    #define PER_LIB_I2C_NVIC_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_WORK_CTRL
+    #define PER_LIB_I2C_WORK_CTRL 1
+#endif
+
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -57,17 +85,19 @@
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
 #include "ELL_CORE.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-/*--------------------------------------------------------
-| @Description: I2C type control enum                    |
---------------------------------------------------------*/
 
+/** 
+ * @brief	 I2C工作类型枚举体。
+ * @details	 I2C type control enumenumeration.
+**/
 typedef enum
 {
-  I2C_Type_Host = 0x01,
-  I2C_Type_Slave  = 0x00
+	I2C_Type_Host  = 0x01,   /*!< I2C工作在主机类型。I2C works in the host type.*/
+	I2C_Type_Slave = 0x00    /*!< I2C工作在从机类型。I2C works in the slave type.*/
 } I2CType_Type;
 
 
@@ -75,280 +105,281 @@ typedef enum
 | @Description: I2C slave interrupt Trigger enum         |
 --------------------------------------------------------*/
 
+/** 
+ * @brief    I2C从机中断触发方式枚举体。
+ * @details	 I2C slave interrupt trigger mode enumeration body.
+**/
 typedef enum
 {
-  I2C_STri_RevStart_Done  = 0x40,
-  I2C_STri_RevData_Done   = 0x20,
-  I2C_STri_SendData_Done  = 0x10,
-  I2C_STri_RevStop_Done   = 0x80
+	I2C_STri_RevStart_Done  = 0x40,  /*!< I2C从机接收START完成中断。I2C slave receives START completion interrupt. */
+	I2C_STri_RevData_Done   = 0x20,  /*!< I2C从机接收数据完成中断。The I2C slave receives data and is interrupted. */
+	I2C_STri_SendData_Done  = 0x10,  /*!< I2C从机发送数据完成中断。The I2C slave is interrupted when sending data. */
+	I2C_STri_RevStop_Done   = 0x80   /*!< I2C从机接收STOP完成中断。The I2C slave receives the STOP completion interrupt.*/
 } I2CSTri_Type;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-
-/**
- * @name    I2C_Init
- * @brief   I2C初始化函数。
- *          I2C initialization function.
- * @param   type  [IN] I2C工作模式（主从机）。I2C working mode (master-slave).
- * @param   wTime [IN] I2C等待时间。value of wait time.
- * @param   run   [IN] 运行控制位。Operation control bit.
- * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, BOOL state);
-
-/**
-  * @name    NVCI_I2C_Master_Init
-  * @brief   I2C主机中断初始化函数。
-  *          I2C Master init NVIC function.  
-  * @param   priority [IN] 中断优先级。interrupt priority.
-  * @param   run      [IN] 使能控制位。enable control. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type priority,BOOL run);
-
-/**
-  * @name    NVCI_I2C_Slave_Init
-  * @brief   I2C从机中断初始化函数。
-  *          I2C Slave init NVIC function.  
-  * @param   priority [IN] 中断优先级。interrupt priority.
-  * @param   triMode  [IN] 触发模式，可以选择多个，并用或运算符连接。
-  *                        Trigger mode, multiple can be selected 
-  *                        and connected with or operator.
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type priority,I2CSTri_Type triMode);
-
-
-/**
-  * @name    NVIC_I2C_HOST_CTRL
-  * @brief   I2C主机中断开关控制宏函数。
-  *          I2C host interrupt switch control macro function.
-  * @param   run [BOOL] 使能控制位。Enable control bit.
-***/
-#define    NVIC_I2C_HOST_CTRL(run)      \
-{                                       \
-	EAXFR_ENABLE();	                    \
-	I2CMSCR = run << 7;                 \
-	EAXFR_DISABLE();                    \
-}
-
-/**
-  * @name    NVIC_I2C_SLAVE_CTRL
-  * @brief   I2C从机中断开关控制宏函数。
-  *          I2C slave interrupt switch control macro function.
-  * @param   run [BOOL] 使能控制位。Enable control bit.
-***/
-#define    NVIC_I2C_SLAVE_CTRL(run)     \
-{                                       \
-	EAXFR_ENABLE();                     \
-	I2CSLCR &= (I2CSLCR & 0x01 ) |      \
-	     (run << 6) | (run << 5) |      \
-	     (run << 4) | (run << 3) ;      \
-	EAXFR_DISABLE();                    \
-}
-
-
-/**
-  * @name    I2C_GET_HOST_FLAG
-  * @brief   I2C获取主机中断请求标志位宏函数。
-  *          I2C gets host interrupt request flag bit macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.  
-***/
-#define I2C_GET_HOST_FLAG()           (I2CMSST & 0x40)
-
-
-/**
-  * @name    I2C_GET_HOST_BUSY_STATE
-  * @brief   I2C获取主机忙/空闲状态宏函数。
-  *          I2C get the host working state (busy / idle) macro function.
-  * @retval  [bit] 0代表控制器处于空闲状态，1代表处于忙碌状态。
-  *                0 means the controller is idle and 1 means it is busy.
-***/
-#define I2C_GET_HOST_BUSY_STATE()           (I2CMSST & 0x80)
-
-
-/**
-  * @name    I2C_CLEAR_HOST_MASTER_FLAG
-  * @brief   I2C清除主机中断请求标志位宏函数。
-  *          I2C clears host interrupt request flag bit macro function. 
-***/
-#define I2C_CLEAR_HOST_MASTER_FLAG()         {I2CMSST &= 0xBF;}
-
-
-/**
-  * @name    I2C_GET_SLAVE_BUSY_STATE
-  * @brief   I2C获取从机状态（忙/空闲）宏函数。
-  *          I2C get the slave working state (busy / idle) macro function.
-  * @retval  [bit] 0代表控制器处于空闲状态，1代表处于忙碌状态。
-  *                0 means the controller is idle and 1 means it is busy.
-***/
-#define I2C_GET_SLAVE_BUSY_STATE()           (I2CMSST & 0x80)
-
-
-/**
-  * @name    I2C_GET_SLAVE_REVSTART_FLAG
-  * @brief   I2C获取，从机接收开始信号中断请求标志位，宏函数。
-  *          I2C acquisition, slave receives start signal, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_GET_SLAVE_REVSTART_FLAG()         (I2CSLST & 0x40)
-
-
-/**
-  * @name    I2C_GET_SLAVE_REVDATA_FLAG
-  * @brief   I2C获取，从机接收一字节数据中断请求标志位，宏函数。
-  *          I2C acquisition, slave receives one byte data, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_GET_SLAVE_REVDATA_FLAG()          (I2CSLST & 0x20)
-
-
-/**
-  * @name    I2C_GET_SLAVE_SENDATA_FLAG
-  * @brief   I2C获取，从机发送一字节数据中断请求标志位，宏函数。
-  *          I2C acquisition, slave sends one byte data, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_GET_SLAVE_SENDATA_FLAG()          (I2CSLST & 0x10)
-
-
-/**
-  * @name    I2C_GET_SLAVE_REVSTART_FLAG
-  * @brief   I2C获取，从机接收停止信号中断请求标志位，宏函数。
-  *          I2C acquisition, slave receives stop signal, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_GET_SLAVE_REVSTOP_FLAG()          (I2CSLST & 0x08)
-
-
-/**
-  * @name    I2C_CLEAR_SLAVE_REVSTART_FLAG
-  * @brief   I2C清除，从机接收开始信号中断请求标志位，宏函数。
-  *          I2C clears the slave receives start signal, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_CLEAR_SLAVE_REVSTART_FLAG()       {I2CSLST &= 0xBF;}
-
-
-/**
-  * @name    I2C_CLEAR_SLAVE_REVDATA_FLAG
-  * @brief   I2C清除，从机接收一字节数据中断请求标志位，宏函数。
-  *          I2C clears the slave receives one byte data, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_CLEAR_SLAVE_REVDATA_FLAG()        {I2CSLST &= 0xDF;}
-
-
-/**
-  * @name    I2C_CLEAR_SLAVE_SENDATA_FLAG
-  * @brief   I2C清除，从机发送一字节数据中断请求标志位，宏函数。
-  *          I2C clears the slave sends one byte data, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_CLEAR_SLAVE_SENDATA_FLAG()        {I2CSLST &= 0xEF;}
-
-
-/**
-  * @name    I2C_CLEAR_SLAVE_REVSTOP_FLAG
-  * @brief   I2C清除，从机接收停止信号中断请求标志位，宏函数。
-  *          I2C clears the slave receives stop signal, 
-  *          interrupt request flag bit, macro function.
-  * @retval  [bit] （中断）标志位。(interrupt) flag bit.
-***/
-#define I2C_CLEAR_SLAVE_REVSTOP_FLAG()        {I2CSLST &= 0xF7;}
-
-
-/**
-  * @name    I2C_Send_Start
-  * @brief   I2C发送开始信号函数。
-  *          I2C sends signal of start function.  
-  * @param   None. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Send_Start(void);
+#if (PER_LIB_I2C_CTRL == 1)
 	
-/**
-  * @name    I2C_Send_Stop
-  * @brief   I2C发送停止信号函数。
-  *          I2C sends signal of stop function.  
-  * @param   None. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Send_Stop(void);
-	
-	
-/**
-  * @name    I2C_Send_ACK
-  * @brief   I2C发送ACK信号函数。
-  *          I2C sends signal of ACK function.  
-  * @param   None. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Send_ACK(void);
-	
-	
-/**
-  * @name    I2C_Send_NACK
-  * @brief   I2C发送NACK信号函数。
-  *          I2C sends signal of NACK function.  
-  * @param   None. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Send_NACK(void);
-	
-	
-/**
-  * @name    I2C_Read_ACK
-  * @brief   I2C读取NACK信号函数。
-  *          I2C reads signal of NACK function.  
-  * @param   None. 
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Read_ACK(void);
-	
-	
-/**
-  * @name    I2C_Send_Btye
-  * @brief   I2C发送一个字节函数。
-  *          I2C sends a byte data function.  
-  * @param   dat [IN] 字节数据。byte data.
-  * @retval  [FSC_SUCCESS / FSC_FAIL]
-***/
-FSCSTATE I2C_Send_Btye(uint8_t dat);
-	
-	
-/**
-  * @name    I2C_Read_Byte
-  * @brief   I2C读取一个字节函数。
-  *          I2C reads a byte data function.  
-  * @param   None.
-  * @retval  [uint8_t]data of recive
-***/
-uint8_t I2C_Read_Byte(void)  ;
+	#if (PER_LIB_I2C_INIT_CTRL == 1)
 
-	
-/**
-  * @name    GPIO_I2C_SWPort
-  * @brief   I2C切换复用IO函数。
-  *          I2C switch out port control function.  
-  * @param   port [IN] 复用IO枚举体。IO switch enumerator.
-  * @retval  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE GPIO_I2C_SWPort(GPIOSWPort_Type port);
+		/**
+		 * @brief     I2C初始化函数。
+		 * @details   I2C initialization function.
+		 * @param[in] type  I2C工作模式（主从机）。I2C working mode (master-slave).
+		 * @param[in] wTime I2C等待时间。value of wait time.
+		 * @param[in] run   运行控制位。Operation control bit.
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Init(I2CType_Type type, uint8_t wTime, BOOL state);
 
+	#endif
+
+	#if (PER_LIB_I2C_NVIC_CTRL == 1)
+	
+		/**
+		 * @brief     I2C主机中断初始化函数。
+		 * @details   I2C Master init NVIC function.  
+		 * @param[in] pri 中断优先级。interrupt priority.
+		 * @param[in] run 使能控制位。enable control. 
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type pri,BOOL run);
+		
+		
+		/**
+		 * @brief   I2C从机中断初始化函数。
+		 * @details I2C Slave init NVIC function.  
+		 * @param[in] pri      中断优先级。interrupt priority.
+		 * @param[in] triMode  触发模式，可以选择多个，并用或运算符连接。
+		 *                     Trigger mode, multiple can be selected 
+		 *                     and connected with or operator.
+		 * @return  FSC_SUCCESS 返回成功。Return to success.
+		 * @return  FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type pri,I2CSTri_Type triMode);
+		
+
+		/**
+		 * @brief     I2C主机中断开关控制宏函数。
+		 * @details   I2C host interrupt switch control macro function.
+		 * @param[in] run 使能控制位。Enable control bit.
+		**/
+		#define    NVIC_I2C_HOST_CTRL(run)      \
+		{                                       \
+			EAXFR_ENABLE();	                    \
+			I2CMSCR = run << 7;                 \
+			EAXFR_DISABLE();                    \
+		}
+
+		/**
+		 * @brief     I2C从机中断开关控制宏函数。
+		 * @details   I2C slave interrupt switch control macro function.
+		 * @param[in] run  使能控制位。Enable control bit.
+		**/
+		#define    NVIC_I2C_SLAVE_CTRL(run)     \
+		{                                       \
+			EAXFR_ENABLE();                     \
+			I2CSLCR &= (I2CSLCR & 0x01 ) |      \
+				 (run << 6) | (run << 5) |      \
+				 (run << 4) | (run << 3) ;      \
+			EAXFR_DISABLE();                    \
+		}
+		
 
 
+		/**
+		 * @brief   I2C获取主机中断请求标志位宏函数。
+		 * @details I2C gets host interrupt request flag bit macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.  
+		**/
+		#define I2C_GET_HOST_FLAG()           (I2CMSST & 0x40)
+
+
+		/**
+		 * @brief   I2C获取主机忙/空闲状态宏函数。
+		 * @details I2C get the host working state (busy / idle) macro function.
+		 * @return  [bit] 0代表控制器处于空闲状态，1代表处于忙碌状态。
+		 *                0 means the controller is idle and 1 means it is busy.
+		**/
+		#define I2C_GET_HOST_BUSY_STATE()           (I2CMSST & 0x80)
+
+
+		/**
+		 * @brief   I2C清除主机中断请求标志位宏函数。
+		 * @details I2C clears host interrupt request flag bit macro function. 
+		**/
+		#define I2C_CLEAR_HOST_MASTER_FLAG()         {I2CMSST &= 0xBF;}
+
+
+		/**
+		 * @brief   I2C获取从机状态（忙/空闲）宏函数。
+		 * @details I2C get the slave working state (busy / idle) macro function.
+		 * @return  [bit] 0代表控制器处于空闲状态，1代表处于忙碌状态。
+		 *                0 means the controller is idle and 1 means it is busy.
+		**/
+		#define I2C_GET_SLAVE_BUSY_STATE()           (I2CMSST & 0x80)
+
+
+		/**
+		 * @brief   I2C获取，从机接收开始信号中断请求标志位，宏函数。
+		 * @details I2C acquisition, slave receives start signal, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_GET_SLAVE_REVSTART_FLAG()         (I2CSLST & 0x40)
+
+
+		/**
+		 * @brief   I2C获取，从机接收一字节数据中断请求标志位，宏函数。
+		 * @details I2C acquisition, slave receives one byte data, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_GET_SLAVE_REVDATA_FLAG()          (I2CSLST & 0x20)
+
+
+		/**
+		 * @brief   I2C获取，从机发送一字节数据中断请求标志位，宏函数。
+		 * @details I2C acquisition, slave sends one byte data, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_GET_SLAVE_SENDATA_FLAG()          (I2CSLST & 0x10)
+
+
+		/**
+		 * @brief   I2C获取，从机接收停止信号中断请求标志位，宏函数。
+		 * @details I2C acquisition, slave receives stop signal, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_GET_SLAVE_REVSTOP_FLAG()          (I2CSLST & 0x08)
+
+
+		/**
+		 * @brief   I2C清除，从机接收开始信号中断请求标志位，宏函数。
+		 * @details I2C clears the slave receives start signal, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_CLEAR_SLAVE_REVSTART_FLAG()       {I2CSLST &= 0xBF;}
+
+
+		/**
+		 * @brief   I2C清除，从机接收一字节数据中断请求标志位，宏函数。
+		 * @details I2C clears the slave receives one byte data, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_CLEAR_SLAVE_REVDATA_FLAG()        {I2CSLST &= 0xDF;}
+
+
+		/**
+		 * @brief   I2C清除，从机发送一字节数据中断请求标志位，宏函数。
+		 * @details I2C clears the slave sends one byte data, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_CLEAR_SLAVE_SENDATA_FLAG()        {I2CSLST &= 0xEF;}
+
+
+		/**
+		 * @brief   I2C清除，从机接收停止信号中断请求标志位，宏函数。
+		 * @details I2C clears the slave receives stop signal, 
+		 *          interrupt request flag bit, macro function.
+		 * @return  [bit] （中断）标志位。(interrupt) flag bit.
+		**/
+		#define I2C_CLEAR_SLAVE_REVSTOP_FLAG()        {I2CSLST &= 0xF7;}
+
+	#endif
+	
+	#if (PER_LIB_I2C_WORK_CTRL == 1)	
+		
+		/**
+		 * @brief   I2C发送开始信号函数。
+		 * @details I2C sends signal of start function.  
+		 * @param   None. 
+		 * @return  FSC_SUCCESS 返回成功。Return to success.
+		 * @return  FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Send_Start(void);
+			
+		/**
+		 * @brief   I2C发送停止信号函数。
+		 * @details I2C sends signal of stop function.  
+		 * @param   None. 
+		 * @return  FSC_SUCCESS 返回成功。Return to success.
+		 * @return  FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Send_Stop(void);
+			
+			
+		/**
+		 * @brief   I2C发送ACK信号函数。
+		 * @details I2C sends signal of ACK function.  
+		 * @param   None. 
+		 * @return  FSC_SUCCESS 返回成功。Return to success.
+		 * @return  FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Send_ACK(void);
+			
+			
+		/**
+		 * @brief   I2C发送NACK信号函数。
+		 * @details I2C sends signal of NACK function.  
+		 * @param   None. 
+		 * @return  FSC_SUCCESS 返回成功。Return to success.
+		 * @return  FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Send_NACK(void);
+			
+			
+		/**
+		 * @brief   I2C读取ACK信号函数。
+		 * @details I2C reads signal of ACK function.  
+		 * @param   None. 
+		 * @return  FSC_SUCCESS 返回成功。Return to success.
+		 * @return  FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Read_ACK(void);
+			
+			
+		/**
+		 * @brief     I2C发送一个字节函数。
+		 * @details   I2C sends a byte data function.  
+		 * @param[in] dat 字节数据。byte data.
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE I2C_Send_Btye(uint8_t dat);
+			
+			
+		/**
+		 * @brief   I2C读取一个字节函数。
+		 * @details I2C reads a byte data function.  
+		 * @param   None.
+		 * @return  [uint8_t] data of recive.
+		**/
+		uint8_t I2C_Read_Byte(void);
+
+			
+		/**
+		 * @brief     I2C切换复用IO函数。
+		 * @details   I2C switch out port control function.  
+		 * @param[in] port 复用IO枚举体。IO switch enumerator.
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE GPIO_I2C_SWPort(GPIOSWPort_Type port);
+
+	#endif
+	
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
+#endif

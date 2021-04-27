@@ -18,10 +18,6 @@
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
-void demo_printf(void)
-{
-    printf("HELLO\r\n");
-}
 
 /**
   * @name    main
@@ -29,14 +25,14 @@ void demo_printf(void)
   * @param   None
   * @return  None
 ***/
-int main(void)
+void main(void)
 {
     STC8x_System_Init();
 
-    for(;;)
-    {
+//    for(;;)
+//    {
 
-    }
+//    }
 
 }
 

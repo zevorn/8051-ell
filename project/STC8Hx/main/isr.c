@@ -25,10 +25,10 @@
   * @param   None
   * @return  None
 ***/
-void TIMER0_ISRQ_Handler(void)
-{
+//void TIMER0_ISRQ_Handler(void)
+//{
 
-}
+//}
 
 /**
   * @name    UART1_ISRQ_Handler
@@ -36,19 +36,19 @@ void TIMER0_ISRQ_Handler(void)
   * @param   None
   * @return  None
 ***/
-void UART1_ISRQ_Handler(void)
-{
-	if(UART1_GET_RX_FLAG())
-	{
-		  UART1_CLEAR_RX_FLAG();
-      Auto_RST_download();
-	}
-	else if(UART1_GET_TX_FLAG())
-	{
-		  UART1_CLEAR_TX_FLAG();
-      UART1_CLEAR_BUSY_FLAG();
-	}
-}
+//void UART1_ISRQ_Handler(void)
+//{
+//	if(UART1_GET_RX_FLAG())
+//	{
+//		  UART1_CLEAR_RX_FLAG();
+//      Auto_RST_download();
+//	}
+//	else if(UART1_GET_TX_FLAG())
+//	{
+//		  UART1_CLEAR_TX_FLAG();
+//      UART1_CLEAR_BUSY_FLAG();
+//	}
+//}
 
 /*--------------------------------------------------------
 | @Description: Interrupt service function               |

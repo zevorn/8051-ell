@@ -118,9 +118,9 @@ do{                                                    \
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
     
     /**
-     * @brief   定时器2定时时间设置函数（作用域为本文件）。
-     * @details Timer 2 timing time setting function (scope is this file).
-     * @param   time 定时时间。 timing time.
+     * @brief      定时器2定时时间设置函数（作用域为本文件）。
+     * @details    Timer 2 timing time setting function (scope is this file).
+     * @param[in]  time 定时时间。 timing time.
     **/
     #define TIMER2_TIM_CFG(time)                           \
 	do{                                                    \
@@ -130,9 +130,9 @@ do{                                                    \
 	
 	
     /**
-     * @brief   定时器3定时时间设置函数（作用域为本文件）。
-     * @details Timer 3 timing time setting function (scope is this file).
-     * @param   time 定时时间。 timing time.
+     * @brief     定时器3定时时间设置函数（作用域为本文件）。
+     * @details   Timer 3 timing time setting function (scope is this file).
+     * @param[in] time 定时时间。 timing time.
     **/
     #define TIMER3_TIM_CFG(time)                           \
 	do{                                                    \
@@ -142,9 +142,9 @@ do{                                                    \
 	
 	
     /**
-     * @brief   定时器3定时时间设置函数（作用域为本文件）。
-     *          Timer 3 timing time setting function (scope is this file).
-     * @param   time 定时时间。 timing time.
+     * @brief     定时器3定时时间设置函数（作用域为本文件）。
+     *            Timer 3 timing time setting function (scope is this file).
+     * @param[in] time 定时时间。 timing time.
     **/
     #define TIMER4_TIM_CFG(time)                           \
 	do{                                                    \
@@ -155,10 +155,9 @@ do{                                                    \
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     /**
-     * @name    TIMER2_TIM_CFG
-     * @brief   定时器2定时时间设置函数（作用域为本文件）。
-     *          Timer 2 timing time setting function (scope is this file).
-     * @param   time 定时时间。 timing time.
+     * @brief     定时器2定时时间设置函数（作用域为本文件）。
+     *            Timer 2 timing time setting function (scope is this file).
+     * @param[in] time 定时时间。 timing time.
     **/
     #define TIMER2_TIM_CFG(time)                                             \
 	do{                                                                      \
@@ -168,10 +167,9 @@ do{                                                    \
 	
 	
     /**
-     * @name    TIMER3_TIM_CFG
-     * @brief   定时器3定时时间设置函数（作用域为本文件）。
-     *          Timer 3 timing time setting function (scope is this file).
-     * @param   time 定时时间。 timing time.
+     * @brief     定时器3定时时间设置函数（作用域为本文件）。
+     *            Timer 3 timing time setting function (scope is this file).
+     * @param[in] time 定时时间。 timing time.
     **/
     #define TIMER3_TIM_CFG(time)                                             \
 	do{ 															         \
@@ -181,10 +179,10 @@ do{                                                    \
 	
 	
     /**
-     * @name    TIMER4_TIM_CFG
-     * @brief   定时器4定时时间设置函数（作用域为本文件）。
-     *          Timer 4 timing time setting function (scope is this file).
-     * @param   time 定时时间。 timing time.
+     * @name      TIMER4_TIM_CFG
+     * @brief     定时器4定时时间设置函数（作用域为本文件）。
+     *            Timer 4 timing time setting function (scope is this file).
+     * @param[in] time 定时时间。 timing time.
     **/
     #define TIMER4_TIM_CFG(time)                                             \
 	do{                                                                      \
@@ -194,19 +192,32 @@ do{                                                    \
     
 #endif            
 
-	
-/**
- * @brief   定时器4定时时间设置函数（作用域为本文件）。
- *          Timer 4 timing time setting function (scope is this file).
- * @param   time [uint16_t] 定时时间 timing time.
-**/
-#define TIMER0_NVIC_PRI(pri) do{ \
-IPH = (IPH & 0xFD) |  (pri & 0x02) ; \
-IP  = (IP  & 0xFD) | ((pri & 0x01) << 1);}while(0)
 
-#define TIMER1_NVIC_PRI(pri) { \
-IPH = (IPH & 0xF7) | ((pri & 0x02) << 2); \
-IP  = (IP  & 0xF7) | ((pri & 0x01) << 3); }
+/**
+ * @brief      TIMER0选择中断优先级宏函数，仅限本文件调用。
+ * @details    TIMER0 select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
+#define TIMER0_NVIC_PRI(pri)                  \
+do{                                           \
+	IPH = (IPH & 0xFD) |  (pri & 0x02) ;      \
+	IP  = (IP  & 0xFD) | ((pri & 0x01) << 1); \
+}while(0)
+
+
+/**
+ * @brief      TIMER1选择中断优先级宏函数，仅限本文件调用。
+ * @details    TIMER1 select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
+#define TIMER1_NVIC_PRI(pri)                  \
+do{                                           \
+	IPH = (IPH & 0xF7) | ((pri & 0x02) << 2); \
+	IP  = (IP  & 0xF7) | ((pri & 0x01) << 3); \
+}while(0)
+
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |

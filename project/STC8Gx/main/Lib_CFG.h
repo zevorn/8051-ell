@@ -54,7 +54,7 @@
  * @brief		配置ADC片内外设。
  * @details	    Configure ADC chip internal  peripheral.
 **/
-#define   PER_LIB_ADC_CTRL         (0) /*!< ADC模块控制宏，写1开启，写0关闭。*/
+#define   PER_LIB_ADC_CTRL         (1) /*!< ADC模块控制宏，写1开启，写0关闭。*/
 
 #define   PER_LIB_ADC_INIT_CTRL    (1) /*!< ADC模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_ADC_NVIC_CTRL    (1) /*!< ADC模块中断相关宏，写1开启，写0关闭。*/
@@ -65,7 +65,7 @@
  * @brief		配置COMP片内外设。
  * @details	    Configure COMP chip internal  peripheral.
 **/
-#define   PER_LIB_COMP_CTRL         (0) /*!< COMP模块控制宏，写1开启，写0关闭。*/
+#define   PER_LIB_COMP_CTRL         (1) /*!< COMP模块控制宏，写1开启，写0关闭。*/
 
 #define   PER_LIB_COMP_INIT_CTRL    (1) /*!< COMP模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_COMP_NVIC_CTRL    (1) /*!< COMP模块中断相关宏，写1开启，写0关闭。*/
@@ -76,7 +76,7 @@
  * @brief		配置EEPROM片内外设。
  * @details	    Configure EEPROM chip internal  peripheral.
 **/
-#define   PER_LIB_EEPROM_CTRL         (0) /*!< EEPROM模块控制宏，写1开启，写0关闭。*/
+#define   PER_LIB_EEPROM_CTRL         (1) /*!< EEPROM模块控制宏，写1开启，写0关闭。*/
 
 #define   PER_LIB_EEPROM_INIT_CTRL    (1) /*!< EEPROM模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_EEPROM_WORK_CTRL    (1) /*!< EEPROM模块工作相关宏，写1开启，写0关闭。*/
@@ -94,14 +94,33 @@
 
 
 /**
+ * @brief		配置GPIO片内外设。
+ * @details	    Configure GPIO chip internal  peripheral.
+**/
+#define   PER_LIB_I2C_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
+				 
+#define   PER_LIB_I2C_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_I2C_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_I2C_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
+
+/**
+ * @brief		配置GPIO片内外设。
+ * @details	    Configure GPIO chip internal  peripheral.
+**/
+#define   PER_LIB_PCA_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
+				 
+#define   PER_LIB_PCA_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PCA_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PCA_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
+
+/**
  * @brief		配置TIMER片内外设。
  * @details	    Configure TIMER chip internal  peripheral.
 **/
 #define   PER_LIB_TIMER_CTRL         (1) /*!< TIMER模块控制宏，写1开启，写0关闭。*/
 											  
-#define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIMER模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIzMER模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_TIMER_NVIC_CTRL    (1) /*!< TIMER模块中断相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_TIMER_WORK_CTRL    (1) /*!< TIMER模块工作相关宏，写1开启，写0关闭。*/
 
 
 /**
@@ -109,18 +128,6 @@
  * @details	    Configure MDU16 chip internal  peripheral.
 **/
 #define   PER_LIB_MDU16_CTRL         (1) /*!< MDU16模块控制宏，写1开启，写0关闭。*/
-
-
-/*--------------------------------------------------------
-| @Description: STC8x Driver config                      |
---------------------------------------------------------*/
-
-/**
-  * @name    KeyScan
-  * @brief   You need to config key scan.  
-***/
-#define  DRV_LIB_KEYSCAN_CTRL        (0)    // "1" is enable, "0" is disable 
-#define  DRV_LIB_KEYSCAN_NUM_MAX     (8)    // key scan number max
 
 
 /*--------------------------------------------------------
@@ -150,6 +157,18 @@
 ***/
 #define  COM_LIB_PREDELAY_CTRL        (1)     // "1" is enable, "0" is disable 
 #define  COM_LIB_PREDELAY_BASE        (11000UL) // PREDELAY number max
+
+
+/*--------------------------------------------------------
+| @Description: STC8x Driver config                      |
+--------------------------------------------------------*/
+
+/**
+  * @name    KeyScan
+  * @brief   You need to config key scan.  
+***/
+#define  DRV_LIB_KEYSCAN_CTRL        (0)    // "1" is enable, "0" is disable 
+#define  DRV_LIB_KEYSCAN_NUM_MAX     (8)    // key scan number max
 
 
 #endif

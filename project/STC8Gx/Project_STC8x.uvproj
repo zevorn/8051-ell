@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -397,14 +397,14 @@
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_ADC.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_COMP.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_COMP.c</FilePath>
-            </File>
-            <File>
               <FileName>STC8x_EEPROM.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_EEPROM.c</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_COMP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_COMP.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_GPIO.c</FileName>

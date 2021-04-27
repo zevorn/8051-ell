@@ -33,9 +33,37 @@
 #define __STC8x_PCA_H_
 
 #include "Lib_CFG.h"
-#ifndef PER_LIB_MCU_MUODEL
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_CTRL
+    #define PER_LIB_PCA_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_INIT_CTRL
+    #define PER_LIB_PCA_INIT_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_NVIC_CTRL
+    #define PER_LIB_PCA_NVIC_CTRL 1
+#endif
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_WORK_CTRL
+    #define PER_LIB_PCA_WORK_CTRL 1
+#endif
+
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -52,371 +80,959 @@
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
 #include "ELL_CORE.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
-/*--------------------------------------------------------
-| @Description: PCA mode enum                            |
---------------------------------------------------------*/
-
+/** 
+ * @brief	 PCA工作类型枚举体
+ * @details	 PCA type control enumenumeration.
+**/
 typedef enum
 {
-  PCA_TYPE_CAP = 0X00,
-  PCA_TYPE_PWM = 0x42,
-  PCA_TYPE_TIM = 0x48,
-  PCA_TYPE_POP = 0x4C
+	PCA_TYPE_CAP = 0X00,   /*!< PAC工作在捕获模式。PAC works in capture mode. */
+	PCA_TYPE_PWM = 0x42,   /*!< PAC工作在PWM模式。PAC works in PWM mode. */
+	PCA_TYPE_TIM = 0x48,   /*!< PAC工作在定时器模式。PAC works in timer mode. */
+	PCA_TYPE_POP = 0x4C    /*!< PAC工作在脉冲输出模式。PAC works in pulse output mode. */
 } PCAType_Type;
 
-/*--------------------------------------------------------
-| @Description: CAP mode enum                            |
---------------------------------------------------------*/
 
+/** 
+ * @brief	 PCA做CAP时，触发模式枚举体。
+ * @details	 CAP trigger mode enumenumeration.
+**/
 typedef enum
 {
-  CAP_Mode_Falling = 0x01,
-  CAP_Mode_Rising  = 0X02,
-  CAP_Mode_Edge    = 0x03
-} CAPMode_Type;
+	PCA_CAP_Mode_Falling = 0x01, /*!< �½��ز���Capture on falling edge.*/
+	PCA_CAP_Mode_Rising  = 0X02, /*!< �����ز���Rising edge capture. */
+	PCA_CAP_Mode_Edge    = 0x03  /*!< ���ز���Edge capture. */
+} PCA_CAPMode_Type;
 
-/*--------------------------------------------------------
-| @Description: PCA clock mode enum                      |
---------------------------------------------------------*/
 
+/** 
+ * @brief	 PCA时钟源枚举体
+ * @details	 PCA working clock enumeration body.
+**/
 typedef enum
 {
-	PCA_SCLK_DIV_12 = 0x00,  //  System clock / 12
-	PCA_SCLK_DIV_2  = 0x02,  //  System clock / 2
-	PCA_TIMER0	    = 0x04,  //  Overflow pulse of timer 0
-	PCA_ECI         = 0x06,  //  External input clock of ECI pin
-	PCA_SCLK_DIV_1	= 0x08,  //  System clock / 1
-	PCA_SCLK_DIV_4  = 0x0A,  //  System clock / 4
-	PCA_SCLK_DIV_6  = 0x0C,  //  System clock / 6
-	PCA_SCLK_DIV_8  = 0x0E   //  System clock / 8
-}	PCACLKSrc_Type;
+	PCA_SCLK_DIV_12 = 0x00,   /*!< 系统时钟12分频。System clock / 12. */
+	PCA_SCLK_DIV_2  = 0x02,   /*!< 系统时钟2分频。System clock / 2. */
+	PCA_TIMER0	    = 0x04,   /*!< 定时器0溢出频率。Overflow pulse of timer 0.*/
+	PCA_ECI         = 0x06,   /*!< 外部时钟源。External input clock of ECI pin. */
+	PCA_SCLK_DIV_1	= 0x08,   /*!< 系统时钟1分频。System clock / 1. */
+	PCA_SCLK_DIV_4  = 0x0A,   /*!< 系统时钟4分频。System clock / 4. */
+	PCA_SCLK_DIV_6  = 0x0C,   /*!< 系统时钟6分频。System clock / 6. */
+	PCA_SCLK_DIV_8  = 0x0E    /*!< 系统时钟8分频。System clock / 8.*/
+} PCACLKSrc_Type;
 
-/*--------------------------------------------------------
-| @Description: PCA PWM bits mode enum                   |
---------------------------------------------------------*/
 
+/** 
+ * @brief	 PCA做PWM时，分辨率枚举体。
+ * @details	 PCA PWM bits mode enumenumeration.
+**/
 typedef enum
 {
-	PCA_PWM_8Bits   = 0x00,  // 8-bit PCA_PWM mode
-	PCA_PWM_7Bits   = 0x01,	// 7-bit PCA_PWM mode
-	PCA_PWM_6Bits   = 0x02,	// 6-bit PCA_PWM mode
-	PCA_PWM_10Bits  = 0x03	//10-bit PCA_PWM mode
-}	PCA_PWMBits_Type;
+	PCA_PWM_8Bits   = 0x00,  /*!< 8-bit PCA_PWM mode. */
+	PCA_PWM_7Bits   = 0x01,	 /*!< 7-bit PCA_PWM mode. */
+	PCA_PWM_6Bits   = 0x02,	 /*!< 6-bit PCA_PWM mode. */
+	PCA_PWM_10Bits  = 0x03	 /*!< 10-bit PCA_PWM mode.*/
+} PCA_PWMBits_Type;
 
-/*--------------------------------------------------------
-| @Description: COMP interrupt Trigger enum              |
---------------------------------------------------------*/
 
+/** 
+ * @brief	 PCA做CAP时，触发中断方式枚举体。
+ * @details	 PCA CAP interrupt trigger enumenumeration.
+**/
 typedef enum
 {
-  PCA_Tri_Null    = 0x00,
-  PCA_Tri_Falling = 0x10,
-  PCA_Tri_Rising  = 0x20,
-  PCA_Tri_Edge    = 0x30
-} PCATri_Type;
+	PCA_CAPTri_Null    = 0x00,   /*!< 无触发模式，不使能中断。
+									No trigger mode, no interrupt is enabled. */
+	PCA_CAPTri_Falling = 0x10,   /*!< 下降沿触发模式，使能中断。
+									Falling edge trigger mode, enable interrupt. */
+	PCA_CAPTri_Rising  = 0x20,   /*!< 上升沿触发模式，使能中断。
+									The rising edge trigger mode enables interrupts. */
+	PCA_CAPTri_Edge    = 0x30    /*!< 边沿触发模式，使能中断。
+									Edge trigger mode, enable interrupt.*/
+} PCA_CAPTri_Type;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: PCA Counter working function             |
---------------------------------------------------------*/
+#if ( PER_LIB_PCA_CTRL == 1)
 
-FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,BOOL run);
+	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
-/*--------------------------------------------------------
-| @Description: PCA PWM mode working function            |
---------------------------------------------------------*/
-
-FSCSTATE PCA0_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
-FSCSTATE PCA1_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
-FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
-#endif
-
-#define PCA0_PWM_6BITS_CTRL(duty)     do{ \
-                                            CCAPM0 = PCA_TYPE_PWM; \
-                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x02 << 6); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x40) >> 6);  \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x40) >> 5);  \
-                                            CCAP0L = (uint8_t)(duty & 0x003F); \
-                                            CCAP0H = (uint8_t)(duty & 0x003F); \
-                                        } while (0)
-
-#define PCA0_PWM_7BITS_CTRL(duty)     do{ \
-                                            CCAPM0 = PCA_TYPE_PWM; \
-                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x01 << 6); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x80) >> 7); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x80) >> 6); \
-                                            CCAP0L = (uint8_t)(duty & 0x007F); \
-                                            CCAP0H = (uint8_t)(duty & 0x007F); \
-                                        } while (0)
-
-#define PCA0_PWM_8BITS_CTRL(duty)     do{ \
-                                            CCAPM0 = PCA_TYPE_PWM; \
-                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x00 << 6); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x100) >> 8); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x100) >> 7); \
-                                            CCAP0L = (uint8_t)duty; \
-                                            CCAP0H = (uint8_t)duty; \
-                                        } while (0)
-
-#define PCA0_PWM_10BITS_CTRL(duty)     do{ \
-                                            CCAPM0 = PCA_TYPE_PWM; \
-                                            PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x03 << 6); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x400) >> 10); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x400) >> 9); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XF3) | ((duty & 0x300) >> 6); \
-                                            PCA_PWM0 = (PCA_PWM0 & 0XCF) | ((duty & 0x300) >> 4); \
-                                            CCAP0L = (uint8_t)duty;  \
-                                            CCAP0H = (uint8_t)duty;  \
-                                        } while (0)
-
-#define PCA1_PWM_6BITS_CTRL(duty)     do{ \
-                                            CCAPM1 = PCA_TYPE_PWM; \
-                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x02 << 6); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x40) >> 6);  \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x40) >> 5);  \
-                                            CCAP1L = (uint8_t)(duty & 0x003F); \
-                                            CCAP1H = (uint8_t)(duty & 0x003F); \
-                                        } while (0)
-
-#define PCA1_PWM_7BITS_CTRL(duty)     do{ \
-                                            CCAPM1 = PCA_TYPE_PWM; \
-                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x01 << 6); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x80) >> 7); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x80) >> 6); \
-                                            CCAP1L = (uint8_t)(duty & 0x007F); \
-                                            CCAP1H = (uint8_t)(duty & 0x007F); \
-                                        } while (0)
-
-#define PCA1_PWM_8BITS_CTRL(duty)     do{ \
-                                            CCAPM1 = PCA_TYPE_PWM; \
-                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x00 << 6); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x100) >> 8); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x100) >> 7); \
-                                            CCAP1L = (uint8_t)duty; \
-                                            CCAP1H = (uint8_t)duty; \
-                                        } while (0)
-
-#define PCA1_PWM_10BITS_CTRL(duty)     do{ \
-                                            CCAPM1 = PCA_TYPE_PWM; \
-                                            PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x03 << 6); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x400) >> 10); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x400) >> 9); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XF3) | ((duty & 0x300) >> 6); \
-                                            PCA_PWM1 = (PCA_PWM1 & 0XCF) | ((duty & 0x300) >> 4); \
-                                            CCAP1L = (uint8_t)duty;  \
-                                            CCAP1H = (uint8_t)duty;  \
-                                        } while (0)
-
-#define PCA2_PWM_6BITS_CTRL(duty)     do{ \
-                                            CCAPM2 = PCA_TYPE_PWM; \
-                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x02 << 6); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x40) >> 6);  \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x40) >> 5);  \
-                                            CCAP2L = (uint8_t)(duty & 0x003F); \
-                                            CCAP2H = (uint8_t)(duty & 0x003F); \
-                                        } while (0)
-
-#define PCA2_PWM_7BITS_CTRL(duty)     do{ \
-                                            CCAPM2 = PCA_TYPE_PWM; \
-                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x01 << 6); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x80) >> 7); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x80) >> 6); \
-                                            CCAP2L = (uint8_t)(duty & 0x007F); \
-                                            CCAP2H = (uint8_t)(duty & 0x007F); \
-                                        } while (0)
-
-#define PCA2_PWM_8BITS_CTRL(duty)     do{ \
-                                            CCAPM2 = PCA_TYPE_PWM; \
-                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x00 << 6); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x100) >> 8); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x100) >> 7); \
-                                            CCAP2L = (uint8_t)duty; \
-                                            CCAP2H = (uint8_t)duty; \
-                                        } while (0)
-
-#define PCA2_PWM_10BITS_CTRL(duty)     do{ \
-                                            CCAPM2 = PCA_TYPE_PWM; \
-                                            PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x03 << 6); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x400) >> 10); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x400) >> 9); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XF3) | ((duty & 0x300) >> 6); \
-                                            PCA_PWM2 = (PCA_PWM2 & 0XCF) | ((duty & 0x300) >> 4); \
-                                            CCAP2L = (uint8_t)duty;  \
-                                            CCAP2H = (uint8_t)duty;  \
-                                        } while (0)
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-
-    #define PCA3_PWM_6BITS_CTRL(duty)     do{ \
-                                                CCAPM3 = PCA_TYPE_PWM; \
-                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x02 << 6); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x40) >> 6);  \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x40) >> 5);  \
-                                                CCAP3L = (uint8_t)(duty & 0x003F); \
-                                                CCAP3H = (uint8_t)(duty & 0x003F); \
-                                            } while (0)
-
-    #define PCA3_PWM_7BITS_CTRL(duty)     do{ \
-                                                CCAPM3 = PCA_TYPE_PWM; \
-                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x01 << 6); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x80) >> 7); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x80) >> 6); \
-                                                CCAP3L = (uint8_t)(duty & 0x007F); \
-                                                CCAP3H = (uint8_t)(duty & 0x007F); \
-                                            } while (0)
-
-    #define PCA3_PWM_8BITS_CTRL(duty)     do{ \
-                                                CCAPM3 = PCA_TYPE_PWM; \
-                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x00 << 6); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x100) >> 8); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x100) >> 7); \
-                                                CCAP3L = (uint8_t)duty; \
-                                                CCAP3H = (uint8_t)duty; \
-                                            } while (0)
-
-    #define PCA3_PWM_10BITS_CTRL(duty)     do{ \
-                                                CCAPM3 = PCA_TYPE_PWM; \
-                                                PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x03 << 6); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x400) >> 10); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x400) >> 9); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XF3) | ((duty & 0x300) >> 6); \
-                                                PCA_PWM3 = (PCA_PWM3 & 0XCF) | ((duty & 0x300) >> 4); \
-                                                CCAP3L = (uint8_t)duty;  \
-                                                CCAP3H = (uint8_t)duty;  \
-                                            } while (0)
-
-#endif
-
-/*--------------------------------------------------------
-| @Description: PCA CAP mode working function            |
---------------------------------------------------------*/
-
-FSCSTATE PCA0_CAP_Init(CAPMode_Type mode);
-FSCSTATE PCA1_CAP_Init(CAPMode_Type mode);
-FSCSTATE PCA2_CAP_Init(CAPMode_Type mode);
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-    FSCSTATE PCA3_CAP_Init(CAPMode_Type mode);
-#endif
-
-/*--------------------------------------------------------
-| @Description: PCA TIMER mode working function          |
---------------------------------------------------------*/
-
-FSCSTATE PCA0_TIM_Init(uint16_t value);
-FSCSTATE PCA1_TIM_Init(uint16_t value);
-FSCSTATE PCA2_TIM_Init(uint16_t value);
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-    FSCSTATE PCA3_TIM_Init(uint16_t value);
-#endif
-
-/*--------------------------------------------------------
-| @Description: PCA POP mode working function            |
---------------------------------------------------------*/
-
-FSCSTATE PCA0_POP_Init(uint16_t value);
-FSCSTATE PCA1_POP_Init(uint16_t value);
-FSCSTATE PCA2_POP_Init(uint16_t value);
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-    FSCSTATE PCA3_POP_Init(uint16_t value);
-#endif
-
-/*--------------------------------------------------------
-| @Description: PCA PWM and POP reload value function    |
---------------------------------------------------------*/
-
-void PCA0_TIM_POP_ReValue(void);
-void PCA1_TIM_POP_ReValue(void);
-void PCA2_TIM_POP_ReValue(void);
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-    void PCA3_TIM_POP_ReValue(void);
-#endif
-
-/*--------------------------------------------------------
-| @Description: PCA control define function              |
---------------------------------------------------------*/
-
-#define    PCA0_WORK_STOP()   CCAPM0 = 0
-#define    PCA1_WORK_STOP()   CCAPM1 = 0
-#define    PCA2_WORK_STOP()   CCAPM2 = 0
-
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-    #define    PCA3_WORK_STOP()   CCAPM3 = 0
-#endif
+		#if ( PER_LIB_PCA_INIT_CTRL == 1)
 
 
+			/**
+			 * @brief     PCA计数器初始化,必须放在所有PCA函数的后面。
+			 * @details   PCA counter init function,It must be initialized last.
+			 * @param[in] clkSrc
+			 * @param[in] run 使能控制位.enable control.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA_CNT_Init(PCACLKSrc_Type clkSrc,BOOL run);
 
-#define PCA_CNT_GET_FLAG()      CF
-#define PCA_CNT_CLEAR_FLAG()    CF = 0
 
-#define PCA0_GET_FLAG()           CCF0
-#define PCA1_GET_FLAG()           CCF1
-#define PCA2_GET_FLAG()           CCF2
-#define PCA3_GET_FLAG()           CCF3
+			/**
+			 * @brief     PCA0做PWM初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA0 PWM init function,it must first is initialized.
+			 * @param[in] pwmBits   PWM分辨率。PWM accuracy of bits.
+			 * @param[in] duty      PWM占空比。PWM duty.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA0_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
+			
+			
+			/**
+			 * @brief     PCA1做PWM初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA1 PWM init function,it must first is initialized.
+			 * @param[in] pwmBits   PWM分辨率。PWM accuracy of bits.
+			 * @param[in] duty      PWM占空比。PWM duty.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA1_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 
-#define PCA0_CLEAR_FLAG()     CCF0 = 0
-#define PCA1_CLEAR_FLAG()     CCF1 = 0
-#define PCA2_CLEAR_FLAG()     CCF2 = 0
-#define PCA3_CLEAR_FLAG()     CCF3 = 0
 
-FSCSTATE NVIC_PCA_CNT_Init(NVICPri_Type priority,BOOL run);
+			/**
+			 * @brief     PCA2做PWM初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA2 PWM init function,it must first is initialized.
+			 * @param[in] pwmBits   PWM分辨率。PWM accuracy of bits.
+			 * @param[in] duty      PWM占空比。PWM duty.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA2_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
 
-FSCSTATE NVIC_PCA0_TIM_POP_Init(BOOL run);
-FSCSTATE NVIC_PCA1_TIM_POP_Init(BOOL run);
-FSCSTATE NVIC_PCA2_TIM_POP_Init(BOOL run);
 
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-	FSCSTATE NVIC_PCA3_TIM_POP_Init(BOOL run);
-#endif
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     PCA3做PWM初始化,必须放在PCA计数器初始化之前。
+				 * @details   PCA3 PWM init function,it must first is initialized.
+				 * @param[in] pwmBits   PWM分辨率。PWM accuracy of bits.
+				 * @param[in] duty      PWM占空比。PWM duty.
+				 * @return    FSC_SUCCESS 返回成功。Return to success.
+				 * @return    FSC_FAIL    返回失败。Return to fail.
+				**/
+				FSCSTATE PCA3_PWM_Init(PCA_PWMBits_Type pwmBits,uint16_t  duty);
+				
+			#endif
 
-FSCSTATE NVIC_PCA0_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
-FSCSTATE NVIC_PCA1_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
-FSCSTATE NVIC_PCA2_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
+			
+			/**
+			 * @brief     PCA0做CAP初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA0 CAP init function,it must first is initialized.
+			 * @param[in] mode  捕获模式。Capture mode.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA0_CAP_Init(PCA_CAPMode_Type mode);
+			
+			
+			/**
+			 * @brief     PCA1做CAP初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA1 CAP init function,it must first is initialized.
+			 * @param[in] mode  捕获模式。Capture mode.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA1_CAP_Init(PCA_CAPMode_Type mode);
+			
+			
+			/**
+			 * @brief     PCA2做CAP初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA2 CAP init function,it must first is initialized.
+			 * @param[in] mode  捕获模式。Capture mode.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA2_CAP_Init(PCA_CAPMode_Type mode);
 
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-	FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCATri_Type triMode,BOOL run);
-#endif
 
-#define    NVIC_PCA_CNT_CTRL(run)     do{ CMOD = (CMOD & 0xFE) | run; }while(0)
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+			
+				/**
+				 * @brief     PCA3做CAP初始化,必须放在PCA计数器初始化之前。
+				 * @details   PCA3 CAP init function,it must first is initialized.
+				 * @param[in] mode  捕获模式。Capture mode.
+				 * @return    FSC_SUCCESS 返回成功。Return to success.
+				 * @return    FSC_FAIL    返回失败。Return to fail.
+				**/			
+				FSCSTATE PCA3_CAP_Init(PCA_CAPMode_Type mode);
+				
+			#endif
 
-#define    NVIC_PCA0_TIM_POP_CTRL(run)     do{ CCAPM0 = (CCAPM0 & 0xFE) | (run); }while(0)
-#define    NVIC_PCA1_TIM_POP_CTRL(run)     do{ CCAPM1 = (CCAPM0 & 0xFE) | (run); }while(0)
-#define    NVIC_PCA2_TIM_POP_CTRL(run)     do{ CCAPM2 = (CCAPM0 & 0xFE) | (run); }while(0)
 
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
-	#define    NVIC_PCA3_TIM_POP_CTRL(run)     do{ CCAPM3 = (CCAPM0 & 0xFE) | (run); }while(0)
-#endif
+			/**
+			 * @brief     PCA0做TIMER初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA0 TIMER init function,it must first is initialized.
+			 * @param[in] time  定时时间。Timing.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA0_TIM_Init(uint16_t time);
+			
+			
+			/**
+			 * @brief     PCA1做TIMER初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA1 TIMER init function,it must first is initialized.
+			 * @param[in] time  定时时间。Timing.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA1_TIM_Init(uint16_t time);
+			
+			
+			/**
+			 * @brief     PCA2做TIMER初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA2 TIMER init function,it must first is initialized.
+			 * @param[in] time  定时时间。Timing.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA2_TIM_Init(uint16_t time);
 
-#define    NVIC_PCA0_PWM_CAP_CTRL(run)     do{ CCAPM0 = (CCAPM0 & 0xFE) | (run); }while(0)
-#define    NVIC_PCA1_PWM_CAP_CTRL(run)     do{ CCAPM1 = (CCAPM0 & 0xFE) | (run); }while(0)
-#define    NVIC_PCA2_PWM_CAP_CTRL(run)     do{ CCAPM2 = (CCAPM0 & 0xFE) | (run); }while(0)
 
-#if (PER_LIB_MCU_MUODEL == STC8Ax)    
-	#define    NVIC_PCA3_PWM_CAP_CTRL(run)     do{ CCAPM3 = (CCAPM0 & 0xFE) | (run); }while(0)
-#endif
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     PCA3做TIMER初始化,必须放在PCA计数器初始化之前。
+				 * @details   PCA3 TIMER init function,it must first is initialized.
+				 * @param[in] time  定时时间。Timing.
+				 * @return    FSC_SUCCESS 返回成功。Return to success.
+				 * @return    FSC_FAIL    返回失败。Return to fail.
+				**/
+				FSCSTATE PCA3_TIM_Init(uint16_t time);
+				
+			#endif
 
-/* PCA */
-FSCSTATE GPIO_PCA_SWPort(GPIOSWPort_Type port);
 
+			/**
+			 * @brief     PCA0做POP初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA0 POP init function,it must first is initialized.
+			 * @param[in] fre  脉冲输出频率。Output frequency.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA0_POP_Init(uint16_t fre);
+			
+			
+			/**
+			 * @brief     PCA1做POP初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA1 POP init function,it must first is initialized.
+			 * @param[in] fre  脉冲输出频率。Output frequency.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA1_POP_Init(uint16_t fre);
+			
+			
+			/**
+			 * @brief     PCA2做POP初始化,必须放在PCA计数器初始化之前。
+			 * @details   PCA2 POP init function,it must first is initialized.
+			 * @param[in] fre  脉冲输出频率。Output frequency.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE PCA2_POP_Init(uint16_t fre);
+
+
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     PCA3做POP初始化,必须放在PCA计数器初始化之前。
+				 * @details   PCA3 POP init function,it must first is initialized.
+				 * @param[in] fre  脉冲输出频率。Output frequency.
+				 * @return    FSC_SUCCESS 返回成功。Return to success.
+				 * @return    FSC_FAIL    返回失败。Return to fail.
+				**/
+				FSCSTATE PCA3_POP_Init(uint16_t fre);
+				
+			#endif
+			
+		#endif
+		
+		
+		#if ( PER_LIB_PCA_WORK_CTRL == 1 )
+		
+			/**
+			 * @brief     PCA0做TIMER或POP时，重载载计数器。
+			 * @details   PCA0 TIM and POP reload value function.
+			 * @param[in] None.
+			 * @return    None.
+			**/
+			void PCA0_TIM_POP_ReValue(void);
+			
+			
+			/**
+			 * @brief     PCA1做TIMER或POP时，重载载计数器。
+			 * @details   PCA1 TIM and POP reload value function.
+			 * @param[in] None.
+			 * @return    None.
+			**/
+			void PCA1_TIM_POP_ReValue(void);
+			
+			
+			/**
+			 * @brief     PCA2做TIMER或POP时，重载载计数器。
+			 * @details   PCA2 TIM and POP reload value function.
+			 * @param[in] None.
+			 * @return    None.
+			**/
+			void PCA2_TIM_POP_ReValue(void);
+
+
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     PCA3做TIMER或POP时，重载载计数器。
+				 * @details   PCA3 TIM and POP reload value function.
+				 * @param[in] None.
+				 * @return    None.
+				**/
+				void PCA3_TIM_POP_ReValue(void);
+				
+			#endif
+				
+				
+			/**
+			 * @brief     PCA0停止工作宏函数。
+			 * @details   PCA0 stops working macro function. 
+			**/
+			#define    PCA0_WORK_STOP()   do{CCAPM0 = 0;}while(0)
+			
+			
+			/**
+			 * @brief     PCA1停止工作宏函数。
+			 * @details   PCA1 stops working macro function. 
+			**/
+			#define    PCA1_WORK_STOP()   do{CCAPM1 = 0;}while(0)
+			
+			
+			/**
+			 * @brief     PCA2停止工作宏函数。
+			 * @details   PCA2 stops working macro function. 
+			**/
+			#define    PCA2_WORK_STOP()   do{CCAPM2 = 0;}while(0)	
+			
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     PCA3停止工作宏函数。
+				 * @details   PCA3 stops working macro function. 
+				**/
+				#define    PCA3_WORK_STOP()   do{CCAPM3 = 0;}while(0)	
+			
+			#endif
+
+				
+			/**
+			 * @brief     PCA0做6位PWM时，占空比调节宏函数。
+			 * @details   When PCA0 is used as 6-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA0_PWM_6BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM0 = PCA_TYPE_PWM;                                \
+				PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x02 << 6);             \
+				PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x40) >> 6);  \
+				PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x40) >> 5);  \
+				CCAP0L = (uint8_t)(duty & 0x003F);                   \
+				CCAP0H = (uint8_t)(duty & 0x003F);                   \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA0做7位PWM时，占空比调节宏函数。
+			 * @details   When PCA0 is used as 7-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA0_PWM_7BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM0 = PCA_TYPE_PWM;                                \
+				PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x01 << 6);             \
+				PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x80) >> 7);  \
+				PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x80) >> 6);  \
+				CCAP0L = (uint8_t)(duty & 0x007F);                   \
+				CCAP0H = (uint8_t)(duty & 0x007F);                   \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA0做8位PWM时，占空比调节宏函数。
+			 * @details   When PCA0 is used as 8-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA0_PWM_8BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM0 = PCA_TYPE_PWM;                                \
+				PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x00 << 6);             \
+				PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x100) >> 8); \
+				PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x100) >> 7); \
+				CCAP0L = (uint8_t)duty;                              \
+				CCAP0H = (uint8_t)duty;                              \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA0做10位PWM时，占空比调节宏函数。
+			 * @details   When PCA0 is used as 10-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA0_PWM_10BITS_CTRL(duty)                         \
+			do{                                                        \
+				CCAPM0 = PCA_TYPE_PWM;                                 \
+				PCA_PWM0 = (PCA_PWM0 & 0x3F)|(0x03 << 6);              \
+				PCA_PWM0 = (PCA_PWM0 & 0XFE) | ((duty & 0x400) >> 10); \
+				PCA_PWM0 = (PCA_PWM0 & 0XFD) | ((duty & 0x400) >> 9);  \
+				PCA_PWM0 = (PCA_PWM0 & 0XF3) | ((duty & 0x300) >> 6);  \
+				PCA_PWM0 = (PCA_PWM0 & 0XCF) | ((duty & 0x300) >> 4);  \
+				CCAP0L = (uint8_t)duty;                               \
+				CCAP0H = (uint8_t)duty;                               \
+			} while (0)
 	
-#endif
+			
+			/**
+			 * @brief     PCA1做6位PWM时，占空比调节宏函数。
+			 * @details   When PCA1 is used as 6-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA1_PWM_6BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM1 = PCA_TYPE_PWM;                                \
+				PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x02 << 6);             \
+				PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x40) >> 6);  \
+				PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x40) >> 5);  \
+				CCAP1L = (uint8_t)(duty & 0x003F);                   \
+				CCAP1H = (uint8_t)(duty & 0x003F);                   \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA1做7位PWM时，占空比调节宏函数。
+			 * @details   When PCA1 is used as 7-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA1_PWM_7BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM1 = PCA_TYPE_PWM;                                \
+				PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x01 << 6);             \
+				PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x80) >> 7);  \
+				PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x80) >> 6);  \
+				CCAP1L = (uint8_t)(duty & 0x007F);                   \
+				CCAP1H = (uint8_t)(duty & 0x007F);                   \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA1做8位PWM时，占空比调节宏函数。
+			 * @details   When PCA1 is used as 8-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA1_PWM_8BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM1 = PCA_TYPE_PWM;                                \
+				PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x00 << 6);             \
+				PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x100) >> 8); \
+				PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x100) >> 7); \
+				CCAP1L = (uint8_t)duty;                              \
+				CCAP1H = (uint8_t)duty;                              \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA1做10位PWM时，占空比调节宏函数。
+			 * @details   When PCA1 is used as 10-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA1_PWM_10BITS_CTRL(duty)                         \
+			do{                                                        \
+				CCAPM1 = PCA_TYPE_PWM;                                 \
+				PCA_PWM1 = (PCA_PWM1 & 0x3F)|(0x03 << 6);              \
+				PCA_PWM1 = (PCA_PWM1 & 0XFE) | ((duty & 0x400) >> 10); \
+				PCA_PWM1 = (PCA_PWM1 & 0XFD) | ((duty & 0x400) >> 9);  \
+				PCA_PWM1 = (PCA_PWM1 & 0XF3) | ((duty & 0x300) >> 6);  \
+				PCA_PWM1 = (PCA_PWM1 & 0XCF) | ((duty & 0x300) >> 4);  \
+				CCAP1L = (uint8_t)duty;                               \
+				CCAP1H = (uint8_t)duty;                               \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA2做6位PWM时，占空比调节宏函数。
+			 * @details   When PCA2 is used as 6-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA2_PWM_6BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM2 = PCA_TYPE_PWM;                                \
+				PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x02 << 6);             \
+				PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x40) >> 6);  \
+				PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x40) >> 5);  \
+				CCAP2L = (uint8_t)(duty & 0x003F);                   \
+				CCAP2H = (uint8_t)(duty & 0x003F);                   \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA2做7位PWM时，占空比调节宏函数。
+			 * @details   When PCA2 is used as 7-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA2_PWM_7BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM2 = PCA_TYPE_PWM;                                \
+				PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x01 << 6);             \
+				PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x80) >> 7);  \
+				PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x80) >> 6);  \
+				CCAP2L = (uint8_t)(duty & 0x007F);                   \
+				CCAP2H = (uint8_t)(duty & 0x007F);                   \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA2做8位PWM时，占空比调节宏函数。
+			 * @details   When PCA2 is used as 8-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA2_PWM_8BITS_CTRL(duty)                         \
+			do{                                                       \
+				CCAPM2 = PCA_TYPE_PWM;                                \
+				PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x00 << 6);             \
+				PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x100) >> 8); \
+				PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x100) >> 7); \
+				CCAP2L = (uint8_t)duty;                              \
+				CCAP2H = (uint8_t)duty;                              \
+			}while(0)
+			
+			
+			/**
+			 * @brief     PCA2做10位PWM时，占空比调节宏函数。
+			 * @details   When PCA2 is used as 10-bit precision PWM, 
+			 *            set the duty cycle macro function.
+			 * @param[in] duty 占空比。PWM duty.
+			**/
+			#define PCA2_PWM_10BITS_CTRL(duty)                         \
+			do{                                                        \
+				CCAPM2 = PCA_TYPE_PWM;                                 \
+				PCA_PWM2 = (PCA_PWM2 & 0x3F)|(0x03 << 6);              \
+				PCA_PWM2 = (PCA_PWM2 & 0XFE) | ((duty & 0x400) >> 10); \
+				PCA_PWM2 = (PCA_PWM2 & 0XFD) | ((duty & 0x400) >> 9);  \
+				PCA_PWM2 = (PCA_PWM2 & 0XF3) | ((duty & 0x300) >> 6);  \
+				PCA_PWM2 = (PCA_PWM2 & 0XCF) | ((duty & 0x300) >> 4);  \
+				CCAP2L = (uint8_t)duty;                               \
+				CCAP2H = (uint8_t)duty;                               \
+			}while(0)
+
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     PCA3做6位PWM时，占空比调节宏函数。
+				 * @details   When PCA3 is used as 6-bit precision PWM, 
+				 *            set the duty cycle macro function.
+				 * @param[in] duty 占空比。PWM duty.
+				**/
+				#define PCA3_PWM_6BITS_CTRL(duty)                         \
+				do{                                                       \
+					CCAPM3 = PCA_TYPE_PWM;                                \
+					PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x02 << 6);             \
+					PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x40) >> 6);  \
+					PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x40) >> 5);  \
+					CCAP3L = (uint8_t)(duty & 0x003F);                   \
+					CCAP3H = (uint8_t)(duty & 0x003F);                   \
+				}while(0)
+				
+				
+				/**
+				 * @brief     PCA3做7位PWM时，占空比调节宏函数。
+				 * @details   When PCA3 is used as 7-bit precision PWM, 
+				 *            set the duty cycle macro function.
+				 * @param[in] duty 占空比。PWM duty.
+				**/
+				#define PCA3_PWM_7BITS_CTRL(duty)                         \
+				do{                                                       \
+					CCAPM3 = PCA_TYPE_PWM;                                \
+					PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x01 << 6);             \
+					PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x80) >> 7);  \
+					PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x80) >> 6);  \
+					CCAP3L = (uint8_t)(duty & 0x007F);                   \
+					CCAP3H = (uint8_t)(duty & 0x007F);                   \
+				}while(0)
+				
+				
+				/**
+				 * @brief     PCA3做8位PWM时，占空比调节宏函数。
+				 * @details   When PCA3 is used as 8-bit precision PWM, 
+				 *            set the duty cycle macro function.
+				 * @param[in] duty 占空比。PWM duty.
+				**/
+				#define PCA3_PWM_8BITS_CTRL(duty)                          \
+				do{                                                        \
+					CCAPM3 = PCA_TYPE_PWM;                                 \
+					PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x00 << 6);              \
+					PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x100) >> 8);  \
+					PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x100) >> 7);  \
+					CCAP3L = (uint8_t)duty;                               \
+					CCAP3H = (uint8_t)duty;                               \
+				}while(0)
+				
+				
+				/**
+				 * @brief     PCA3做10位PWM时，占空比调节宏函数。
+				 * @details   When PCA3 is used as 10-bit precision PWM, 
+				 *            set the duty cycle macro function.
+				 * @param[in] duty 占空比。PWM duty.
+				**/
+				#define PCA3_PWM_10BITS_CTRL(duty)                         \
+				do{                                                        \
+					CCAPM3 = PCA_TYPE_PWM;                                 \
+					PCA_PWM3 = (PCA_PWM3 & 0x3F)|(0x03 << 6);              \
+					PCA_PWM3 = (PCA_PWM3 & 0XFE) | ((duty & 0x400) >> 10); \
+					PCA_PWM3 = (PCA_PWM3 & 0XFD) | ((duty & 0x400) >> 9);  \
+					PCA_PWM3 = (PCA_PWM3 & 0XF3) | ((duty & 0x300) >> 6);  \
+					PCA_PWM3 = (PCA_PWM3 & 0XCF) | ((duty & 0x300) >> 4);  \
+					CCAP3L = (uint8_t)duty;                               \
+					CCAP3H = (uint8_t)duty;                               \
+				}while(0)
+
+			#endif
+			
+				
+			/**
+			 * @brief     PCA切换复用IO函数。
+			 * @details   PCA switch out port control function.  
+			 * @param[in] port 复用IO枚举体。IO switch enumerator.
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE GPIO_PCA_SWPort(GPIOSWPort_Type port);
+				
+		#endif
+				
+		#if ( PER_LIB_PCA_INIT_CTRL == 1)		
+
+			/**
+			 * @brief     PCA计数器中断初始化函数。
+			 * @details   PCA Counter NVIC function.   
+			 * @param[in] pri 中断优先级。interrupt priority.
+			 * @param[in] run 使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA_CNT_Init(NVICPri_Type pri,BOOL run);
+
+
+			/**
+			 * @brief     PCA0做TIMER或POP中断初始化函数。
+			 * @details   PCA0 Timer and POP NVIC function .  
+			 * @param[in] run 使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA0_TIM_POP_Init(BOOL run);
+			
+			
+			/**
+			 * @brief     PCA1做TIMER或POP中断初始化函数。
+			 * @details   PCA1 Timer and POP NVIC function .  
+			 * @param[in] run 使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA1_TIM_POP_Init(BOOL run);
+			
+			
+			/**
+			 * @brief     PCA2做TIMER或POP中断初始化函数。
+			 * @details   PCA2 Timer and POP NVIC function .  
+			 * @param[in] run 使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA2_TIM_POP_Init(BOOL run);
+
+
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+			
+				/**
+				 * @brief     PCA3做TIMER或POP中断初始化函数。
+				 * @details   PCA3 Timer and POP NVIC function .  
+				 * @param[in] run 使能控制位。enable control. 
+				 * @return    FSC_SUCCESS 返回成功。Return to success.
+				 * @return    FSC_FAIL    返回失败。Return to fail.
+				**/
+				FSCSTATE NVIC_PCA3_TIM_POP_Init(BOOL run);
+				
+			#endif
+			
+			/**
+			 * @brief     PCA0做PWM或CAP中断初始化函数。
+			 * @details   PCA0 PWM and CAP NVIC function.  
+			 * @param[in] triMode  触发模式。 Interrupt trigger mode. 
+			 * @param[in] run      使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA0_PWM_CAP_Init(PCA_CAPTri_Type triMode,BOOL run);
+			
+			
+			/**
+			 * @brief     PCA1做PWM或CAP中断初始化函数。
+			 * @details   PCA1 PWM and CAP NVIC function.  
+			 * @param[in] triMode  触发模式。 Interrupt trigger mode. 
+			 * @param[in] run      使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA1_PWM_CAP_Init(PCA_CAPTri_Type triMode,BOOL run);
+			
+			
+			/**
+			 * @brief     PCA2做PWM或CAP中断初始化函数。
+			 * @details   PCA2 PWM and CAP NVIC function.  
+			 * @param[in] triMode  触发模式。 Interrupt trigger mode. 
+			 * @param[in] run      使能控制位。enable control. 
+			 * @return    FSC_SUCCESS 返回成功。Return to success.
+			 * @return    FSC_FAIL    返回失败。Return to fail.
+			**/
+			FSCSTATE NVIC_PCA2_PWM_CAP_Init(PCA_CAPTri_Type triMode,BOOL run);
+			
+			
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+			
+				/**
+				 * @brief     PCA3做PWM或CAP中断初始化函数。
+				 * @details   PCA3 PWM and CAP NVIC function.  
+				 * @param[in] triMode  触发模式。 Interrupt trigger mode. 
+				 * @param[in] run      使能控制位。enable control. 
+				 * @return    FSC_SUCCESS 返回成功。Return to success.
+				 * @return    FSC_FAIL    返回失败。Return to fail.
+				**/
+				FSCSTATE NVIC_PCA3_PWM_CAP_Init(PCA_CAPTri_Type triMode,BOOL run);
+				
+			#endif
+			
+			/**
+			 * @brief     获取PCA计数器溢出（中断）标志位。
+			 * @details   Get the PCA counter overflow (interrupt) flag macro function.
+			 * @return    [bit] 标志位。Flag.
+			**/			
+			#define PCA_CNT_GET_FLAG()      (CF)
+			
+			
+			/**
+			 * @brief     清除PCA计数器溢出（中断）标志位。
+			 * @details   Clear the PCA counter overflow (interrupt) flag macro function.
+			**/						
+			#define PCA_CNT_CLEAR_FLAG()    do{CF = 0;}while(0)
+			
+			
+			/**
+			 * @brief     获取PCA0计数器溢出（中断）标志位。
+			 * @details   Get the PCA0 overflow (interrupt) flag macro function.
+			 * @return    [bit] 标志位。Flag.
+			**/			
+			#define PCA0_GET_FLAG()           (CCF0)
+			
+			
+			/**
+			 * @brief     获取PCA1计数器溢出（中断）标志位。
+			 * @details   Get the PCA1 overflow (interrupt) flag macro function.
+			 * @return    [bit] 标志位。Flag.
+			**/			
+			#define PCA1_GET_FLAG()           (CCF1)
+			
+			
+			/**
+			 * @brief     获取PCA2计数器溢出（中断）标志位。
+			 * @details   Get the PCA2 overflow (interrupt) flag macro function.
+			 * @return    [bit] 标志位。Flag.
+			**/			
+			#define PCA2_GET_FLAG()           (CCF2)
+			
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+				/**
+				 * @brief     获取PCA3计数器溢出（中断）标志位。
+				 * @details   Get the PCA0 overflow (interrupt) flag macro function.
+				 * @return    [bit] 标志位。Flag.
+				**/			
+				#define PCA3_GET_FLAG()           (CCF3)
+				
+			#endif
+			
+			/**
+			 * @brief     清除PCA0计数器溢出（中断）标志位。
+			 * @details   Clear the PCA0 overflow (interrupt) flag macro function.
+			**/						
+			#define PCA0_CLEAR_FLAG()     do{CCF0 = 0;}while(0)
+			
+			
+			/**
+			 * @brief     清除PCA1计数器溢出（中断）标志位。
+			 * @details   Clear the PCA1 overflow (interrupt) flag macro function.
+			**/			
+			#define PCA1_CLEAR_FLAG()     do{CCF1 = 0;}while(0)
+			
+			
+			/**
+			 * @brief     清除PCA2计数器溢出（中断）标志位。
+			 * @details   Clear the PCA2 overflow (interrupt) flag macro function.
+			**/			
+			#define PCA2_CLEAR_FLAG()     do{CCF2 = 0;}while(0)
+			
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+			
+				/**
+				 * @brief     清除PCA3计数器溢出（中断）标志位。
+				 * @details   Clear the PCA3 overflow (interrupt) flag macro function.
+				**/			
+				#define PCA3_CLEAR_FLAG()     do{CCF3 = 0;}while(0)
+				
+			#endif
+
+            /**
+             * @brief     PCA计数器中断控制宏函数。
+             * @details   PCA interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA_CNT_CTRL(run)    \
+			do{                                  \
+				CMOD = (CMOD & 0xFE) | run;      \
+			}while(0)
+			
+			
+            /**
+             * @brief     PCA0做TIM或POP中断控制宏函数。
+             * @details   PCA0 TIM / POP interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA0_TIM_POP_CTRL(run)  \
+			do{                                     \
+				CCAPM0 = (CCAPM0 & 0xFE) | (run);   \
+			}while(0)
+			
+			
+            /**
+             * @brief     PCA1做TIM或POP中断控制宏函数。
+             * @details   PCA1 TIM / POP interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA1_TIM_POP_CTRL(run)   \
+			do{                                      \
+				CCAPM1 = (CCAPM0 & 0xFE) | (run);    \
+			}while(0)
+			
+			
+            /**
+             * @brief     PCA2做TIM或POP中断控制宏函数。
+             * @details   PCA2 TIM / POP interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA2_TIM_POP_CTRL(run)   \
+			do{                                      \
+				CCAPM2 = (CCAPM0 & 0xFE) | (run);    \
+			}while(0)
+
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)
+			
+			
+				/**
+				 * @brief     PCA3做TIM或POP中断控制宏函数。
+				 * @details   PCA3 TIM / POP interrupt switch control macro function.
+				 * @param[in] run  使能控制位。Enable control bit.
+				**/
+				#define    NVIC_PCA3_TIM_POP_CTRL(run)   \
+				do{                                      \
+					CCAPM3 = (CCAPM0 & 0xFE) | (run);    \
+				}while(0)
+				
+			#endif
+				
+				
+            /**
+             * @brief     PCA0做PWM或CAP中断控制宏函数。
+             * @details   PCA0 PWM / CAPP interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA0_PWM_CAP_CTRL(run)     \
+			do{                                        \
+				CCAPM0 = (CCAPM0 & 0xFE) | (run);      \
+			}while(0)
+			
+			
+            /**
+             * @brief     PCA1做PWM或CAP中断控制宏函数。
+             * @details   PCA1 PWM / CAPP interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA1_PWM_CAP_CTRL(run)     \
+			do{                                        \
+				CCAPM1 = (CCAPM0 & 0xFE) | (run);      \
+			}while(0)
+			
+			
+            /**
+             * @brief     PCA2做PWM或CAP中断控制宏函数。
+             * @details   PCA2 PWM / CAPP interrupt switch control macro function.
+             * @param[in] run  使能控制位。Enable control bit.
+            **/
+			#define    NVIC_PCA2_PWM_CAP_CTRL(run)     \
+			do{                                        \
+				CCAPM2 = (CCAPM0 & 0xFE) | (run);      \
+			}while(0)
+
+			
+			#if (PER_LIB_MCU_MUODEL == STC8Ax)    
+			
+			
+				/**
+				 * @brief     PCA3做PWM或CAP中断控制宏函数。
+				 * @details   PCA3 PWM / CAPP interrupt switch control macro function.
+				 * @param[in] run  使能控制位。Enable control bit.
+				**/
+				#define    NVIC_PCA3_PWM_CAP_CTRL(run)    \
+				do{										  \
+					CCAPM3 = (CCAPM0 & 0xFE) | (run);     \
+				}while(0)
+				
+			#endif
+
+
+		#endif
+		
+	#endif
 
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
+#endif
