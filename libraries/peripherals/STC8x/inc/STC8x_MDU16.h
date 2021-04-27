@@ -83,7 +83,7 @@
 		 * @param[in]  mul2 乘数2。multiplier 2.
 		 * @param[out] pro  乘积。product.
 		**/
-		#define MUL_16_BIT(mul1, mul2, pro) \		
+		#define MUL_16_BIT(mul1, mul2, pro) \
 		do{                                 \
 			EAXFR_ENABLE();                 \
 			MD1U16 = mul1; MD5U16 = mul2;   \
@@ -102,7 +102,7 @@
 		 * @param[out] quo 商。quotient.
 		 * @param[out] rem 余数。remainder.
 		**/
-		#define DIV_16_BIT(mol, den, quo, rem) 	\	
+		#define DIV_16_BIT(mol, den, quo, rem) 	\
 		do{ 							        \
 			EAXFR_ENABLE();                     \
 			MD1U16 = mol;   MD5U16 = den;       \
@@ -156,7 +156,7 @@
 		 * @param[in]  digits 被右移的位数。Number of digits moved.
 		 * @param[out] result 右移完的结果。Data of result.
 		**/
-		#define MOVE_RIGHT_SHIFT(mdata, digits, result)  \	
+		#define MOVE_RIGHT_SHIFT(mdata, digits, result)  \
 		do{                                              \
 			EAXFR_ENABLE();                              \
 			ARCON = (0x01 << 5) + digits;                \
