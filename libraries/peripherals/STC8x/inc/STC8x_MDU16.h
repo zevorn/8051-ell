@@ -108,7 +108,7 @@
 			MD1U16 = mol;   MD5U16 = den;       \
 			ARCON = 0x06 << 5; OPCON = 1;       \
 			while((OPCON & 0x01) != 0);         \
-			quo = MD1U16;   mod = MD5U16;       \
+			quo = MD1U16;   mol = MD5U16;       \
 			EAXFR_DISABLE();                    \
 		}while (0)
 

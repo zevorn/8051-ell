@@ -934,10 +934,10 @@ typedef struct
 
 #define    MDU16      (* (MDU16_TypeDef  xdata *) MDU16_BASE)
 
-#define    MD3U32      (*(__IO uint8_t xdata *)  MD3_ADDRESS)
-#define    MD3U16      (*(__IO uint8_t xdata *)  MD3_ADDRESS)
-#define    MD1U16      (*(__IO uint8_t xdata *)  MD1_ADDRESS)
-#define    MD5U16      (*(__IO uint8_t xdata *)  MD5_ADDRESS)
+#define    MD3U32      (*(__IO uint32_t xdata *)  MD3_ADDRESS)
+#define    MD3U16      (*(__IO uint16_t xdata *)  MD3_ADDRESS)
+#define    MD1U16      (*(__IO uint16_t xdata *)  MD1_ADDRESS)
+#define    MD5U16      (*(__IO uint16_t xdata *)  MD5_ADDRESS)
 
 #define    MD3         (*(__IO uint8_t xdata *)  MD3_ADDRESS)
 #define    MD2         (*(__IO uint8_t xdata *)  MD2_ADDRESS)
