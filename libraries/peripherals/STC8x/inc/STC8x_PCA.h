@@ -170,7 +170,7 @@ typedef enum
 			/**
 			 * @brief     PCA计数器初始化,必须放在所有PCA函数的后面。
 			 * @details   PCA counter init function,It must be initialized last.
-			 * @param[in] clkSrc
+			 * @param[in] clkSrc PCA时钟源。PCA clock source.
 			 * @param[in] run 使能控制位.enable control.
 			 * @return    FSC_SUCCESS 返回成功。Return to success.
 			 * @return    FSC_FAIL    返回失败。Return to fail.
