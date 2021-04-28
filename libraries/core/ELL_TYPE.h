@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : STC8x_TYPE.h
   - Author        : zeweni
-  - Update date   : 2020.03.02
+  - Update date   : 2020.04.28
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -65,6 +65,10 @@ typedef  unsigned char   uint8_t; //  8 bits
 typedef  unsigned int   uint16_t; // 16 bits 
 typedef  unsigned long  uint32_t; // 32 bits 
 
+typedef  unsigned char   u8; //  8 bits 
+typedef  unsigned int   u16; // 16 bits 
+typedef  unsigned long  u32; // 32 bits 
+
 /*--------------------------------------------------------
 | @Description: Volatile width unsigned integer types    |
 --------------------------------------------------------*/
@@ -72,6 +76,10 @@ typedef  unsigned long  uint32_t; // 32 bits
 typedef  volatile uint8_t    vuint8_t; //  8 bits 
 typedef  volatile uint16_t  vuint16_t; // 16 bits 
 typedef  volatile uint32_t  vuint32_t; // 32 bits 
+
+typedef  volatile uint8_t    vu8; //  8 bits 
+typedef  volatile uint16_t  vu16; // 16 bits 
+typedef  volatile uint32_t  vu32; // 32 bits 
 
 /*--------------------------------------------------------
 | @Description: IO definitions                           |
