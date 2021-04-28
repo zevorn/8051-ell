@@ -38,8 +38,16 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
-#ifndef PER_LIB_MCU_MUODEL
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
     #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_CLK_VALUE   
+    #define PER_LIB_MCU_CLK_VALUE 0
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)

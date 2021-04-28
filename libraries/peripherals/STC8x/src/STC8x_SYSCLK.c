@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : STC8x_SYSCLK.c
   - Author        : zeweni
-  - Update date   : 2020.01.29
+  - Update date   : 2020.04.28
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -161,17 +161,21 @@ FSCSTATE SYSCLK_Init(const SYSCLK_InitType* sysClkn)
 ***/
 uint32_t Get_SysClk_FRE(void)
 {
-	uint32_t count;
-#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
-	/* Frequency deviation, calculate the approximate data */
-	count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL);
-#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-	/* Frequency deviation, calculate the approximate data */
-    if(IRCBAND)    count = 36000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_22_1184M) * 0x128E0UL); 
-	else           count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xBB80UL); 
-#endif
-	count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
-	return count;
+	#if (PER_LIB_MCU_CLK_VALUE == 0)
+		uint32_t count;
+		#if    (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+		/* Frequency deviation, calculate the approximate data */
+		count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xD2F0UL);
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		/* Frequency deviation, calculate the approximate data */
+		if(IRCBAND)    count = 36000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_22_1184M) * 0x128E0UL); 
+		else           count = 24000000UL + ((int32_t)((int32_t)IRTRIM - (int32_t)IRC_24M) * 0xBB80UL); 
+		#endif
+		count /= SYSCLK.CLKDIV_REG;  /*Divide by division value */
+		return count;
+	#else
+		return PER_LIB_MCU_CLK_VALUE;
+	#endif
 }
 
 /*-----------------------------------------------------------------------

@@ -50,6 +50,8 @@
 
 #define    PER_LIB_MCU_MUODEL     STC8Gx
 
+#define    PER_LIB_MCU_CLK_VALUE  0 /*!< 等于0,自动获取系统时钟，用作时间计算。*/
+
 /**
  * @brief		配置ADC片内外设。
  * @details	    Configure ADC chip internal  peripheral.

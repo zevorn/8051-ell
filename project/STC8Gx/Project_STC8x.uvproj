@@ -461,6 +461,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_HPWM.c</FilePath>
             </File>
+            <File>
+              <FileName>STC8x_MDU16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_MDU16.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
