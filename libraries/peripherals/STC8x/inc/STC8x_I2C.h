@@ -39,35 +39,6 @@
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
-#ifndef PER_LIB_MCU_MUODEL   
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_I2C_CTRL
-    #define PER_LIB_I2C_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_I2C_INIT_CTRL
-    #define PER_LIB_I2C_INIT_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_I2C_NVIC_CTRL
-    #define PER_LIB_I2C_NVIC_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_I2C_WORK_CTRL
-    #define PER_LIB_I2C_WORK_CTRL 1
-#endif
 
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -89,6 +60,41 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_CTRL
+    #define PER_LIB_I2C_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_INIT_CTRL
+    #define PER_LIB_I2C_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_NVIC_CTRL
+    #define PER_LIB_I2C_NVIC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_I2C_WORK_CTRL
+    #define PER_LIB_I2C_WORK_CTRL 1
+#endif
+
 
 /** 
  * @brief	 I2C工作类型枚举体。
@@ -189,8 +195,20 @@ typedef enum
 			EAXFR_DISABLE();                    \
 		}
 		
+		
+		/**
+		 * @brief      I2C选择中断优先级宏函数，仅限本文件调用。
+		 * @details    I2C select interrupt priority macro function, 
+		 *             only this file call.
+		 * @param[in]  pri 中断优先级。 Priority of interrupt.
+		***/
+		#define NVIC_I2C_PRI(pri)                       \
+		do{                                             \
+			IP2H = (IP2H & 0xBF) | ((pri & 0x02) << 5); \
+			IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); \
+		}while(0)		
 
-
+		
 		/**
 		 * @brief   I2C获取主机中断请求标志位宏函数。
 		 * @details I2C gets host interrupt request flag bit macro function.

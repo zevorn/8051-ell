@@ -35,9 +35,6 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "Lib_CFG.h"
-#ifndef PER_LIB_MCU_MUODEL
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -58,41 +55,137 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: External static holding current control  |
---------------------------------------------------------*/
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
 
-#define ESH_CURRENT_ENABLE()   VOCTRL = 0x80  /* Use external */
-#define ESH_CURRENT_DISABLE()  VOCTRL = 0x00  /* Use internal */
 
-/*--------------------------------------------------------
-| @Description: Power mode enum                          |
---------------------------------------------------------*/
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_POWER_CTRL
+    #define PER_LIB_POWER_CTRL 1
+#endif
 
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_POWER_NVIC_CTRL
+    #define PER_LIB_POWER_NVIC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_POWER_WORK_CTRL
+    #define PER_LIB_POWER_WORK_CTRL 1
+#endif
+
+
+/**
+ * @brief   电源工作模式枚举体。
+ * @details Power mode enumerator.
+**/
 typedef enum
 {
-  POWER_Mode_Normal = 0x00, /* Power normal mode */
-  POWER_Mode_Stop   = 0x02, /* Power down mode */
-  POWER_Mode_Idle   = 0x03  /* Power idle mode */
+  POWER_Mode_Normal = 0x00, /*!< 正常模式。 Power normal mode. */
+  POWER_Mode_Stop   = 0x02, /*!< 掉电模式。Power down mode. */
+  POWER_Mode_Idle   = 0x03  /*!< 空闲模式。Power idle mode. */
 } POWERMode_Type;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_POWER_CTRL == 1)
+	
+	#if (PER_LIB_POWER_WORK_CTRL == 1)
 
-uint8_t Get_POWER_State(void);
-FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode);
+		/**
+		 * @brief		电源工作模式控制函数。
+		 * @details	    Power mode configure function. 
+		 * @param[in]	mode 电源工作模式。Power working mode. 
+		 * @return      FSC_SUCCESS 返回成功。Return to success.
+		 * @return      FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode);
+
+		/**
+		 * @brief		获取电源工作模式函数。
+		 * @details	    PGet power mode function. 
+		 * @return      POWERMode_Type 电源工作模式。
+		**/
+		#define POWER_GET_WORK_MODE()  (PCON & 0x10)
 
 
-#define LVD_GET_FLAG()       (PCON & 0x20)
-#define LVD_CLEAR_FLAG()      PCON &= 0xDF
+		/**
+		 * @brief		使能外部静态电流保持电流控制电路，功耗更低。
+		 * @details	    Enable external quiescent current to maintain 
+		 *              current control circuit, lower power consumption.
+		**/
+		#define ESH_CURRENT_ENABLE()   VOCTRL = 0x80  /* Use external */
+		
+		
+		/**
+		 * @brief		不使能外部静态电流保持电流控制电路，
+		 *              选择内部的静态电流保持电流控制电路。
+		 * @details	    Disable external quiescent current to maintain 
+		 *              current control circuit, lower power consumption.
+		**/
+		#define ESH_CURRENT_DISABLE()  VOCTRL = 0x00  /* Use internal */
 
-FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,BOOL run);
-
-#define    NVIC_LVD_CTRL(run)     do{ ELVD = run; }while(0)
-
+	#endif
+	
+	#if (PER_LIB_POWER_NVIC_CTRL == 1)
+	
+		/**
+		 * @brief	   低压检测中断初始化函数。
+		 * @details	   Low-voltage detection interrupt initialization function.
+		 * @param[in]  pri 中断优先级。Interrupt priority.
+		 * @param[in]  run 中断运行控制位。Interrupt operation control bit.
+		 * @return     FSC_SUCCESS 返回成功。Return to success.
+		 * @return     FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,BOOL run);
+		
+		 /**
+         * @brief   获取比较中断标志位宏函数。
+         * @details LVD gets interrupt flag bit macro function.
+         * @return  [bit] 完成（也是中断）标志位。Completion (interrupt) flag bit.
+        **/
+		#define LVD_GET_FLAG()       (PCON & 0x20)
+		
+		 /**
+         * @brief   清除比较中断标志位宏函数。
+         * @details LVD clears interrupt flag bit macro function.
+         * @return  [bit] 完成（也是中断）标志位。Completion (interrupt) flag bit.
+        **/		
+		#define LVD_CLEAR_FLAG()     do{PCON &= 0xDF;}while(0)
+		
+        /**
+         * @brief     LVD中断开关控制宏函数。
+         * @details   LVD interrupt switch control macro function.
+         * @param[in] run 使能控制位。Enable control bit.
+        ***/		
+		#define    NVIC_LVD_CTRL(run)     do{ELVD = run;}while(0)
+		
+		
+		/**
+		 * @brief      LVD选择中断优先级宏函数，仅限本文件调用。
+		 * @details    LVD select interrupt priority macro function, 
+		 *             only this file call.
+		 * @param[in]  pri 中断优先级。 Priority of interrupt.
+		**/
+		#define NVIC_LVD_PRI(pri)                     \
+		do{                                           \
+			IPH = (IPH & 0xBF) | ((pri & 0x02) << 5); \
+			IP  = (IP  & 0xBF) | ((pri & 0x01) << 6); \
+		}while(0)
+	
+	#endif
+	
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
+#endif

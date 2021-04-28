@@ -30,26 +30,6 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_PCA.h"
-/*-----------------------------------------------------------------------
-|                             DECLARATION                               |
------------------------------------------------------------------------*/
-
-/*--------------------------------------------------------
-| @Description: PCA priority define function             |
---------------------------------------------------------*/
-
-/**
- * @brief      PCA选择中断优先级宏函数，仅限本文件调用。
- * @details    PCA select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级. Priority of interrupt.
-***/
-#define PCA_NVIC_PRI(pri)                     \
-do{                                           \
-	IPH = (IPH & 0x7F) | ((pri & 0x02) << 6); \
-	IP  = (IP  & 0x7F) | ((pri & 0x01) << 7); \ 
-}while(0)
-
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -548,7 +528,7 @@ static vuint16_t PCA_Rvalue[4];
 			FSCSTATE NVIC_PCA_CNT_Init(NVICPri_Type pri,BOOL run)
 			{
 				CMOD = (CMOD & 0xFE) | run;
-				PCA_NVIC_PRI(pri);
+				NVIC_PCA_PRI(pri);
 				return FSC_SUCCESS;
 			}
 

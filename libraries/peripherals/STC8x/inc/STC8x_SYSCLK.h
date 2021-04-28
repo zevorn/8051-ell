@@ -38,17 +38,34 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
+
 /** 如果没有定义这个宏，默认为STC8Ax。
     If the mirco is undefined，select to STC8Ax */
 #ifndef PER_LIB_MCU_MUODEL   
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
-#ifndef PER_LIB_MCU_CLK_VALUE   
-    #define PER_LIB_MCU_CLK_VALUE 0
+
+/** 如果没有定义这个宏，默认为0。
+    If the mirco is undefined，select to "0" */
+#ifndef PER_LIB_SYSCLK_VALUE   
+    #define PER_LIB_SYSCLK_VALUE 0
 #endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_SYSCLK_INIT_CTRL
+    #define PER_LIB_SYSCLK_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_SYSCLK_WORK_CTRL
+    #define PER_LIB_SYSCLK_WORK_CTRL 1
+#endif
+
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -61,10 +78,12 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
+
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
 --------------------------------------------------------*/
 #include "ELL_CORE.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -72,7 +91,8 @@
 /*--------------------------------------------------------
 | @Description: System clock ferquency division define   |
 --------------------------------------------------------*/
-#if     (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx )
+
+#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx )
 
     #define     SYSCLK_DIV1     0x10
     #define     SYSCLK_DIV2     0x20
@@ -85,66 +105,70 @@
 
 #endif
 
-/*--------------------------------------------------------
-| @Description: IRC frequency little trimmer enum type   |
---------------------------------------------------------*/
-
+/** 
+ * @brief   IRC频率微调枚举体。
+ * @details	IRC frequency little trimmer enum.
+**/
 typedef enum
 {
-	TRIM0 = 0x00,
-	TRIM1 = 0x01,
-	TRIM2 = 0x02,
-    TRIM3 = 0x03  
+	TRIM0 = 0x00, /*!< 微调等级0。Fine-tuning level 0. */
+	TRIM1 = 0x01, /*!< 微调等级1。Fine-tuning level 1. */
+	TRIM2 = 0x02, /*!< 微调等级2。Fine-tuning level 2. */
+    TRIM3 = 0x03  /*!< 微调等级3。Fine-tuning level 3. */
 }   LIRCTRIM_Type;
 
-/*--------------------------------------------------------
-| @Description: System clock out pin enum type           |
---------------------------------------------------------*/
 
+/** 
+ * @brief	系统时钟输出引脚枚举体。
+ * @details	System clock out pin enum.
+**/
 typedef enum
 {
-	SCLK_OUT_P54 = 0x00, /* GPIO Port 5 pin 4 */
-	SCLK_OUT_P16 = 0x01  /* GPIO Port 1 pin 6 */
+	SCLK_OUT_P54 = 0x00, /*!< 输出时钟到P54。GPIO Port 5 pin 4 */
+	SCLK_OUT_P16 = 0x01  /*!< 输出时钟到P16。GPIO Port 1 pin 6 */
 }   SCLKOut_Type;
 
 
-/*--------------------------------------------------------
-| @Description: Master clock source enum type            |
---------------------------------------------------------*/
-
+/** 
+ * @brief	系统主时钟源枚举体。
+ * @details	Master clock source enum.
+**/
 typedef enum
 {
-	AUTO = 0x00,   /* stc -isp toll control */
-	HIRC = 0x01,   /* High internal 4MHz~24MHz oscillator */
-	LIRC = 0x02,   /* Internal 32KHz oscillator */
-#if (PER_LIB_MCU_MUODEL == STC8Hx)
-    X32KSC = 0x03,  /* External  32KHzoscillator control */
-#endif
-    XOSC = 0x04    /* External oscillator control */
-}   MCLKSrc_Type;
+	AUTO = 0x00,   /*!< 由STC-ISP助手设置。 stc -isp toll control. */
+	HIRC = 0x01,   /*!< 选择内部高速IRC时钟。High internal 4MHz~24MHz oscillator. */
+	LIRC = 0x02,   /*!< 选择内部32K时钟。Internal 32KHz oscillator. */
+	#if (PER_LIB_MCU_MUODEL == STC8Hx)
+		X32KSC = 0x03,  /*!< 选择外部32K时钟。External  32KHzoscillator control. */
+	#endif
+    XOSC = 0x04    /*!< 选择外部晶振。 External oscillator control. */
+} MCLKSrc_Type;
+
 
 #if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
-/*--------------------------------------------------------
-| @Description: IRC band selector enum type              |
---------------------------------------------------------*/
+	/** 
+	 * @brief	IRC频段选择器枚举体。
+	 * @details	IRC band selector enum.
+	**/
     typedef enum
     {
-        IRC_Band_20MHz = 0x00,
-#if   (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx)
-        IRC_Band_33MHz = 0x01
-#elif (PER_LIB_MCU_MUODEL == STC8Hx)
-        IRC_Band_35MHz = 0x01
-#endif
-
-    }   IRCBand_Type;
+        IRC_Band_20MHz = 0x00, /*!< 选择20M频段。 Select the 20M frequency band. */
+		#if   (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx)
+				IRC_Band_33MHz = 0x01 /*!< 选择33M频段。 Select the 33M frequency band. */
+		#elif (PER_LIB_MCU_MUODEL == STC8Hx)
+				IRC_Band_35MHz = 0x01 /*!< 选择35M频段。 Select the 35M frequency band. */
+		#endif
+    }  IRCBand_Type;
+	
 #endif
 
 #if (PER_LIB_MCU_MUODEL == STC8Hx)
-
-/*--------------------------------------------------------
-| @Description: External crystal filter enum type        |
---------------------------------------------------------*/
+	
+	/** 
+	 * @brief	外部晶振滤波频段枚举体。
+	 * @details	External crystal filter enum.
+	**/	
     typedef enum
     {
         XOSC_Filter_150MHz = 0x00,
@@ -156,49 +180,63 @@ typedef enum
 #endif
 
 /**
-  * @name    SYSCLK_InitType
-  * @brief   System clock init struct type   
-  * @param   MCLKSrc  Master clock source
-  * @param   IRCTRIM  IRC frequency trimmer
-  * @param   LIRCTRIM  IRC little trimmer
-  * @param   MCLKDiv  Master clock frequency division Parameter range: 0 <= MDiv <= 255
-  * @param   SCLKDiv  System clock ferquency division
-  * @param   SCLKOutPin  Select system clock output pin
-  * @param   XOSCFilter  External crystal filter (STC8Hx)
-***/
+ * @brief	系统时钟初始化结构体句柄，需要在函数初始化时定义它，并用其地址传参。
+ * @details	System clock init struct type.
+**/
 typedef struct
 {
-    MCLKSrc_Type MCLKSrc;  /* Master clock source */
-	
-    uint8_t IRCTRIM;    /* IRC frequency trimmer */
-	
-    LIRCTRIM_Type LIRCTRIM;  /* IRC little trimmer */
-	
-    uint8_t MCLKDiv;  /* Master clock frequency division Parameter range: 0 <= MDiv <= 255 */
-
-    uint8_t SCLKDiv;  /* System clock ferquency division */
-
-    SCLKOut_Type SCLKOutPin; /* Select system clock output pin */
-    
-#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-    IRCBand_Type  IRCBand;
-#endif
-
+    MCLKSrc_Type MCLKSrc;  /*!< 主时钟源。Master clock source. */
+    uint8_t IRCTRIM;    /*!< IRC时钟频率调整。IRC frequency trimmer. */
+    LIRCTRIM_Type LIRCTRIM;  /*!< IRC时钟频率微调。 IRC little trimmer. */
+	#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+		IRCBand_Type  IRCBand; /*!< 选择IRC频段。IRC band selector. */
+	#endif
+    uint8_t MCLKDiv;  /*!< 主时钟分频。 Master clock frequency 
+	                        division Parameter range: 0 <= MDiv <= 255. */
+    uint8_t SCLKDiv;  /*!< 系统时钟分频。System clock ferquency division. */
+    SCLKOut_Type SCLKOutPin; /*!< 选择系统时钟输出脚。Select system clock output pin. */
 #if (PER_LIB_MCU_MUODEL == STC8Hx)
-    XOSCFilter_Type XOSCFilter; 
+    XOSCFilter_Type XOSCFilter; /*!< 外部晶振滤波频段。External crystal filter. */
 #endif
 
-}   SYSCLK_InitType;
+} SYSCLK_InitType;
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_SYSCLK_CTRL == 1)
 
-uint32_t Get_SysClk_FRE(void);
-FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn);
+	#if (PER_LIB_SYSCLK_INIT_CTRL == 1)
 
+		/**
+		 * @brief     系统时钟初始化函数。 
+		 * @details   System clock init function.
+		 * @param[in] sysClkn 系统时钟初始化结构体句柄，需要在初始化时定义它，并用其地址传参。
+							  The system clock initializes the structure handle, 
+							  which needs to be defined during initialization and its 
+							  address is used to pass parameters.
+		 * @return      FSC_SUCCESS 返回成功。Return to success.
+		 * @return      FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn);
+
+	#endif
+
+	#if (PER_LIB_SYSCLK_WORK_CTRL == 1)
+
+		/**
+		 * @brief   获取系统时钟频率函数，用于定时器、串口、EEPROM等进行时钟计算。
+		 * @details Get System clock frequendy function.
+		 * @param   None
+		 * @return  [uint32_t] 时钟频率。value of system clock frequenction. 
+		**/
+		uint32_t Get_SysClk_FRE(void);
+
+	#endif
+	
 #endif
+
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
+#endif

@@ -30,19 +30,6 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_I2C.h"
-/*-----------------------------------------------------------------------
-|                             DECLARATION                               |
------------------------------------------------------------------------*/
-
-/**
- * @brief      I2C选择中断优先级宏函数，仅限本文件调用。
- * @details    I2C select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-***/
-#define I2C_NVIC_PRI(pri) { \
-IP2H = (IP2H & 0xBF) | ((pri & 0x02) << 5); \
-IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); }
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -133,7 +120,7 @@ IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); }
 		FSCSTATE NVCI_I2C_Master_Init(NVICPri_Type pri,BOOL run)
 		{
 			EAXFR_ENABLE();
-			I2C_NVIC_PRI(pri);
+			NVIC_I2C_PRI(pri);
 			I2CMSCR = run << 7;
 			EAXFR_DISABLE();
 			return FSC_SUCCESS;
@@ -153,7 +140,7 @@ IP2  = (IP2  & 0xBF) | ((pri & 0x01) << 6); }
 		FSCSTATE NVCI_I2C_Slave_Init(NVICPri_Type pri,I2CSTri_Type triState)
 		{
 			EAXFR_ENABLE();
-			I2C_NVIC_PRI(pri);
+			NVIC_I2C_PRI(pri);
 			I2CSLCR &= (I2CSLCR & 0x01 )| (triState);
 			EAXFR_DISABLE();
 			return FSC_SUCCESS;

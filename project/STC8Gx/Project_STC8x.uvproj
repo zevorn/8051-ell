@@ -392,6 +392,11 @@
               <FilePath>..\..\libraries\peripherals\PerList.h</FilePath>
             </File>
             <File>
+              <FileName>STC8x_SYSCLK.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_SYSCLK.c</FilePath>
+            </File>
+            <File>
               <FileName>STC8x_ADC.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_ADC.c</FilePath>
@@ -435,11 +440,6 @@
               <FileName>STC8x_SPI.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_SPI.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_SYSCLK.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_SYSCLK.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_TIMER.c</FileName>

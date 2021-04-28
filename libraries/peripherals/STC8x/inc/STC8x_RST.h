@@ -94,8 +94,8 @@ typedef enum
 | @Description: Reset  control functions                 |
 --------------------------------------------------------*/
 
-#define    RST_P54_ENABLE()      RSTCFG |= 0x10
-#define    RST_P54_DISABLE()     RSTCFG &= 0xEF
+#define    RST_P54_ENABLE()      do{RSTCFG |= 0x10;}while(0)
+#define    RST_P54_DISABLE()     do{RSTCFG &= 0xEF;}while(0)
 
 /*--------------------------------------------------------
 | @Description: Reset  control functions                 |

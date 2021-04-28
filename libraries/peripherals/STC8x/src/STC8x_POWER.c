@@ -30,15 +30,7 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_POWER.h"
-/*-----------------------------------------------------------------------
-|                             DECLARATION                               |
------------------------------------------------------------------------*/
-/*--------------------------------------------------------
-| @Description: LVD priority define function             |
---------------------------------------------------------*/
-#define LVD_NVIC_PRI(pri) { \
-IPH = (IPH & 0xBF) | ((pri & 0x02) << 5); \
-IP  = (IP  & 0xBF) | ((pri & 0x01) << 6); }
+
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -49,39 +41,31 @@ IP  = (IP  & 0xBF) | ((pri & 0x01) << 6); }
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    POWER_Mode_Ctrl
-  * @brief   Power mode configure function
-  * @param   mode   POWER_Mode_Normal | POWER_Mode_Down | POWER_Mode_Idle
-  * @return  None
-***/
+ * @brief		电源工作模式控制函数。
+ * @details	    Power mode configure function. 
+ * @param[in]	mode 电源工作模式。Power working mode. 
+ * @return      FSC_SUCCESS 返回成功。Return to success.
+ * @return      FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE POWER_Mode_Ctrl(POWERMode_Type mode)
 {
   PCON = (PCON & 0xFC) | mode;
   return FSC_SUCCESS;
 }
 
-/**
-  * @name    Get_POWER_State
-  * @brief   Get power state function
-  * @param   None
-  * @return  POWER state (uint8)
-***/
-uint8_t Get_POWER_State(void)
-{
-  return (PCON & 0x10);
-}
 
 /**
-  * @name    NVIC_LVD_Init
-  * @brief   LVD NVIC function
-  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run      ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+* @brief	   低压检测中断初始化函数。
+ * @details	   Low-voltage detection interrupt initialization function.
+ * @param[in]  pri 中断优先级。Interrupt priority.
+ * @param[in]  run 中断运行控制位。Interrupt operation control bit.
+ * @return     FSC_SUCCESS 返回成功。Return to success.
+ * @return     FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE NVIC_LVD_Init(NVICPri_Type priority,BOOL run)
 {
 	ELVD = run;
-	LVD_NVIC_PRI(priority);
+	NVIC_LVD_PRI(priority);
 	return FSC_SUCCESS;
 }
 

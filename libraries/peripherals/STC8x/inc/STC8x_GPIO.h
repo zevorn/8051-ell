@@ -33,39 +33,6 @@
 #define __STC8x_GPIO_H_
 
 #include "Lib_CFG.h"
-/*--------------------------------------------------------
-| @Description: STC8x MCU Register                       |
---------------------------------------------------------*/
-
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
-#ifndef PER_LIB_MCU_MUODEL
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_GPIO_CTRL
-    #define PER_LIB_GPIO_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_GPIO_INIT_CTRL
-    #define PER_LIB_GPIO_INIT_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_GPIO_NVIC_CTRL
-    #define PER_LIB_GPIO_NVIC_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_GPIO_WORK_CTRL
-    #define PER_LIB_GPIO_WORK_CTRL 1
-#endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -86,6 +53,40 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_CTRL
+    #define PER_LIB_GPIO_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_INIT_CTRL
+    #define PER_LIB_GPIO_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_NVIC_CTRL
+    #define PER_LIB_GPIO_NVIC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_GPIO_WORK_CTRL
+    #define PER_LIB_GPIO_WORK_CTRL 1
+#endif
 
 /*--------------------------------------------------------
 | @Description: GPIO Pin define                          |
@@ -439,6 +440,32 @@ typedef enum
 		#define    NVIC_EXTI2_CTRL(run)     do{INTCLKO = (INTCLKO & 0xEF) | (run << 4);}while(0)
 
 
+		/**
+		 * @brief      EXTI0选择中断优先级宏函数，仅限本文件调用。
+		 * @details    EXTI0 select interrupt priority macro function, 
+		 *             only this file call.
+		 * @param[in]  pri 中断优先级。 Priority of interrupt.
+		**/
+		#define NVIC_EXTI0_PRI(pri)                   \
+		do{                                           \
+			IPH = (IPH & 0xFE) | ((pri & 0x02) >> 1); \
+			IP  = (IP  & 0xFE) | (pri & 0x01);        \
+		}while(0)
+
+
+		/**
+		 * @brief      EXTI1选择中断优先级宏函数，仅限本文件调用。
+		 * @details    EXTI1 select interrupt priority macro function, 
+		 *             only this file call.
+		 * @param[in]  pri 中断优先级。 Priority of interrupt.
+		**/
+		#define NVIC_EXTI1_PRI(pri)                   \
+		do{                                           \
+			IPH = (IPH & 0xFB) | ((pri & 0x02) << 1); \
+			IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); \
+		}while(0)
+		
+		
 		/**
 		 * @brief      外部中断3控制中断开关宏函数。
 		 * @details    External interrupt 3 controls interrupt switch macro function. 

@@ -30,23 +30,7 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_ADC.h"
-/*-----------------------------------------------------------------------
-|                             DECLARATION                               |
------------------------------------------------------------------------*/
 
-/**
- * @brief      ADC选择中断优先级宏函数，仅限本文件调用。
- * @details    ADC select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-**/
-#define ADC_NVIC_PRI(pri)                     \
-do{                                           \
-	IPH = (IPH & 0xDF) | ((pri & 0x02) << 4); \
-	IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); \
-}while(0)
-
- 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -82,7 +66,7 @@ do{                                           \
 			 *                    to pass parameters.
              * @return      FSC_SUCCESS 返回成功。Return to success.
              * @return      FSC_FAIL    返回失败。Return to fail.
-			 **/
+			**/
 			FSCSTATE ADC_Init(const ADC_InitType* adcx)
 			{
 				if(adcx -> Speed <= 0x0F) 
@@ -116,7 +100,7 @@ do{                                           \
 			 *                      the highest accuracy is different, 
 			 *                      please check the macro definition of the header file.
 			 * @return	   uint16_t 返回采集到的ADC值。Returns the collected ADC value.
-			 **/
+			**/
 			uint16_t ADC_Get_Sample(uint8_t channel, ADCAcc_Type acc)
 			{	
 				uint16_t value;
@@ -140,7 +124,7 @@ do{                                           \
 			 *                      the highest accuracy is different, 
 			 *                      please check the macro definition of the header file.
 			 * @return	   uint16_t 返回采集到的ADC值。Returns the collected ADC value.
-			 **/
+			**/
 			uint16_t ADC_Get_Sample_Interrupt(ADCAcc_Type acc)
 			{	
 				uint16_t value;
@@ -159,17 +143,17 @@ do{                                           \
 		#if (PER_LIB_ADC_WORK_CTRL == 1)
 			
             /**
-             * @brief	   ADC优先级初始化函数。
-             * @details	   This is a ADC priority initialization function. 
+             * @brief	   ADC中断初始化函数。
+             * @details	   ADC interrupt initialization function.
              * @param[in]  pri 中断优先级。Interrupt priority.
              * @param[in]  run 中断运行控制位。Interrupt operation control bit.
-             * @return  FSC_SUCCESS 返回成功。Return to success.
-             * @return  FSC_FAIL    返回失败。Return to fail.
-             **/
+             * @return     FSC_SUCCESS 返回成功。Return to success.
+             * @return     FSC_FAIL    返回失败。Return to fail.
+            **/
             FSCSTATE NVIC_ADC_Init(NVICPri_Type pri,BOOL run)
             {
                 EADC = run;
-                ADC_NVIC_PRI(pri);
+                NVIC_ADC_PRI(pri);
                 return FSC_SUCCESS;
             }
 

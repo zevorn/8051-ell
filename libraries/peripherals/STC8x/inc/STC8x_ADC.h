@@ -38,37 +38,6 @@
 
 #include "Lib_CFG.h"
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
-#ifndef PER_LIB_MCU_MUODEL   
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_ADC_CTRL
-    #define PER_LIB_ADC_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_ADC_INIT_CTRL
-    #define PER_LIB_ADC_INIT_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_ADC_NVIC_CTRL
-    #define PER_LIB_ADC_NVIC_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_ADC_WORK_CTRL
-    #define PER_LIB_ADC_WORK_CTRL 1
-#endif
-
-
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx)
@@ -89,6 +58,41 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_ADC_CTRL
+    #define PER_LIB_ADC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_ADC_INIT_CTRL
+    #define PER_LIB_ADC_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_ADC_NVIC_CTRL
+    #define PER_LIB_ADC_NVIC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_ADC_WORK_CTRL
+    #define PER_LIB_ADC_WORK_CTRL 1
+#endif
+
 
 /** ADC通道15，测量内部参考电压。ADC channel 15 is internal refv voltage. */
 #define    ADC_Road_REV    0x0F	   
@@ -335,12 +339,12 @@ typedef struct
 		#if (PER_LIB_ADC_NVIC_CTRL == 1)		
 		
             /**
-             * @brief	   ADC优先级初始化函数。
+             * @brief	   ADC中断初始化函数。
              * @details	   This is a ADC priority initialization function. 
              * @param[in]  pri 中断优先级。Interrupt priority.
              * @param[in]  run 中断运行控制位。Interrupt operation control bit.
-             * @return  FSC_SUCCESS 返回成功。Return to success.
-             * @return  FSC_FAIL    返回失败。Return to fail.
+             * @return     FSC_SUCCESS 返回成功。Return to success.
+             * @return     FSC_FAIL    返回失败。Return to fail.
             **/
             FSCSTATE NVIC_ADC_Init(NVICPri_Type pri,BOOL run);
 
@@ -368,6 +372,19 @@ typedef struct
              * @param[in] run  使能控制位。Enable control bit.
             **/
             #define NVIC_ADC_CTRL(run)     do{EADC = run;}while(0)
+
+			
+			/**
+			 * @brief      ADC选择中断优先级宏函数，仅限本文件调用。
+			 * @details    ADC select interrupt priority macro function, 
+			 *             only this file call.
+			 * @param[in]  pri 中断优先级。 Priority of interrupt.
+			**/
+			#define NVIC_ADC_PRI(pri)                     \
+			do{                                           \
+				IPH = (IPH & 0xDF) | ((pri & 0x02) << 4); \
+				IP  = (IP  & 0xDF) | ((pri & 0x01) << 5); \
+			}while(0)
 			
         #endif
 

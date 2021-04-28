@@ -30,34 +30,6 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_GPIO.h"
-/*-----------------------------------------------------------------------
-|                             DECLARATION                               |
------------------------------------------------------------------------*/
-
-/**
- * @brief      EXTI0选择中断优先级宏函数，仅限本文件调用。
- * @details    EXTI0 select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-**/
-#define EXTI0_NVIC_PRI(pri)                   \
-do{                                           \
-	IPH = (IPH & 0xFE) | ((pri & 0x02) >> 1); \
-	IP  = (IP  & 0xFE) | (pri & 0x01);        \
-}while(0)
-
-
-/**
- * @brief      EXTI1选择中断优先级宏函数，仅限本文件调用。
- * @details    EXTI1 select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-**/
-#define EXTI1_NVIC_PRI(pri)                   \
-do{                                           \
-	IPH = (IPH & 0xFB) | ((pri & 0x02) << 1); \
-	IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); \
-}while(0)
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -83,7 +55,7 @@ do{                                           \
 		{
 			IT0 = triMode;
 			EX0 = run;
-			EXTI0_NVIC_PRI(pri);
+			NVIC_EXTI0_PRI(pri);
 			return FSC_SUCCESS;
 		}
 
@@ -101,7 +73,7 @@ do{                                           \
 		{
 			IT1 = triMode;
 			EX1 = run;
-			EXTI1_NVIC_PRI(pri);
+			NVIC_EXTI1_PRI(pri);
 			return FSC_SUCCESS;
 		}
 

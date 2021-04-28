@@ -35,18 +35,6 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @brief      COMP选择中断优先级宏函数，仅限本文件调用。
- * @details    COMP select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-**/
-#define COMP_NVIC_PRI(pri)                      \
-do{                                             \
-	IP2H = (IP2H & 0xEF) | ((pri & 0x02) << 3); \
-	IP2  = (IP2  & 0xEF) | ((pri & 0x01) << 4); \
-}while(0)
-
-/**
  * @brief     COMP选择触发模式宏函数，仅限本文件调用。
  * @details   Comp select trigger state macro function, 
  *            only this file call.

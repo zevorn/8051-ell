@@ -48,9 +48,44 @@
 #define    STC8Gx      (3)
 #define    STC8Hx      (4)
 
+/**
+ * @brief		配置ELL库MCU选型。
+ * @details	    Configure ADC chip internal  peripheral.
+**/
 #define    PER_LIB_MCU_MUODEL     STC8Gx
 
-#define    PER_LIB_MCU_CLK_VALUE  0 /*!< 等于0,自动获取系统时钟，用作时间计算。*/
+
+/**
+ * @brief		配置系统时钟管理片内外设。
+ * @details	    Configure the system clock for time calculation.
+**/
+#define   PER_LIB_SYSCLK_CTRL        (1) /*!< 系统时钟模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_SYSCLK_INIT_CTRL   (1) /*!< 系统时钟模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_SYSCLK_WORK_CTRL   (1) /*!< 系统时钟模块工作相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_SYSCLK_VALUE     (0UL) /*!< 等于0,自动获取系统时钟 */
+
+
+/**
+ * @brief		配置TIMER片内外设。
+ * @details	    Configure TIMER chip internal  peripheral.
+**/
+#define   PER_LIB_TIMER_CTRL         (1) /*!< TIMER模块控制宏，写1开启，写0关闭。*/
+											  
+#define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIzMER模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_TIMER_NVIC_CTRL    (1) /*!< TIMER模块中断相关宏，写1开启，写0关闭。*/
+
+
+/**
+ * @brief		配置GPIO片内外设。
+ * @details	    Configure GPIO chip internal  peripheral.
+**/
+#define   PER_LIB_GPIO_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_GPIO_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_GPIO_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_GPIO_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
+
 
 /**
  * @brief		配置ADC片内外设。
@@ -85,19 +120,8 @@
 
 
 /**
- * @brief		配置GPIO片内外设。
- * @details	    Configure GPIO chip internal  peripheral.
-**/
-#define   PER_LIB_GPIO_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
-
-#define   PER_LIB_GPIO_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_GPIO_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_GPIO_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
-
-
-/**
- * @brief		配置GPIO片内外设。
- * @details	    Configure GPIO chip internal  peripheral.
+ * @brief		配置I2C片内外设。
+ * @details	    Configure I2C chip internal  peripheral.
 **/
 #define   PER_LIB_I2C_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
 				 
@@ -105,9 +129,10 @@
 #define   PER_LIB_I2C_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_I2C_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
 
+
 /**
- * @brief		配置GPIO片内外设。
- * @details	    Configure GPIO chip internal  peripheral.
+ * @brief		配置PCA片内外设。
+ * @details	    Configure PCA chip internal  peripheral.
 **/
 #define   PER_LIB_PCA_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
 				 
@@ -115,14 +140,15 @@
 #define   PER_LIB_PCA_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_PCA_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
 
+
 /**
- * @brief		配置TIMER片内外设。
- * @details	    Configure TIMER chip internal  peripheral.
+ * @brief		配置电源管理片内外设。
+ * @details	    Configure on-chip peripherals for power management.
 **/
-#define   PER_LIB_TIMER_CTRL         (1) /*!< TIMER模块控制宏，写1开启，写0关闭。*/
-											  
-#define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIzMER模块初始化相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_TIMER_NVIC_CTRL    (1) /*!< TIMER模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_POWER_CTRL        (1) /*!< 电源管理模块控制宏，写1开启，写0关闭。*/
+
+#define   PER_LIB_POWER_NVIC_CTRL   (1) /*!< 电源管理模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_POWER_WORK_CTRL   (1) /*!< 电源管理模块工作相关宏，写1开启，写0关闭。*/
 
 
 /**
@@ -154,11 +180,11 @@
 #define  COM_LIB_NVIC_TIMER_ISR_DISABLE   ET0 = 0
 
 /**
-  * @name    PreDelay
-  * @brief   Precision delay
+  * @brief   精准延时组件。
+  @details	 Precision delay components.
 ***/
 #define  COM_LIB_PREDELAY_CTRL        (1)     // "1" is enable, "0" is disable 
-#define  COM_LIB_PREDELAY_BASE        (11000UL) // PREDELAY number max
+#define  COM_LIB_PREDELAY_BASE        (11000UL)  /*!< 计算延时时间系数，根据实际情况需要微调。*/
 
 
 /*--------------------------------------------------------

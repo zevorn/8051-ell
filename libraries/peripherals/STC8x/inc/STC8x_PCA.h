@@ -34,35 +34,6 @@
 
 #include "Lib_CFG.h"
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
-#ifndef PER_LIB_MCU_MUODEL   
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_PCA_CTRL
-    #define PER_LIB_PCA_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_PCA_INIT_CTRL
-    #define PER_LIB_PCA_INIT_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_PCA_NVIC_CTRL
-    #define PER_LIB_PCA_NVIC_CTRL 1
-#endif
-
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
-#ifndef PER_LIB_PCA_WORK_CTRL
-    #define PER_LIB_PCA_WORK_CTRL 1
-#endif
 
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -84,6 +55,42 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+
+
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_CTRL
+    #define PER_LIB_PCA_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_INIT_CTRL
+    #define PER_LIB_PCA_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_NVIC_CTRL
+    #define PER_LIB_PCA_NVIC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_PCA_WORK_CTRL
+    #define PER_LIB_PCA_WORK_CTRL 1
+#endif
+
 
 /** 
  * @brief	 PCA工作类型枚举体
@@ -926,6 +933,19 @@ typedef enum
 			#define    NVIC_PCA_CNT_CTRL(run)    \
 			do{                                  \
 				CMOD = (CMOD & 0xFE) | run;      \
+			}while(0)
+			
+			
+			/**
+			 * @brief      PCA选择中断优先级宏函数，仅限本文件调用。
+			 * @details    PCA select interrupt priority macro function, 
+			 *             only this file call.
+			 * @param[in]  pri 中断优先级. Priority of interrupt.
+			***/
+			#define NVIC_PCA_PRI(pri)                     \
+			do{                                           \
+				IPH = (IPH & 0x7F) | ((pri & 0x02) << 6); \
+				IP  = (IP  & 0x7F) | ((pri & 0x01) << 7); \ 
 			}while(0)
 			
 			
