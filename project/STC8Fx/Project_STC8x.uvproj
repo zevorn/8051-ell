@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -410,11 +410,6 @@
               <FileName>STC8x_I2C.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_NVIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_NVIC.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_POWER.c</FileName>

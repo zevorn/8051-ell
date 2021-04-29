@@ -40,32 +40,7 @@
 #include "Lib_CFG.h"
 
 
-#ifndef PER_LIB_MCU_MUODEL  
-    /** 如果没有定义这个宏，默认为STC8Ax。
-        If the mirco is undefined，select to STC8Ax */
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
 
-
-#ifndef PER_LIB_SYSCLK_VALUE   
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
-    #define PER_LIB_SYSCLK_VALUE 0
-#endif
-
-
-#ifndef PER_LIB_SYSCLK_INIT_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
-    #define PER_LIB_SYSCLK_INIT_CTRL 1
-#endif
-
-
-#ifndef PER_LIB_SYSCLK_WORK_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
-    #define PER_LIB_SYSCLK_WORK_CTRL 1
-#endif
 
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -88,6 +63,38 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+
+#ifndef PER_LIB_MCU_MUODEL  
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+#ifndef PER_LIB_SYSCLK_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_SYSCLK_CTRL 1
+#endif
+
+#ifndef PER_LIB_SYSCLK_VALUE   
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_SYSCLK_VALUE 0
+#endif
+
+
+#ifndef PER_LIB_SYSCLK_INIT_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_SYSCLK_INIT_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_SYSCLK_WORK_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_SYSCLK_WORK_CTRL 1
+#endif
 
 /*--------------------------------------------------------
 | @Description: System clock ferquency division define   |

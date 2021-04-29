@@ -73,6 +73,11 @@
     #define PER_LIB_RST_CTRL 1
 #endif
 
+#ifndef PER_LIB_RST_INIT_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_RST_INIT_CTRL 1
+#endif
 
 #ifndef PER_LIB_RST_WORK_CTRL
     /** 如果没有定义这个宏，默认为1。
