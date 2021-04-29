@@ -54,39 +54,41 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
+
 #ifndef PER_LIB_MCU_MUODEL
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_GPIO_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_GPIO_CTRL 1
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_GPIO_INIT_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_GPIO_INIT_CTRL 1
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_GPIO_NVIC_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_GPIO_NVIC_CTRL 1
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_GPIO_WORK_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_GPIO_WORK_CTRL 1
 #endif
+
 
 /*--------------------------------------------------------
 | @Description: GPIO Pin define                          |
@@ -387,7 +389,7 @@ typedef enum
 
 
 		/**
-		 * @brief      外部中断2中断初始化函数。
+		 * @brief      外部中断2中断初始化函数，固定下降沿触发。
 		 * @details    EXTI2 NVIC function.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
@@ -397,7 +399,7 @@ typedef enum
 
 
 		/**
-		 * @brief      外部中断3中断初始化函数。
+		 * @brief      外部中断3中断初始化函数，固定下降沿触发。
 		 * @details    EXTI3 NVIC function.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
@@ -407,7 +409,7 @@ typedef enum
 
 
 		/**
-		 * @brief      外部中断4中断初始化函数。
+		 * @brief      外部中断4中断初始化函数，固定下降沿触发。
 		 * @details    EXTI4 NVIC function.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.

@@ -37,58 +37,74 @@
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_RST_CTRL == 1)
+	
+	#if (PER_LIB_RST_INIT_CTRL == 1)
 
-/**
-  * @name    SFW_RST_Ctrl
-  * @brief   Software reset function
-  * @param   choice   RST_USER_DATA_KEEP | RST_USER_DATA_CLEAN
-  * @param   run      ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, BOOL run)
-{
-	IAP_CONTR = (IAP_CONTR & 0xBF) | (choice << 6);
-	IAP_CONTR = (IAP_CONTR & 0xDF) | (run << 5);
-	return FSC_SUCCESS;
-}
+		/**
+		 * @brief       低压复位函数，可以选择不同低压复位标准。
+		 * @details     Low voltage reset function, 
+		 *              you can select different low voltage reset standards.
+		 * @param[in]   lvDiv   低压复位标准。low voltage reset standards.
+		 * @param[in]   run     使能控制位。 Enable control bit.
+		 * @return      FSC_SUCCESS 返回成功。Return to success.
+		 * @return      FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv, BOOL run)
+		{
+			RSTCFG = (RSTCFG & 0xFC) | lvDiv;
+			RSTCFG = (RSTCFG & 0xEF) | (run << 6);
+			return FSC_SUCCESS;
+		}
 
-/**
-  * @name    LVD_RST_Init
-  * @brief   Software reset function
-  * @param   lvDiv   LVD_RST_2_2V | LVD_RST_2_4V | LVD_RST_2_7V | LVD_RST_3_0V
-  * @param   run     ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE LVD_RST_Init(LVDRstDiv_Type lvDiv, BOOL run)
-{
-	RSTCFG = (RSTCFG & 0xFC) | lvDiv;
-	RSTCFG = (RSTCFG & 0xEF) | (run << 6);
-	return FSC_SUCCESS;
-}
+	#endif
+	#if (PER_LIB_RST_WORK_CTRL == 1)
+		/**
+		 * @brief        软件复位控制函数。
+		 * @details     Software reset function.
+		 * @param[in]   choice   复位方式选择。Reset mode selection.
+		 * @param[in]   run      使能控制位。 Enable control bit.
+		 * @return      FSC_SUCCESS 返回成功。Return to success.
+		 * @return      FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE SFW_RST_Ctrl(RSTChoice_Type choice, BOOL run)
+		{
+			IAP_CONTR = (IAP_CONTR & 0xBF) | (choice << 6);
+			IAP_CONTR = (IAP_CONTR & 0xDF) | (run << 5);
+			return FSC_SUCCESS;
+		}
 
-/**
-  * @name    Auto_RST_download
-  * @brief   Software auto reset download function
-  * @param   none
-  * @return  none
-***/
-void Auto_RST_download(void)
-{
-  static uint8_t semCont = 0;
-  if(SBUF == 0x7F || SBUF == 0x80) 
-  {
-    if(++semCont >= 10)
-    {
-      semCont = 0;
-      IAP_CONTR = 0x60;
-    }
-  }
-  else
-  {
-    semCont = 0;
-  }
-}
 
+		/**
+		 * @brief    软件复位自动下载功能，需要在串口中断里调用，
+		 *           需要在STC-ISP助手里设置下载口令：10个0x7F。
+		 * @details  Software reset automatic download function, 
+		 *			 need to be called in serial interrupt,
+		 *			 The download password needs to be 
+		 *			 set in the STC-ISP assistant: 10 0x7F.
+		 * @param    None.
+		 * @return   None.
+		**/
+		void Auto_RST_download(void)
+		{
+		  static uint8_t semCont = 0;
+		  if(SBUF == 0x7F || SBUF == 0x80) 
+		  {
+			if(++semCont >= 10)
+			{
+			  semCont = 0;
+			  IAP_CONTR = 0x60;
+			}
+		  }
+		  else
+		  {
+			semCont = 0;
+		  }
+		}
+		
+	#endif
+		
+#endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/

@@ -59,10 +59,45 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-/*--------------------------------------------------------
-| @Description: SPI type control enum                    |
---------------------------------------------------------*/
+/** 如果没有定义这个宏，默认为STC8Ax。
+    If the mirco is undefined，select to STC8Ax */
+#ifndef PER_LIB_MCU_MUODEL   
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
 
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_SPI_CTRL
+    #define PER_LIB_SPI_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_SPI_INIT_CTRL
+    #define PER_LIB_SPI_INIT_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_SPI_NVIC_CTRL
+    #define PER_LIB_SPI_NVIC_CTRL 1
+#endif
+
+
+/** 如果没有定义这个宏，默认为1。
+    If the mirco is undefined，select to "1" */
+#ifndef PER_LIB_SPI_WORK_CTRL
+    #define PER_LIB_SPI_WORK_CTRL 1
+#endif
+
+
+/**
+ * @brief     SPI工作类型枚举体。
+ * @details   SPI type control enum.
+**/
 typedef enum
 {
   SPI_Type_Master_Slave = 0x00,
@@ -126,17 +161,41 @@ typedef struct
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
+
+/**
+ * @brief     SPI初始化函数。
+ * @details   SPI initialization function. 
+ * @param[in] spix  SPI初始化结构体句柄，你需要定义它，并其地址传参。  
+ *            you need to definean associated initialization handle,
+ *            And pass it by its address.  
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE SPI_Init(SPIInit_Type *spix);
+
+/**
+ * @brief     SPI发送数据（一个字节）函数。
+ * @details   SPI send data function 
+ * @param[in] dat   要发送的数据。 data of SPI.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE SPI_Send_Data(uint8_t dat);
+
 uint8_t SPI_Rev_Data(void);
 
 #define SPI_GET_FLAG()                  (SPSTAT & 0x80)
 #define SPI_CLEAR_FLAG()                 SPSTAT = 0xC0
 
-FSCSTATE NVIC_SPI_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_SPI_Init(NVICPri_Type pri,BOOL run);
 
 #define    NVIC_SPI_CTRL(run)    do{ IE2 = (IE2 & 0xFD) | (run << 1); }while(0)
 
+#define NVIC_SPI_PRI(pri)                       \
+do{                                             \
+	IP2H = (IP2H & 0xFD) |  (pri & 0x02);       \
+	IP2  = (IP2  & 0xFD) | ((pri & 0x01) << 1); \
+}while(0)
 
 
 

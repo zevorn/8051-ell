@@ -37,15 +37,15 @@
 --------------------------------------------------------*/
 #include "Lib_CFG.h"
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
 #ifndef PER_LIB_MCU_MUODEL   
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_MDU16_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
     #define PER_LIB_MDU16_CTRL 1
 #endif
 

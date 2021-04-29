@@ -43,10 +43,12 @@
 --------------------------------------------------------*/
 
 #define    STC8Ax      (0)
-#define    STC8Cx      (1)
-#define    STC8Fx      (2)
-#define    STC8Gx      (3)
-#define    STC8Hx      (4)
+#define    STC8AxD4    (1)
+#define    STC8Cx      (2)
+#define    STC8Fx      (3)
+#define    STC8Gx      (4)
+#define    STC8Hx      (5)
+
 
 /**
  * @brief		配置ELL库MCU选型。
@@ -56,7 +58,7 @@
 
 
 /**
- * @brief		配置系统时钟管理片内外设。
+ * @brief		配置系统时钟管理片内外设，没有中断相关的控制宏。
  * @details	    Configure the system clock for time calculation.
 **/
 #define   PER_LIB_SYSCLK_CTRL        (1) /*!< 系统时钟模块控制宏，写1开启，写0关闭。*/
@@ -67,7 +69,7 @@
 
 
 /**
- * @brief		配置TIMER片内外设。
+ * @brief		配置TIMER片内外设，没有工作相关的控制宏。
  * @details	    Configure TIMER chip internal  peripheral.
 **/
 #define   PER_LIB_TIMER_CTRL         (1) /*!< TIMER模块控制宏，写1开启，写0关闭。*/
@@ -110,7 +112,7 @@
 
 
 /**
- * @brief		配置EEPROM片内外设。
+ * @brief		配置EEPROM片内外设，没有中断相关的控制宏。
  * @details	    Configure EEPROM chip internal  peripheral.
 **/
 #define   PER_LIB_EEPROM_CTRL         (1) /*!< EEPROM模块控制宏，写1开启，写0关闭。*/
@@ -123,12 +125,21 @@
  * @brief		配置I2C片内外设。
  * @details	    Configure I2C chip internal  peripheral.
 **/
-#define   PER_LIB_I2C_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
-				 
-#define   PER_LIB_I2C_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_I2C_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_I2C_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_I2C_CTRL         (1) /*!< I2C模块控制宏，写1开启，写0关闭。*/
+											
+#define   PER_LIB_I2C_INIT_CTRL    (1) /*!< I2C模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_I2C_NVIC_CTRL    (1) /*!< I2C模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_I2C_WORK_CTRL    (1) /*!< I2C模块工作相关宏，写1开启，写0关闭。*/
 
+/**
+ * @brief		配置SPI片内外设。
+ * @details	    Configure PCA chip internal  peripheral.
+**/
+#define   PER_LIB_SPI_CTRL         (1) /*!< SPI模块控制宏，写1开启，写0关闭。*/
+				  
+#define   PER_LIB_SPI_INIT_CTRL    (1) /*!< SPI模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_SPI_NVIC_CTRL    (1) /*!< SPI模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_SPI_WORK_CTRL    (1) /*!< SPI模块工作相关宏，写1开启，写0关闭。*/
 
 /**
  * @brief		配置PCA片内外设。
@@ -142,7 +153,7 @@
 
 
 /**
- * @brief		配置电源管理片内外设。
+ * @brief		配置电源管理片内外设，没有初始化相关的控制宏。
  * @details	    Configure on-chip peripherals for power management.
 **/
 #define   PER_LIB_POWER_CTRL        (1) /*!< 电源管理模块控制宏，写1开启，写0关闭。*/
@@ -150,6 +161,15 @@
 #define   PER_LIB_POWER_NVIC_CTRL   (1) /*!< 电源管理模块中断相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_POWER_WORK_CTRL   (1) /*!< 电源管理模块工作相关宏，写1开启，写0关闭。*/
 
+
+/**
+ * @brief		配置RST片内外设，没有中断相关的控制宏。
+ * @details	    Configure RST chip internal  peripheral.
+**/
+#define   PER_LIB_RST_CTRL         (1) /*!< RST模块控制宏，写1开启，写0关闭。*/
+									
+#define   PER_LIB_RST_INIT_CTRL    (1) /*!< RST模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_RST_WORK_CTRL    (1) /*!< RST模块工作相关宏，写1开启，写0关闭。*/
 
 /**
  * @brief		配置MDU16片内外设。

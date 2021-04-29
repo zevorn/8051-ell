@@ -201,6 +201,37 @@ FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run);
 #define    NVIC_UART3_CTRL(run)     do{ IE2 = (IE2 & 0xF7) | (run << 3); }while(0)
 #define    NVIC_UART4_CTRL(run)     do{ IE2 = (IE2 & 0xEF) | (run << 4); }while(0)
 
+/*--------------------------------------------------------
+| @Description: UART priority define function            |
+--------------------------------------------------------*/
+
+#define NVIC_UART1_PRI(pri)                   \
+do{                                           \
+	IPH = (IPH & 0xEF) | ((pri & 0x02) << 3); \
+	IP  = (IP  & 0xEF) | ((pri & 0x01) << 4); \
+}while(0)
+
+#define NVIC_UART2_PRI(pri)                     \
+do{                                             \
+	IP2H = (IP2H & 0xFE) | ((pri & 0x02) >> 1); \
+	IP2  = (IP2  & 0xFE) | (pri & 0x01);        \
+}while(0)
+
+#if (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+
+	#define NVIC_UART3_PRI(pri)                     \
+	do{                                             \
+		IP3H = (IP3H & 0xFE) | ((pri & 0x02) >> 1); \
+		IP3  = (IP3  & 0xFE) | (pri & 0x01);        \
+	}while(0)
+
+	#define NVIC_UART4_PRI(pri)                    \
+	do{                                            \
+		IP3H = (IP3H & 0xFD) | (pri & 0x02);       \
+		IP3  = (IP3  & 0xFD) | (pri & 0x01) << 1;  \
+	}while(0)
+	
+#endif
 /* UART */
 FSCSTATE GPIO_UART1_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_UART2_SWPort(GPIOSWPort_Type port);

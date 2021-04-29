@@ -75,17 +75,14 @@
 	
 #endif
 
-
-
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
-    #include "STC8x_ADC.h"
     #include "STC8x_PCA.h"
     #include "STC8x_PWM.h"
     
 #endif
 
-#if  (PER_LIB_MCU_MUODEL == STC8Hx)
+#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
     #include "STC8x_ADC.h"
     

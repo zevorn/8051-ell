@@ -63,7 +63,7 @@
 		/**
 		 * @brief      外部中断1中断初始化函数。
 		 * @details    EXTI1 NVIC function.
-		 * @param[in] triMode  触发模式。Trigger mode. 
+		 * @param[in]  triMode  触发模式。Trigger mode. 
 		 * @param[in]  pri 中断优先级。interrupt priority.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
@@ -78,7 +78,7 @@
 		}
 
 		/**
-		 * @brief      外部中断2中断初始化函数。
+		 * @brief      外部中断2中断初始化函数,固定下降沿触发。
 		 * @details    EXTI2 NVIC function.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
@@ -92,7 +92,7 @@
 
 
 		/**
-		 * @brief      外部中断3中断初始化函数。
+		 * @brief      外部中断3中断初始化函数，固定下降沿触发。
 		 * @details    EXTI3 NVIC function.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
@@ -106,7 +106,7 @@
 
 
 		/**
-		 * @brief      外部中断4中断初始化函数。
+		 * @brief      外部中断4中断初始化函数，固定下降沿触发。
 		 * @details    EXTI4 NVIC function.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.

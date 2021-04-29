@@ -193,30 +193,6 @@ do{                                                    \
 #endif            
 
 
-/**
- * @brief      TIMER0选择中断优先级宏函数，仅限本文件调用。
- * @details    TIMER0 select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-**/
-#define TIMER0_NVIC_PRI(pri)                  \
-do{                                           \
-	IPH = (IPH & 0xFD) |  (pri & 0x02) ;      \
-	IP  = (IP  & 0xFD) | ((pri & 0x01) << 1); \
-}while(0)
-
-
-/**
- * @brief      TIMER1选择中断优先级宏函数，仅限本文件调用。
- * @details    TIMER1 select interrupt priority macro function, 
- *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
-**/
-#define TIMER1_NVIC_PRI(pri)                  \
-do{                                           \
-	IPH = (IPH & 0xF7) | ((pri & 0x02) << 2); \
-	IP  = (IP  & 0xF7) | ((pri & 0x01) << 3); \
-}while(0)
 
 
 /*-----------------------------------------------------------------------
@@ -429,7 +405,7 @@ FSCSTATE TIMER5_Wake_Up_Power(uint16_t Time,BOOL run)
 FSCSTATE NVIC_TIMER0_Init(NVICPri_Type priority,BOOL run)
 {
 	ET0 = run;
-    TIMER0_NVIC_PRI(priority);
+    NVIC_TIMER0_PRI(priority);
 	return FSC_SUCCESS;
 }
 
@@ -443,7 +419,7 @@ FSCSTATE NVIC_TIMER0_Init(NVICPri_Type priority,BOOL run)
 FSCSTATE NVIC_TIMER1_Init(NVICPri_Type priority,BOOL run)
 {
 	ET1 = run;
-    TIMER1_NVIC_PRI(priority);
+    NVIC_TIMER1_PRI(priority);
 	return FSC_SUCCESS;
 }
 

@@ -96,25 +96,7 @@ while(0)
 		
 #endif
 
-/*--------------------------------------------------------
-| @Description: UART priority define function            |
---------------------------------------------------------*/
 
-#define UART1_NVIC_PRI(pri) { \
-IPH = (IPH & 0xEF) | ((pri & 0x02) << 3); \
-IP  = (IP  & 0xEF) | ((pri & 0x01) << 4); }
-
-#define UART2_NVIC_PRI(pri) { \
-IP2H = (IP2H & 0xFE) | ((pri & 0x02) >> 1); \
-IP2  = (IP2  & 0xFE) | (pri & 0x01); }
-
-#define UART3_NVIC_PRI(pri) { \
-IP3H = (IP3H & 0xFE) | ((pri & 0x02) >> 1); \
-IP3  = (IP3  & 0xFE) | (pri & 0x01); }
-
-#define UART4_NVIC_PRI(pri) { \
-IP3H = (IP3H & 0xFD) | (pri & 0x02); \
-IP3  = (IP3  & 0xFD) | (pri & 0x01) << 1;}
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -369,7 +351,7 @@ FSCSTATE UART4_Init(const UART_InitType* uartx)
 FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,BOOL run)
 {
 	ES = run;
-	UART1_NVIC_PRI(priority); 
+	NVIC_UART1_PRI(priority); 
 	return FSC_SUCCESS;
 }
 
@@ -383,7 +365,7 @@ FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,BOOL run)
 FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run)
 {
 	IE2 = (IE2 & 0xFE) | (run);
-    UART2_NVIC_PRI(priority);
+    NVIC_UART2_PRI(priority);
 	return FSC_SUCCESS;
 }
 
@@ -424,7 +406,7 @@ FSCSTATE NVIC_UART4_Init(BOOL run)
 	FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,BOOL run)
 	{
 		IE2 = (IE2 & 0xF7) | (run << 3);
-		UART3_NVIC_PRI(priority);
+		NVIC_UART3_PRI(priority);
 		return FSC_SUCCESS;
 	}
 
@@ -438,7 +420,7 @@ FSCSTATE NVIC_UART4_Init(BOOL run)
 	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,BOOL run)
 	{
 		IE2 = (IE2 & 0xEF) | (run << 4);
-		UART4_NVIC_PRI(priority);
+		NVIC_UART4_PRI(priority);
 		return FSC_SUCCESS;
 	}
 

@@ -30,17 +30,6 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "STC8x_SPI.h"
-/*-----------------------------------------------------------------------
-|                             DECLARATION                               |
------------------------------------------------------------------------*/
-
-/*--------------------------------------------------------
-| @Description: SPI priority define function             |
---------------------------------------------------------*/
-
-#define SPI_NVIC_PRI(pri) { \
-IP2H = (IP2H & 0xFD) |  (pri & 0x02); \
-IP2  = (IP2  & 0xFD) | ((pri & 0x01) << 1); }
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -51,11 +40,14 @@ IP2  = (IP2  & 0xFD) | ((pri & 0x01) << 1); }
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    SPI_Init
-  * @brief   SPI init function 
-  * @param   *spix    SPIInit_Type
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     SPI初始化函数。
+ * @details   SPI initialization function. 
+ * @param[in] spix  SPI初始化结构体句柄，你需要定义它，并其地址传参。  
+ *            you need to definean associated initialization handle,
+ *            And pass it by its address.  
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE SPI_Init(SPIInit_Type* spix)
 {
     SPDAT = 0;
@@ -68,12 +60,14 @@ FSCSTATE SPI_Init(SPIInit_Type* spix)
     return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    SPI_Send_Data
-  * @brief   SPI send data function 
-  * @param   dat    data of SPI (uint8)
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     SPI发送数据（一个字节）函数。
+ * @details   SPI send data function. 
+ * @param[in] dat   要发送的数据。 data of SPI.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE SPI_Send_Data(uint8_t dat)
 {
     SPDAT = dat;			//Data register assignment
@@ -82,12 +76,13 @@ FSCSTATE SPI_Send_Data(uint8_t dat)
 	return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    SPI_Rev_Data
-  * @brief   SPI receive data function 
-  * @param   None
-  * @return  receive data (uint8) 
-***/
+ * @brief     SPI接收数据（一个字节）函数。
+ * @details   SPI receive data function. 
+ * @param     None.
+ * @return    [uint8_t] 接收的数据。 receive data. 
+**/
 uint8_t SPI_Rev_Data(void)
 {
     while (!(SPSTAT & 0x80));  //Query completion flag
@@ -95,30 +90,30 @@ uint8_t SPI_Rev_Data(void)
     return SPDAT;  //Data register assignment
 }
 
+
 /**
-  * @name    NVIC_SPI_Init
-  * @brief   SPI init NVIC function 
-  * @param   priority   NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run        ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_SPI_Init(NVICPri_Type priority,BOOL run)
+ * @brief     SPI中断初始化函数。
+ * @details   SPI init NVIC function.  
+ * @param[in] pri 中断优先级。interrupt priority.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE NVIC_SPI_Init(NVICPri_Type pri,BOOL run)
 {
-	SPI_NVIC_PRI(priority);
+	NVIC_SPI_PRI(pri);
 	IE2 = (IE2 & 0xFD) | (run << 1);
 	return FSC_SUCCESS;
 }
 
 
 /**
-  * @name    GPIO_SPI_SWPort
-  * @brief   SPI switch port control function 
-  * @param   port    SW_Port1: SS/P1.2 MOSI/P1.3 MISO/P1.4 SCLK/P1.5
-  *                  SW_Port2: SS/P2.2 MOSI/P2.3 MISO/P2.4 SCLK/P2.5
-  *                  SW_Port3: SS/P7.4 MOSI/P7.5 MISO/P7.6 SCLK/P7.7
-  *                  SW_Port4: SS/P3.5 MOSI/P3.4 MISO/P3.3 SCLK/P3.2
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     SPI切换复用IO函数。
+ * @details   SPI switch out port control function.  
+ * @param[in] port 复用IO枚举体。IO switch enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE GPIO_SPI_SWPort(GPIOSWPort_Type port)
 {
 	P_SW1 = (P_SW1 & 0xF3) | (port << 2);

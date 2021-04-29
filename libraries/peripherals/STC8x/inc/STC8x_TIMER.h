@@ -214,6 +214,32 @@ FSCSTATE NVIC_TIMER4_Init(BOOL run);
 
 #define    NVIC_TIMER0_CTRL(run)     do{ ET0 = run; }while(0)
 #define    NVIC_TIMER1_CTRL(run)     do{ ET1 = run; }while(0)
+
+/**
+ * @brief      TIMER0选择中断优先级宏函数，仅限本文件调用。
+ * @details    TIMER0 select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
+#define NVIC_TIMER0_PRI(pri)                  \
+do{                                           \
+	IPH = (IPH & 0xFD) |  (pri & 0x02) ;      \
+	IP  = (IP  & 0xFD) | ((pri & 0x01) << 1); \
+}while(0)
+
+
+/**
+ * @brief      TIMER1选择中断优先级宏函数，仅限本文件调用。
+ * @details    TIMER1 select interrupt priority macro function, 
+ *             only this file call.
+ * @param[in]  pri 中断优先级。 Priority of interrupt.
+**/
+#define NVIC_TIMER1_PRI(pri)                  \
+do{                                           \
+	IPH = (IPH & 0xF7) | ((pri & 0x02) << 2); \
+	IP  = (IP  & 0xF7) | ((pri & 0x01) << 3); \
+}while(0)
+
 #define    NVIC_TIMER2_CTRL(run)     do{ IE2 = (IE2 & 0xFB) | (run << 2); }while(0)
 #define    NVIC_TIMER3_CTRL(run)     do{ IE2 = (IE2 & 0xDF) | (run << 5); }while(0)
 #define    NVIC_TIMER4_CTRL(run)     do{ IE2 = (IE2 & 0xBF) | (run << 6); }while(0)

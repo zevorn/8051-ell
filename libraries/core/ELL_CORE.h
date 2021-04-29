@@ -33,6 +33,7 @@
 #ifndef __STC8x_CORE_H_
 #define __STC8x_CORE_H_
 
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -47,7 +48,8 @@
 ***/
 typedef enum 
 {
-	DISABLE = 0, ENABLE = !DISABLE
+	DISABLE = 0, 
+	ENABLE = !DISABLE
 } BOOL;
 
 
@@ -105,6 +107,8 @@ typedef enum
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
+extern void      _nop_     (void);
+
 /*--------------------------------------------------------
 | @Description: Global interrupt switch define           |
 --------------------------------------------------------*/
@@ -114,7 +118,7 @@ typedef enum
   * @brief   使能总中断。
   *          Enable total interrupt.
 ***/
-#define    NVIC_GLOBAL_ENABLE()     do{EA = 1;}while(0)
+#define    NVIC_GLOBAL_ENABLE()     do{_nop_();EA = 1;_nop_();}while(0)
 
 
 /**
@@ -122,10 +126,10 @@ typedef enum
   * @brief   不使能总中断。
   *          Disable total interrupt.
 ***/
-#define    NVIC_GLOBAL_DISABLE()    do{EA = 0;}while(0)
+#define    NVIC_GLOBAL_DISABLE()    do{_nop_();EA = 0;_nop_();}while(0)
 
 /*-----------------------------------------------------------------------
-|                         ISR FUNCTION(Public)                          |
+|                         ISR FUNCTION(Public STC)                      |
 -----------------------------------------------------------------------*/
 
 /*--------------------------------------------------------

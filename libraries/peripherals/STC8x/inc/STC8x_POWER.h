@@ -55,30 +55,31 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-/** 如果没有定义这个宏，默认为STC8Ax。
-    If the mirco is undefined，select to STC8Ax */
-#ifndef PER_LIB_MCU_MUODEL   
+
+#ifndef PER_LIB_MCU_MUODEL 
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */  
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_POWER_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
     #define PER_LIB_POWER_CTRL 1
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_POWER_NVIC_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
     #define PER_LIB_POWER_NVIC_CTRL 1
 #endif
 
 
-/** 如果没有定义这个宏，默认为1。
-    If the mirco is undefined，select to "1" */
 #ifndef PER_LIB_POWER_WORK_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
     #define PER_LIB_POWER_WORK_CTRL 1
 #endif
 
