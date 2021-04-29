@@ -100,6 +100,21 @@ static void STC8x_PWM_Config(void)
 	GPIO_MODE_OUT_PP(GPIO_P2,Pin_5);
 	GPIO_PWM5_SWPort(SW_Port1);
 
+
+   /**
+    * 配置PWM频率：
+    * 如果系统时钟频率== 24Mhz，
+    * 配置PWM_SCLK_DIV = 1，
+    * 配置计数频率= 0x1000（4096）
+    * 因此，PWM频率= 24M /（1 * 4096）Hz = 5.86KHz
+    *
+    * 配置占空比：
+    * 配置启动的PWM电平=高电平，
+    * 配置第一个点= 0x100，
+    * 配置第二点= 0x500，
+    * 因此，占空比=（0x1000-（0x500-0x100））/ 0x1000 = 75％
+   **/
+
     /*
      * PWM frequency:
      * If system clock frequency == 24Mhz,

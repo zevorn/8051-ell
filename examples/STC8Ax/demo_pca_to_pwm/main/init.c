@@ -98,6 +98,17 @@ static void STC8x_GPIO_Config(void)
 static void STC8x_PCA_Config(void)
 {
    TIMER_InitType TIMER_InitStruct={0};
+
+    /**
+     * PCA至PWM频率：
+     * 如果系统时钟频率== 24Mhz，
+     * 配置PCA时钟源= Timer0溢出脉冲，
+     * 配置定时器0 = 19 us
+     * 配置PCA位= 10位
+     * 因此时钟源的pca = 52.6KHZ
+     * 因此，PCA至PWM频率= 52.6 / 1024 Hz = 51Hz
+    **/
+
     /*
      * PCA to PWM frequency:
      * If system clock frequency == 24Mhz,
@@ -112,6 +123,13 @@ static void STC8x_PCA_Config(void)
 	TIMER_InitStruct.Run = ENABLE;
 	TIMER0_Init(&TIMER_InitStruct);
     
+    /**
+     * 配置占空比：
+     * 配置PCA位= 10位
+     * 值= 0x200
+     * 因此，占空比=（0x400-0x200）/ 0x400 = 50％
+    **/
+
     /*
      * duty:
      * to configure PCA  bits = 10 bits
