@@ -134,7 +134,7 @@ typedef enum
 
 	#if (PER_LIB_GPIO_INIT_CTRL == 1)
 		/**
-		 * @brief       GPIO设置为准双向口（若上拉）模式宏函数。
+		 * @brief       GPIO设置为准双向口（弱上拉）模式宏函数。
 		 * @details	    GPIO is set as macro function in quasi 
 		 *              bidirectional port (if pull-up) mode.
 		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
