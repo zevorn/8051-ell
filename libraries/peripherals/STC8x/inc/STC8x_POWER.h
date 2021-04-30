@@ -64,22 +64,22 @@
 
 
 #ifndef PER_LIB_POWER_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_POWER_CTRL 1
 #endif
 
 
 #ifndef PER_LIB_POWER_NVIC_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_POWER_NVIC_CTRL 1
 #endif
 
 
 #ifndef PER_LIB_POWER_WORK_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_POWER_WORK_CTRL 1
 #endif
 
