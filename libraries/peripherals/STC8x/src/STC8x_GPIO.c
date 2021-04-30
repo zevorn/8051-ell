@@ -108,11 +108,12 @@
 		/**
 		 * @brief      外部中断4中断初始化函数，固定下降沿触发。
 		 * @details    EXTI4 NVIC function.
+		 * @param[in]  pri 中断优先级。interrupt priority.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
 		 * @return     FSC_FAIL    返回失败。Return to fail.
 		**/
-		FSCSTATE NVIC_EXTI4_Init(BOOL run)
+		FSCSTATE NVIC_EXTI4_Init(NVICPri_Type pri,BOOL run)
 		{
 			INTCLKO = (INTCLKO & 0xBF) | (run << 6);
 			return FSC_SUCCESS;

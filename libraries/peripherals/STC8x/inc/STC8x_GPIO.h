@@ -411,11 +411,12 @@ typedef enum
 		/**
 		 * @brief      外部中断4中断初始化函数，固定下降沿触发。
 		 * @details    EXTI4 NVIC function.
+		 * @param[in]  pri 中断优先级。interrupt priority.
 		 * @param[in]  run 使能控制位。enable control. 
 		 * @return     FSC_SUCCESS 返回成功。Return to success.
 		 * @return     FSC_FAIL    返回失败。Return to fail.
 		**/
-		FSCSTATE NVIC_EXTI4_Init(BOOL run);
+		FSCSTATE NVIC_EXTI4_Init(NVICPri_Type pri,BOOL run);
 
 
 		/**
@@ -467,7 +468,18 @@ typedef enum
 			IP  = (IP  & 0xFB) | ((pri & 0x01) << 2); \
 		}while(0)
 		
-		
+		/**
+		 * @brief      EXTI4选择中断优先级宏函数，仅限本文件调用。
+		 * @details    EXTI4 select interrupt priority macro function, 
+		 *             only this file call.
+		 * @param[in]  pri 中断优先级。 Priority of interrupt.
+		**/
+		#define NVIC_EXTI4_PRI(pri)                    \
+		do{                                            \
+            IP2H = (IPH & 0xEF) | ((pri & 0x02) << 3); \
+            IP2  = (IP  & 0xEF) | ((pri & 0x01) << 4); \
+		}while(0)
+
 		/**
 		 * @brief      外部中断3控制中断开关宏函数。
 		 * @details    External interrupt 3 controls interrupt switch macro function. 

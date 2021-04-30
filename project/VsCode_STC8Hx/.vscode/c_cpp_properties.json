@@ -34,7 +34,7 @@
                 "databaseFilename": "${default}"
             },
             "forcedInclude": [
-                "c:\\Users\\Administrator\\.vscode\\extensions\\cl.eide-2.5.3\\bin\\include\\internal_headers\\c51_intr.h"
+                "c:\\Users\\Administrator\\.vscode\\extensions\\cl.eide-2.5.4\\bin\\include\\internal_headers\\c51_intr.h"
             ]
         },
         {

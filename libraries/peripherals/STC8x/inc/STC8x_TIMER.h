@@ -64,162 +64,223 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
+#ifndef PER_LIB_MCU_MUODEL  
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+#ifndef PER_LIB_TIMER_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_TIMER_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_TIMER_INIT_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_TIMER_INIT_CTRL 1
+#endif
+
+
 /**
-  * @name    TIMERType_Type
-  * @brief   定时器类型状态枚举体。
-  *          Timer type state enumeration body.
-  * @param   TIMER_Type_Timer    [uint8_t] 工作在定时器状态。Working in timer state.
-  * @param   TIMER_Type_Counter  [uint8_t] 工作在计数器状态。Working in counter state.
-***/
+ * @name    TIMERType_Type
+ * @brief   定时器类型状态枚举体。
+ * @details Timer type state enumeration body.
+**/
 typedef enum
 {
-    TIMER_Type_Timer   = 0x00, 
-    TIMER_Type_Counter = 0x01
+    TIMER_Type_Timer   = 0x00,  /*!< 工作在定时器类型。Working on timer type. */
+    TIMER_Type_Counter = 0x01   /*!< 工作在计数器类型。Working on counter type. */
 }   TIMERType_Type;
 
+
 /**
-  * @name    TIMERMode_Type
-  * @brief   定时器工作模式枚举体。
-  *          Timer work mode enumeration body.
-  * @param   TIMER_16BitAutoReload       [uint8_t] 十六位自动重装载模式。16 Bit auto reload timer.
-  * @param   TIMER_16Bit                 [uint8_t] 十六位手动重装载模式。16 Bit non auto reload timer.
-  * @param   TIMER_8BitAutoReload        [uint8_t] 八位自动重装载模式。8 Bit auto reload timer.
-  * @param   TIMER_16BitAutoReloadNoMask [uint8_t] 十六位自动重装载不可被打断模式。16 Bit auto reload non maskable interrupt.
-***/
+ * @name    TIMERMode_Type
+ * @brief   定时器工作模式枚举体。
+ * @details Timer work mode enumeration body.
+**/
 typedef enum
 {
-	TIMER_16BitAutoReload       = 0x00, 
-	TIMER_16Bit                 = 0x01, 
-	TIMER_8BitAutoReload        = 0x02,  
-	TIMER_16BitAutoReloadNoMask = 0x03 
+	TIMER_16BitAutoReload       = 0x00, /*!< 十六位自动重装载模式。16 Bit auto reload timer. */
+	TIMER_16Bit                 = 0x01, /*!< 十六位手动重装载模式。16 Bit non auto reload timer. */
+	TIMER_8BitAutoReload        = 0x02, /*!< 八位自动重装载模式。8 Bit auto reload timer. */
+	TIMER_16BitAutoReloadNoMask = 0x03  /*!< 十六位自动重装载不可被打断模式。16 Bit auto reload non maskable interrupt. */
 }	TIMERMode_Type;
 
-/**
-  * @name    TIMERTCycle_Type
-  * @brief   定时器指令周期枚举体。
-  *          Timer instruction cycle enumeration body.
-  * @param   TIMER_TCY_1T   [uint8_t] 1T指令周期。The machine executes 1 cycles.
-  * @param   TIMER_TCY_12T  [uint8_t] 12T指令周期（其实是1T的十二分频）。The machine executes 12 cycles
-***/
-typedef enum
-{
-	TIMER_TCY_1T  = 0x00,	
-	TIMER_TCY_12T = 0x01
-}	TIMERTCycle_Type;
 
 /**
-  * @name    TIMER_InitType
-  * @brief   定时器初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
-  *          The timer initializes the structure handle. When initializing, 
-  *          please define the handle and use its address to pass parameters.
-  * @param   SysClokDiv [uint8_t] 定时器时钟源八分频。system clock division to timer use.
-  * @param   Type       [TIMERType_Type] 定时器类型状态。timer type.
-  * @param   Mode       [TIMERMode_Type] 定时器工作模式。Working mode.
-  * @param   TCycle     [TIMERTCycle_Type] 定时器指令周期。Instruction cycle.
-  * @param   ClkOut     [BOOL] 定时器可编程时钟输出控制位。Programmable clock output.
-  * @param   Time       [uint16_t] 定时器定时时间。Loading initial value.
-  * @param   Run        [BOOL] 定时器运行控制位。Operation control bit.
-***/
+ * @name    TIMERTCycle_Type
+ * @brief   定时器指令周期枚举体。
+ * @details Timer instruction cycle enumeration body.
+**/
+typedef enum
+{
+	TIMER_TCY_1T  = 0x00,	/*!< 1T指令周期。The machine executes 1 cycles. */
+	TIMER_TCY_12T = 0x01	/*!< 12T指令周期（其实是1T的十二分频）。The machine executes 12 cycles. */
+}	TIMERTCycle_Type;
+
+
+/**
+ * @name    TIMER_InitType
+ * @brief   定时器初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
+ * @details The timer initializes the structure handle. When initializing, 
+ *          please define the handle and use its address to pass parameters.
+**/
 typedef struct 
 {
 #if  (PER_LIB_MCU_MUODEL == STC8Cx ||PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-    uint8_t SysClkDiv;   /* just STC8G、STC8H */
+    uint8_t SysClkDiv;   /*!< 定时器时钟源八分频。system clock division to timer use.*/
 #endif
-    TIMERType_Type Type;
-    TIMERMode_Type Mode;
-    TIMERTCycle_Type TCycle;
-    BOOL ClkOut;
-    uint16_t Time;
-    BOOL Run;
+    TIMERType_Type Type;      /*!< 定时器类型状态。timer type. */
+    TIMERMode_Type Mode;      /*!< 定时器工作模式。Working mode. */
+    TIMERTCycle_Type TCycle;  /*!< 定时器指令周期。Instruction cycle. */
+    BOOL ClkOut;              /*!< 定时器可编程时钟输出控制位。Programmable clock output. */
+    uint16_t Time;            /*!< 定时器定时时间。Loading initial value. */
+    BOOL Run;                 /*!< 定时器运行控制位。Operation control bit. */
 }   TIMER_InitType;
+
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
+
 /**
-  * @name    TIMER5_Wake_Up_Power
-  * @brief   调电唤醒定时器5初始化函数。 
-  *          Power up timer 5 initialization function.
-  * @param   value  [IN] 定时器5调电唤醒时间值。Timer power up time value.
-  * @param   run    [IN] 定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
+ * @brief     调电唤醒定时器5初始化函数。 
+ * @details   Power up timer 5 initialization function.
+ * @param[in] time  定时器5调电唤醒时间值。Timer power up time value.
+ * @param[in] run   定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE TIMER5_Wake_Up_Power(uint16_t value,BOOL run);
 
+
 /**
-  * @name    TIMER0_Init
-  * @brief   定时器0初始化函数。 
-  *          TIMER0 peripheral init function. 
-  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
-  *                        The timer initializes the structure handle. When initializing, 
-  *                        please define the handle and pass its address to the parameter.
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
+ * @brief     定时器0初始化函数。 
+ * @details   TIMER0 peripheral init function. 
+ * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The timer initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE TIMER0_Init(const TIMER_InitType *timerx);
 
+
 /**
-  * @name    TIMER1_Init
-  * @brief   定时器1初始化函数。 
-  *          TIMER1 peripheral init function. 
-  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
-  *                        The timer initializes the structure handle. When initializing, 
-  *                        please define the handle and pass its address to the parameter.
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
+ * @brief     定时器1初始化函数。 
+ * @details   TIMER1 peripheral init function. 
+ * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The timer initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE TIMER1_Init(const TIMER_InitType *timerx);
 
+
 /**
-  * @name    TIMER2_Init
-  * @brief   定时器2初始化函数。 
-  *          TIMER2 peripheral init function. 
-  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
-  *                        The timer initializes the structure handle. When initializing, 
-  *                        please define the handle and pass its address to the parameter.
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
+ * @brief     定时器2初始化函数。 
+ * @details   TIMER2 peripheral init function. 
+ * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The timer initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE TIMER2_Init(const TIMER_InitType *timerx);
 
+
 /**
-  * @name    TIMER3_Init
-  * @brief   定时器3初始化函数。 
-  *          TIMER3 peripheral init function. 
-  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
-  *                        The timer initializes the structure handle. When initializing, 
-  *                        please define the handle and pass its address to the parameter.
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
+ * @brief     定时器3初始化函数。 
+ * @details   TIMER3 peripheral init function. 
+ * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The timer initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE TIMER3_Init(const TIMER_InitType *timerx);
 
+
 /**
-  * @name    TIMER4_Init
-  * @brief   定时器4初始化函数。 
-  *          TIMER4 peripheral init function. 
-  * @param   *timerx  [IN] 定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
-  *                        The timer initializes the structure handle. When initializing, 
-  *                        please define the handle and pass its address to the parameter.
-  * @return  [FSC_SUCCESS / FSC_FAIL]
-***/
+ * @brief     定时器4初始化函数。 
+ * @details   TIMER4 peripheral init function. 
+ * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The timer initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE TIMER4_Init(const TIMER_InitType *timerx);
 
-FSCSTATE NVIC_TIMER0_Init(NVICPri_Type priority,BOOL run);
-FSCSTATE NVIC_TIMER1_Init(NVICPri_Type priority,BOOL run);
+
+/**
+ * @brief     定时器0中断初始化函数。
+ * @details   TIMER0 NVIC function.
+ * @param[in] pri 中断优先级。interrupt priority.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE NVIC_TIMER0_Init(NVICPri_Type pri,BOOL run);
+
+
+/**
+ * @brief     定时器1中断初始化函数。
+ * @details   TIMER1 NVIC function.
+ * @param[in] pri 中断优先级。interrupt priority.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE NVIC_TIMER1_Init(NVICPri_Type pri,BOOL run);
+
+
+/**
+ * @brief     定时器2中断初始化函数。
+ * @details   TIMER2 NVIC function.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE NVIC_TIMER2_Init(BOOL run);
+
+
+/**
+ * @brief     定时器3中断初始化函数。
+ * @details   TIMER3 NVIC function.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE NVIC_TIMER3_Init(BOOL run);
+
+
+/**
+ * @brief     定时器4中断初始化函数。
+ * @details   TIMER4 NVIC function.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE NVIC_TIMER4_Init(BOOL run);
 
 #define    TIMER2_CLEAR_FLAG()    do{ AUXINTIF &= 0xFE; }while(0)
 #define    TIMER3_CLEAR_FLAG()    do{ AUXINTIF &= 0xFD; }while(0)
 #define    TIMER4_CLEAR_FLAG()    do{ AUXINTIF &= 0xFB; }while(0)
 
-#define    NVIC_TIMER0_CTRL(run)     do{ ET0 = run; }while(0)
-#define    NVIC_TIMER1_CTRL(run)     do{ ET1 = run; }while(0)
+
 
 /**
  * @brief      TIMER0选择中断优先级宏函数，仅限本文件调用。
- * @details    TIMER0 select interrupt priority macro function, 
+ * @details    TIMER0 select interrupt pri macro function, 
  *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
+ * @param[in]  pri 中断优先级。 pri of interrupt.
 **/
 #define NVIC_TIMER0_PRI(pri)                  \
 do{                                           \
@@ -230,9 +291,9 @@ do{                                           \
 
 /**
  * @brief      TIMER1选择中断优先级宏函数，仅限本文件调用。
- * @details    TIMER1 select interrupt priority macro function, 
+ * @details    TIMER1 select interrupt pri macro function, 
  *             only this file call.
- * @param[in]  pri 中断优先级。 Priority of interrupt.
+ * @param[in]  pri 中断优先级。 pri of interrupt.
 **/
 #define NVIC_TIMER1_PRI(pri)                  \
 do{                                           \
@@ -240,6 +301,8 @@ do{                                           \
 	IP  = (IP  & 0xF7) | ((pri & 0x01) << 3); \
 }while(0)
 
+#define    NVIC_TIMER0_CTRL(run)     do{ ET0 = run; }while(0)
+#define    NVIC_TIMER1_CTRL(run)     do{ ET1 = run; }while(0)
 #define    NVIC_TIMER2_CTRL(run)     do{ IE2 = (IE2 & 0xFB) | (run << 2); }while(0)
 #define    NVIC_TIMER3_CTRL(run)     do{ IE2 = (IE2 & 0xDF) | (run << 5); }while(0)
 #define    NVIC_TIMER4_CTRL(run)     do{ IE2 = (IE2 & 0xBF) | (run << 6); }while(0)

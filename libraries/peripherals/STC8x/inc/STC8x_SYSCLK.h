@@ -40,9 +40,6 @@
 #include "Lib_CFG.h"
 
 
-
-
-
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx)
@@ -223,8 +220,8 @@ typedef struct
 							  The system clock initializes the structure handle, 
 							  which needs to be defined during initialization and its 
 							  address is used to pass parameters.
-		 * @return      FSC_SUCCESS 返回成功。Return to success.
-		 * @return      FSC_FAIL    返回失败。Return to fail.
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
 		**/
 		FSCSTATE SYSCLK_Init(const SYSCLK_InitType *sysClkn);
 

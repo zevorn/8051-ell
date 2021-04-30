@@ -31,7 +31,7 @@ int main(void)
 
     for(;;)
     {
-        GPIO_TOGGLE_PIN(GPIO_P5,Pin_5);
+        GPIO_FLIP_PIN_LEVEL(GPIO_P5,Pin_5);
         delay_ms(100);
     }
 
