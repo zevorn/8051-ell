@@ -71,8 +71,8 @@
 #endif
 
 #ifndef PER_LIB_SYSCLK_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_SYSCLK_CTRL 1
 #endif
 
@@ -84,15 +84,15 @@
 
 
 #ifndef PER_LIB_SYSCLK_INIT_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_SYSCLK_INIT_CTRL 1
 #endif
 
 
 #ifndef PER_LIB_SYSCLK_WORK_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
     #define PER_LIB_SYSCLK_WORK_CTRL 1
 #endif
 
