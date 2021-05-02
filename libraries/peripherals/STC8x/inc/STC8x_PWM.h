@@ -235,8 +235,6 @@ FSCSTATE NVIC_PWM7_Init(PWMFlip_Type flipMode);
 #define    NVIC_PWM7_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM7CR_ADDRESS) = (PWMxCR(PWM7CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
 
 
-
-
 FSCSTATE GPIO_PWM0_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM1_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM2_SWPort(GPIOSWPort_Type port);

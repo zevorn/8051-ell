@@ -39,64 +39,144 @@
 | @Description: UART mode configure define function      |
 --------------------------------------------------------*/
 
-#define  UART1_MODE_CFG(mode)  SM0 = mode >> 1, SM1 = mode
-#define  UART2_MODE_CFG(mode)  S2CON = (S2CON & 0x3F)|((mode & 0x02) << 6)
-#define  UART3_MODE_CFG(mode)  S3CON = (S3CON & 0x3F)|((mode & 0x02) << 6)
-#define  UART4_MODE_CFG(mode)  S4CON = (S4CON & 0x3F)|((mode & 0x02) << 6)
+/**
+ * @brief   串口1工作模式选择宏函数，仅限本文件内调用。
+ * @details Serial Port 1 mode of operation selects macro functions and is only called within this file.
+**/
+#define  UART1_MODE_CFG(mode)  do{SM0 = mode >> 1, SM1 = mode;}while(0)
+
+
+/**
+ * @brief   串口2工作模式选择宏函数，仅限本文件内调用。
+ * @details Serial Port 2 mode of operation selects macro functions and is only called within this file.
+**/
+#define  UART2_MODE_CFG(mode)  do{S2CON = (S2CON & 0x3F)|((mode & 0x02) << 6);}while(0)
+
+
+/**
+ * @brief   串口3工作模式选择宏函数，仅限本文件内调用。
+ * @details Serial Port 3 mode of operation selects macro functions and is only called within this file.
+**/
+#define  UART3_MODE_CFG(mode)  do{S3CON = (S3CON & 0x3F)|((mode & 0x02) << 6);}while(0)
+
+
+/**
+ * @brief   串口4工作模式选择宏函数，仅限本文件内调用。
+ * @details Serial Port 4 mode of operation selects macro functions and is only called within this file.
+**/
+#define  UART4_MODE_CFG(mode)  do{S4CON = (S4CON & 0x3F)|((mode & 0x02) << 6);}while(0)
 
 /*--------------------------------------------------------
 | @Description: UART Baud rate configure define function |
 --------------------------------------------------------*/
 
-#define UART1_TIMER1_BRTMODE_CFG(brtMode,baudRate) do{ \
-AUXR = (AUXR & 0xBF) | ( !brtMode << 6 ); \
-T1L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) ; \
-T1H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) >> 8;} \
-while(0)
+/**
+ * @brief     串口1用定时器1做波特率发生器计算波特率宏函数，仅限本文件内调用。
+ * @details   Serial port 1 uses timer 1 to do baud rate generator calculation baud rate macro function, 
+ *            which is only called in this file.
+ * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+ * @param[in] baudRate 波特率。Baud rate.
+**/
+#define UART1_TIMER1_BRTMODE_CFG(brtMode,baudRate)                                      \
+do{                                                                                     \
+    AUXR = (AUXR & 0xBF) | ( !brtMode << 6 );                                           \
+    T1L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 )));       \
+    T1H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x40)) + 1 ))) >> 8;  \
+}while(0)
 
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
 
-	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate) do{ \
-	AUXR = (AUXR & 0xFB) | ( !brtMode << 2 ); \
-	T2L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
-	T2H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
-	while(0)
+    /**
+     * @brief     串口用定时器2做波特率发生器计算波特率宏函数，仅限本文件内调用。
+     * @details   Serial port uses timer 2 to do baud rate generator calculation baud rate macro function, 
+     *            which is only called in this file.
+     * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+     * @param[in] baudRate 波特率。Baud rate.
+    **/
+	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate)                                     \
+    do{                                                                                    \
+	    AUXR = (AUXR & 0xFB) | ( !brtMode << 2 );                                          \
+	    T2L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 )));      \
+	    T2H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8; \
+	}while(0)
 
-	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate) do{ \
-	T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 ); \
-	T3L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
-	T3H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
-	while(0)
 
-	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate) do{ \
-	T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 ); \
-	T4L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
-	T4H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
-	while(0)
+    /**
+     * @brief     串口3用定时器3做波特率发生器计算波特率宏函数，仅限本文件内调用。
+     * @details   Serial port 3 uses timer 3 to do baud rate generator calculation baud rate macro function, 
+     *            which is only called in this file.
+     * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+     * @param[in] baudRate 波特率。Baud rate.
+    **/
+	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate)                                      \
+    do{                                                                                     \
+	    T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 );                                         \
+	    T3L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 )));      \
+	    T3H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8; \
+	}while(0)
+
+
+    /**
+     * @brief     串口4用定时器4做波特率发生器计算波特率宏函数，仅限本文件内调用。
+     * @details   Serial port 4 uses timer 4 to do baud rate generator calculation baud rate macro function, 
+     *            which is only called in this file.
+     * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+     * @param[in] baudRate 波特率。Baud rate.
+    **/
+	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate)                                      \
+    do{                                                                                     \
+	    T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 );                                         \
+	    T4L = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 )));      \
+	    T4H = (65536UL - sysClk_FRE / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8; \
+	}while(0)
 		
 #elif  (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-	
-	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate) do{ \
-	AUXR = (AUXR & 0xFB) | ( !brtMode << 2 ); \
-	T2L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) ; \
-	T2H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8;} \
-	while(0)
 
-	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate) do{ \
-	T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 ); \
-	T3L = (65536UL - (sysClk_FRE / (TM3PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) ; \
-	T3H = (65536UL - (sysClk_FRE / (TM3PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8;} \
-	while(0)
+    /**
+     * @brief     串口用定时器2做波特率发生器计算波特率宏函数，仅限本文件内调用。
+     * @details   Serial port uses timer 2 to do baud rate generator calculation baud rate macro function, 
+     *            which is only called in this file.
+     * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+     * @param[in] baudRate 波特率。Baud rate.
+    **/	
+	#define uartx_TIMER2_BRTMODE_CFG(brtMode,baudRate)                                                      \
+    do{                                                                                                     \
+	    AUXR = (AUXR & 0xFB) | ( !brtMode << 2 );                                                           \
+	    T2L = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 )));      \
+	    T2H = (65536UL - (sysClk_FRE / (TM2PS + 1) ) / (baudRate * 4 * (11 * (!(AUXR & 0x04)) + 1 ))) >> 8; \
+	}while(0)
 
-	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate) do{ \
-	T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 ); \
-	T4L = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) ; \
-	T4H = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;} \
-	while(0)
+
+    /**
+     * @brief     串口3用定时器3做波特率发生器计算波特率宏函数，仅限本文件内调用。
+     * @details   Serial port 3 uses timer 3 to do baud rate generator calculation baud rate macro function, 
+     *            which is only called in this file.
+     * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+     * @param[in] baudRate 波特率。Baud rate.
+    **/
+	#define UART3_TIMER3_BRTMODE_CFG(brtMode,baudRate)                                                       \
+    do{                                                                                                      \
+	    T4T3M = (T4T3M & 0xFD) | ( !brtMode << 1 );                                                          \
+	    T3L = (65536UL - (sysClk_FRE / (TM3PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 )));      \
+	    T3H = (65536UL - (sysClk_FRE / (TM3PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x02)) + 1 ))) >> 8; \
+	}while(0)
+
+
+    /**
+     * @brief     串口4用定时器4做波特率发生器计算波特率宏函数，仅限本文件内调用。
+     * @details   Serial port 4 uses timer 4 to do baud rate generator calculation baud rate macro function, 
+     *            which is only called in this file.
+     * @param[in] brtMode  波特率发生器模式。Baud rate generator mode.
+     * @param[in] baudRate 波特率。Baud rate.
+    **/
+	#define UART4_TIMER4_BRTMODE_CFG(brtMode,baudRate)                                                        \
+    do{                                                                                                       \
+	    T4T3M = (T4T3M & 0xDF) | ( !brtMode << 5 );                                                           \
+	    T4L = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 )));       \
+	    T4H = (65536UL - (sysClk_FRE / (TM4PS + 1) ) / (baudRate * 4 * (11 * (!(T4T3M & 0x20)) + 1 ))) >> 8;  \
+	}while(0)
 		
 #endif
-
-
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -108,11 +188,14 @@ uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    UART1_Init
-  * @brief   UART1 init function   
-  * @param   *uartx: UART_InitType
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口1初始化函数。 
+ * @details   UART1 peripheral init function. 
+ * @param[in] uartx  串口初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The uart initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE UART1_Init(const UART_InitType* uartx)
 {
     extern uint32_t Get_SysClk_FRE(void);
@@ -167,12 +250,16 @@ FSCSTATE UART1_Init(const UART_InitType* uartx)
     return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    UART2_Init
-  * @brief   UART2 init function   
-  * @param   *uartx: UART_InitType
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口2初始化函数。 
+ * @details   UART2 peripheral init function. 
+ * @param[in] uartx  串口初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The uart initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE UART2_Init(const UART_InitType* uartx)
 {
     extern uint32_t Get_SysClk_FRE(void);
@@ -207,12 +294,16 @@ FSCSTATE UART2_Init(const UART_InitType* uartx)
     return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    UART3_Init
-  * @brief   UART3 init function   
-  * @param   *uartx: UART_InitType
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口3初始化函数。 
+ * @details   UART3 peripheral init function. 
+ * @param[in] uartx  串口初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The uart initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE UART3_Init(const UART_InitType* uartx)
 {
     extern uint32_t Get_SysClk_FRE(void);
@@ -274,12 +365,16 @@ FSCSTATE UART3_Init(const UART_InitType* uartx)
     return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    UART4_Init
-  * @brief   UART4 init function   
-  * @param   *uartx: UART_InitType
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口4初始化函数。 
+ * @details   UART4 peripheral init function. 
+ * @param[in] uartx  串口初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+ *                    The uart initializes the structure handle. When initializing, 
+ *                    please define the handle and pass its address to the parameter.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE UART4_Init(const UART_InitType* uartx)
 {
     extern uint32_t Get_SysClk_FRE(void);
@@ -341,113 +436,126 @@ FSCSTATE UART4_Init(const UART_InitType* uartx)
     return FSC_SUCCESS;
 }
 
+
+
 /**
-  * @name    NVIC_UART1_Init
-  * @brief   UART1 NVIC function  
-  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run    ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_UART1_Init(NVICPri_Type priority,BOOL run)
+ * @brief     串口1中断初始化函数。
+ * @details   UART1 NVIC function.
+ * @param[in] pri 中断优先级。interrupt pri.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE NVIC_UART1_Init(NVICPri_Type pri,BOOL run)
 {
 	ES = run;
-	NVIC_UART1_PRI(priority); 
+	NVIC_UART1_PRI(pri); 
 	return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    NVIC_UART2_Init
-  * @brief   UART2 NVIC function  
-  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-  * @param   run    ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
-FSCSTATE NVIC_UART2_Init(NVICPri_Type priority,BOOL run)
+ * @brief     串口2中断初始化函数。
+ * @details   UART2 NVIC function.
+ * @param[in] pri 中断优先级。interrupt pri.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE NVIC_UART2_Init(NVICPri_Type pri,BOOL run)
 {
 	IE2 = (IE2 & 0xFE) | (run);
-    NVIC_UART2_PRI(priority);
+    NVIC_UART2_PRI(pri);
 	return FSC_SUCCESS;
 }
 
+
 #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
-/**
-  * @name    NVIC_UART3_Init
-  * @brief   UART3 NVIC function  
-  * @param   run    ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+
+	/**
+	 * @brief     串口3中断初始化函数。
+	 * @details   UART3 NVIC function.
+	 * @param[in] run 使能控制位。enable control. 
+	 * @return    FSC_SUCCESS 返回成功。Return to success.
+	 * @return    FSC_FAIL    返回失败。Return to fail.
+	**/
 FSCSTATE NVIC_UART3_Init(BOOL run)
 {
 	IE2 = (IE2 & 0xF7) | (run << 3);
 	return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    NVIC_UART4_Init
-  * @brief   UART4 NVIC function  
-  * @param   run    ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口4中断初始化函数。
+ * @details   UART4 NVIC function.
+ * @param[in] run 使能控制位。enable control. 
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE NVIC_UART4_Init(BOOL run)
 {
 	IE2 = (IE2 & 0xEF) | (run << 4);
 	return FSC_SUCCESS;
 }
 
+
 #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
 
 	/**
-	  * @name    NVIC_UART3_Init
-	  * @brief   UART3 NVIC function  
-	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-	  * @param   run    ENABLE | DISABLE
-	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-	***/
-	FSCSTATE NVIC_UART3_Init(NVICPri_Type priority,BOOL run)
+	 * @brief     串口3中断初始化函数。
+	 * @details   UART3 NVIC function.
+	 * @param[in] pri 中断优先级。interrupt pri.
+	 * @param[in] run 使能控制位。enable control. 
+	 * @return    FSC_SUCCESS 返回成功。Return to success.
+	 * @return    FSC_FAIL    返回失败。Return to fail.
+	**/
+	FSCSTATE NVIC_UART3_Init(NVICPri_Type pri,BOOL run)
 	{
 		IE2 = (IE2 & 0xF7) | (run << 3);
-		NVIC_UART3_PRI(priority);
+		NVIC_UART3_PRI(pri);
 		return FSC_SUCCESS;
 	}
 
 	/**
-	  * @name    NVIC_UART4_Init
-	  * @brief   UART4 NVIC function  
-	  * @param   priority NVIC_PR0 | NVIC_PR1 | NVIC_PR2 | NVIC_PR3
-	  * @param   run    ENABLE | DISABLE
-	  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-	***/
-	FSCSTATE NVIC_UART4_Init(NVICPri_Type priority,BOOL run)
+	 * @brief     串口4中断初始化函数。
+	 * @details   UART4 NVIC function.
+	 * @param[in] pri 中断优先级。interrupt pri.
+	 * @param[in] run 使能控制位。enable control. 
+	 * @return    FSC_SUCCESS 返回成功。Return to success.
+	 * @return    FSC_FAIL    返回失败。Return to fail.
+	**/
+	FSCSTATE NVIC_UART4_Init(NVICPri_Type pri,BOOL run)
 	{
 		IE2 = (IE2 & 0xEF) | (run << 4);
-		NVIC_UART4_PRI(priority);
+		NVIC_UART4_PRI(pri);
 		return FSC_SUCCESS;
 	}
 
 #endif
 
+	
 /**
-  * @name    GPIO_UART1_SWPort
-  * @brief   UART1 switch port control function    
-  * @param   port    SW_Port1: RXD/P3.0 TXD/P3.1
-  *                  SW_Port2: RXD/P3.6 TXD/P3.7
-  *                  SW_Port3: RXD/P1.6 TXD/P1.7
-  *                  SW_Port4: RXD/P4.3 TXD/P4.4
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口1切换复用IO函数。
+ * @details   UART1 switch out port control function.  
+ * @param[in] port 复用IO枚举体。IO switch enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE GPIO_UART1_SWPort(GPIOSWPort_Type port)
 {
 	P_SW1 = (P_SW1 & 0x3F) | (port << 6);
 	return FSC_SUCCESS;
 }
 
+
 /**
-  * @name    GPIO_UART2_SWPort
-  * @brief   UART2 switch port control function    
-  * @param   port    SW_Port1: RXD/P1.0 TXD/P1.1
-  *                  SW_Port2: RXD/P4.1 TXD/P4.2
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口2切换复用IO函数。
+ * @details   UART2 switch out port control function.  
+ * @param[in] port 复用IO枚举体。IO switch enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE GPIO_UART2_SWPort(GPIOSWPort_Type port)
 {
 	if(port < SW_Port3)
@@ -458,13 +566,14 @@ FSCSTATE GPIO_UART2_SWPort(GPIOSWPort_Type port)
 	else return FSC_FAIL;
 }
 
+
 /**
-  * @name    GPIO_UART3_SWPort
-  * @brief   UART3 switch port control function    
-  * @param   port    SW_Port1: RXD/P0.0 TXD/P0.1
-  *                  SW_Port2: RXD/P5.0 TXD/P5.1
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口3切换复用IO函数。
+ * @details   UART3 switch out port control function.  
+ * @param[in] port 复用IO枚举体。IO switch enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE GPIO_UART3_SWPort(GPIOSWPort_Type port)
 {
 	if(port < SW_Port3)
@@ -475,13 +584,14 @@ FSCSTATE GPIO_UART3_SWPort(GPIOSWPort_Type port)
 	else return FSC_FAIL;
 }
 
+
 /**
-  * @name    GPIO_UART4_SWPort
-  * @brief   UART4 switch port control function    
-  * @param   port    SW_Port1: RXD/P0.2 TXD/P0.3
-  *                  SW_Port2: RXD/P5.2 TXD/P5.3
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     串口4切换复用IO函数。
+ * @details   UART4 switch out port control function.  
+ * @param[in] port 复用IO枚举体。IO switch enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
 FSCSTATE GPIO_UART4_SWPort(GPIOSWPort_Type port)
 {
 	if(port < SW_Port3)
@@ -492,219 +602,283 @@ FSCSTATE GPIO_UART4_SWPort(GPIOSWPort_Type port)
 	else return FSC_FAIL;
 }
 
+
 /**
-  * @name    UART1_Send_Byte
-  * @brief   UART1 Send byte function  
-  * @param   dat: uint8_t
-  * @return  None 
-***/
-void UART1_Send_Byte(uint8_t dat)
+ * @brief      串口1发送一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 1 sends a byte function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  dat 要发送的字节数据。The byte data to be sent.
+ * @return     None. 
+**/
+void UART1_Isr_Send_Byte(uint8_t dat)
 {
     while(UART1_GET_BUSY_FLAG());
     UART1_SET_BUSY_FLAG();
     SBUF = dat;
 }
 
+
 /**
-  * @name    UART2_Send_Byte
-  * @brief   UART2 Send byte function  
-  * @param   dat: uint8_t
-  * @return  None 
-***/
-void UART2_Send_Byte(uint8_t dat)
+ * @brief      串口2发送一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 2 sends a byte function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  dat 要发送的字节数据。The byte data to be sent.
+ * @return     None. 
+**/
+void UART2_Isr_Send_Byte(uint8_t dat)
 {
     while(UART2_GET_BUSY_FLAG());
     UART2_SET_BUSY_FLAG();
     S2BUF = dat;
 }
 
+
 /**
-  * @name    UART3_Send_Byte
-  * @brief   UART3 Send byte function  
-  * @param   dat: uint8_t
-  * @return  None 
-***/
-void UART3_Send_Byte(uint8_t dat)
+ * @brief      串口3发送一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 3 sends a byte function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  dat 要发送的字节数据。The byte data to be sent.
+ * @return     None. 
+**/
+void UART3_Isr_Send_Byte(uint8_t dat)
 {
     while(UART3_GET_BUSY_FLAG());
     UART3_SET_BUSY_FLAG();
     S3BUF = dat;
 }
 
+
 /**
-  * @name    UART4_Send_Byte
-  * @brief   UART4 Send byte function  
-  * @param   dat: uint8_t
-  * @return  None 
-***/
-void UART4_Send_Byte(uint8_t dat)
+ * @brief      串口4发送一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 4 sends a byte function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  dat 要发送的字节数据。The byte data to be sent.
+ * @return     None. 
+**/
+void UART4_Isr_Send_Byte(uint8_t dat)
 {
     while(UART4_GET_BUSY_FLAG());
     UART4_SET_BUSY_FLAG();
     S4BUF = dat;
 }
 
+
 /**
-  * @name    UART1_Rev_Byte
-  * @brief   UART1 get byte function  
-  * @param   None
-  * @return  receive data (uint8_t) 
-***/
-uint8_t UART1_Rev_Byte(void)
+ * @brief      串口1接收一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除接收标志位。
+ * @details    Serial port 1 receives a byte function,
+ *             Need to turn on the interrupt and clear the received flag,
+ *             in the interrupt service function.
+ * @param      None.
+ * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
+**/
+uint8_t UART1_Isr_Receive_Byte(void)
 {
     while(UART1_GET_BUSY_FLAG());
     return SBUF;
 }
 
+
 /**
-  * @name    UART2_Rev_Byte
-  * @brief   UART2 get byte function  
-  * @param   None
-  * @return  receive data (uint8_t) 
-***/
-uint8_t UART2_Rev_Byte(void)
+ * @brief      串口2接收一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除接收标志位。
+ * @details    Serial port 2 receives a byte function,
+ *             Need to turn on the interrupt and clear the received flag,
+ *             in the interrupt service function.
+ * @param      None.
+ * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
+**/
+uint8_t UART2_Isr_Receive_Byte(void)
 {
     while(UART2_GET_BUSY_FLAG());
     return S2BUF;
 }
 
+
 /**
-  * @name    UART3_Rev_Byte
-  * @brief   UART3 get byte function  
-  * @param   None
-  * @return  receive data (uint8_t) 
-***/
-uint8_t UART3_Rev_Byte(void)
+ * @brief      串口3接收一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除接收标志位。
+ * @details    Serial port 3 receives a byte function,
+ *             Need to turn on the interrupt and clear the received flag,
+ *             in the interrupt service function.
+ * @param      None.
+ * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
+**/
+uint8_t UART3_Isr_Receive_Byte(void)
 {
     while(UART3_GET_BUSY_FLAG());
     return S3BUF;
 }
 
+
 /**
-  * @name    UART4_Rev_Byte
-  * @brief   UART4 get byte function  
-  * @param   None
-  * @return  receive data (uint8_t) 
-***/
-uint8_t UART4_Rev_Byte(void)
+ * @brief      串口4接收一个字节函数，
+ *             需要开启中断，并在中断服务函数中清除接收标志位。
+ * @details    Serial port 4 receives a byte function,
+ *             Need to turn on the interrupt and clear the received flag,
+ *             in the interrupt service function.
+ * @param      None.
+ * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
+**/
+uint8_t UART4_Isr_Receive_Byte(void)
 {
     while(UART4_GET_BUSY_FLAG());
     return S4BUF;
 }
 
+
 /**
-  * @name    UART1_Send_String
-  * @brief   UART1 send string function  
-  * @param   *str  String first address (uint8_t)
-  * @return  None 
-***/
-void UART1_Send_String(uint8_t *str)
+ * @brief      串口1发送一个字符串函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 1 sends a string function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  str 要发送的字符串地址。String address to be sent.
+ * @return     None. 
+**/
+void UART1_Isr_Send_String(const uint8_t *str)
 {
    	while(*str)
   	{
-        UART1_Send_Byte(*(str++));
+        UART1_Isr_Send_Byte(*(str++));
     }
 }
 
+
 /**
-  * @name    UART2_Send_String
-  * @brief   UART2 send string function  
-  * @param   *str  String first address (uint8_t)
-  * @return  None 
-***/
-void UART2_Send_String(uint8_t *str)
+ * @brief      串口2发送一个字符串函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 2 sends a string function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  str 要发送的字符串地址。String address to be sent.
+ * @return     None. 
+**/
+void UART2_Isr_Send_String(const uint8_t *str)
 {
   	while(*str)
   	{
-        UART2_Send_Byte(*(str++));
+        UART2_Isr_Send_Byte(*(str++));
   	}
 }
 
+
 /**
-  * @name    UART3_Send_String
-  * @brief   UART3 send string function  
-  * @param   *str  String first address (uint8_t)
-  * @return  None 
-***/
-void UART3_Send_String(uint8_t* str)
+ * @brief      串口3发送一个字符串函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 3 sends a string function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  str 要发送的字符串地址。String address to be sent.
+ * @return     None. 
+**/
+void UART3_Isr_Send_String(const uint8_t* str)
 {
     while(*str)
   	{
-        UART3_Send_Byte(*(str++));
+        UART3_Isr_Send_Byte(*(str++));
     }
 }
 
+
 /**
-  * @name    UART4_Send_String
-  * @brief   UART4 send string function  
-  * @param   *str  String first address (uint8_t)
-  * @return  None 
-***/
-void UART4_Send_String(uint8_t *str)
+ * @brief      串口4发送一个字符串函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 4 sends a string function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  str 要发送的字符串地址。String address to be sent.
+ * @return     None. 
+**/
+void UART4_Isr_Send_String(const uint8_t *str)
 {
   	while(*str)
   	{
-        UART4_Send_Byte(*(str++));
+        UART4_Isr_Send_Byte(*(str++));
   	}
 }
 
+
 /**
-  * @name    UART1_Send_Array
-  * @brief   UART1 send arry function  
-  * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16_t)
-  * @return  None 
-***/
-void UART1_Send_Array(const uint8_t* str,uint16_t len)
+ * @brief      串口1发送一个数组函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 1 sends a arry function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  arry 要发送的数组地址。The address of the array to be sent.
+ * @param[in]  len  要发送的数组长度。The length of the array to be sent.
+ * @return     None. 
+**/
+void UART1_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 {
   	while(len--)
   	{
-        UART1_Send_Byte(*(str++));
+        UART1_Isr_Send_Byte(*(arry++));
   	}
 }
 
+
 /**
-  * @name    UART2_Send_Array
-  * @brief   UART2 send arry function  
-  * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16_t)
-  * @return  None 
-***/
-void UART2_Send_Array(const uint8_t* str,uint16_t len)
+ * @brief      串口2发送一个数组函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 2 sends a arry function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  arry 要发送的数组地址。The address of the array to be sent.
+ * @param[in]  len  要发送的数组长度。The length of the array to be sent.
+ * @return     None. 
+**/
+void UART2_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 {
     while(len--)
   	{
-        UART2_Send_Byte(*(str++));
+        UART2_Isr_Send_Byte(*(arry++));
   	}
 }
 
+
 /**
-  * @name    UART3_Send_Array
-  * @brief   UART3 send arry function  
-  * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16_t)
-  * @return  None 
-***/
-void UART3_Send_Array(const uint8_t* str,uint16_t len)
+ * @brief      串口3发送一个数组函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 3 sends a arry function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  arry 要发送的数组地址。The address of the array to be sent.
+ * @param[in]  len  要发送的数组长度。The length of the array to be sent.
+ * @return     None. 
+**/
+void UART3_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 {
   	while(len--)
     {
-        UART3_Send_Byte(*(str++));
+        UART3_Isr_Send_Byte(*(arry++));
     } 
 }
 
+
 /**
-  * @name    UART4_Send_Array
-  * @brief   UART4 send arry function  
-  * @param   *str  Array first address (uint8_t) 
-  * @param   len   Array length (uint16_t)
-  * @return  None 
-***/
-void UART4_Send_Array(const uint8_t* str,uint16_t len)
+ * @brief      串口4发送一个数组函数，
+ *             需要开启中断，并在中断服务函数中清除发送标志位。
+ * @details    Serial port 4 sends a arry function,
+ *             Need to turn on the interrupt and clear the sending flag,
+ *             in the interrupt service function.
+ * @param[in]  arry 要发送的数组地址。The address of the array to be sent.
+ * @param[in]  len  要发送的数组长度。The length of the array to be sent.
+ * @return     None. 
+**/
+void UART4_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 {
   	while(len--)
   	{
-        UART4_Send_Byte(*(str++));
+        UART4_Isr_Send_Byte(*(arry++));
   	}
 }
 

@@ -115,6 +115,7 @@
 		**/
 		FSCSTATE NVIC_EXTI4_Init(NVICPri_Type pri,BOOL run)
 		{
+			NVIC_EXTI4_PRI(pri);
 			INTCLKO = (INTCLKO & 0xBF) | (run << 6);
 			return FSC_SUCCESS;
 		}

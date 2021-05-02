@@ -200,278 +200,287 @@ do{                                                    \
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_TIMER_CTRL == 1)
+
+    #if (PER_LIB_TIMER_INIT_CTRL == 1)
+
+        /**
+         * @brief     定时器0初始化函数。 
+         * @details   TIMER0 peripheral init function. 
+         * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+         *                    The timer initializes the structure handle. When initializing, 
+         *                    please define the handle and pass its address to the parameter.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER0_Init(const TIMER_InitType* timerx)
+        {
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            TR0 = 0; //Turn off Timer0
+            TMOD = (TMOD & 0xFB) | (timerx -> Type << 2);
+            TIMER0_MODE_CFG(timerx -> Mode);
+            TIMER0_TCY_CFG(timerx -> TCycle);
+            TIMER0_TIM_CFG(timerx -> Time);
+            if(timerx -> Mode == TIMER_8BitAutoReload) T0L = (uint8_t)(timerx -> Time), T0H = (uint8_t)(timerx -> Time); 
+            else                                       T0L = (uint8_t)(timerx -> Time), T0H = (uint8_t)(timerx -> Time >> 8);
+            INTCLKO = (INTCLKO & 0xFE) | (timerx -> ClkOut);
+            TR0 = timerx -> Run;
+            return FSC_SUCCESS;
+        }
 
 
-/**
- * @brief     定时器0初始化函数。 
- * @details   TIMER0 peripheral init function. 
- * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
- *                    The timer initializes the structure handle. When initializing, 
- *                    please define the handle and pass its address to the parameter.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE TIMER0_Init(const TIMER_InitType* timerx)
-{
-	extern uint32_t Get_SysClk_FRE(void);
-    uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_SysClk_FRE();
-	TR0 = 0; //Turn off Timer0
-	TMOD = (TMOD & 0xFB) | (timerx -> Type << 2);
-	TIMER0_MODE_CFG(timerx -> Mode);
-	TIMER0_TCY_CFG(timerx -> TCycle);
-	TIMER0_TIM_CFG(timerx -> Time);
-	if(timerx -> Mode == TIMER_8BitAutoReload) T0L = (uint8_t)(timerx -> Time), T0H = (uint8_t)(timerx -> Time); 
-	else                                       T0L = (uint8_t)(timerx -> Time), T0H = (uint8_t)(timerx -> Time >> 8);
-	INTCLKO = (INTCLKO & 0xFE) | (timerx -> ClkOut);
-	TR0 = timerx -> Run;
-	return FSC_SUCCESS;
-}
+        /**
+         * @brief     定时器1初始化函数。 
+         * @details   TIMER1 peripheral init function. 
+         * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+         *                    The timer initializes the structure handle. When initializing, 
+         *                    please define the handle and pass its address to the parameter.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER1_Init(const TIMER_InitType* timerx)
+        {
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            TR1 = 0; //Turn off Timer1
+            if(timerx -> Mode != TIMER_16BitAutoReloadNoMask) TIMER1_MODE_CFG(timerx -> Mode);
+            else return FSC_FAIL;
+            TMOD = (TMOD & 0xBF) | (timerx -> Type << 6);
+            TIMER1_TCY_CFG(timerx -> TCycle);
+            TIMER1_TIM_CFG(timerx -> Time);	
+            if(timerx -> Mode == TIMER_8BitAutoReload) T1L = (uint8_t)(timerx -> Time), T1H = (uint8_t)(timerx -> Time); 
+            else                                       T1L = (uint8_t)(timerx -> Time), T1H = (uint8_t)(timerx -> Time >> 8);
+            INTCLKO = (INTCLKO & 0xFD) | (timerx -> ClkOut << 1);
+            TF1 = 0; //Clear Flag
+            TR1 = timerx -> Run; 
+            return FSC_SUCCESS;		
+        }
 
 
-/**
- * @brief     定时器1初始化函数。 
- * @details   TIMER1 peripheral init function. 
- * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
- *                    The timer initializes the structure handle. When initializing, 
- *                    please define the handle and pass its address to the parameter.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE TIMER1_Init(const TIMER_InitType* timerx)
-{
-	extern uint32_t Get_SysClk_FRE(void);
-	uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_SysClk_FRE();
-	TR1 = 0; //Turn off Timer1
-	if(timerx -> Mode != TIMER_16BitAutoReloadNoMask) TIMER1_MODE_CFG(timerx -> Mode);
-	else return FSC_FAIL;
-	TMOD = (TMOD & 0xBF) | (timerx -> Type << 6);
-	TIMER1_TCY_CFG(timerx -> TCycle);
-	TIMER1_TIM_CFG(timerx -> Time);	
-	if(timerx -> Mode == TIMER_8BitAutoReload) T1L = (uint8_t)(timerx -> Time), T1H = (uint8_t)(timerx -> Time); 
-	else                                       T1L = (uint8_t)(timerx -> Time), T1H = (uint8_t)(timerx -> Time >> 8);
-	INTCLKO = (INTCLKO & 0xFD) | (timerx -> ClkOut << 1);
-	TF1 = 0; //Clear Flag
-	TR1 = timerx -> Run; 
-	return FSC_SUCCESS;		
-}
+        /**
+         * @brief     定时器2初始化函数。 
+         * @details   TIMER2 peripheral init function. 
+         * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+         *                    The timer initializes the structure handle. When initializing, 
+         *                    please define the handle and pass its address to the parameter.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER2_Init(const TIMER_InitType* timerx)
+        {
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            AUXR &= 0xEF; //Turn off timer2
+            AUXR = (AUXR & 0xF7) | (timerx -> Type << 3);
+            TIMER2_TCY_CFG(timerx -> TCycle);
+            
+            #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+            
+                TIMER2_TIM_CFG(timerx -> Time);
+            
+            #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+            
+                EAXFR_ENABLE();
+                TM3PS = timerx -> SysClkDiv;
+                TIMER2_TIM_CFG(timerx -> Time);
+                EAXFR_DISABLE();
+            
+            #endif	
+            
+            T2L = (uint8_t)(timerx -> Time);
+            T2H = (uint8_t)(timerx -> Time >> 8);
+            INTCLKO = (INTCLKO & 0xFB) | (timerx -> ClkOut << 2);	
+            AUXR = (AUXR & 0xEF) | (timerx -> Run << 4);  
+            return FSC_SUCCESS;	
+        }
 
 
-/**
- * @brief     定时器2初始化函数。 
- * @details   TIMER2 peripheral init function. 
- * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
- *                    The timer initializes the structure handle. When initializing, 
- *                    please define the handle and pass its address to the parameter.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE TIMER2_Init(const TIMER_InitType* timerx)
-{
-	extern uint32_t Get_SysClk_FRE(void);
-	uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_SysClk_FRE();
-	AUXR &= 0xEF; //Turn off timer2
-	AUXR = (AUXR & 0xF7) | (timerx -> Type << 3);
-	TIMER2_TCY_CFG(timerx -> TCycle);
-	
-	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
-	
-		TIMER2_TIM_CFG(timerx -> Time);
-	
-    #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-	
-        EAXFR_ENABLE();
-        TM3PS = timerx -> SysClkDiv;
-	    TIMER2_TIM_CFG(timerx -> Time);
-        EAXFR_DISABLE();
-	
-    #endif	
-	
-	T2L = (uint8_t)(timerx -> Time);
-	T2H = (uint8_t)(timerx -> Time >> 8);
-	INTCLKO = (INTCLKO & 0xFB) | (timerx -> ClkOut << 2);	
-	AUXR = (AUXR & 0xEF) | (timerx -> Run << 4);  
-	return FSC_SUCCESS;	
-}
+        /**
+         * @brief     定时器3初始化函数。 
+         * @details   TIMER3 peripheral init function. 
+         * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+         *                    The timer initializes the structure handle. When initializing, 
+         *                    please define the handle and pass its address to the parameter.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER3_Init(const TIMER_InitType* timerx)
+        {
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            T4T3M &= 0XF7;//Turn off timer3
+            T4T3M = (T4T3M & 0xFB) | (timerx -> Type << 2);
+            TIMER3_TCY_CFG(timerx -> TCycle);
+            
+            #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+            
+                TIMER3_TIM_CFG(timerx -> Time);
+            
+            #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+            
+                EAXFR_ENABLE();
+                TM3PS = timerx -> SysClkDiv;
+                TIMER3_TIM_CFG(timerx -> Time);
+                EAXFR_DISABLE();
+            
+            #endif	
+            
+            T3L = (uint8_t)(timerx -> Time);
+            T3H = (uint8_t)(timerx -> Time >> 8);
+            T4T3M = (T4T3M & 0xFE) | (timerx -> ClkOut);
+            T4T3M = (T4T3M & 0xF7) | (timerx -> Run << 3);		
+            return FSC_SUCCESS;	
+        }
 
 
-/**
- * @brief     定时器3初始化函数。 
- * @details   TIMER3 peripheral init function. 
- * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
- *                    The timer initializes the structure handle. When initializing, 
- *                    please define the handle and pass its address to the parameter.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE TIMER3_Init(const TIMER_InitType* timerx)
-{
-	extern uint32_t Get_SysClk_FRE(void);
-    uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_SysClk_FRE();
-	T4T3M &= 0XF7;//Turn off timer3
-	T4T3M = (T4T3M & 0xFB) | (timerx -> Type << 2);
-	TIMER3_TCY_CFG(timerx -> TCycle);
-	
-	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
-	
-		TIMER3_TIM_CFG(timerx -> Time);
-	
-    #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-	
-        EAXFR_ENABLE();
-        TM3PS = timerx -> SysClkDiv;
-	    TIMER3_TIM_CFG(timerx -> Time);
-        EAXFR_DISABLE();
-	
-    #endif	
-	
-	T3L = (uint8_t)(timerx -> Time);
-	T3H = (uint8_t)(timerx -> Time >> 8);
-	T4T3M = (T4T3M & 0xFE) | (timerx -> ClkOut);
-	T4T3M = (T4T3M & 0xF7) | (timerx -> Run << 3);		
-	return FSC_SUCCESS;	
-}
+        /**
+         * @brief     定时器4初始化函数。 
+         * @details   TIMER4 peripheral init function. 
+         * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
+         *                    The timer initializes the structure handle. When initializing, 
+         *                    please define the handle and pass its address to the parameter.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER4_Init(const TIMER_InitType* timerx)
+        {
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            T4T3M &= 0X7F; //Turn off timer4
+            T4T3M = (T4T3M & 0xBF) | (timerx -> Type << 6);
+            TIMER4_TCY_CFG(timerx -> TCycle);
+            
+            #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+            
+                TIMER3_TIM_CFG(timerx -> Time);
+            
+            #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+            
+                EAXFR_ENABLE();
+                TM3PS = timerx -> SysClkDiv;
+                TIMER3_TIM_CFG(timerx -> Time);
+                EAXFR_DISABLE();
+            
+            #endif	
+            
+            T4L = (uint8_t)(timerx -> Time);
+            T4H = (uint8_t)(timerx -> Time >> 8);
+            T4T3M = (T4T3M & 0xEF) | (timerx -> ClkOut << 4);
+            T4T3M = (T4T3M & 0x7F) | (timerx -> Run << 7);	
+            return FSC_SUCCESS;		
+        }
 
 
-/**
- * @brief     定时器4初始化函数。 
- * @details   TIMER4 peripheral init function. 
- * @param[in] timerx  定时器初始化结构体句柄，初始化时请定义该句柄，并将其地址传参。
- *                    The timer initializes the structure handle. When initializing, 
- *                    please define the handle and pass its address to the parameter.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE TIMER4_Init(const TIMER_InitType* timerx)
-{
-	extern uint32_t Get_SysClk_FRE(void);
-    uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_SysClk_FRE();
-	T4T3M &= 0X7F; //Turn off timer4
-	T4T3M = (T4T3M & 0xBF) | (timerx -> Type << 6);
-	TIMER4_TCY_CFG(timerx -> TCycle);
-	
-	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
-	
-		TIMER3_TIM_CFG(timerx -> Time);
-	
-    #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
-	
-        EAXFR_ENABLE();
-        TM3PS = timerx -> SysClkDiv;
-	    TIMER3_TIM_CFG(timerx -> Time);
-        EAXFR_DISABLE();
-	
-    #endif	
-	
-	T4L = (uint8_t)(timerx -> Time);
-	T4H = (uint8_t)(timerx -> Time >> 8);
-	T4T3M = (T4T3M & 0xEF) | (timerx -> ClkOut << 4);
-	T4T3M = (T4T3M & 0x7F) | (timerx -> Run << 7);	
-	return FSC_SUCCESS;		
-}
+        /**
+         * @name      TIMER5_Wake_Up_Power
+         * @brief     调电唤醒定时器5初始化函数。 
+         * @details   Power up timer 5 initialization function.
+         * @param[in] time 定时器5调电唤醒时间值。Timer power up time value.
+         * @param[in] run  定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER5_Wake_Up_Power(uint16_t time,BOOL run)
+        {
+            uint16_t fwt;
+            fwt = (uint16_t)((FWTH << 8) | FWTL);    //Calculate the clock frequency 
+            time = (uint16_t)((fwt * (uint32_t) time) / 16000000UL);//Count count times
+            WKTCH = (uint8_t)((time - 1) >> 8);
+            WKTCL = (uint8_t)( time - 1);
+            WKTCH = (WKTCH & 0x7F) | (run << 7);
+            return FSC_SUCCESS;
+        }
+
+    #endif
+
+    #if (PER_LIB_TIMER_NVIC_CTRL == 1)
+    
+        /**
+         * @brief     定时器0中断初始化函数。
+         * @details   TIMER0 NVIC function.
+         * @param[in] pri 中断优先级。interrupt priority.
+         * @param[in] run 使能控制位。enable control. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE NVIC_TIMER0_Init(NVICPri_Type pri,BOOL run)
+        {
+            ET0 = run;
+            NVIC_TIMER0_PRI(pri);
+            return FSC_SUCCESS;
+        }
 
 
-/**
- * @name      TIMER5_Wake_Up_Power
- * @brief     调电唤醒定时器5初始化函数。 
- * @details   Power up timer 5 initialization function.
- * @param[in] time 定时器5调电唤醒时间值。Timer power up time value.
- * @param[in] run  定时器5调电唤醒运行控制位。Timer 5 power up operation control bit.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE TIMER5_Wake_Up_Power(uint16_t time,BOOL run)
-{
-	uint16_t fwt;
-	fwt = (uint16_t)((FWTH << 8) | FWTL);    //Calculate the clock frequency 
-	time = (uint16_t)((fwt * (uint32_t) time) / 16000000UL);//Count count times
-	WKTCH = (uint8_t)((time - 1) >> 8);
-	WKTCL = (uint8_t)( time - 1);
-	WKTCH = (WKTCH & 0x7F) | (run << 7);
-	return FSC_SUCCESS;
-}
+        /**
+         * @brief     定时器1中断初始化函数。
+         * @details   TIMER1 NVIC function.
+         * @param[in] pri 中断优先级。interrupt priority.
+         * @param[in] run 使能控制位。enable control. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE NVIC_TIMER1_Init(NVICPri_Type pri,BOOL run)
+        {
+            ET1 = run;
+            NVIC_TIMER1_PRI(pri);
+            return FSC_SUCCESS;
+        }
 
 
-/**
- * @brief     定时器0中断初始化函数。
- * @details   TIMER0 NVIC function.
- * @param[in] pri 中断优先级。interrupt priority.
- * @param[in] run 使能控制位。enable control. 
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE NVIC_TIMER0_Init(NVICPri_Type pri,BOOL run)
-{
-	ET0 = run;
-    NVIC_TIMER0_PRI(pri);
-	return FSC_SUCCESS;
-}
+        /**
+         * @brief     定时器2中断初始化函数。
+         * @details   TIMER2 NVIC function.
+         * @param[in] run 使能控制位。enable control. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE NVIC_TIMER2_Init(BOOL run)
+        {
+            IE2 = (IE2 & 0xFB) | (run << 2);
+            return FSC_SUCCESS;
+        }
 
 
-/**
- * @brief     定时器1中断初始化函数。
- * @details   TIMER1 NVIC function.
- * @param[in] pri 中断优先级。interrupt priority.
- * @param[in] run 使能控制位。enable control. 
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE NVIC_TIMER1_Init(NVICPri_Type pri,BOOL run)
-{
-	ET1 = run;
-    NVIC_TIMER1_PRI(pri);
-	return FSC_SUCCESS;
-}
+        /**
+         * @brief     定时器3中断初始化函数。
+         * @details   TIMER3 NVIC function.
+         * @param[in] run 使能控制位。enable control. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE NVIC_TIMER3_Init(BOOL run)
+        {
+            IE2 = (IE2 & 0xDF) | (run << 5);
+            return FSC_SUCCESS;
+        }
 
+        /**
+         * @brief     定时器4中断初始化函数。
+         * @details   TIMER4 NVIC function.
+         * @param[in] run 使能控制位。enable control. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE NVIC_TIMER4_Init(BOOL run)
+        {
+            IE2 = (IE2 & 0xBF) | (run << 6);
+            return FSC_SUCCESS;
+        }
 
-/**
- * @brief     定时器2中断初始化函数。
- * @details   TIMER2 NVIC function.
- * @param[in] run 使能控制位。enable control. 
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE NVIC_TIMER2_Init(BOOL run)
-{
-	IE2 = (IE2 & 0xFB) | (run << 2);
-	return FSC_SUCCESS;
-}
+    #endif
 
-
-/**
- * @brief     定时器3中断初始化函数。
- * @details   TIMER3 NVIC function.
- * @param[in] run 使能控制位。enable control. 
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE NVIC_TIMER3_Init(BOOL run)
-{
-	IE2 = (IE2 & 0xDF) | (run << 5);
-	return FSC_SUCCESS;
-}
-
-/**
- * @brief     定时器4中断初始化函数。
- * @details   TIMER4 NVIC function.
- * @param[in] run 使能控制位。enable control. 
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE NVIC_TIMER4_Init(BOOL run)
-{
-	IE2 = (IE2 & 0xBF) | (run << 6);
-	return FSC_SUCCESS;
-}
+#endif
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

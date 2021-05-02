@@ -57,19 +57,19 @@ char putchar(char c)
 {
 	#if   (COM_LIB_PRINTFRED_ROAD == 1)
 	{
-	  UART1_Send_Byte((uint8_t)c);
+	  UART1_Isr_Send_Byte((uint8_t)c);
 	}
 	#elif (COM_LIB_PRINTFRED_ROAD == 2)
 	{
-	  UART2_Send_Byte((uint8_t)c);	
+	  UART2_Isr_Send_Byte((uint8_t)c);	
 	}
 	#elif (COM_LIB_PRINTFRED_ROAD == 3)
 	{
-	  UART3_Send_Byte((uint8_t)c);
+	  UART3_Isr_Send_Byte((uint8_t)c);
 	}
 	#elif (COM_LIB_PRINTFRED_ROAD == 4)
 	{
-	  UART4_Send_Byte((uint8_t)c);
+	  UART4_Isr_Send_Byte((uint8_t)c);
 	}
 	#endif
 	return c;

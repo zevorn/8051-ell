@@ -77,6 +77,16 @@
 #define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIzMER模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_TIMER_NVIC_CTRL    (1) /*!< TIMER模块中断相关宏，写1开启，写0关闭。*/
 
+/**
+ * @brief		配置UART片内外设。
+ * @details	    Configure GPIO chip internal  peripheral.
+**/
+#define   PER_LIB_UART_CTRL         (1) /*!< UART模块控制宏，写1开启，写0关闭。*/
+											
+#define   PER_LIB_UART_INIT_CTRL    (1) /*!< UART模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_UART_NVIC_CTRL    (1) /*!< UART模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_UART_WORK_CTRL    (1) /*!< UART模块工作相关宏，写1开启，写0关闭。*/
+
 
 /**
  * @brief		配置GPIO片内外设。

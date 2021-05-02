@@ -48,7 +48,7 @@
  * @return    FSC_SUCCESS 返回成功。Return to success.
  * @return    FSC_FAIL    返回失败。Return to fail.
 **/
-FSCSTATE SPI_Init(SPIInit_Type* spix)
+FSCSTATE SPI_Init(const SPIInit_Type* spix)
 {
     SPDAT = 0;
     SPSTAT = SPIF | WCOL;          

@@ -100,62 +100,65 @@
 **/
 typedef enum
 {
-  SPI_Type_Master_Slave = 0x00,
-  SPI_Type_Master       = 0x90,
-  SPI_Type_Slave        = 0x80,
+	SPI_Type_Master_Slave = 0x00,  /*!< SPI互为主从机模式。SPI is mutually master-slave mode. */
+	SPI_Type_Master       = 0x90,  /*!< SPI互为主机模式。SPI is mutually master mode. */
+	SPI_Type_Slave        = 0x80,  /*!< SPI互为主机模式。SPI is mutually slave mode. */
 } SPIType_Type;
 
-/*--------------------------------------------------------
-| @Description: SPI clock source select enum             |
---------------------------------------------------------*/
-
-typedef enum
-{
-  SPI_SCLK_DIV_4  = 0x00,
-  SPI_SCLK_DIV_8  = 0x01,
-  SPI_SCLK_DIV_16 = 0x02,
-  SPI_SCLK_DIV_32 = 0x03
-} SPIClkSrc_Type;
-
-/*--------------------------------------------------------
-| @Description: SPI Transmission sequence enum           |
---------------------------------------------------------*/
-
-typedef enum
-{
-  SPI_Tran_MSB = 0x00,
-  SPI_Tran_LSB = 0x01
-} SPITran_Type;
-
-/*--------------------------------------------------------
-| @Description: SPI mode control enum                    |
---------------------------------------------------------*/
-
-typedef enum
-{
-  SPI_Mode_0  = 0x00,
-  SPI_Mode_1  = 0x01,
-  SPI_Mode_2  = 0x02,
-  SPI_Mode_3  = 0x03
-} SPIMode_Type;
 
 /**
-  * @name    SPIInit_Type
-  * @brief   SPI init structure 
-  * @param   Type     SPI_Type_Master | SPI_Type_Slave | SPI_Type_Master_Slave
-  * @param   ClkSrc   SPI_SCLK_DIV_4 | SPI_SCLK_DIV_8 | SPI_SCLK_DIV_16 | SPI_SCLK_DIV_32
-  * @param   Mode     SPI_Mode_0 | SPI_Mode_1 | SPI_Mode_2 | SPI_Mode_3
-  * @param   Tran     SPI_Tran_MSB | SPI_Tran_LSB
-  * @param   Run      ENABLE | DISABLE 
-***/
+ * @brief     SPI时钟源选择枚举体。
+ * @details   SPI clock source select enum.
+**/
+typedef enum
+{
+	SPI_SCLK_DIV_4  = 0x00,  /*!< SPI系统时钟源4分频。SPI system clock source divided by 4. */
+	SPI_SCLK_DIV_8  = 0x01,  /*!< SPI系统时钟源8分频。SPI system clock source divided by 8. */
+	SPI_SCLK_DIV_16 = 0x02,  /*!< SPI系统时钟源16分频。SPI system clock source divided by 16. */
+	SPI_SCLK_DIV_32 = 0x03   /*!< SPI系统时钟源32分频。SPI system clock source divided by 32. */
+} SPIClkSrc_Type;
+
+
+/**
+ * @brief     SPI传输类型枚举体。
+ * @details   SPI Transmission sequence enum.
+**/
+typedef enum
+{
+	SPI_Tran_MSB = 0x00,   /*!< 数据的最高位存放在字节的第0位。
+	                            The highest bit of the data is stored in the 0th bit of the byte. */
+	SPI_Tran_LSB = 0x01   /*!< 数据的最低位存放在字节的第0位。
+	                           The lowest bit of the data is stored in the 0th bit of the byte. */
+} SPITran_Type;
+
+
+/**
+ * @brief     SPI模式枚举体。
+ * @details   SPI mode control enum .
+**/
+typedef enum
+{
+	SPI_Mode_0  = 0x00, /*!< 模式0。mode 0. */
+	SPI_Mode_1  = 0x01, /*!< 模式1。mode 1. */
+	SPI_Mode_2  = 0x02, /*!< 模式2。mode 2. */
+	SPI_Mode_3  = 0x03  /*!< 模式3。mode 3. */
+} SPIMode_Type;
+
+
+/**
+ * @brief   SPI初始化枚举体，需要你定义它，并用它的地址来传参给初始化函数。
+ * @details SPI initializes the enumeration body, you need to define 
+ *          it and use its address to pass parameters to the initialization function.
+**/
 typedef struct 
 {
-  SPIType_Type Type;
-  SPIClkSrc_Type ClkSrc;
-  SPIMode_Type Mode;
-  SPITran_Type Tran;
-  BOOL Run;
+	SPIType_Type Type;     /*!< SPI工作类型。SPI working type. */
+	SPIClkSrc_Type ClkSrc; /*!< SPI时钟源。SPI clock source. */
+	SPIMode_Type Mode;     /*!< SPI工作模式。SPI working mode. */
+	SPITran_Type Tran;     /*!< SPI传输类型。SPI transmission type. */
+	BOOL Run;             /*!< SPI运行控制位。SPI operation control bit. */
 } SPIInit_Type;
+
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
@@ -171,7 +174,7 @@ typedef struct
  * @return    FSC_SUCCESS 返回成功。Return to success.
  * @return    FSC_FAIL    返回失败。Return to fail.
 **/
-FSCSTATE SPI_Init(SPIInit_Type *spix);
+FSCSTATE SPI_Init(const SPIInit_Type *spix);
 
 /**
  * @brief     SPI发送数据（一个字节）函数。

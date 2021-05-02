@@ -28,8 +28,8 @@ extern bit Time500MsFlag;
 void LOGO(void)
 {
 //	printf("Timer0 500MS \r\n");
-  UART1_Send_String("Uart1\r\n");
-  UART2_Send_String("Uart2\r\n");
+  UART1_Isr_Send_String("Uart1\r\n");
+  UART1_Isr_Send_String("Uart2\r\n");
 }
 
 /**

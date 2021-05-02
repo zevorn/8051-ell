@@ -27,9 +27,9 @@ extern bit Time500MsFlag;
 ***/
 void LOGO(void)
 {
-	//printf使用的是串口2
+	
 	printf("Timer0 500MS \r\n");
-  UART1_Send_String("Uart1\r\n");
+    UART1_Isr_Send_String("Uart1\r\n");
 }
 
 /**
