@@ -61,6 +61,35 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
+
+#ifndef PER_LIB_MCU_MUODEL   
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+#ifndef PER_LIB_RST_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_RST_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_RST_INIT_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_RST_INIT_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_RST_WORK_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_RST_WORK_CTRL 1
+#endif
+
+
 /*--------------------------------------------------------
 | @Description: WDT clock ferquency division define      |
 --------------------------------------------------------*/
@@ -78,21 +107,44 @@
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
 
+#if (PER_LIB_RST_CTRL == 1)
 
-/*--------------------------------------------------------
-| @Description: Dog feeding function define              |
---------------------------------------------------------*/
+	#if (PER_LIB_RST_INIT_CTRL == 1)
+	
+		/**
+		 * @brief       看门狗初始函数。
+		 * @details     WDT initialization function. 
+		 * @param[in]   cLKDiv   系统时钟分频数。clock division.
+		 * @param[in]   run      运行控制位。Run control bit.
+		 * @return      FSC_SUCCESS 返回成功。Return to success.
+		 * @return      FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE WDT_Init(uint8_t clKDiv,BOOL run);
+	
+	#endif
+	
+	#if (PER_LIB_RST_WORK_CTRL == 1)
 
-#define   WDT_FEED()   WDT_CONTR |= 0x10
+		/**
+		 * @brief   获取喂狗时间函数，以便定时喂狗。
+		 * @details Get WDT  feeding time function.
+		 * @param   None.
+		 * @return  [uint32_t] 获取喂狗时间，单位us。Get the feeding time, the unit is us.
+		**/
+		uint32_t Get_WDT_Time(void);
 
-/*--------------------------------------------------------
-| @Description: WDT function                             |
---------------------------------------------------------*/
 
-uint32_t Get_WDT_Time(void);
-FSCSTATE WDT_Init(uint8_t clKDiv,BOOL run);
+		/**
+		 * @brief    喂狗宏函数，如果不定时喂狗，系统将会复位。
+		 * @details  Feeding the dog macro function, 
+		 *           if the dog is not fed regularly, the system will reset.
+		**/
+		#define   WDT_FEED()   do{WDT_CONTR |= 0x10;}while(0)
 
+	#endif
+		
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
+#endif

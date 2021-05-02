@@ -52,28 +52,39 @@
   * @param   c  put data
   * @return  char
 ***/
-#if (COM_LIB_PRINTFRED_CTRL == 1)      
-char putchar(char c)
-{
-	#if   (COM_LIB_PRINTFRED_ROAD == 1)
+#if (COM_LIB_PRINTFRED_CTRL == 1)     
+
+	char putchar(char c)
 	{
-	  UART1_Isr_Send_Byte((uint8_t)c);
+		#if   (COM_LIB_PRINTFRED_ROAD == 1)
+		{
+			
+		  UART1_Isr_Send_Byte((uint8_t)c);
+			
+		}
+		#elif (COM_LIB_PRINTFRED_ROAD == 2)
+		{
+			
+		  UART2_Isr_Send_Byte((uint8_t)c);	
+			
+		}
+		#elif (COM_LIB_PRINTFRED_ROAD == 3)
+		{
+			
+		  UART3_Isr_Send_Byte((uint8_t)c);
+			
+		}
+		#elif (COM_LIB_PRINTFRED_ROAD == 4)
+		{
+			
+		  UART4_Isr_Send_Byte((uint8_t)c);
+			
+		}
+		#endif
+		
+		return c;
 	}
-	#elif (COM_LIB_PRINTFRED_ROAD == 2)
-	{
-	  UART2_Isr_Send_Byte((uint8_t)c);	
-	}
-	#elif (COM_LIB_PRINTFRED_ROAD == 3)
-	{
-	  UART3_Isr_Send_Byte((uint8_t)c);
-	}
-	#elif (COM_LIB_PRINTFRED_ROAD == 4)
-	{
-	  UART4_Isr_Send_Byte((uint8_t)c);
-	}
-	#endif
-	return c;
-}
+	
 #endif
 
 /*-----------------------------------------------------------------------

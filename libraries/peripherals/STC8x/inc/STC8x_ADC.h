@@ -376,9 +376,8 @@ typedef struct
 
 			
 			/**
-			 * @brief      ADC选择中断优先级宏函数，仅限本文件调用。
-			 * @details    ADC select interrupt priority macro function, 
-			 *             only this file call.
+			 * @brief      ADC选择中断优先级宏函数。
+			 * @details    ADC select interrupt priority macro function.
 			 * @param[in]  pri 中断优先级。 Priority of interrupt.
 			**/
 			#define NVIC_ADC_PRI(pri)                     \

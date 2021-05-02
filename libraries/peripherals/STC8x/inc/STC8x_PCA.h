@@ -937,9 +937,8 @@ typedef enum
 			
 			
 			/**
-			 * @brief      PCA选择中断优先级宏函数，仅限本文件调用。
-			 * @details    PCA select interrupt priority macro function, 
-			 *             only this file call.
+			 * @brief      PCA选择中断优先级宏函数。
+			 * @details    PCA select interrupt priority macro function.
 			 * @param[in]  pri 中断优先级. Priority of interrupt.
 			***/
 			#define NVIC_PCA_PRI(pri)                     \

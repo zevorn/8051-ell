@@ -163,54 +163,103 @@ typedef struct
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
+#if (PER_LIB_SPI_CTRL == 1)
+
+	#if (PER_LIB_SPI_INIT_CTRL == 1)
+
+		/**
+		 * @brief     SPI初始化函数。
+		 * @details   SPI initialization function. 
+		 * @param[in] spix  SPI初始化结构体句柄，你需要定义它，并其地址传参。  
+		 *            you need to definean associated initialization handle,
+		 *            And pass it by its address.  
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE SPI_Init(const SPIInit_Type *spix);
+	
+	#endif 
+	
+	#if (PER_LIB_SPI_NVIC_CTRL == 1)
+	
+		/**
+		 * @brief     SPI中断初始化函数。
+		 * @details   SPI init NVIC function.  
+		 * @param[in] pri 中断优先级。interrupt priority.
+		 * @param[in] run 使能控制位。enable control. 
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE NVIC_SPI_Init(NVICPri_Type pri,BOOL run);
 
 
-/**
- * @brief     SPI初始化函数。
- * @details   SPI initialization function. 
- * @param[in] spix  SPI初始化结构体句柄，你需要定义它，并其地址传参。  
- *            you need to definean associated initialization handle,
- *            And pass it by its address.  
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE SPI_Init(const SPIInit_Type *spix);
+		/**
+		 * @brief     SPI中断开关控制宏函数。
+		 * @details   SPI interrupt switch control macro function.
+		 * @param[in] run  使能控制位。Enable control bit.
+		**/
+		#define    NVIC_SPI_CTRL(run)    do{ IE2 = (IE2 & 0xFD) | (run << 1); }while(0)
 
-/**
- * @brief     SPI发送数据（一个字节）函数。
- * @details   SPI send data function 
- * @param[in] dat   要发送的数据。 data of SPI.
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-FSCSTATE SPI_Send_Data(uint8_t dat);
+		/**
+		 * @brief      SPI选择中断优先级宏函数。
+		 * @details    SPI select interrupt pri macro function.
+		 * @param[in]  pri 中断优先级。 pri of interrupt.
+		**/
+		#define NVIC_SPI_PRI(pri)                       \
+		do{                                             \
+			IP2H = (IP2H & 0xFD) |  (pri & 0x02);       \
+			IP2  = (IP2  & 0xFD) | ((pri & 0x01) << 1); \
+		}while(0)
 
-uint8_t SPI_Rev_Data(void);
+	  
+		/**
+		 * @brief   SPI获取中断标志位宏函数。
+		 * @details SPI gets the interrupt flag macro function.
+		**/
+		#define SPI_GET_FLAG()          (SPSTAT & 0x80)
 
-#define SPI_GET_FLAG()                  (SPSTAT & 0x80)
-#define SPI_CLEAR_FLAG()                 SPSTAT = 0xC0
+		/**
+		 * @brief   SPI清除中断标志位宏函数。
+		 * @details SPI clears the interrupt flag macro function.
+		**/
+		#define SPI_CLEAR_FLAG()        do{SPSTAT = 0xC0;}while(0)
 
-FSCSTATE NVIC_SPI_Init(NVICPri_Type pri,BOOL run);
-
-#define    NVIC_SPI_CTRL(run)    do{ IE2 = (IE2 & 0xFD) | (run << 1); }while(0)
-
-#define NVIC_SPI_PRI(pri)                       \
-do{                                             \
-	IP2H = (IP2H & 0xFD) |  (pri & 0x02);       \
-	IP2  = (IP2  & 0xFD) | ((pri & 0x01) << 1); \
-}while(0)
-
-
-
-/* SPI */
-FSCSTATE GPIO_SPI_SWPort(GPIOSWPort_Type port);
-
-
-
+	#endif
+		
+	#if (PER_LIB_SPI_WORK_CTRL == 1)
+	
+		/**
+		 * @brief     SPI发送数据（一个字节）函数。
+		 * @details   SPI send data function 
+		 * @param[in] dat   要发送的数据。 data of SPI.
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE SPI_Send_Data(uint8_t dat);
 
 
+		/**
+		 * @brief     SPI接收数据（一个字节）函数。
+		 * @details   SPI receive data function. 
+		 * @param     None.
+		 * @return    [uint8_t] 接收的数据。 receive data. 
+		**/
+		uint8_t SPI_Receive_Data(void);
+
+
+		/**
+		 * @brief     SPI切换复用IO函数。
+		 * @details   SPI switch out port control function.  
+		 * @param[in] port 复用IO枚举体。IO switch enumerator.
+		 * @return    FSC_SUCCESS 返回成功。Return to success.
+		 * @return    FSC_FAIL    返回失败。Return to fail.
+		**/
+		FSCSTATE GPIO_SPI_SWPort(GPIOSWPort_Type port);
+		
+	#endif
+	
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
+#endif

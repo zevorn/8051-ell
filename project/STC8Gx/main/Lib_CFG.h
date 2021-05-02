@@ -181,6 +181,17 @@
 #define   PER_LIB_RST_INIT_CTRL    (1) /*!< RST模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_RST_WORK_CTRL    (1) /*!< RST模块工作相关宏，写1开启，写0关闭。*/
 
+
+/**
+ * @brief		配置WDT片内外设，没有中断相关的控制宏。
+ * @details	    Configure RST chip internal  peripheral.
+**/
+#define   PER_LIB_WDT_CTRL         (1) /*!< WDT模块控制宏，写1开启，写0关闭。*/
+								
+#define   PER_LIB_WDT_INIT_CTRL    (1) /*!< WDT模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_WDT_WORK_CTRL    (1) /*!< WDT模块工作相关宏，写1开启，写0关闭。*/
+
+
 /**
  * @brief		配置MDU16片内外设。
  * @details	    Configure MDU16 chip internal  peripheral.

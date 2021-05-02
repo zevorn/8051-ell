@@ -47,13 +47,11 @@
 ***/
 int main(void)
 {
-    uint8_t demo_str[] = "Hello,World!\r\n";
     STC8x_System_Init();
 	
     for(;;)
     {
 		P55 = !P55;
-		UART1_Isr_Send_Array(demo_str,14);
 		delay_ms(50);
     }
 

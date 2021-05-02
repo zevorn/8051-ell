@@ -129,7 +129,6 @@ typedef enum
 
 
 /**
- * @name    TIMER_InitType
  * @brief   定时器初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
  * @details The timer initializes the structure handle. When initializing, 
  *          please define the handle and use its address to pass parameters.
@@ -303,9 +302,8 @@ typedef struct
 
 
         /**
-         * @brief      TIMER0选择中断优先级宏函数，仅限本文件调用。
-         * @details    TIMER0 select interrupt pri macro function, 
-         *             only this file call.
+         * @brief      TIMER0选择中断优先级宏函数。
+         * @details    TIMER0 select interrupt pri macro function.
          * @param[in]  pri 中断优先级。 pri of interrupt.
         **/
         #define NVIC_TIMER0_PRI(pri)                  \
@@ -316,9 +314,8 @@ typedef struct
 
 
         /**
-         * @brief      TIMER1选择中断优先级宏函数，仅限本文件调用。
-         * @details    TIMER1 select interrupt pri macro function, 
-         *             only this file call.
+         * @brief      TIMER1选择中断优先级宏函数。
+         * @details    TIMER1 select interrupt pri macro function.
          * @param[in]  pri 中断优先级。 pri of interrupt.
         **/
         #define NVIC_TIMER1_PRI(pri)                  \

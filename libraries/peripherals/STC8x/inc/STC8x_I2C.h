@@ -196,9 +196,8 @@ typedef enum
 		
 		
 		/**
-		 * @brief      I2C选择中断优先级宏函数，仅限本文件调用。
-		 * @details    I2C select interrupt priority macro function, 
-		 *             only this file call.
+		 * @brief      I2C选择中断优先级宏函数。
+		 * @details    I2C select interrupt priority macro function.
 		 * @param[in]  pri 中断优先级。 Priority of interrupt.
 		***/
 		#define NVIC_I2C_PRI(pri)                       \

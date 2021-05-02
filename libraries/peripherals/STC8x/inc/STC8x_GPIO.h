@@ -444,9 +444,8 @@ typedef enum
 
 
 		/**
-		 * @brief      EXTI0选择中断优先级宏函数，仅限本文件调用。
-		 * @details    EXTI0 select interrupt priority macro function, 
-		 *             only this file call.
+		 * @brief      EXTI0选择中断优先级宏函数。
+		 * @details    EXTI0 select interrupt priority macro function.
 		 * @param[in]  pri 中断优先级。 Priority of interrupt.
 		**/
 		#define NVIC_EXTI0_PRI(pri)                   \
@@ -457,9 +456,8 @@ typedef enum
 
 
 		/**
-		 * @brief      EXTI1选择中断优先级宏函数，仅限本文件调用。
-		 * @details    EXTI1 select interrupt priority macro function, 
-		 *             only this file call.
+		 * @brief      EXTI1选择中断优先级宏函数。
+		 * @details    EXTI1 select interrupt priority macro function.
 		 * @param[in]  pri 中断优先级。 Priority of interrupt.
 		**/
 		#define NVIC_EXTI1_PRI(pri)                   \
@@ -469,9 +467,8 @@ typedef enum
 		}while(0)
 		
 		/**
-		 * @brief      EXTI4选择中断优先级宏函数，仅限本文件调用。
-		 * @details    EXTI4 select interrupt priority macro function, 
-		 *             only this file call.
+		 * @brief      EXTI4选择中断优先级宏函数。
+		 * @details    EXTI4 select interrupt priority macro function.
 		 * @param[in]  pri 中断优先级。 Priority of interrupt.
 		**/
 		#define NVIC_EXTI4_PRI(pri)                    \
