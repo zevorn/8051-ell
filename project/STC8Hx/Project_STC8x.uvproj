@@ -308,7 +308,7 @@
             </OnChipMemories>
           </Target51Misc>
           <C51>
-            <RegisterColoring>1</RegisterColoring>
+            <RegisterColoring>0</RegisterColoring>
             <VariablesInOrder>0</VariablesInOrder>
             <IntegerPromotion>1</IntegerPromotion>
             <uAregs>0</uAregs>
@@ -318,7 +318,7 @@
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
-            <ACallAJmp>1</ACallAJmp>
+            <ACallAJmp>0</ACallAJmp>
             <InterruptVectorAddress>0</InterruptVectorAddress>
             <VariousControls>
               <MiscControls></MiscControls>

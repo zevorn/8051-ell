@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : STC8x_SYSCLK.c
   - Author        : zeweni
-  - Update date   : 2020.04.28
+  - Update date   : 2020.05.03
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -171,6 +171,8 @@
 		
 		/**
 		 * @brief   获取系统时钟频率函数，用于定时器、串口、EEPROM等进行时钟计算。
+		 *          这个函数只能获取内部IRC做时钟源时的系统频率，如果你使用的是外部晶振，
+		 *          请在Lib_CFG.h中配置PER_LIB_SYSCLK_VALUE宏，填写你的系统时钟频率。
 		 * @details Get System clock frequendy function.
 		 * @param   None
 		 * @return  [uint32_t] 时钟频率。value of system clock frequenction. 

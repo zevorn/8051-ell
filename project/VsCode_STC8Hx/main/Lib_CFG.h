@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : Lib_CFG.h
   - Author        : zeweni
-  - Update date   : 2020.02.06                  
+  - Update date   : 2020.05.03                 
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------
@@ -43,7 +43,7 @@
 --------------------------------------------------------*/
 
 #define    STC8Ax      (0)
-#define    STC8Ax_Dx   (1)
+#define    STC8AxD4    (1)
 #define    STC8Cx      (2)
 #define    STC8Fx      (3)
 #define    STC8Gx      (4)
@@ -54,7 +54,7 @@
  * @brief		配置ELL库MCU选型。
  * @details	    Configure ADC chip internal  peripheral.
 **/
-#define    PER_LIB_MCU_MUODEL     STC8Gx
+#define    PER_LIB_MCU_MUODEL     STC8Ax
 
 
 /**
@@ -76,6 +76,16 @@
 											  
 #define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIzMER模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_TIMER_NVIC_CTRL    (1) /*!< TIMER模块中断相关宏，写1开启，写0关闭。*/
+
+/**
+ * @brief		配置UART片内外设。
+ * @details	    Configure GPIO chip internal  peripheral.
+**/
+#define   PER_LIB_UART_CTRL         (1) /*!< UART模块控制宏，写1开启，写0关闭。*/
+											
+#define   PER_LIB_UART_INIT_CTRL    (1) /*!< UART模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_UART_NVIC_CTRL    (1) /*!< UART模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_UART_WORK_CTRL    (1) /*!< UART模块工作相关宏，写1开启，写0关闭。*/
 
 
 /**
@@ -170,6 +180,17 @@
 									
 #define   PER_LIB_RST_INIT_CTRL    (1) /*!< RST模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_RST_WORK_CTRL    (1) /*!< RST模块工作相关宏，写1开启，写0关闭。*/
+
+
+/**
+ * @brief		配置WDT片内外设，没有中断相关的控制宏。
+ * @details	    Configure RST chip internal  peripheral.
+**/
+#define   PER_LIB_WDT_CTRL         (1) /*!< WDT模块控制宏，写1开启，写0关闭。*/
+								
+#define   PER_LIB_WDT_INIT_CTRL    (1) /*!< WDT模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_WDT_WORK_CTRL    (1) /*!< WDT模块工作相关宏，写1开启，写0关闭。*/
+
 
 /**
  * @brief		配置MDU16片内外设。
