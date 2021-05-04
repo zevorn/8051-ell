@@ -38,15 +38,9 @@
 #endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
-    #include "STC8Ax_REG.h"  
-#elif  (PER_LIB_MCU_MUODEL == STC8Cx)
-    #include "STC8Cx_REG.h"
-#elif  (PER_LIB_MCU_MUODEL == STC8Fx)
-    #include "STC8Fx_REG.h"
-#elif  (PER_LIB_MCU_MUODEL == STC8Gx)
-    #include "STC8Gx_REG.h"
-#elif  (PER_LIB_MCU_MUODEL == STC8Hx)
-    #include "STC8Hx_REG.h"
+
+    #include "STC8Ax_REG.h"
+	
 #endif 
 /*--------------------------------------------------------
 | @Description: STC8x core                               |
@@ -56,7 +50,41 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 
-#if (PER_LIB_MCU_MUODEL == STC8Ax)
+#ifndef PER_LIB_MCU_MUODEL 
+    /** 如果没有定义这个宏，默认为STC8Ax。
+        If the mirco is undefined，select to STC8Ax */  
+    #define PER_LIB_MCU_MUODEL STC8Ax
+#endif
+
+
+#ifndef PER_LIB_PWM_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_PWM_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_PWM_INIT_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_PWM_INIT_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_PWM_NVIC_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_PWM_NVIC_CTRL 1
+#endif
+
+
+#ifndef PER_LIB_PWM_WORK_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_PWM_WORK_CTRL 1
+#endif
+
+
 
 /*--------------------------------------------------------
 | @Description: PWM clock source enum                    |
@@ -142,25 +170,17 @@ typedef enum
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-
+#if (PER_LIB_MCU_MUODEL == STC8Ax)
 /*--------------------------------------------------------
 | @Description: PWM Adjust the duty cycle define function|
 --------------------------------------------------------*/
 
-#define PWM0_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM0T1_ADDRESS) = fValue; PWMxT2(PWM0T2_ADDRESS) = sValue;}while(0)
-#define PWM1_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM1T1_ADDRESS) = fValue; PWMxT2(PWM1T2_ADDRESS) = sValue;}while(0)
-#define PWM2_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM2T1_ADDRESS) = fValue; PWMxT2(PWM2T2_ADDRESS) = sValue;}while(0)
-#define PWM3_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM3T1_ADDRESS) = fValue; PWMxT2(PWM3T2_ADDRESS) = sValue;}while(0)
-#define PWM4_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM4T1_ADDRESS) = fValue; PWMxT2(PWM4T2_ADDRESS) = sValue;}while(0)
-#define PWM5_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM5T1_ADDRESS) = fValue; PWMxT2(PWM5T2_ADDRESS) = sValue;}while(0)
-#define PWM6_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM6T1_ADDRESS) = fValue; PWMxT2(PWM6T2_ADDRESS) = sValue;}while(0)
-#define PWM7_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM7T1_ADDRESS) = fValue; PWMxT2(PWM7T2_ADDRESS) = sValue;}while(0)
 
 /*--------------------------------------------------------
 | @Description: PWM working function                     |
 --------------------------------------------------------*/
 
-FSCSTATE PWM_CNT_Init(PWMCLKSrc_Type clkSrc,uint16_t value,BOOL run);
+FSCSTATE PWM_CNT_Init(PWMCLKSrc_Type clkSrc,uint16_t period,BOOL run);
 
 /*--------------------------------------------------------
 | @Description: PWM road working function                |
@@ -211,8 +231,8 @@ FSCSTATE PWM_ETADC_Init(uint16_t tValue,BOOL run);
 #define PWM6_CLEAR_FLAG()         PWMIF &= 0xBF
 #define PWM7_CLEAR_FLAG()         PWMIF &= 0x7F
 
-FSCSTATE NVIC_PWM_CNT_Init(NVICPri_Type priority,BOOL run);
-FSCSTATE NVIC_PWM_ABD_Init(NVICPri_Type priority,BOOL run);
+FSCSTATE NVIC_PWM_CNT_Init(NVICPri_Type pri,BOOL run);
+FSCSTATE NVIC_PWM_ABD_Init(NVICPri_Type pri,BOOL run);
 FSCSTATE NVIC_PWM0_Init(PWMFlip_Type flipMode);
 FSCSTATE NVIC_PWM1_Init(PWMFlip_Type flipMode);
 FSCSTATE NVIC_PWM2_Init(PWMFlip_Type flipMode);
@@ -221,6 +241,20 @@ FSCSTATE NVIC_PWM4_Init(PWMFlip_Type flipMode);
 FSCSTATE NVIC_PWM5_Init(PWMFlip_Type flipMode);
 FSCSTATE NVIC_PWM6_Init(PWMFlip_Type flipMode);
 FSCSTATE NVIC_PWM7_Init(PWMFlip_Type flipMode);
+
+
+#define NVIC_PWM_CNT_PRI(pri)                   \
+do{                                             \
+	IP2H = (IP2H & 0xFB) | ((pri & 0x02) << 1); \
+	IP2  = (IP2  & 0xFB) | ((pri & 0x01) << 2); \
+}while(0)
+
+
+#define NVIC_PWM_ABD_PRI(pri)                   \
+do{                                             \
+	IP2H = (IP2H & 0xF7) | ((pri & 0x02) << 2); \
+	IP2  = (IP2  & 0xF7) | ((pri & 0x01) << 3); \
+}while(0)
 
 #define    NVIC_PWM_CNT_CTRL(run)     do{ PWMCR = (PWMCR & 0xBF) | (run << 6); }while(0)	
 #define    NVIC_PWM_ABD_CTRL(run)     do{ PWMFDCR = (PWMFDCR & 0xF7) | (run << 3); }while(0)	
@@ -235,6 +269,18 @@ FSCSTATE NVIC_PWM7_Init(PWMFlip_Type flipMode);
 #define    NVIC_PWM7_CTRL(run)     do{ EAXFR_ENABLE(); PWMxCR(PWM7CR_ADDRESS) = (PWMxCR(PWM7CR_ADDRESS) & 0xF8) | (run); EAXFR_DISABLE(); }while(0)		
 
 
+
+#define PWM0_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM0T1_ADDRESS) = fValue; PWMxT2(PWM0T2_ADDRESS) = sValue;}while(0)
+#define PWM1_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM1T1_ADDRESS) = fValue; PWMxT2(PWM1T2_ADDRESS) = sValue;}while(0)
+#define PWM2_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM2T1_ADDRESS) = fValue; PWMxT2(PWM2T2_ADDRESS) = sValue;}while(0)
+#define PWM3_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM3T1_ADDRESS) = fValue; PWMxT2(PWM3T2_ADDRESS) = sValue;}while(0)
+#define PWM4_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM4T1_ADDRESS) = fValue; PWMxT2(PWM4T2_ADDRESS) = sValue;}while(0)
+#define PWM5_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM5T1_ADDRESS) = fValue; PWMxT2(PWM5T2_ADDRESS) = sValue;}while(0)
+#define PWM6_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM6T1_ADDRESS) = fValue; PWMxT2(PWM6T2_ADDRESS) = sValue;}while(0)
+#define PWM7_DUTY_CTRL(fValue,sValue) do{PWMxT1(PWM7T1_ADDRESS) = fValue; PWMxT2(PWM7T2_ADDRESS) = sValue;}while(0)
+
+
+
 FSCSTATE GPIO_PWM0_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM1_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM2_SWPort(GPIOSWPort_Type port);
@@ -243,8 +289,6 @@ FSCSTATE GPIO_PWM4_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM5_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM6_SWPort(GPIOSWPort_Type port);
 FSCSTATE GPIO_PWM7_SWPort(GPIOSWPort_Type port);
-
-
 
 #endif
 

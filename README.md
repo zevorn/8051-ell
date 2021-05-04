@@ -3,7 +3,7 @@
 
 # 8051-ELL 库简介
 
-<font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://zewen-i.github.io/8051-ELL-WEB/)</font> <font color=#0BBEE>[<u>**全新的API文档中心**</u>](https://zewen-i.github.io/8051-ELL-API/)</font>  
+<font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://8051-ell-web.vercel.app/#/)</font> <font color=#0BBEE>[<u>**全新的API文档中心**</u>](https://8051-ell-api.vercel.app/index.html)</font>  
 
 [![](https://img.shields.io/badge/version-1.1.6-green)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/license/zewen-i/8051-ELL-LIB?color=orange)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/stars/zewen-i/8051-ELL-LIB?color=green)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/forks/zewen-i/8051-ELL-LIB)](https://github.com/zewen-i/8051-ELL-LIB) <a href='https://gitee.com/zeweni/ELL-8051-LIB/stargazers'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=white' alt='star'></img></a> <a href='https://gitee.com/zeweni/ELL-8051-LIB/members'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=gray' alt='fork'></img></a>
 
@@ -39,7 +39,7 @@ QQ技术支持群：` 1001220381`
 
 
 
-进入 <font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://zewen-i.github.io/8051-ELL-WEB/)</font>  可查看入门教程。
+进入 <font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://8051-ell-web.vercel.app/#/)</font>  可查看入门教程。
 
 
 

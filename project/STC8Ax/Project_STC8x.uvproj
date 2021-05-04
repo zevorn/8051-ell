@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -502,9 +502,9 @@
           <GroupName>user/main</GroupName>
           <Files>
             <File>
-              <FileName>lib_cfg.h</FileName>
+              <FileName>Lib_CFG.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\main\lib_cfg.h</FilePath>
+              <FilePath>.\main\Lib_CFG.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>

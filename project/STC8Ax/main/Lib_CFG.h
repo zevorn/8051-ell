@@ -143,7 +143,7 @@
 
 /**
  * @brief		配置SPI片内外设。
- * @details	    Configure PCA chip internal  peripheral.
+ * @details	    Configure SPI chip internal  peripheral.
 **/
 #define   PER_LIB_SPI_CTRL         (1) /*!< SPI模块控制宏，写1开启，写0关闭。*/
 				  
@@ -151,16 +151,26 @@
 #define   PER_LIB_SPI_NVIC_CTRL    (1) /*!< SPI模块中断相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_SPI_WORK_CTRL    (1) /*!< SPI模块工作相关宏，写1开启，写0关闭。*/
 
+
 /**
  * @brief		配置PCA片内外设。
  * @details	    Configure PCA chip internal  peripheral.
 **/
-#define   PER_LIB_PCA_CTRL         (1) /*!< GPIO模块控制宏，写1开启，写0关闭。*/
-				 
-#define   PER_LIB_PCA_INIT_CTRL    (1) /*!< GPIO模块初始化相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_PCA_NVIC_CTRL    (1) /*!< GPIO模块中断相关宏，写1开启，写0关闭。*/
-#define   PER_LIB_PCA_WORK_CTRL    (1) /*!< GPIO模块工作相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PCA_CTRL         (1) /*!< PCA模块控制宏，写1开启，写0关闭。*/
+											
+#define   PER_LIB_PCA_INIT_CTRL    (1) /*!< PCA模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PCA_NVIC_CTRL    (1) /*!< PCA模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PCA_WORK_CTRL    (1) /*!< PCA模块工作相关宏，写1开启，写0关闭。*/
 
+/**
+ * @brief		配置PWM片内外设。
+ * @details	    Configure PWM chip internal  peripheral.
+**/
+#define   PER_LIB_PWM_CTRL         (1) /*!< PWM模块控制宏，写1开启，写0关闭。*/
+											
+#define   PER_LIB_PWM_INIT_CTRL    (1) /*!< PWM模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PWM_NVIC_CTRL    (1) /*!< PWM模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_PWM_WORK_CTRL    (1) /*!< PWM模块工作相关宏，写1开启，写0关闭。*/
 
 /**
  * @brief		配置电源管理片内外设，没有初始化相关的控制宏。
@@ -184,7 +194,7 @@
 
 /**
  * @brief		配置WDT片内外设，没有中断相关的控制宏。
- * @details	    Configure RST chip internal  peripheral.
+ * @details	    Configure WDT chip internal  peripheral.
 **/
 #define   PER_LIB_WDT_CTRL         (1) /*!< WDT模块控制宏，写1开启，写0关闭。*/
 								
