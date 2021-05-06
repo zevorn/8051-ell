@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : STC8Ax_PWM.c
   - Author        : zeweni
-  - Update date   : 2020.05.06
+  - Update date   : 2020.02.06
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -49,13 +49,13 @@
 	#if (PER_LIB_MCU_MUODEL == STC8Ax)
 
 			/**
-			 * @brief     PWMè®¡æ•°å™¨åˆå§‹åŒ–,å¿…é¡»åœ¨æ‰€æœ‰PWMåˆå§‹åŒ–å‡½æ•°çš„åé¢è°ƒç”¨ã€‚
+			 * @brief     PWM¼ÆÊıÆ÷³õÊ¼»¯,±ØĞëÔÚËùÓĞPWM³õÊ¼»¯º¯ÊıµÄºóÃæµ÷ÓÃ¡£
 			 * @details   PWM counter init function,It must be initialized last.
-			 * @param[in] clkSrc PWMæ—¶é’Ÿæºã€‚PWM clock source.
-			 * @param[in] period PWMå‘¨æœŸå€¼ï¼ˆè®¡æ•°å™¨é‡è£…è½½å€¼ï¼‰ã€‚PWM period value (counter reload value)
-			 * @param[in] run è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] clkSrc PWMÊ±ÖÓÔ´¡£PWM clock source.
+			 * @param[in] period PWMÖÜÆÚÖµ£¨¼ÆÊıÆ÷ÖØ×°ÔØÖµ£©¡£PWM period value (counter reload value)
+			 * @param[in] run ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM_CNT_Init(PWMCLKSrc_Type clkSrc,uint16_t period,BOOL run)
 			{
@@ -72,14 +72,14 @@
 			}
 
 			/**
-			 * @brief       PWM0é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM0Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM0 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM0_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -97,14 +97,14 @@
 			}
 
 			/**
-			 * @brief       PWM1é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM1Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM1 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM1_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -122,14 +122,14 @@
 			}
 
 			/**
-			 * @brief       PWM2é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM2Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM2 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM2_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -147,14 +147,14 @@
 			}
 
 			/**
-			 * @brief       PWM3é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM3Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM3 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM3_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -172,14 +172,14 @@
 			}
 
 			/**
-			 * @brief       PWM4é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM4Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM4 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM4_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -197,14 +197,14 @@
 			}
 
 			/**
-			 * @brief       PWM5é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM5Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM5 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM5_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -222,14 +222,14 @@
 			}
 
 			/**
-			 * @brief       PWM6é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM6Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM6 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM6_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -247,14 +247,14 @@
 			}
 
 			/**
-			 * @brief       PWM7é€šé“åˆå§‹åŒ–å‡½æ•°ï¼Œå®ƒå¿…é¡»åœ¨PWMè®¡æ•°å™¨åˆå§‹åŒ–å‡½æ•°ä¹‹å‰è°ƒç”¨ã€‚
+			 * @brief       PWM7Í¨µÀ³õÊ¼»¯º¯Êı£¬Ëü±ØĞëÔÚPWM¼ÆÊıÆ÷³õÊ¼»¯º¯ÊıÖ®Ç°µ÷ÓÃ¡£
 			 * @details     PWM7 road init function,it is best to initialize before the counter.
-			 * @param[in]   level    PWMå¼€å§‹ç”µå¹³ã€‚PWM start level.
-			 * @param[in]   fValue   ç¬¬ä¸€ä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the first reversal point.
-			 * @param[in]   sValue   ç¬¬äºŒä¸ªç”µå¹³ç¿»è½¬ç‚¹ã€‚The value of the second reversal point.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   level    PWM¿ªÊ¼µçÆ½¡£PWM start level.
+			 * @param[in]   fValue   µÚÒ»¸öµçÆ½·­×ªµã¡£The value of the first reversal point.
+			 * @param[in]   sValue   µÚ¶ş¸öµçÆ½·­×ªµã¡£The value of the second reversal point.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE PWM7_Init(PWMStartLevel_Type level,uint16_t fValue,uint16_t sValue,BOOL run)
 			{
@@ -272,13 +272,13 @@
 			}
 
 			/**
-			 * @brief       PWMå¼‚å¸¸æ£€æµ‹åˆå§‹åŒ–å‡½æ•°ã€‚
+			 * @brief       PWMÒì³£¼ì²â³õÊ¼»¯º¯Êı¡£
 			 * @details     PWM abnormal detection init function.
-			 * @param[in]   sigSrc  å¼‚å¸¸æ£€æµ‹ä¿¡å·æºã€‚Anomaly detection signal source.
-			 * @param[in]   mode    å¼‚å¸¸æ£€æµ‹æ¨¡å¼é€‰æ‹©ã€‚Anomaly detection mode selection.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   sigSrc  Òì³£¼ì²âĞÅºÅÔ´¡£Anomaly detection signal source.
+			 * @param[in]   mode    Òì³£¼ì²âÄ£Ê½Ñ¡Ôñ¡£Anomaly detection mode selection.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/			
 			FSCSTATE PWM_ABD_Init( PWMABDSignal_Type sigSrc,PWMABDMode_Type mode,BOOL run)
 			{
@@ -292,12 +292,12 @@
 
 
 			/**
-			 * @brief       PWMè§¦å‘ADCå‡½æ•°ã€‚
+			 * @brief       PWM´¥·¢ADCº¯Êı¡£
 			 * @details     PWM trigger associated ADC init function.
-			 * @param[in]   tValue  è§¦å‘ADCçš„è®¡æ•°å€¼ã€‚The value of trigger associated ADC.
-			 * @param[in]   run     è¿è¡Œæ§åˆ¶ä½ã€‚Run control bit.
-			 * @return      FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return      FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in]   tValue  ´¥·¢ADCµÄ¼ÆÊıÖµ¡£The value of trigger associated ADC.
+			 * @param[in]   run     ÔËĞĞ¿ØÖÆÎ»¡£Run control bit.
+			 * @return      FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return      FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/			
 			FSCSTATE PWM_ETADC_Init(uint16_t tValue,BOOL run)
 			{
@@ -313,12 +313,12 @@
 			}
 
 			/**
-			 * @brief     PWMè®¡æ•°å™¨ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ã€‚
+			 * @brief     PWM¼ÆÊıÆ÷ÖĞ¶Ï³õÊ¼»¯º¯Êı¡£
 			 * @details   PWM Counter NVIC function.   
-			 * @param[in] pri ä¸­æ–­ä¼˜å…ˆçº§ã€‚interrupt priority.
-			 * @param[in] run ä½¿èƒ½æ§åˆ¶ä½ã€‚enable control. 
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] pri ÖĞ¶ÏÓÅÏÈ¼¶¡£interrupt priority.
+			 * @param[in] run Ê¹ÄÜ¿ØÖÆÎ»¡£enable control. 
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE NVIC_PWM_CNT_Init(NVICPri_Type pri,BOOL run)
 			{
@@ -329,12 +329,12 @@
 
 
 			/**
-			 * @brief     PWMå¼‚å¸¸æ£€æµ‹ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ã€‚
+			 * @brief     PWMÒì³£¼ì²âÖĞ¶Ï³õÊ¼»¯º¯Êı¡£
 			 * @details   PWM abnormal detection NVIC function.   
-			 * @param[in] pri ä¸­æ–­ä¼˜å…ˆçº§ã€‚interrupt priority.
-			 * @param[in] run ä½¿èƒ½æ§åˆ¶ä½ã€‚enable control. 
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] pri ÖĞ¶ÏÓÅÏÈ¼¶¡£interrupt priority.
+			 * @param[in] run Ê¹ÄÜ¿ØÖÆÎ»¡£enable control. 
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE NVIC_PWM_ABD_Init(NVICPri_Type pri,BOOL run)
 			{
@@ -347,13 +347,13 @@
 
 
 			/**
-			 * @brief     PWM0ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM0ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM0 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -367,13 +367,13 @@
 
 			
 			/**
-			 * @brief     PWM1ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM1ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM1 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -387,13 +387,13 @@
 
 			
 			/**
-			 * @brief     PWM2ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM2ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM2 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -407,13 +407,13 @@
 
 			
 			/**
-			 * @brief     PWM3ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM3ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM3 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -427,13 +427,13 @@
 
 			
 			/**
-			 * @brief     PWM4ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM4ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM4 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -447,13 +447,13 @@
 
 			
 			/**
-			 * @brief     PWM5ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM5ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM5 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -467,13 +467,13 @@
 
 			
 			/**
-			 * @brief     PWM6ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM6ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM6 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -487,13 +487,13 @@
 
 			
 			/**
-			 * @brief     PWM7ä¸­æ–­åˆå§‹åŒ–å‡½æ•°ï¼Œè®¾ç½®è§¦å‘ä¸­æ–­çš„ç”µå¹³ç¿»è½¬ç‚¹ã€‚
+			 * @brief     PWM7ÖĞ¶Ï³õÊ¼»¯º¯Êı£¬ÉèÖÃ´¥·¢ÖĞ¶ÏµÄµçÆ½·­×ªµã¡£
 			 * @details   PWM7 interrupt initialization function, 
 			 *            set the level flip point that triggers the interrupt.
-			 * @param[in] flipPoint ç”µå¹³ç¿»è½¬ç‚¹ Level flip point.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
-			 * @note      PWM0~7,ä¸PWMè®¡æ•°å™¨å…±ç”¨ä¸€ä¸ªä¸­æ–­æœåŠ¡å…¥å£ï¼Œå¦‚æœè®¾ç½®çš„ç”µå¹³è§¦å‘ç‚¹ä¸ºæ— ï¼Œé‚£ä¹ˆå°†å…³é—­è¿™ä¸ªä¸­æ–­ã€‚
+			 * @param[in] flipPoint µçÆ½·­×ªµã Level flip point.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
+			 * @note      PWM0~7,ÓëPWM¼ÆÊıÆ÷¹²ÓÃÒ»¸öÖĞ¶Ï·şÎñÈë¿Ú£¬Èç¹ûÉèÖÃµÄµçÆ½´¥·¢µãÎªÎŞ£¬ÄÇÃ´½«¹Ø±ÕÕâ¸öÖĞ¶Ï¡£
 			 *            PWM0~7 share an interrupt service entry with the PWM counter. 
 			 *            If the set level trigger point is none, then this interrupt will be closed.
 			**/
@@ -507,11 +507,11 @@
 
 			
 			/**
-			 * @brief     PWM0åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM0ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM0 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM0_SWPort(GPIOSWPort_Type port)
 			{
@@ -528,11 +528,11 @@
 			
 			
 			/**
-			 * @brief     PWM1åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM1ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM1 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM1_SWPort(GPIOSWPort_Type port)
 			{
@@ -548,11 +548,11 @@
 
 			
 			/**
-			 * @brief     PWM2åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM2ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM2 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM2_SWPort(GPIOSWPort_Type port)
 			{
@@ -568,11 +568,11 @@
 
 			
 			/**
-			 * @brief     PWM3åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM3ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM3 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM3_SWPort(GPIOSWPort_Type port)
 			{
@@ -588,11 +588,11 @@
 
 			
 			/**
-			 * @brief     PWM4åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM4ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM4 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM4_SWPort(GPIOSWPort_Type port)
 			{
@@ -608,11 +608,11 @@
 
 			
 			/**
-			 * @brief     PWM5åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM5ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM5 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM5_SWPort(GPIOSWPort_Type port)
 			{
@@ -628,11 +628,11 @@
 
 
 			/**
-			 * @brief     PWM6åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM6ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM6 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM6_SWPort(GPIOSWPort_Type port)
 			{
@@ -648,11 +648,11 @@
 
 			
 			/**
-			 * @brief     PWM7åˆ‡æ¢å¤ç”¨IOå‡½æ•°ã€‚
+			 * @brief     PWM7ÇĞ»»¸´ÓÃIOº¯Êı¡£
 			 * @details   PWM7 switch out port control function.  
-			 * @param[in] port å¤ç”¨IOæšä¸¾ä½“ã€‚IO switch enumerator.
-			 * @return    FSC_SUCCESS è¿”å›æˆåŠŸã€‚Return to success.
-			 * @return    FSC_FAIL    è¿”å›å¤±è´¥ã€‚Return to fail.
+			 * @param[in] port ¸´ÓÃIOÃ¶¾ÙÌå¡£IO switch enumerator.
+			 * @return    FSC_SUCCESS ·µ»Ø³É¹¦¡£Return to success.
+			 * @return    FSC_FAIL    ·µ»ØÊ§°Ü¡£Return to fail.
 			**/
 			FSCSTATE GPIO_PWM7_SWPort(GPIOSWPort_Type port)
 			{

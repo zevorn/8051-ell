@@ -49,6 +49,31 @@
 |                                REGISTER                               |
 -----------------------------------------------------------------------*/
 
+
+/*--------------------------------------------------------
+| @Description: kernel management                        |
+--------------------------------------------------------*/
+
+//内核特殊功能寄存器
+sfr ACC         =   0xe0;
+sfr B           =   0xf0;
+sfr PSW         =   0xd0;
+sbit CY         =   PSW^7;
+sbit AC         =   PSW^6;
+sbit F0         =   PSW^5;
+sbit RS1        =   PSW^4;
+sbit RS0        =   PSW^3;
+sbit OV         =   PSW^2;
+sbit F1         =   PSW^1;
+sbit P          =   PSW^0;
+sfr SP          =   0x81;
+sfr DPL         =   0x82;
+sfr DPH         =   0x83;
+sfr TA          =   0xae;
+sfr DPS         =   0xe3;
+sfr DPL1        =   0xe4;
+sfr DPH1        =   0xe5;
+
 /*--------------------------------------------------------
 | @Description: system management                        |
 --------------------------------------------------------*/
