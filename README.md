@@ -113,4 +113,4 @@ QQ技术支持群：` 1001220381`
 
 欢迎加群，在这里可以帮你解决学习ELL库遇到的问题。
 
-<img src="doc/image/QQ交流群.png" style="zoom:30%;" />   <img src="doc/image/微信交流群.jpg" style="zoom:20%;" />
+ > <img src="doc/image/QQ交流群.png" style="zoom:30%;" />
