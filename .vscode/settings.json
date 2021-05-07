@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "stc8x_uart.h": "c",
-        "predelay.h": "c"
-    }
-}

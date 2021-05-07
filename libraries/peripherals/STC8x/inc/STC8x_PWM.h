@@ -90,6 +90,10 @@
 | @Description: PWM clock source enum                    |
 --------------------------------------------------------*/
 
+/**
+ * @brief     RST复位方式选择枚举体。
+ * @details   RST Reset Select Enumerator.
+**/
 typedef enum
 {
 	PWM_SCLK_DIV_1  =  0x00,
