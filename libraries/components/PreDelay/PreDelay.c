@@ -1,9 +1,11 @@
+/*-----------------------------------------------------------------------
+|                            FILE DESCRIPTION                           |
+-----------------------------------------------------------------------*/
 /*----------------------------------------------------------------------
-  - File name      : PreDelay.c
-  - Author         : Quark Team
-  - Update date    : 2020-12-29                
-  -	Copyright      : Gevico Electronic studio   
-  - Module comments: Precision delay component.
+  - File name     : Predelay.h
+  - Author        : zeweni
+  - Update date   : 2020.05.07                
+  -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
 |                            COPYRIGHT NOTICE                            |
@@ -31,55 +33,58 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-static uint16_t MS_Count = 0;
+static uint16_t G_MS_Count = 0;
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 #if (COM_LIB_PREDELAY_CTRL == 1)
-/*--------------------------------------------------------
-| @Description: MCU delay ms function                    |
-| @param      : None                                     |
-| @return     : Success(1) / Fail(0)                     |
---------------------------------------------------------*/
 
-FSCSTATE Pre_Delay_init(void)
-{
-	extern uint32_t Get_SysClk_FRE(void);
-    uint32_t sysClk_FRE;
-	/* Get system clock frequency */
-	sysClk_FRE = Get_SysClk_FRE();
-	MS_Count = sysClk_FRE / DELAY_COUNT;
-	return FSC_SUCCESS;
-}
+    /**
+     * @brief      精准延时组件初始化。
+     * @details    Precisely delay component initialization.  
+     * @param      None.
+     * @return     FSC_SUCCESS 返回成功。Return to success.
+     * @return     FSC_FAIL    返回失败。Return to fail.
+    **/
+    FSCSTATE Pre_Delay_init(void)
+    {
+        extern uint32_t Get_SysClk_FRE(void);
+        uint32_t sysClk_FRE;
+        /* Get system clock frequency */
+        sysClk_FRE = Get_SysClk_FRE();
+        MS_Count = sysClk_FRE / DELAY_COUNT;
+        return FSC_SUCCESS;
+    }
 
-/*--------------------------------------------------------
-| @Description: MCU power on stability delay function    |
-| @param      : None                                     |
-| @return     : Success(1) / Fail(0)                     |
---------------------------------------------------------*/
 
-FSCSTATE Pre_Delay_Pos(void) 
-{
-	uint16_t i = 1000;
-	for(; i>0; i--) ;
-	return FSC_SUCCESS;
-}
+    /**
+     * @brief      上电延时，帮助系统稳定。
+     * @details    Power-on delay helps to stabilize the system.
+     * @param      None.
+     * @return     None.
+    **/
+    void Pre_Delay_Pos(void) 
+    {
+        uint16_t i = 10000;
+        for(; i>0; i--);
+    }
 
-/*--------------------------------------------------------
-| @Description: MCU delay ms function                    |
-| @param      : uint16 nms                               |
-| @return     : None                                     |
---------------------------------------------------------*/
 
-void Pre_Delay_ms(uint16_t nms)
-{
-	uint16_t i;
-	 for(; nms>0; nms--)
-	 {			
-		 i = MS_Count;
-		 while(--i);
-	 }
-}
+    /**
+     * @brief      延时一段时间，ms级别。
+     * @details    Delay for a period of time, ms level.  
+     * @param[in]  nms 延时时间.Delay time.
+     * @return     None.
+    **/
+    void Pre_Delay_ms(uint16_t nms)
+    {
+        uint16_t i;
+        for(; nms>0; nms--)
+        {			
+            i = G_MS_Count;
+            while(--i);
+        }
+    }
 
 #endif
 /*-----------------------------------------------------------------------

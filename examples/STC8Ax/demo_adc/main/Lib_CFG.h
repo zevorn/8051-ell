@@ -70,7 +70,7 @@
   * @brief   Precision delay
 ***/
 #define  COM_LIB_PREDELAY_CTRL        (1)     // "1" is enable, "0" is disable 
-#define  COM_LIB_PREDELAY_BASE        (11000U) // task number max
+#define  COM_LIB_PREDELAY_BASE        (11000UL) // task number max
 
 
 #endif
