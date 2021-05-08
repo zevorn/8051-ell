@@ -21,7 +21,7 @@
  * 8051 ELL low-layer libraries is distributed in the hope that it will 
  * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
- * Apache-2.0 License License for more details.
+ * Apache-2.0 License for more details.
 
  * You should have received a copy of the Apache-2.0 License.8051 ELL 
  * low-layer libraries. If not, see <http://www.apache.org/licenses/>.
@@ -52,7 +52,7 @@ static uint16_t G_MS_Count = 0;
         uint32_t sysClk_FRE;
         /* Get system clock frequency */
         sysClk_FRE = Get_SysClk_FRE();
-        MS_Count = sysClk_FRE / DELAY_COUNT;
+        G_MS_Count = sysClk_FRE / DELAY_COUNT;
         return FSC_SUCCESS;
     }
 

@@ -21,7 +21,7 @@
 ; * Ant Real Time Operating System is distributed in the hope that it will 
 ; * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
 ; * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-; * Apache-2.0 License License for more details.
+; * Apache-2.0 License for more details.
 ; 
 ; * You should have received a copy of the Apache-2.0 License.Ant Real Time
 ; * Operating System. If not, see <http://www.apache.org/licenses/>.
