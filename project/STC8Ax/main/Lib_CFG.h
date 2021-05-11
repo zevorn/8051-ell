@@ -69,13 +69,14 @@
 
 
 /**
- * @brief		配置TIMER片内外设，没有工作相关的控制宏。
+ * @brief		配置TIMER片内外设。
  * @details	    Configure TIMER chip internal  peripheral.
 **/
 #define   PER_LIB_TIMER_CTRL         (1) /*!< TIMER模块控制宏，写1开启，写0关闭。*/
 											  
 #define   PER_LIB_TIMER_INIT_CTRL    (1) /*!< TIzMER模块初始化相关宏，写1开启，写0关闭。*/
 #define   PER_LIB_TIMER_NVIC_CTRL    (1) /*!< TIMER模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_TIMER_WORK_CTRL    (1) /*!< TIMER模块工作相关宏，写1开启，写0关闭。*/
 
 /**
  * @brief		配置UART片内外设。

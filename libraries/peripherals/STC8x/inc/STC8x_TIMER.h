@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : STC8x_TIMER.h
   - Author        : zeweni
-  - Update date   : 2020.02.06
+  - Update date   : 2020.05.11
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -82,6 +82,11 @@
     #define PER_LIB_TIMER_INIT_CTRL 1
 #endif
 
+#ifndef PER_LIB_TIMER_WORK_CTRL
+    /** 如果没有定义这个宏，默认为1。
+        If the mirco is undefined，select to "1" */
+    #define PER_LIB_TIMER_WORK_CTRL 1
+#endif
 
 #ifndef PER_LIB_TIMER_NVIC_CTRL
     /** 如果没有定义这个宏，默认为1。
@@ -142,7 +147,7 @@ typedef struct
     TIMERMode_Type Mode;      /*!< 定时器工作模式。Working mode. */
     TIMERTCycle_Type TCycle;  /*!< 定时器指令周期。Instruction cycle. */
     BOOL ClkOut;              /*!< 定时器可编程时钟输出控制位。Programmable clock output. */
-    uint16_t Time;           /*!< 定时器定时时间。Loading initial value. */
+    uint32_t Time;           /*!< 定时器定时时间。Loading initial value. */
     BOOL Run;                 /*!< 定时器运行控制位。Operation control bit. */
 }   TIMER_InitType;
 
@@ -225,7 +230,51 @@ typedef struct
         FSCSTATE TIMER4_Init(const TIMER_InitType *timerx);
 
     #endif
+	
+	#if (PER_LIB_TIMER_WORK_CTRL == 1)
+	
+        /**
+         * @brief     定时器0工作开关控制宏函数。
+         * @details   timer0 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER0_WORK_CTRL(run)     do{ TR0 = run; }while(0)	
 
+		
+        /**
+         * @brief     定时器1工作开关控制宏函数。
+         * @details   timer1 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER1_WORK_CTRL(run)     do{ TR1 = run; }while(0)	
+		
+		
+
+        /**
+         * @brief     定时器2工作开关控制宏函数。
+         * @details   timer2 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER2_WORK_CTRL(run)     do{AUXR = (AUXR & 0xEF) | (run << 4);  }while(0)	
+		
+		
+        /**
+         * @brief     定时器3工作开关控制宏函数。
+         * @details   timer3 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER3_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0xF7) | (run << 3)}while(0)	
+		
+		
+        /**
+         * @brief     定时器4工作开关控制宏函数。
+         * @details   timer4 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER4_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0x7F) | (run << 7)}while(0)		
+
+	#endif
+		
     #if (PER_LIB_TIMER_NVIC_CTRL == 1)
 
         /**

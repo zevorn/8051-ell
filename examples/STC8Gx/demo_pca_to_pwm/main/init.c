@@ -78,7 +78,7 @@ static void STC8x_PCA_Config(void)
      * so, PCA to PWM frequency = 52.6 / 1024 Hz = 51Hz
      */
 	TIMER_InitStruct.Mode = TIMER_16BitAutoReload;
-	TIMER_InitStruct.Value = 19;     //19us
+	TIMER_InitStruct.Time = 19;     //19us
 	TIMER_InitStruct.Run = ENABLE;
 	TIMER0_Init(&TIMER_InitStruct);
     
