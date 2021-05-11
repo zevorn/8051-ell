@@ -288,7 +288,8 @@ do{                                                    \
             #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
             
                 EAXFR_ENABLE();
-                TM3PS = timerx -> SysClkDiv;
+                TM2PS = timerx -> SysClkDiv;
+			
                 TIMER2_TIM_CFG(timerx -> Time);
                 EAXFR_DISABLE();
             
@@ -368,7 +369,7 @@ do{                                                    \
             #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
             
                 EAXFR_ENABLE();
-                TM3PS = timerx -> SysClkDiv;
+                TM4PS = timerx -> SysClkDiv;
                 TIMER3_TIM_CFG(timerx -> Time);
                 EAXFR_DISABLE();
             

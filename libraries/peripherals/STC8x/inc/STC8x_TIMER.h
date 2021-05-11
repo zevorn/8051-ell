@@ -330,21 +330,24 @@ typedef struct
 
 
         /**
-         * @brief   定时器2清除中断请求标志位宏函数。
+		 * @brief   定时器2清除中断请求标志位宏函数,
+		 *          只有STC8A，STC8F需要清，STC8AxD4和其它STC8型号不需要清。
          * @details TIMER2 clears  interrupt request flag bit macro function. 
         **/
         #define    TIMER2_CLEAR_FLAG()    do{ AUXINTIF &= 0xFE; }while(0)
 
 
         /**
-         * @brief   定时器3清除中断请求标志位宏函数。
+         * @brief   定时器3清除中断请求标志位宏函数，
+		 *          只有STC8A，STC8F需要清，STC8AxD4和其它STC8型号不需要清。
          * @details TIMER3 clears  interrupt request flag bit macro function. 
         **/
         #define    TIMER3_CLEAR_FLAG()    do{ AUXINTIF &= 0xFD; }while(0)
 
 
         /**
-         * @brief   定时器4清除中断请求标志位宏函数。
+         * @brief   定时器4清除中断请求标志位宏函数，
+		 *          只有STC8A，STC8F需要清，STC8AxD4和其它STC8型号不需要清。
          * @details TIMER4 clears  interrupt request flag bit macro function. 
         **/
         #define    TIMER4_CLEAR_FLAG()    do{ AUXINTIF &= 0xFB; }while(0)
