@@ -3,7 +3,7 @@
 
 # 8051-ELL 库简介
 
-<font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://8051-ell-web.vercel.app/#/)</font> <font color=#0BBEE>[<u>**全新的API文档中心**</u>](https://8051-ell-api.vercel.app/index.html)</font>  
+<font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://8051-ell-web.vercel.app/#/)</font>  <font color=#0BBEE>[<u>**全新的API文档中心**</u>](https://8051-ell-api.vercel.app/index.html)</font>   <font color=#0BBEE>[<u>**ELL-知识星球**</u>](https://t.zsxq.com/YBEQF6y)</font>  
 
 [![](https://img.shields.io/badge/version-1.1.6-green)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/license/zewen-i/8051-ELL-LIB?color=orange)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/stars/zewen-i/8051-ELL-LIB?color=green)](https://github.com/zewen-i/8051-ELL-LIB) [![](https://badgen.net/github/forks/zewen-i/8051-ELL-LIB)](https://github.com/zewen-i/8051-ELL-LIB) <a href='https://gitee.com/zeweni/ELL-8051-LIB/stargazers'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=white' alt='star'></img></a> <a href='https://gitee.com/zeweni/ELL-8051-LIB/members'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=gray' alt='fork'></img></a>
 
@@ -33,7 +33,6 @@ QQ技术支持群：` 1001220381`
 
 
 ****
-
 
 ## 新手如何入门
 
@@ -102,6 +101,7 @@ QQ技术支持群：` 1001220381`
 | STC8H系列 | √      | √    | √    | √       |     |      |  | X | √      | √    | √     | √      | X | X | X | X |
 
 
+
 # 打赏和支持
 
 
@@ -114,3 +114,15 @@ QQ技术支持群：` 1001220381`
 欢迎加群，在这里可以帮你解决学习ELL库遇到的问题。
 
  > <img src="doc/image/QQ交流群.png" style="zoom:30%;" />
+
+
+
+# 知识星球
+
+提供对ELL库最完善专业的技术支持，在这里你可以查看使用ELL库中可以接触到的所有技术细节。
+
+
+
+
+
+<img src="doc/image/知识星球.png" style="zoom:30%;" />

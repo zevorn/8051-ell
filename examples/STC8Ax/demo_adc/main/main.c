@@ -30,7 +30,7 @@ int main(void)
 
 	for(;;)
 	{
-		printf("Vin = %.2f V\r\n", (float)(ADC_Get_Sample(ADC_Channel_P06_8Ax,ADC_Acc_12Bits) * 5.0f ) / 4096.0f);
+		printf("Vin = %.2f V\r\n", (float)(ADC_Get_Sample(ADC_Channel_P06_8Ax,ADC_Acc_12Bits) * 5.0f ) / 4095.0f);
 		
 		delay_ms(500);
 	}

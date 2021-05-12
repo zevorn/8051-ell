@@ -29,12 +29,12 @@ void ADC_ISRQ_Handler(void)
 {
 	if(ADC_GET_CHANNEL() == ADC_Channel_P10_8G1K08_T)
 	{
-		G_VinDat = (float)(ADC_Get_Sample_Interrupt(ADC_Acc_10Bits) * 5 ) / 1024;
+		G_VinDat = (float)(ADC_Get_Sample_Interrupt(ADC_Acc_10Bits) * 5 ) / 1023;
         ADC_CHANGE_CHANNEL(ADC_Channel_P11_8G1K08_T);
 	}
 	if(ADC_GET_CHANNEL() == ADC_Channel_P11_8G1K08_T)
 	{
-		G_VinDat2 = (float)(ADC_Get_Sample_Interrupt(ADC_Acc_10Bits) * 5 ) / 1024;
+		G_VinDat2 = (float)(ADC_Get_Sample_Interrupt(ADC_Acc_10Bits) * 5 ) / 1023;
         ADC_CHANGE_CHANNEL(ADC_Channel_P10_8G1K08_T);
 	}
   
