@@ -498,7 +498,7 @@ do{                                                    \
             /* Get system clock frequency */
             sysClk_FRE = Get_SysClk_FRE();
             TIMER0_TIM_CFG(time);
-			if((TMOD & 0xFC)) T0L = (uint8_t)(time), T0H = (uint8_t)(time); 
+			if((TMOD & 0x03) == 0x02) T0L = (uint8_t)(time), T0H = (uint8_t)(time); 
             else              T0L = (uint8_t)(time), T0H = (uint8_t)(time >> 8);
 			return FSC_SUCCESS;
 		}
@@ -518,7 +518,7 @@ do{                                                    \
             /* Get system clock frequency */
             sysClk_FRE = Get_SysClk_FRE();
             TIMER0_TIM_CFG(time);
-			if((TMOD & 0xCF)) T1L = (uint8_t)(time), T1H = (uint8_t)(time); 
+			if((TMOD & 0x30) == 0x20) T1L = (uint8_t)(time), T1H = (uint8_t)(time); 
             else              T1L = (uint8_t)(time), T1H = (uint8_t)(time >> 8);
 			return FSC_SUCCESS;
 		}		
