@@ -39,7 +39,7 @@ QQ技术支持群：` 1001220381`
 
 
 
-进入 <font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://8051-ell-web.vercel.app/#/)</font>  可查看入门教程。
+进入 <font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://8051-ell-web.vercel.app/#/)</font>  可查看 <font color=#0CCDD>[<u>**入门教程**</u>](https://8051-ell-web.vercel.app/#/zh-cn/start/start)</font> 。
 
 
 

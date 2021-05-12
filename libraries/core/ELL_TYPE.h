@@ -48,6 +48,10 @@
 typedef  signed char  int8_t;	//  8 bits 
 typedef  signed int  int16_t;	// 16 bits 
 typedef  signed long int32_t;	// 32 bits 
+						
+typedef  signed char  int8;	//  8 bits 
+typedef  signed int  int16;	// 16 bits 
+typedef  signed long int32;	// 32 bits 
 
 /*--------------------------------------------------------
 | @Description: Volatile width signed integer types      |
@@ -56,6 +60,10 @@ typedef  signed long int32_t;	// 32 bits
 typedef  volatile int8_t    vint8_t; //  8 bits 
 typedef  volatile int16_t  vint16_t; // 16 bits 
 typedef  volatile int32_t  vint32_t; // 32 bits 
+
+typedef  volatile int8_t    vint8; //  8 bits 
+typedef  volatile int16_t  vint16; // 16 bits 
+typedef  volatile int32_t  vint32; // 32 bits 
 
 /*--------------------------------------------------------
 | @Description: Exact width unsigned integer types       |
@@ -69,6 +77,10 @@ typedef  unsigned char   u8; //  8 bits
 typedef  unsigned int   u16; // 16 bits 
 typedef  unsigned long  u32; // 32 bits 
 
+typedef  unsigned char   uint8; //  8 bits 
+typedef  unsigned int   uint16; // 16 bits 
+typedef  unsigned long  uint32; // 32 bits 
+
 /*--------------------------------------------------------
 | @Description: Volatile width unsigned integer types    |
 --------------------------------------------------------*/
@@ -80,6 +92,10 @@ typedef  volatile uint32_t  vuint32_t; // 32 bits
 typedef  volatile uint8_t    vu8; //  8 bits 
 typedef  volatile uint16_t  vu16; // 16 bits 
 typedef  volatile uint32_t  vu32; // 32 bits 
+
+typedef  volatile uint8_t    vuint8; //  8 bits 
+typedef  volatile uint16_t  vuint16; // 16 bits 
+typedef  volatile uint32_t  vuint32; // 32 bits 
 
 /*--------------------------------------------------------
 | @Description: IO definitions                           |
