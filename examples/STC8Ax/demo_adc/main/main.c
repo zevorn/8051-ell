@@ -26,13 +26,12 @@
 ***/
 int main(void)
 {
-	extern float G_VinDat,G_VinDat2;
 	STC8x_System_Init();
 
 	for(;;)
 	{
-		printf("Vin = %.2f V\r\n", G_VinDat);
-		printf("Vin = %.2f V\r\n", G_VinDat2);	
+		printf("Vin = %.2f V\r\n", (float)(ADC_Get_Sample(ADC_Channel_P06_8Ax,ADC_Acc_12Bits) * 5.0f ) / 4096.0f);
+		
 		delay_ms(500);
 	}
 

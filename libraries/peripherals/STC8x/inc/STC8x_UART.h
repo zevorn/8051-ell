@@ -136,6 +136,8 @@ typedef enum
  * @brief   串口初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
  * @details The uart initializes the structure handle. When initializing, 
  *          please define the handle and use its address to pass parameters.
+ * @note    关于BRTGenClkDiv这个参数，在系统时钟发生改变以后，需要你手动重新更改，
+ *          以匹配你需要的定时时间，它不可以向BaudRate参数一样可以自己做修正。
 **/
 typedef struct 
 {

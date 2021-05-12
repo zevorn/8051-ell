@@ -137,6 +137,8 @@ typedef enum
  * @brief   定时器初始化结构体句柄，初始化时请定义该句柄，并用其地址来传参。
  * @details The timer initializes the structure handle. When initializing, 
  *          please define the handle and use its address to pass parameters.
+ * @note    关于SysClkDiv这个参数，在系统时钟发生改变以后，需要你手动重新更改，
+ *          以匹配你需要的定时时间，它不可以向Time参数一样可以自己做修正。
 **/
 typedef struct 
 {
@@ -418,6 +420,71 @@ typedef struct
 
     #endif
 
+				
+    #if (PER_LIB_TIMER_WORK_CTRL == 1)
+		
+        /**
+         * @brief     定时器0设置定时时间函数。
+         * @details   Timer 0 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER0_Set_Time(uint32_t time);
+		
+
+        /**
+         * @brief     定时器1设置定时时间函数。
+         * @details   Timer 1 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER1_Set_Time(uint32_t time);
+
+        /**
+         * @brief     定时器2设置定时时间函数。
+         * @details   Timer 2 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			FSCSTATE TIMER2_Set_Time(uint32_t time);
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			FSCSTATE TIMER2_Set_Time(uint8_t clkDiv,uint32_t time);	
+  		#endif			
+
+
+        /**
+         * @brief     定时器3设置定时时间函数。
+         * @details   Timer 3 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			FSCSTATE TIMER3_Set_Time(uint32_t time);
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			FSCSTATE TIMER3_Set_Time(uint8_t clkDiv,uint32_t time);
+  		#endif			
+		
+		
+        /**
+         * @brief     定时器4设置定时时间函数。
+         * @details   Timer 4 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			FSCSTATE TIMER4_Set_Time(uint32_t time);
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			FSCSTATE TIMER4_Set_Time(uint8_t clkDiv,uint32_t time);
+  		#endif			
+
+
+	#endif
 #endif
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |

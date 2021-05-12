@@ -84,7 +84,8 @@ static void STC8x_GPIO_Config(void)
 	GPIO_MODE_WEAK_PULL(GPIO_P3,Pin_All);
 	GPIO_MODE_WEAK_PULL(GPIO_P4,Pin_All);
 
-	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);
+	GPIO_MODE_IN_FLOATING(GPIO_P0,Pin_4);
+	GPIO_MODE_IN_FLOATING(GPIO_P0,Pin_6);
 }
 
 /**
@@ -98,12 +99,12 @@ static void STC8x_ADC_Config(void)
 	ADC_InitType ADC_InitStruct = {0};
 
 	ADC_InitStruct.Power = ENABLE; // ADC power control bit
-	ADC_InitStruct.Channel = ADC_Channel_P11_8Ax; // ADC channel selection
+	ADC_InitStruct.Channel = ADC_Channel_P04_8Ax; // ADC channel selection
 	ADC_InitStruct.Speed = 0X0F; // The maximum ADC conversion speed (working clock frequency) is 0x0f
 	ADC_InitStruct.Align = ADC_Right; // ADC data format alignment
 	ADC_InitStruct.Run = ENABLE; //  ADC conversion operation control bit
 	ADC_Init(&ADC_InitStruct);
-	NVIC_ADC_Init(NVIC_PR0,ENABLE);
+	//NVIC_ADC_Init(NVIC_PR0,ENABLE);
 }
 
 /*-----------------------------------------------------------------------

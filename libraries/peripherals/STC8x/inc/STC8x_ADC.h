@@ -221,15 +221,15 @@
 typedef enum
 {
 	#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx )
-		ADC_Acc_12Bit = 0x00,    /*!< ADC12位采集精度。ADC12 bit acquisition accuracy. */
-		ADC_Acc_11Bit = 0x01,    /*!< ADC11位采集精度。ADC 11 bit acquisition accuracy. */
-		ADC_Acc_10Bit = 0x02,    /*!< ADC10位采集精度。ADC 10 bit acquisition accuracy. */
-		ADC_Acc_9Bit  = 0x03,    /*!< ADC9位采集精度。ADC 9 bit acquisition accuracy. */
-		ADC_Acc_8Bit  = 0x04     /*!< ADC8位采集精度。ADC 8 bit acquisition accuracy. */
+		ADC_Acc_12Bits = 0x00,    /*!< ADC12位采集精度。ADC12 bit acquisition accuracy. */
+		ADC_Acc_11Bits = 0x01,    /*!< ADC11位采集精度。ADC 11 bit acquisition accuracy. */
+		ADC_Acc_10Bits = 0x02,    /*!< ADC10位采集精度。ADC 10 bit acquisition accuracy. */
+		ADC_Acc_9Bits  = 0x03,    /*!< ADC9位采集精度。ADC 9 bit acquisition accuracy. */
+		ADC_Acc_8Bits  = 0x04     /*!< ADC8位采集精度。ADC 8 bit acquisition accuracy. */
 	#elif (PER_LIB_MCU_MUODEL == STC8Gx )
-		ADC_Acc_10Bit = 0x00,   
-		ADC_Acc_09Bit = 0x01,    
-		ADC_Acc_08Bit = 0x02     
+		ADC_Acc_10Bits = 0x00,   
+		ADC_Acc_09Bits = 0x01,    
+		ADC_Acc_08Bits = 0x02     
 	#endif
 } ADCAcc_Type;
 

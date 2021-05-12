@@ -360,20 +360,21 @@ do{                                                    \
             sysClk_FRE = Get_SysClk_FRE();
             T4T3M &= 0X7F; //Turn off timer4
             T4T3M = (T4T3M & 0xBF) | (timerx -> Type << 6);
+			
             TIMER4_TCY_CFG(timerx -> TCycle);
             
             #if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
             
-                TIMER3_TIM_CFG(timerx -> Time);
+                TIMER4_TIM_CFG(timerx -> Time);
             
             #elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
             
                 EAXFR_ENABLE();
                 TM4PS = timerx -> SysClkDiv;
-                TIMER3_TIM_CFG(timerx -> Time);
+                TIMER4_TIM_CFG(timerx -> Time);
                 EAXFR_DISABLE();
             
-            #endif	
+            #endif
             
             T4L = (uint8_t)(timerx -> Time);
             T4H = (uint8_t)(timerx -> Time >> 8);
@@ -480,7 +481,152 @@ do{                                                    \
         }
 
     #endif
+		
+    #if (PER_LIB_TIMER_WORK_CTRL == 1)
+		
+        /**
+         * @brief     定时器0设置定时时间函数。
+         * @details   Timer 0 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER0_Set_Time(uint32_t time)		
+		{
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            TIMER0_TIM_CFG(time);
+			if((TMOD & 0xFC)) T0L = (uint8_t)(time), T0H = (uint8_t)(time); 
+            else              T0L = (uint8_t)(time), T0H = (uint8_t)(time >> 8);
+			return FSC_SUCCESS;
+		}
+		
+		
+        /**
+         * @brief     定时器1设置定时时间函数。
+         * @details   Timer 1 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+        FSCSTATE TIMER1_Set_Time(uint32_t time)		
+		{
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+            TIMER0_TIM_CFG(time);
+			if((TMOD & 0xCF)) T1L = (uint8_t)(time), T1H = (uint8_t)(time); 
+            else              T1L = (uint8_t)(time), T1H = (uint8_t)(time >> 8);
+			return FSC_SUCCESS;
+		}		
+		
+		
+        /**
+         * @brief     定时器2设置定时时间函数。
+         * @details   Timer 2 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			FSCSTATE TIMER2_Set_Time(uint32_t time)
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			FSCSTATE TIMER2_Set_Time(uint8_t clkDiv,uint32_t time)	
+  		#endif			
+		{
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			{
+				TIMER2_TIM_CFG(time);
+			}
+			#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			{
+				EAXFR_ENABLE();
+                TM2PS = clkDiv;
+                TIMER2_TIM_CFG(time);
+                EAXFR_DISABLE();
+			}
+			#endif	
+            T2L = (uint8_t)(time), T2H = (uint8_t)(time >> 8);
+			return FSC_SUCCESS;
+		}		
 
+		
+        /**
+         * @brief     定时器3设置定时时间函数。
+         * @details   Timer 3 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			FSCSTATE TIMER3_Set_Time(uint32_t time)
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			FSCSTATE TIMER3_Set_Time(uint8_t clkDiv,uint32_t time)	
+  		#endif			
+		{
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			{
+				TIMER3_TIM_CFG(time);
+			}
+			#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			{
+				EAXFR_ENABLE();
+                TM3PS = clkDiv;
+                TIMER3_TIM_CFG(time);
+                EAXFR_DISABLE();
+			}
+			#endif	
+            T3L = (uint8_t)(time), T3H = (uint8_t)(time >> 8);
+			return FSC_SUCCESS;
+		}		
+
+        /**
+         * @brief     定时器4设置定时时间函数。
+         * @details   Timer 4 sets the timing function.
+         * @param[in] time 定时时间。timing. 
+         * @return    FSC_SUCCESS 返回成功。Return to success.
+         * @return    FSC_FAIL    返回失败。Return to fail.
+        **/
+		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			FSCSTATE TIMER4_Set_Time(uint32_t time)
+		#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			FSCSTATE TIMER4_Set_Time(uint8_t clkDiv,uint32_t time)	
+  		#endif			
+		{
+            extern uint32_t Get_SysClk_FRE(void);
+            uint32_t sysClk_FRE;
+            /* Get system clock frequency */
+            sysClk_FRE = Get_SysClk_FRE();
+			#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Fx)
+			{
+				TIMER4_TIM_CFG(time);
+			}
+			#elif (PER_LIB_MCU_MUODEL == STC8Cx || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+			{
+				EAXFR_ENABLE();
+                TM4PS = clkDiv;
+                TIMER4_TIM_CFG(time);
+                EAXFR_DISABLE();
+			}
+			#endif	
+            T4L = (uint8_t)(time), T4H = (uint8_t)(time >> 8);
+			return FSC_SUCCESS;
+		}		
+		
+	#endif
+		
+		
 #endif
 
 /*-----------------------------------------------------------------------
