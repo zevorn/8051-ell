@@ -74,7 +74,7 @@
 			uint32_t sysClk_FRE,dat = 2;
 			sysClk_FRE = Get_SysClk_FRE();
 			for(i=0; i<(WDT_CONTR & 0x03); i++) dat *= 2;
-			dat = (12 * 32768 * dat) / sysClk_FRE;
+			dat = ((12UL * 32768UL * dat) / sysClk_FRE)/1000UL;
 			return dat;
 		}
 		

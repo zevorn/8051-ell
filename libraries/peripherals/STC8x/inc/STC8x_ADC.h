@@ -96,7 +96,7 @@
 
 
 /** ADC通道15，测量内部参考电压。ADC channel 15 is internal refv voltage. */
-#define    ADC_Road_REV    0x0F	   
+#define    ADC_Channel_REV    0x0F	   
 
 /* STC8Ax */
 #define    ADC_Channel_P10_8Ax    0x00  /*!< STC8A: ADC通道0。ADC channel 0. */
