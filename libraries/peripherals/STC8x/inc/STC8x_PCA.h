@@ -944,107 +944,55 @@ typedef enum
 			#define NVIC_PCA_PRI(pri)                     \
 			do{                                           \
 				IPH = (IPH & 0x7F) | ((pri & 0x02) << 6); \
-				IP  = (IP  & 0x7F) | ((pri & 0x01) << 7); \ 
+				IP  = (IP  & 0x7F) | ((pri & 0x01) << 7); \
 			}while(0)
 			
 			
             /**
-             * @brief     PCA0做TIM或POP中断控制宏函数。
-             * @details   PCA0 TIM / POP interrupt switch control macro function.
+             * @brief     PCA0中断控制宏函数。
+             * @details   PCA0 interrupt switch control macro function.
              * @param[in] run  使能控制位。Enable control bit.
             **/
-			#define    NVIC_PCA0_TIM_POP_CTRL(run)  \
+			#define    NVIC_PCA0_CTRL(run)          \
 			do{                                     \
 				CCAPM0 = (CCAPM0 & 0xFE) | (run);   \
 			}while(0)
 			
 			
             /**
-             * @brief     PCA1做TIM或POP中断控制宏函数。
+             * @brief     PCA1中断控制宏函数。
              * @details   PCA1 TIM / POP interrupt switch control macro function.
              * @param[in] run  使能控制位。Enable control bit.
             **/
-			#define    NVIC_PCA1_TIM_POP_CTRL(run)   \
+			#define    NVIC_PCA1_CTRL(run)           \
 			do{                                      \
-				CCAPM1 = (CCAPM0 & 0xFE) | (run);    \
+				CCAPM1 = (CCAPM1 & 0xFE) | (run);    \
 			}while(0)
 			
 			
             /**
-             * @brief     PCA2做TIM或POP中断控制宏函数。
-             * @details   PCA2 TIM / POP interrupt switch control macro function.
+             * @brief     PCA2中断控制宏函数。
+             * @details   PCA2 interrupt switch control macro function.
              * @param[in] run  使能控制位。Enable control bit.
             **/
-			#define    NVIC_PCA2_TIM_POP_CTRL(run)   \
+			#define    NVIC_PCA2_CTRL(run)           \
 			do{                                      \
-				CCAPM2 = (CCAPM0 & 0xFE) | (run);    \
+				CCAPM2 = (CCAPM2 & 0xFE) | (run);    \
 			}while(0)
 
-			
 			#if (PER_LIB_MCU_MUODEL == STC8Ax)
-			
-			
+
 				/**
-				 * @brief     PCA3做TIM或POP中断控制宏函数。
-				 * @details   PCA3 TIM / POP interrupt switch control macro function.
+				 * @brief     PCA3中断控制宏函数。
+				 * @details   PCA3 interrupt switch control macro function.
 				 * @param[in] run  使能控制位。Enable control bit.
 				**/
-				#define    NVIC_PCA3_TIM_POP_CTRL(run)   \
+				#define    NVIC_PCA3_CTRL(run)           \
 				do{                                      \
-					CCAPM3 = (CCAPM0 & 0xFE) | (run);    \
+					CCAPM3 = (CCAPM3 & 0xFE) | (run);    \
 				}while(0)
 				
 			#endif
-				
-				
-            /**
-             * @brief     PCA0做PWM或CAP中断控制宏函数。
-             * @details   PCA0 PWM / CAPP interrupt switch control macro function.
-             * @param[in] run  使能控制位。Enable control bit.
-            **/
-			#define    NVIC_PCA0_PWM_CAP_CTRL(run)     \
-			do{                                        \
-				CCAPM0 = (CCAPM0 & 0xFE) | (run);      \
-			}while(0)
-			
-			
-            /**
-             * @brief     PCA1做PWM或CAP中断控制宏函数。
-             * @details   PCA1 PWM / CAPP interrupt switch control macro function.
-             * @param[in] run  使能控制位。Enable control bit.
-            **/
-			#define    NVIC_PCA1_PWM_CAP_CTRL(run)     \
-			do{                                        \
-				CCAPM1 = (CCAPM0 & 0xFE) | (run);      \
-			}while(0)
-			
-			
-            /**
-             * @brief     PCA2做PWM或CAP中断控制宏函数。
-             * @details   PCA2 PWM / CAPP interrupt switch control macro function.
-             * @param[in] run  使能控制位。Enable control bit.
-            **/
-			#define    NVIC_PCA2_PWM_CAP_CTRL(run)     \
-			do{                                        \
-				CCAPM2 = (CCAPM0 & 0xFE) | (run);      \
-			}while(0)
-
-			
-			#if (PER_LIB_MCU_MUODEL == STC8Ax)    
-			
-			
-				/**
-				 * @brief     PCA3做PWM或CAP中断控制宏函数。
-				 * @details   PCA3 PWM / CAPP interrupt switch control macro function.
-				 * @param[in] run  使能控制位。Enable control bit.
-				**/
-				#define    NVIC_PCA3_PWM_CAP_CTRL(run)    \
-				do{										  \
-					CCAPM3 = (CCAPM0 & 0xFE) | (run);     \
-				}while(0)
-				
-			#endif
-
 
 		#endif
 		
