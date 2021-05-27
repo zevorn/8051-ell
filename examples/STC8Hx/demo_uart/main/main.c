@@ -27,9 +27,9 @@ extern bit Time500MsFlag;
 ***/
 void LOGO(void)
 {
+	uint8 chr[10]={1,2,3,4,5,6,7,8,9,10};
+	UART1_Isr_Send_Array(chr,10);
 	
-	printf("Timer0 500MS \r\n");
-    UART1_Isr_Send_String("Uart1\r\n");
 }
 
 /**
