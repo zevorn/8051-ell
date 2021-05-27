@@ -72,6 +72,7 @@ static void STC8x_SYSCLK_Config(void)
 	
 }
 
+
 /**
   * @name    STC8x_GPIO_Config
   * @brief   MCU GPIO initialization function
@@ -80,16 +81,18 @@ static void STC8x_SYSCLK_Config(void)
 ***/
 static void STC8x_GPIO_Config(void)
 {
-	GPIO_MODE_WEAK_PULL(GPIO_P0,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P1,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P2,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P3,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P4,Pin_All);
-	GPIO_MODE_WEAK_PULL(GPIO_P5,Pin_All);
+//	GPIO_MODE_WEAK_PULL(1,Pin_All);
+//	GPIO_MODE_WEAK_PULL(2,Pin_All);
+//	GPIO_MODE_WEAK_PULL(3,Pin_All);
+//	GPIO_MODE_WEAK_PULL(4,Pin_All);
+//	GPIO_MODE_WEAK_PULL(5,Pin_All);
+//	GPIO_MODE_WEAK_PULL(6,Pin_All);
 	RST_P54_ENABLE();
 	
     /* Run lamp */
-	GPIO_MODE_OUT_PP(GPIO_P2,Pin_0);  //P20
+
+	GPIO_MODE_OUT_PP(GPIO_P0,Pin_0);
+	GPIO_FLIP_PIN_LEVEL(GPIO_P0,Pin_0);
 }
 
 /**
@@ -120,9 +123,9 @@ static void STC8x_UART_Config(void)
 	UART_InitType UART_InitStruct = {0};
 	
 	/* UART1 TXD */
-	GPIO_MODE_OUT_PP(GPIO_P3,Pin_1);
+//	GPIO_MODE_OUT_PP(GPIO_P3,Pin_1);
 	/* UART1 RXD */
-	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_0); 
+//	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_0); 
 
 	UART_InitStruct.Mode = UART_8bit_BRTx;
 	UART_InitStruct.BRTGen = UART_BRT_TIM1;

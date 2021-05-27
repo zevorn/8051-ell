@@ -833,9 +833,11 @@ uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
 		**/
 		void UART1_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 		{
-			while(len--)
+			uint8_t i = 0;
+			while(i != len)
 			{
 				UART1_Isr_Send_Byte(*(arry++));
+				i++;
 			}
 		}
 
@@ -852,9 +854,11 @@ uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
 		**/
 		void UART2_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 		{
-			while(len--)
+			uint8_t i = 0;
+			while(i != len)
 			{
 				UART2_Isr_Send_Byte(*(arry++));
+				i++;
 			}
 		}
 
@@ -871,10 +875,12 @@ uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
 		**/
 		void UART3_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 		{
-			while(len--)
+			uint8_t i = 0;
+			while(i != len)
 			{
 				UART3_Isr_Send_Byte(*(arry++));
-			} 
+				i++;
+			}
 		}
 
 
@@ -890,9 +896,11 @@ uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
 		**/
 		void UART4_Isr_Send_Array(const uint8_t *arry,uint16_t len)
 		{
-			while(len--)
+			uint8_t i = 0;
+			while(i != len)
 			{
 				UART4_Isr_Send_Byte(*(arry++));
+				i++;
 			}
 		}
 		

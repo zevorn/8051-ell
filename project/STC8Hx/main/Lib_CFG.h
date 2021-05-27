@@ -54,7 +54,7 @@
  * @brief		配置ELL库MCU选型。
  * @details	    Configure ADC chip internal  peripheral.
 **/
-#define    PER_LIB_MCU_MUODEL     STC8Ax
+#define    PER_LIB_MCU_MUODEL     STC8Hx
 
 
 /**

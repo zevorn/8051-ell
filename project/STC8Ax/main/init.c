@@ -90,6 +90,7 @@ static void STC8x_GPIO_Config(void)
 	
     /* Run lamp */
 	GPIO_MODE_OUT_PP(GPIO_P2,Pin_0);  //P20
+	
 }
 
 /**

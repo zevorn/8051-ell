@@ -94,17 +94,32 @@
 | @Description: GPIO Pin define                          |
 --------------------------------------------------------*/
 
-/* GPIO */
-#define	GPIO_P0      0x00 /*!< IO P0. */
-#define	GPIO_P1      0x01 /*!< IO P1. */
-#define	GPIO_P2      0x02 /*!< IO P2. */
-#define	GPIO_P3      0x03 /*!< IO P3. */
-#define	GPIO_P4      0x04 /*!< IO P4. */
-#define	GPIO_P5      0x05 /*!< IO P5. */
-#define	GPIO_P6      0x06 /*!< IO P6. */
-#define	GPIO_P7      0x07 /*!< IO P7. */
+/** 
+ * @brief    GPIO组号，是GPIO宏操作函数的第一个参数，
+ *           支持对这个宏进行再封装。
+ * @details	 The GPIO group number is the first parameter of 
+ *           the GPIO macro operation function,
+ *           Support for repackaging this macro.
+**/
+#define	GPIO_P0      0 /*!< IO P0. */
+#define	GPIO_P1      1 /*!< IO P1. */
+#define	GPIO_P2      2 /*!< IO P2. */
+#define	GPIO_P3      3 /*!< IO P3. */
+#define	GPIO_P4      4 /*!< IO P4. */
+#define	GPIO_P5      5 /*!< IO P5. */
+#define	GPIO_P6      6 /*!< IO P6. */
+#define	GPIO_P7      7 /*!< IO P7. */
 
-/* Pin */
+
+
+/** 
+ * @brief    GPIO端口号，是GPIO宏操作函数的第二个参数，
+ *           支持多个宏进行或运算，以达到同时配置多个IO的效果。
+ * @details	 The GPIO port number is the second parameter of 
+ *           the GPIO macro operation function,
+ *           Support multiple macros to perform OR operations to 
+ *           achieve the effect of configuring multiple IOs at the same time.
+**/
 #define	Pin_0    0x01  /*!< IO Pin Px.0 . */
 #define	Pin_1    0x02  /*!< IO Pin Px.1 . */
 #define	Pin_2    0x04  /*!< IO Pin Px.2 . */
@@ -130,6 +145,10 @@ typedef enum
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
+
+
+
+
 #if (PER_LIB_GPIO_CTRL == 1)
 
 	#if (PER_LIB_GPIO_INIT_CTRL == 1)
@@ -137,8 +156,9 @@ typedef enum
 		 * @brief       GPIO设置为准双向口（弱上拉）模式宏函数。
 		 * @details	    GPIO is set as macro function in quasi 
 		 *              bidirectional port (if pull-up) mode.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个， 用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -146,15 +166,16 @@ typedef enum
 		**/
 		#define  GPIO_MODE_WEAK_PULL(gpio_x,pin)            \
 		do{                                                 \
-				gpio_x##M1 &= ~(pin); gpio_x##M0 &= ~(pin); \
+				Px_M1(gpio_x) &= ~(pin); Px_M0(gpio_x) &= ~(pin); \
 		}while(0)
 
 			
 		/**
 		 * @brief       GPIO设置为浮空输入模式宏函数。
 		 * @details	    GPIO is set to float input mode macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -162,15 +183,16 @@ typedef enum
 		**/	
 		#define  GPIO_MODE_IN_FLOATING(gpio_x,pin)          \
 		do{                                                 \
-				gpio_x##M1 |=  (pin); gpio_x##M0 &= ~(pin); \
+				Px_M1(gpio_x) |=  (pin); Px_M0(gpio_x) &= ~(pin); \
 		}while(0)
 
 			
 		/**
 		 * @brief       GPIO设置为开漏输出模式宏函数。
 		 * @details	    GPIO is set to open drain output mode macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -178,31 +200,33 @@ typedef enum
 		**/		
 		#define  GPIO_MODE_OUT_OD(gpio_x,pin)               \
 		do{                                                 \
-				gpio_x##M1 |=  (pin); gpio_x##M0 |=  (pin); \
+				Px_M1(gpio_x) |=  (pin); Px_M0(gpio_x) |=  (pin); \
 		}while(0)
 
 
 		/**
 		 * @brief       GPIO设置为推挽输出模式宏函数。
 		 * @details	    GPIO is set to push-pull output mode macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
 		 *                       with or operation symbol.
 		***/			
-		#define  GPIO_MODE_OUT_PP(gpio_x,pin)               \
-		do{                                                 \
-				gpio_x##M1 &= ~(pin); gpio_x##M0 |=  (pin); \
+		#define  GPIO_MODE_OUT_PP(gpio_x,pin)                    \
+		do{                                                       \
+				Px_M1(gpio_x) &= ~(pin); Px_M0(gpio_x) |=  (pin); \
 		}while(0)
 
 
 		/**
 		 * @brief       GPIO使能上拉电阻宏函数。
 		 * @details	    GPIO enable pull-up resistor macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -211,7 +235,7 @@ typedef enum
 		#define GPIO_PULL_UP_ENABLE(gpio_x,pin)         \
 		do{                                             \
 				EAXFR_ENABLE();                         \
-				PxPU(gpio_x##PU_ADDRESS) |=  (pin);     \
+				Px_PU(gpio_x) |=  (pin);                \
 				EAXFR_DISABLE();                        \
 		}while(0)
 
@@ -219,8 +243,9 @@ typedef enum
 		/**
 		 * @brief       GPIO不使能上拉电阻宏函数。
 		 * @details	    GPIO disable pull-up resistor macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -229,7 +254,7 @@ typedef enum
 		#define GPIO_PULL_UP_DISABLE(gpio_x,pin)        \
 		do{                                             \
 				EAXFR_ENABLE();                         \
-				PxPU(gpio_x##PU_ADDRESS) &= ~(pin);     \
+				Px_PU(gpio_x) &= ~(pin);                \
 				EAXFR_DISABLE();                        \
 		}while(0)
 																			
@@ -237,8 +262,9 @@ typedef enum
 		/**
 		 * @brief       GPIO使能施密特触发器宏函数。
 		 * @details	    GPIO enable schmidt trigger macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -247,7 +273,7 @@ typedef enum
 		#define GPIO_ST_ENABLE(gpio_x,pin)         \
 		do{                                        \
 			EAXFR_ENABLE();                        \
-			PxNCS(gpio_x##NCS_ADDRESS) |=  (pin);  \
+			Px_NCS(gpio_x) |=  (pin);              \
 			EAXFR_DISABLE();                       \
 		}while(0)
 
@@ -255,8 +281,9 @@ typedef enum
 		/**
 		 * @brief       GPIO不使能施密特触发器宏函数。
 		 * @details	    GPIO disable schmidt trigger macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -265,7 +292,7 @@ typedef enum
 		#define GPIO_ST_DISABLE(gpio_x,pin)        \
 		do{                                        \
 			EAXFR_ENABLE();                        \
-			PxNCS(gpio_x##NCS_ADDRESS) &= ~(pin);  \
+			Px_NCS(gpio_x) &= ~(pin);              \
 			EAXFR_DISABLE();                       \
 		}while(0)
 
@@ -273,8 +300,9 @@ typedef enum
 		/**
 		 * @brief       GPIO电平低速翻转宏函数。
 		 * @details	    GPIO level low speed flip macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -283,7 +311,7 @@ typedef enum
 		#define GPIO_SPEED_LOW(gpio_x,pin)         \
 		do{                                        \
 			EAXFR_ENABLE();                        \
-			PxSR(gpio_x##SR_ADDRESS) |= (pin);     \
+			Px_SR(gpio_x) |= (pin);                \
 			EAXFR_DISABLE();                       \
 		}while(0)
 
@@ -291,8 +319,9 @@ typedef enum
 		/**
 		 * @brief       GPIO电平高速翻转宏函数。
 		 * @details	    GPIO level high speed flip macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -301,7 +330,7 @@ typedef enum
 		#define GPIO_SPEED_HIGH(gpio_x,pin)        \
 		do{                                        \
 			EAXFR_ENABLE();                        \
-			PxSR(gpio_x##SR_ADDRESS) &= ~(pin);    \
+			Px_SR(gpio_x) &= ~(pin);               \
 			EAXFR_DISABLE();                       \
 		}while(0)
 
@@ -309,8 +338,9 @@ typedef enum
 		/**
 		 * @brief       GPIO普通驱动电流宏函数。
 		 * @details	    GPIO general drive current macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -319,7 +349,7 @@ typedef enum
 		#define GPIO_DRIVE_MEDIUM(gpio_x,pin)     \
 		do{                                       \
 			EAXFR_ENABLE();                       \
-			PxDR(gpio_x##DR_ADDRESS) |=  (pin);   \
+			Px_DR(gpio_x) |=  (pin);              \
 			EAXFR_DISABLE();                      \
 		}while(0)
 
@@ -327,8 +357,9 @@ typedef enum
 		/**
 		 * @brief       GPIO高驱动电流宏函数。
 		 * @details	    GPIO high drive current macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -337,7 +368,7 @@ typedef enum
 		#define GPIO_DRIVE_HIGH(gpio_x,pin)       \
 		do{                                       \
 			EAXFR_ENABLE();                       \
-			PxDR(gpio_x##DR_ADDRESS) &= ~(pin);   \
+			Px_DR(gpio_x) &= ~(pin);              \
 			EAXFR_DISABLE();                      \
 		}while(0)
 		
@@ -348,8 +379,9 @@ typedef enum
 		/**
 		 * @brief       GPIO翻转端口电平状态宏函数。
 		 * @details	    GPIO flip port level state macro function.
-		 * @param[in]   gpio_x   GPIO组，只能是宏名称。
-		 *                       GPIO group, can only be macro name.
+		 * @param[in]   gpio_x   GPIO组，可以对这个宏的参数进行封装。
+		 *                       The GPIO group can encapsulate the parameters 
+         *                       of this macro.
 		 * @param[in]   pin      端口号，可以同时传参多个，用或运算符号连接。
 		 *                       Port number, which can transfer multiple 
 		 *                       parameters at the same time and connect 
@@ -357,7 +389,7 @@ typedef enum
 		**/		
 		#define  GPIO_FLIP_PIN_LEVEL(gpio_x,pin)    \
 		do{                                         \
-				gpio_x##_IO ^= pin;                 \
+				GPIO_Px(gpio_x) ^= pin;             \
 		}while(0)		
 		
 	#endif
