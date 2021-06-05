@@ -60,8 +60,12 @@ typedef struct
 ***/
 struct
 {
+    /*pritive*/
 	KEY_COMPS Comps[KEY_NUM_MAX];
 	uint8_t Number_Max;
+
+    /*pubilc*/
+    KeyScan_Object_Type KeyScan;
 } KeyScan_Object;
 
 /*-----------------------------------------------------------------------
@@ -93,24 +97,27 @@ static void KeyScan_Run_t(void);
 FSCSTATE KeyScan_Init(KeyScan_Type *keyScan)
 {
 	static uint8_t number = 0;
+    
+    KeyScan_Object.KeyScan = keyScan;
+
 	if(number>= 0 && number < KEY_NUM_MAX)
 	{
-		KeyScan_Object.Comps[number].GPIO = keyScan -> GPIO;
-		KeyScan_Object.Comps[number].Pin = keyScan -> Pin;
-		KeyScan_Object.Comps[number].keyHandle = keyScan -> HandleFunc;
-		KeyScan_Object.Comps[number].TriMode = keyScan -> TriMode;
-		KeyScan_Object.Comps[number].EffMode = keyScan -> EffMode;
+		KeyScan_Object.Comps[number].GPIO = KeyScan_Object.KeyScan -> GPIO;
+		KeyScan_Object.Comps[number].Pin = KeyScan_Object.KeyScan -> Pin;
+		KeyScan_Object.Comps[number].keyHandle = KeyScan_Object.KeyScan -> HandleFunc;
+		KeyScan_Object.Comps[number].TriMode = KeyScan_Object.KeyScan -> TriMode;
+		KeyScan_Object.Comps[number].EffMode = KeyScan_Object.KeyScan -> EffMode;
 		
-		KeyScan.ReadPin_P0 = KeyScan_ReadPin_P0_t;
-		KeyScan.ReadPin_P1 = KeyScan_ReadPin_P1_t;
-		KeyScan.ReadPin_P2 = KeyScan_ReadPin_P2_t;
-		KeyScan.ReadPin_P3 = KeyScan_ReadPin_P3_t;
-		KeyScan.ReadPin_P4 = KeyScan_ReadPin_P4_t;
-		KeyScan.ReadPin_P5 = KeyScan_ReadPin_P5_t;
+		KeyScan_Object.KeyScan.ReadPin_P0 = KeyScan_ReadPin_P0_t;
+		KeyScan_Object.KeyScan.ReadPin_P1 = KeyScan_ReadPin_P1_t;
+		KeyScan_Object.KeyScan.ReadPin_P2 = KeyScan_ReadPin_P2_t;
+		KeyScan_Object.KeyScan.ReadPin_P3 = KeyScan_ReadPin_P3_t;
+		KeyScan_Object.KeyScan.ReadPin_P4 = KeyScan_ReadPin_P4_t;
+		KeyScan_Object.KeyScan.ReadPin_P5 = KeyScan_ReadPin_P5_t;
 		
 		#if (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Hx )
-				KeyScan.ReadPin_P6 = KeyScan_ReadPin_P6_t;
-				KeyScan.ReadPin_P7 = KeyScan_ReadPin_P7_t;
+				KeyScan_Object.KeyScan.ReadPin_P6 = KeyScan_ReadPin_P6_t;
+				KeyScan_Object.KeyScan.ReadPin_P7 = KeyScan_ReadPin_P7_t;
 		#endif
 		
 		KeyScan.Run = KeyScan_Run_t;

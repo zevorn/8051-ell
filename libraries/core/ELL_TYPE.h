@@ -51,7 +51,7 @@ typedef  signed long int32_t;	// 32 bits
 						
 typedef  signed char  int8;	//  8 bits 
 typedef  signed int  int16;	// 16 bits 
-typedef  signed long int32;	// 32 bits 
+typedef  signed long int32;	// 32 bits
 
 /*--------------------------------------------------------
 | @Description: Volatile width signed integer types      |
