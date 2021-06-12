@@ -100,6 +100,7 @@
 			 *                      the highest accuracy is different, 
 			 *                      please check the macro definition of the header file.
 			 * @return	   uint16_t 返回采集到的ADC值。Returns the collected ADC value.
+			 * @note        默认使用的是右对齐操作，如果读取的数据是左对齐，需要开发者自己处理。
 			**/
 			uint16_t ADC_Get_Sample(uint8_t channel, ADCAcc_Type acc)
 			{	
@@ -124,6 +125,7 @@
 			 *                      the highest accuracy is different, 
 			 *                      please check the macro definition of the header file.
 			 * @return	   uint16_t 返回采集到的ADC值。Returns the collected ADC value.
+			 * @note        默认使用的是右对齐操作，如果读取的数据是左对齐，需要开发者自己处理。
 			**/
 			uint16_t ADC_Get_Sample_Interrupt(ADCAcc_Type acc)
 			{	
