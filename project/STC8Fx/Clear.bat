@@ -12,6 +12,7 @@ del *.iex /s
 del Project_STC8x /s
 del *.map /s
 del *.SBR /s
+del *.Administrator /s
 
 
 

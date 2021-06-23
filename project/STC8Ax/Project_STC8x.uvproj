@@ -531,6 +531,11 @@
               <FileType>1</FileType>
               <FilePath>.\main\isr.c</FilePath>
             </File>
+            <File>
+              <FileName>guide.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\guide.txt</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
