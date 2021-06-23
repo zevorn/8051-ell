@@ -683,71 +683,7 @@ uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
 			UART4_SET_BUSY_FLAG();
 			S4BUF = dat;
 		}
-
-
-		/**
-		 * @brief      串口1接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 1 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART1_Isr_Receive_Byte(void)
-		{
-			while(UART1_GET_BUSY_FLAG());
-			return SBUF;
-		}
-
-
-		/**
-		 * @brief      串口2接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 2 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART2_Isr_Receive_Byte(void)
-		{
-			while(UART2_GET_BUSY_FLAG());
-			return S2BUF;
-		}
-
-
-		/**
-		 * @brief      串口3接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 3 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART3_Isr_Receive_Byte(void)
-		{
-			while(UART3_GET_BUSY_FLAG());
-			return S3BUF;
-		}
-
-
-		/**
-		 * @brief      串口4接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 4 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART4_Isr_Receive_Byte(void)
-		{
-			while(UART4_GET_BUSY_FLAG());
-			return S4BUF;
-		}
-
+        
 
 		/**
 		 * @brief      串口1发送一个字符串函数，

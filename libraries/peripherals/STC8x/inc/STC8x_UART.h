@@ -323,7 +323,7 @@ typedef struct
 		**/
 		#define	   UART4_CLEAR_TX_FLAG()  do{S4CON &= 0xFD;}while(0)
 
-						
+
 		/**
 		 * @brief     串口1中断初始化函数。
 		 * @details   UART1 NVIC function.
@@ -636,7 +636,38 @@ typedef struct
 		**/
 		#define    UART4_CLEAR_BUSY_FLAG()    do{UART_BUSY_FLAG &= 0xF7;}while(0)
 
-		
+
+		/**
+		 * @brief      串口1接收一个字节宏函数。
+		 * @details    Serial port 1 receives a byte function。
+         * @param[in]  byte 字节。
+		**/
+		#define UART1_RECEIVE_BYTE(byte) do{byte = SBUF;}while(0)
+
+
+		/**
+		 * @brief      串口2接收一个字节宏函数。
+		 * @details    Serial port 2 receives a byte function。
+         * @param[in]  byte 字节。
+		**/
+		#define UART2_RECEIVE_BYTE(byte) do{byte = S2BUF;}while(0)
+
+
+		/**
+		 * @brief      串口3接收一个字节宏函数。
+		 * @details    Serial port 3 receives a byte function。
+         * @param[in]  byte 字节。
+		**/
+		#define UART3_RECEIVE_BYTE(byte) do{byte = S3BUF;}while(0)
+
+
+		/**
+		 * @brief      串口4接收一个字节宏函数。
+		 * @details    Serial port 4 receives a byte function。
+         * @param[in]  byte 字节。
+		**/
+		#define UART4_RECEIVE_BYTE(byte) do{byte = S4BUF;}while(0)
+
 		/**
 		 * @brief      串口1发送一个字节函数，
 		 *             需要开启中断，并在中断服务函数中清除发送标志位。
@@ -647,7 +678,6 @@ typedef struct
 		 * @return     None. 
 		**/
 		void UART1_Isr_Send_Byte(uint8_t dat);
-
 
 		/**
 		 * @brief      串口2发送一个字节函数，
@@ -683,53 +713,7 @@ typedef struct
 		 * @return     None. 
 		**/
 		void UART4_Isr_Send_Byte(uint8_t dat);
-
-		/**
-		 * @brief      串口1接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 1 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART1_Isr_Receive_Byte(void);
-
-		/**
-		 * @brief      串口2接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 2 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART2_Isr_Receive_Byte(void);
-
-
-		/**
-		 * @brief      串口3接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 3 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART3_Isr_Receive_Byte(void);
-
-
-		/**
-		 * @brief      串口4接收一个字节函数，
-		 *             需要开启中断，并在中断服务函数中清除接收标志位。
-		 * @details    Serial port 4 receives a byte function,
-		 *             Need to turn on the interrupt and clear the received flag,
-		 *             in the interrupt service function.
-		 * @param      None.
-		 * @return     [uint8_t] 要发送的字节数据。The byte data to be sent. 
-		**/
-		uint8_t UART4_Isr_Receive_Byte(void);
-
+        
 
 		/**
 		 * @brief      串口1发送一个字符串函数，
