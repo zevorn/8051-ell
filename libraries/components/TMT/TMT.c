@@ -109,7 +109,7 @@ void TMT_Tick_t(void)
 	for(i=0; i<Task_Object.Number_Max; i++)
     {
 		 /* If time arrives */
-        if(Task_Object.Comp[i] >0 )
+        if(Task_Object.Comp[i].TIMCount > 0 )
         {
             Task_Object.Comp[i].TIMCount--;
         }
