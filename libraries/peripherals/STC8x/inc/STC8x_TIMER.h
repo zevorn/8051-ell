@@ -232,51 +232,7 @@ typedef struct
         FSCSTATE TIMER4_Init(const TIMER_InitType *timerx);
 
     #endif
-	
-	#if (PER_LIB_TIMER_WORK_CTRL == 1)
-	
-        /**
-         * @brief     定时器0工作开关控制宏函数。
-         * @details   timer0 working switch control macro function.
-         * @param[in] run  使能控制位。Enable control bit.
-        **/
-        #define    TIMER0_WORK_CTRL(run)     do{ TR0 = run; }while(0)	
 
-		
-        /**
-         * @brief     定时器1工作开关控制宏函数。
-         * @details   timer1 working switch control macro function.
-         * @param[in] run  使能控制位。Enable control bit.
-        **/
-        #define    TIMER1_WORK_CTRL(run)     do{ TR1 = run; }while(0)	
-		
-		
-
-        /**
-         * @brief     定时器2工作开关控制宏函数。
-         * @details   timer2 working switch control macro function.
-         * @param[in] run  使能控制位。Enable control bit.
-        **/
-        #define    TIMER2_WORK_CTRL(run)     do{AUXR = (AUXR & 0xEF) | (run << 4);  }while(0)	
-		
-		
-        /**
-         * @brief     定时器3工作开关控制宏函数。
-         * @details   timer3 working switch control macro function.
-         * @param[in] run  使能控制位。Enable control bit.
-        **/
-        #define    TIMER3_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0xF7) | (run << 3)}while(0)	
-		
-		
-        /**
-         * @brief     定时器4工作开关控制宏函数。
-         * @details   timer4 working switch control macro function.
-         * @param[in] run  使能控制位。Enable control bit.
-        **/
-        #define    TIMER4_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0x7F) | (run << 7)}while(0)		
-
-	#endif
-		
     #if (PER_LIB_TIMER_NVIC_CTRL == 1)
 
         /**
@@ -422,6 +378,46 @@ typedef struct
 
 				
     #if (PER_LIB_TIMER_WORK_CTRL == 1)
+        /**
+         * @brief     定时器0工作开关控制宏函数。
+         * @details   timer0 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER0_WORK_CTRL(run)     do{ TR0 = run; }while(0)	
+
+		
+        /**
+         * @brief     定时器1工作开关控制宏函数。
+         * @details   timer1 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER1_WORK_CTRL(run)     do{ TR1 = run; }while(0)	
+		
+		
+
+        /**
+         * @brief     定时器2工作开关控制宏函数。
+         * @details   timer2 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER2_WORK_CTRL(run)     do{AUXR = (AUXR & 0xEF) | (run << 4);  }while(0)	
+		
+		
+        /**
+         * @brief     定时器3工作开关控制宏函数。
+         * @details   timer3 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER3_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0xF7) | (run << 3)}while(0)	
+		
+		
+        /**
+         * @brief     定时器4工作开关控制宏函数。
+         * @details   timer4 working switch control macro function.
+         * @param[in] run  使能控制位。Enable control bit.
+        **/
+        #define    TIMER4_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0x7F) | (run << 7)}while(0)		
+
 		
         /**
 		 * @brief     定时器0计数器重装载宏函数。
