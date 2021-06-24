@@ -424,6 +424,32 @@ typedef struct
     #if (PER_LIB_TIMER_WORK_CTRL == 1)
 		
         /**
+		 * @brief     定时器0计数器重装载宏函数。
+         * @details   Timer 0 counter reload macro function。
+         * @note      适用于定时器0十六位手动重装载模式。
+		 *            Suitable for timer 0 sixteen-bit manual reload mode.
+        **/
+        #define    TIMER0_RELOAD_CNT()                    \
+		do{                                               \
+			T0L = (uint8_t)(G_Time0_CntValue);           \
+			T0H = (uint8_t)(G_Time0_CntValue >> 8);      \
+		}while(0)
+		
+		
+        /**
+		 * @brief     定时器1计数器重装载宏函数。
+         * @details   Timer 1 counter reload macro function。
+         * @note      适用于定时器1十六位手动重装载模式。
+		 *            Suitable for timer 1 sixteen-bit manual reload mode.
+        **/
+        #define    TIMER1_RELOAD_CNT()                    \
+		do{                                               \
+			T1L = (uint8_t)(G_Time1_CntValue);           \
+			T1H = (uint8_t)(G_Time1_CntValue >> 8);      \
+		}while(0)
+				
+		
+        /**
          * @brief     定时器0设置定时时间函数。
          * @details   Timer 0 sets the timing function.
          * @param[in] time 定时时间。timing. 
