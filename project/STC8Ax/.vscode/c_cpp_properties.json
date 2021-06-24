@@ -1,0 +1,52 @@
+{
+    "configurations": [
+        {
+            "name": "STC8x",
+            "includePath": [
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\core",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\core\\register\\STC8x",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\drives",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\drives\\KeyScan",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\peripherals",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\peripherals\\STC8x\\inc",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\peripherals\\STC8x\\src",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\components",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\components\\TMT",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\components\\PrintfRed",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\components\\PreDelay",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\project\\STC8Ax\\main",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\project\\STC8Ax\\application",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\libraries\\core\\startup\\STC8x",
+                "E:\\Keil5\\C51\\INC",
+                "d:\\OneDrive\\Desktop\\8051-ELL\\ELL-8051-LIB\\project\\STC8Ax"
+            ],
+            "defines": [
+                "__C51__",
+                "__VSCODE_C51__",
+                "reentrant=",
+                "compact=",
+                "small=",
+                "large=",
+                "data=",
+                "idata=",
+                "pdata=",
+                "bdata=",
+                "xdata=",
+                "code=",
+                "bit=char",
+                "sbit=char",
+                "sfr=char",
+                "sfr16=int",
+                "sfr32=int",
+                "interrupt=",
+                "using=",
+                "_at_=",
+                "_priority_=",
+                "_task_="
+            ],
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}
