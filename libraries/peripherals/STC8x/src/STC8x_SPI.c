@@ -55,7 +55,7 @@
 		{
 			SPDAT = 0;
 			SPSTAT = SPIF | WCOL;          
-			SPCTL = (SPCTL & 0x6B) | (spix -> Type);
+			SPCTL = (SPCTL & 0x6F) | (spix -> Type);
 			SPCTL = (SPCTL & 0xFC) | (spix -> ClkSrc);
 			SPCTL = (SPCTL & 0xF3) | (spix -> Mode << 2);
 			SPCTL = (SPCTL & 0xDF) | (spix -> Tran << 5);
