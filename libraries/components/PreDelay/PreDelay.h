@@ -69,13 +69,13 @@
  *             It is recommended to use an IO flip, delay with a delay function in the middle, 
  *             and use an oscilloscope to capture the waveform for calibration.
 **/   
-#define   DELAY_COUNT         COM_LIB_PREDELAY_BASE
+#define   DELAY_COUNT         PER_LIB_PREDELAY_BASE
 
 
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/
-#if (COM_LIB_PREDELAY_CTRL == 1)
+#if (PER_LIB_PREDELAY_CTRL == 1)
 
     /**
      * @brief      精准延时组件初始化。

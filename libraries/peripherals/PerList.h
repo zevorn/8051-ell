@@ -36,7 +36,8 @@
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
 
-#include "Lib_CFG.h"
+#include "ELL_CFG.h"
+
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
 #endif
@@ -72,7 +73,8 @@
     #include "STC8x_I2C.h"
     #include "STC8x_EEPROM.h"
     #include "STC8x_COMP.h"
-	
+		#include "STC8x_DELAY.h"
+		
 #endif
 
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
@@ -82,7 +84,8 @@
     
 #endif
 
-#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || PER_LIB_MCU_MUODEL == STC8Hx)
+#if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx || \
+      PER_LIB_MCU_MUODEL == STC8Hx)
 
     #include "STC8x_ADC.h"
     

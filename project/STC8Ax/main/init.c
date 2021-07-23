@@ -24,7 +24,6 @@ static void STC8x_UART_Config(void);
 static void STC8x_GPIO_Config(void);
 static void STC8x_TIMER_Config(void);
 
-
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -37,19 +36,17 @@ static void STC8x_TIMER_Config(void);
 ***/
 void STC8x_System_Init(void)
 {
-	DELAY_POS(); /* Power on stability delay */	
+	DELAY_Set_Pos(); /* Power on stability delay */	
 	STC8x_SYSCLK_Config(); /* Initialize system clock */
-	delay_init();
+	DELAY_Init();
 	
 	STC8x_GPIO_Config();
 	STC8x_UART_Config();
 	STC8x_TIMER_Config();
 
-
 	/*
 		Add hardware driver initialization code here.
 	*/
-	
 	
 	NVIC_GLOBAL_ENABLE();
 }
@@ -69,7 +66,6 @@ static void STC8x_SYSCLK_Config(void)
 	SYSCLK_InitStruct.SCLKOutPin = SCLK_OUT_P16;
 	SYSCLK_Init(&SYSCLK_InitStruct);
 }
-
 
 
 /**
@@ -93,6 +89,7 @@ static void STC8x_GPIO_Config(void)
 	
 }
 
+
 /**
   * @name    STC8x_TIMER_Config
   * @brief   MCU TIMER initialization function
@@ -108,6 +105,7 @@ static void STC8x_TIMER_Config(void)
 	TIMER_InitStruct.Run = ENABLE;
 	TIMER0_Init(&TIMER_InitStruct);
 	NVIC_TIMER0_Init(NVIC_PR0,ENABLE);
+	
 }
 
 /**

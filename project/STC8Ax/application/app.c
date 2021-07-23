@@ -28,7 +28,6 @@
 void led_entry(void)
 {
     P50 = !P50;
-    printf("Hello,world!\r\n");
 }
 
 

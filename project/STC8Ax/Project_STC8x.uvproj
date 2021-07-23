@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application;..\..\libraries\core\startup\STC8x</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application;..\..\libraries\core\startup\STC8x;..\..\examples\STC8Ax\example_adc;..\..\examples\STC8Ax\example_exti</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -384,12 +384,32 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lib/core</GroupName>
+          <Files>
+            <File>
+              <FileName>ELL_CORE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_CORE.h</FilePath>
+            </File>
+            <File>
+              <FileName>ELL_TYPE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_TYPE.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lib/peripherals</GroupName>
           <Files>
             <File>
               <FileName>PerList.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\libraries\peripherals\PerList.h</FilePath>
+            </File>
+            <File>
+              <FileName>STC8x_DELAY.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_DELAY.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_ADC.c</FileName>
@@ -464,58 +484,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lib/components</GroupName>
-          <Files>
-            <File>
-              <FileName>ComList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\components\ComList.h</FilePath>
-            </File>
-            <File>
-              <FileName>PreDelay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PreDelay\PreDelay.c</FilePath>
-            </File>
-            <File>
-              <FileName>PrintfRed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PrintfRed\PrintfRed.c</FilePath>
-            </File>
-            <File>
-              <FileName>TMT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\TMT\TMT.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/drives</GroupName>
-          <Files>
-            <File>
-              <FileName>DrvList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\DrvList.h</FilePath>
-            </File>
-            <File>
-              <FileName>KeyScan.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\drives\KeyScan\KeyScan.c</FilePath>
-            </File>
-            <File>
-              <FileName>KeyScan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\KeyScan\KeyScan.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>user/main</GroupName>
           <Files>
-            <File>
-              <FileName>Lib_CFG.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\main\Lib_CFG.h</FilePath>
-            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -534,7 +504,29 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>user/example</GroupName>
+          <Files>
+            <File>
+              <FileName>example_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\examples\STC8Ax\example_adc\example_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>example_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\examples\STC8Ax\example_exti\example_exti.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>user/app</GroupName>
+          <Files>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\application\app.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

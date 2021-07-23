@@ -33,12 +33,13 @@
 #define __STC8x_UART_H_
 
 /*--------------------------------------------------------
+| @Description: ELL library core                         |
+--------------------------------------------------------*/
+#include "ELL_CORE.h"
+
+/*--------------------------------------------------------
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
-#include "Lib_CFG.h"
-#ifndef PER_LIB_MCU_MUODEL
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
     #include "STC8Ax_REG.h"  
@@ -51,10 +52,6 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
-/*--------------------------------------------------------
-| @Description: ELL library core                         |
---------------------------------------------------------*/
-#include "ELL_CORE.h"
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
