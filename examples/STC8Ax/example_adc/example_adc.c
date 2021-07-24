@@ -45,6 +45,9 @@
  * @details    Example code for ADC peripherals initialized.
  * @param      None.
  * @return     None.
+ * @note       每种例程，只能调用一个初始化函数和运行函数，各例程之间并不兼容。
+ *             Each routine can only call an initialization function and a run function, 
+ *             and the routines are not compatible with each other.
 **/
 void Example_ADC_Init(void)
 {
@@ -65,6 +68,9 @@ void Example_ADC_Init(void)
  * @details    Run the ADC peripheral sample code.
  * @param      None.
  * @return     None.
+ * @note       每种例程，只能调用一个初始化函数和运行函数，各例程之间并不兼容。
+ *             Each routine can only call an initialization function and a run function, 
+ *             and the routines are not compatible with each other.
 **/
 void Example_ADC_Run(void)
 {

@@ -51,8 +51,7 @@ int main(void)
 	
     for(;;)
     {
-		P55 = !P55;
-		delay_ms(50);
+
     }
 
 }

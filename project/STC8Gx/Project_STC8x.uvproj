@@ -384,6 +384,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lib/core</GroupName>
+          <Files>
+            <File>
+              <FileName>ELL_CORE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_CORE.h</FilePath>
+            </File>
+            <File>
+              <FileName>ELL_TYPE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_TYPE.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lib/peripherals</GroupName>
           <Files>
             <File>
@@ -466,40 +481,10 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_MDU16.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/components</GroupName>
-          <Files>
             <File>
-              <FileName>ComList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\components\ComList.h</FilePath>
-            </File>
-            <File>
-              <FileName>PreDelay.c</FileName>
+              <FileName>STC8x_DELAY.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PreDelay\PreDelay.c</FilePath>
-            </File>
-            <File>
-              <FileName>PrintfRed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PrintfRed\PrintfRed.c</FilePath>
-            </File>
-            <File>
-              <FileName>TMT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\TMT\TMT.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/drives</GroupName>
-          <Files>
-            <File>
-              <FileName>DrvList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\DrvList.h</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_DELAY.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -507,9 +492,9 @@
           <GroupName>user/main</GroupName>
           <Files>
             <File>
-              <FileName>Lib_CFG.h</FileName>
+              <FileName>ELL_CFG.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\main\Lib_CFG.h</FilePath>
+              <FilePath>.\main\ELL_CFG.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -525,6 +510,16 @@
               <FileName>isr.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main\isr.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>user/example</GroupName>
+          <Files>
+            <File>
+              <FileName>DrvList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\drives\DrvList.h</FilePath>
             </File>
           </Files>
         </Group>

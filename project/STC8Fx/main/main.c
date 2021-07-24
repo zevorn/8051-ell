@@ -30,8 +30,7 @@ int main(void)
 	
 	for(;;)
 	{
-		printf("Hello World\r\n");
-		delay_ms(500);
+		
 	}
 
 }

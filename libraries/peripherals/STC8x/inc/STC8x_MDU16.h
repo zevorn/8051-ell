@@ -33,21 +33,10 @@
 #define __STC8x_MDU16_H_
 
 /*--------------------------------------------------------
-| @Description: STC8x MCU Register                       |
+| @Description: STC8x core                               |
 --------------------------------------------------------*/
-#include "Lib_CFG.h"
+#include "ELL_CORE.h"
 
-#ifndef PER_LIB_MCU_MUODEL   
-    /** 如果没有定义这个宏，默认为STC8Ax。
-        If the mirco is undefined，select to STC8Ax */
-    #define PER_LIB_MCU_MUODEL STC8Ax
-#endif
-
-#ifndef PER_LIB_MDU16_CTRL
-    /** 如果没有定义这个宏，默认为0。
-        If the mirco is undefined，select to "0" */
-    #define PER_LIB_MDU16_CTRL 1
-#endif
 
 
 #if    (PER_LIB_MCU_MUODEL == STC8Ax)
@@ -61,14 +50,18 @@
 #elif  (PER_LIB_MCU_MUODEL == STC8Hx)
     #include "STC8Hx_REG.h"
 #endif
-/*--------------------------------------------------------
-| @Description: STC8x core                               |
---------------------------------------------------------*/
-#include "ELL_CORE.h"
+
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 /* None */
+
+#ifndef PER_LIB_MDU16_CTRL
+    /** 如果没有定义这个宏，默认为0。
+        If the mirco is undefined，select to "0" */
+    #define PER_LIB_MDU16_CTRL 1
+#endif
+
 /*-----------------------------------------------------------------------
 |                             API FUNCTION                              |
 -----------------------------------------------------------------------*/

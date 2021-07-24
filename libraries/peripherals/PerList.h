@@ -33,10 +33,13 @@
 #define __PerList_H_
 
 /*--------------------------------------------------------
+| @Description: STC8x core                               |
+--------------------------------------------------------*/
+#include "ELL_CORE.h"
+
+/*--------------------------------------------------------
 | @Description: STC8x MCU Register                       |
 --------------------------------------------------------*/
-
-#include "ELL_CFG.h"
 
 #ifndef PER_LIB_MCU_MUODEL
     #define PER_LIB_MCU_MUODEL STC8Ax
@@ -73,7 +76,7 @@
     #include "STC8x_I2C.h"
     #include "STC8x_EEPROM.h"
     #include "STC8x_COMP.h"
-		#include "STC8x_DELAY.h"
+    #include "STC8x_DELAY.h"
 		
 #endif
 

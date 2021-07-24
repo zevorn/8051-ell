@@ -58,19 +58,6 @@ static uint16_t G_MS_Count = 0;
 
 
     /**
-     * @brief      上电延时，帮助系统稳定。
-     * @details    Power-on delay helps to stabilize the system.
-     * @param      None.
-     * @return     None.
-    **/
-    void DELAY_Set_Pos(void) 
-    {
-        uint16_t i = 10000;
-        for(; i > 0; i--);
-    }
-
-
-    /**
      * @brief      延时一段时间，ms级别。
      * @details    Delay for a period of time, ms level.  
      * @param[in]  nms 延时时间.Delay time.

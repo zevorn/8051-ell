@@ -56,10 +56,9 @@ static void STC8x_TIMER_Config(void);
 void STC8x_System_Init(void)
 {
 	
-	DELAY_POS(); /* Power on stability delay */	
-	//STC8x_SYSCLK_Config(); /* Initialize system clock */
-    NVIC_GLOBAL_ENABLE();	
-    delay_init();
+	STC8x_SYSCLK_Config(); /* Initialize system clock */
+    DELAY_Init();
+
 	
 	STC8x_GPIO_Config();
 	STC8x_UART_Config();
@@ -69,7 +68,7 @@ void STC8x_System_Init(void)
 		Add hardware driver initialization code here.
 	*/
 	
-	
+	NVIC_GLOBAL_ENABLE();	
 }
 
 /**

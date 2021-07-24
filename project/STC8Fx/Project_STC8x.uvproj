@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;.\main;.\application</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -380,6 +380,21 @@
               <FileName>startup_stc8f.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\..\libraries\core\startup\STC8x\startup_stc8f.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lib/core</GroupName>
+          <Files>
+            <File>
+              <FileName>ELL_CORE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_CORE.h</FilePath>
+            </File>
+            <File>
+              <FileName>ELL_TYPE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_TYPE.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -446,40 +461,10 @@
               <FileType>1</FileType>
               <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_WDT.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/components</GroupName>
-          <Files>
             <File>
-              <FileName>ComList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\components\ComList.h</FilePath>
-            </File>
-            <File>
-              <FileName>PreDelay.c</FileName>
+              <FileName>STC8x_DELAY.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PreDelay\PreDelay.c</FilePath>
-            </File>
-            <File>
-              <FileName>PrintfRed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\PrintfRed\PrintfRed.c</FilePath>
-            </File>
-            <File>
-              <FileName>TMT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\components\TMT\TMT.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/drives</GroupName>
-          <Files>
-            <File>
-              <FileName>DrvList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\DrvList.h</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_DELAY.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -487,9 +472,9 @@
           <GroupName>user/main</GroupName>
           <Files>
             <File>
-              <FileName>Lib_CFG.h</FileName>
+              <FileName>ELL_CFG.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\main\Lib_CFG.h</FilePath>
+              <FilePath>.\main\ELL_CFG.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -507,6 +492,9 @@
               <FilePath>.\main\isr.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>user/example</GroupName>
         </Group>
         <Group>
           <GroupName>user/app</GroupName>

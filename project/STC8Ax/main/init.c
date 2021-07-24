@@ -36,7 +36,7 @@ static void STC8x_TIMER_Config(void);
 ***/
 void STC8x_System_Init(void)
 {
-	DELAY_Set_Pos(); /* Power on stability delay */	
+
 	STC8x_SYSCLK_Config(); /* Initialize system clock */
 	DELAY_Init();
 	

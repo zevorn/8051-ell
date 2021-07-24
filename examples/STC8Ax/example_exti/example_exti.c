@@ -35,7 +35,9 @@
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
-/* None. */
+
+#define EXAMPLE_CTRL     (0)
+
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
@@ -45,6 +47,9 @@
  * @details    External interrupt peripheral sample code initialization.
  * @param      None.
  * @return     None.
+ * @note       每种例程，只能调用一个初始化函数和运行函数，各例程之间并不兼容。
+ *             Each routine can only call an initialization function and a run function, 
+ *             and the routines are not compatible with each other.
 **/
 void Example_EXTI_Init(void)
 {
@@ -53,19 +58,19 @@ void Example_EXTI_Init(void)
 	NVIC_EXTI0_Init(EXTI_Tri_Falling,NVIC_PR0,ENABLE);
 }
 
-#if 0
+#if EXAMPLE_CTRL
 
-/**
- * @brief      外部0中断服务函数。
- * @details    External 0 interrupt service function.
- * @param      None.
- * @return     None.
-**/
-void EXTI0_ISRQ_Handler(void)
-{
-	static uint16_t cnt = 0;
-	UART1_Isr_Send_Byte(cnt++);
-}
+	/**
+	 * @brief      外部0中断服务函数。
+	 * @details    External 0 interrupt service function.
+	 * @param      None.
+	 * @return     None.
+	**/
+	void EXTI0_ISRQ_Handler(void)
+	{
+		static uint16_t cnt = 0;
+		UART1_Isr_Send_Byte(cnt++);
+	}
 
 #endif
 

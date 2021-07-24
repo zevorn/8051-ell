@@ -83,15 +83,7 @@
     **/
     FSCSTATE DELAY_Init(void);
 
-    /**
-     * @brief      上电延时，帮助系统稳定。
-     * @details    Power-on delay helps to stabilize the system.
-     * @param      None.
-     * @return     None.
-    **/
-    void DELAY_Set_Pos(void); 
 
- 
     /**
      * @brief      延时一段时间，ms级别。
      * @details    Delay for a period of time, ms level.  
