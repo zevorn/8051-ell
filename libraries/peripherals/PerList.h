@@ -83,6 +83,11 @@
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
     #include "STC8x_PCA.h"
+    
+#endif
+
+#if  (PER_LIB_MCU_MUODEL == STC8Ax)
+
     #include "STC8x_PWM.h"
     
 #endif
