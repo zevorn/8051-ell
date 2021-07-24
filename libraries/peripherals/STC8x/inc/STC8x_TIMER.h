@@ -414,7 +414,36 @@ typedef struct
         **/
         #define    TIMER4_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0x7F) | (run << 7)}while(0)		
 
-		
+        /**
+		 * @brief     定时器0计数器重清零宏函数。
+         * @details   Timer 0 counter reset zero macro function.
+        **/
+        #define    TIMER0_CLEAR_CNT()    do{T0L = 0;  T0H = 0;}while(0)
+
+        /**
+		 * @brief     定时器1计数器重清零宏函数。
+         * @details   Timer 1 counter reset zero macro function.
+        **/
+        #define    TIMER1_CLEAR_CNT()    do{T1L = 0;  T1H = 0;}while(0)
+
+        /**
+		 * @brief     定时器2计数器重清零宏函数。
+         * @details   Timer 2 counter reset zero macro function.
+        **/
+        #define    TIMER2_CLEAR_CNT()    do{T2L = 0;  T2H = 0;}while(0)
+
+        /**
+		 * @brief     定时器3计数器重清零宏函数。
+         * @details   Timer 3 counter reset zero macro function.
+        **/
+        #define    TIMER3_CLEAR_CNT()    do{T3L = 0;  T3H = 0;}while(0)
+
+        /**
+		 * @brief     定时器4计数器重清零宏函数。
+         * @details   Timer 4 counter reset zero macro function.
+        **/
+        #define    TIMER4_CLEAR_CNT()    do{T4L = 0;  T4H = 0;}while(0)
+
         /**
 		 * @brief     定时器0计数器重装载宏函数。
          * @details   Timer 0 counter reload macro function。
