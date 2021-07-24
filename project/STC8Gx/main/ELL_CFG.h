@@ -173,6 +173,16 @@
 #define   PER_LIB_PWM_WORK_CTRL    (1) /*!< PWM模块工作相关宏，写1开启，写0关闭。*/
 
 /**
+ * @brief		配置MPWM片内外设。
+ * @details	    Configure MPWM chip internal  peripheral.
+**/
+#define   PER_LIB_MPWM_CTRL         (1) /*!< MPWM模块控制宏，写1开启，写0关闭。*/
+											
+#define   PER_LIB_MPWM_INIT_CTRL    (1) /*!< MPWM模块初始化相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_MPWM_NVIC_CTRL    (1) /*!< MPWM模块中断相关宏，写1开启，写0关闭。*/
+#define   PER_LIB_MPWM_WORK_CTRL    (1) /*!< MPWM模块工作相关宏，写1开启，写0关闭。*/
+
+/**
  * @brief		配置电源管理片内外设，没有初始化相关的控制宏。
  * @details	    Configure on-chip peripherals for power management.
 **/

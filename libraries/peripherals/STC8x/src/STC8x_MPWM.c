@@ -2,16 +2,16 @@
 |                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
 /*----------------------------------------------------------------------
-  - File name     : STC8Ax_MPWM.c
-  - Author        : zeweni
-  - Update date   : 2020.04.23
+  - File name     : STC8x_MPWM.c
+  - Author        : slipperstree
+  - Update date   : 2021.07.25
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
 |                            COPYRIGHT NOTICE                            |
 ------------------------------------------------------------------------*/
 /*
- * Copyright (C) 2021, zeweni (17870070675@163.com)
+ * Copyright (C) 2021, slipperstree (slipperstree@gmail.com)
 
  * This file is part of 8051 ELL low-layer libraries.
 
@@ -34,23 +34,100 @@
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
 #if (PER_LIB_MCU_MUODEL == STC8Gx)
-/* None */
+
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
 -----------------------------------------------------------------------*/
 
 /**
-  * @name    PWM_CNT_Init
-  * @brief   PWM counter init function,it must be initialized last
-  * @param   clkSrc   PWM_SCLK_DIV_1  | PWM_SCLK_DIV_2  | PWM_SCLK_DIV_3  | PWM_SCLK_DIV_4
-  *                   PWM_SCLK_DIV_5  | PWM_SCLK_DIV_6  | PWM_SCLK_DIV_7  | PWM_SCLK_DIV_8
-  *                   PWM_SCLK_DIV_9  | PWM_SCLK_DIV_10 | PWM_SCLK_DIV_11 | PWM_SCLK_DIV_12
-  *                   PWM_SCLK_DIV_13 | PWM_SCLK_DIV_14 | PWM_SCLK_DIV_15 | PWM_SCLK_DIV_16
-  * @param   value    Counter load value (uint16_t)
-  * @param   run      ENABLE | DISABLE
-  * @return  FSC_SUCCESS(1) / FSC_FAIL(0) 
-***/
+ * @brief     PWM端口初始化函数。Init PWM port function.
+ * @details   初始化指定端口(0-5)。Init the specified PWM port. (from 0 to 5)
+ * @param[in] port PWM端口枚举体。PWM port enumerator.
+ * @param[in] clkSrc PWM时钟源。PWM clock source.
+ * @param[in] period PWM周期值（计数器重装载值）。PWM period value (counter reload value)
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE MPWMn_Port_Init(MPWMPort_Type port, MPWMCLKSrc_Type clkSrc, uint16_t period)
+{
+    if(period <= 0x7FFF)
+    {
+    EAXFR_ENABLE();
+    PWM_ENABLE(port);
+    setRegPWMnCKS(port, clkSrc);
+    setRegPWMnC(port, period);
+    EAXFR_DISABLE();
+    return FSC_SUCCESS;
+    }
+    else return FSC_FAIL;
+}
 
+/**
+ * @brief     PWM通道初始化函数。Init PWM channel function.
+ * @details   初始化指定端口(0-5)的指定通道(0-7)。Init the specified port's channel (port from 0 to 5, channel from 0 to 7)
+ * @param[in] port PWM端口枚举体。PWM port enumerator.
+ * @param[in] ch   PWM通道枚举体。PWM channel enumerator.
+ * @param[in] level    PWM开始电平。PWM start level.
+ * @param[in] fValue   第一个电平翻转点。The value of the first reversal point.
+ * @param[in] sValue   第二个电平翻转点。The value of the second reversal point.
+ * @param[in] run     运行控制位。Run control bit.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE MPWMn_Channel_Init(MPWMPort_Type port, MPWMChannel_Type ch, MPWMStartLevel_Type level, uint16_t fValue, uint16_t sValue, BOOL run)
+{
+    if(fValue <= 0x7FFF && sValue <= 0x7FFF)
+    {
+    EAXFR_ENABLE();
+    setRegPWMniT1(port, ch, fValue);
+    setRegPWMniT2(port, ch, sValue);
+    // 开始电平
+    if (level) 
+    {
+        setBitPWMniStartLevel(port, ch);
+    } else {
+        clrBitPWMniStartLevel(port, ch);
+    }
+    // 使能
+    if (run)
+    {
+        setBitPWMniEnableOut(port, ch);
+    } else {
+        clrBitPWMniEnableOut(port, ch);
+    }   
+    EAXFR_DISABLE();
+    return FSC_SUCCESS;
+    }
+    else return FSC_FAIL;
+}
+
+/**
+ * @brief     指定PWM端口开始工作。Run specified PWM port.
+ * @details   指定PWM端口开始工作，输出PWM波形。Run specified PWM port. (Start PWM signal outputs)
+ * @param[in] port PWM端口枚举体。PWM port enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE MPWMn_run(MPWMPort_Type port){
+    EAXFR_ENABLE();
+    setBitPWMnCEN(port);
+    EAXFR_DISABLE();
+    return FSC_SUCCESS;
+}
+
+/**
+ * @brief     指定PWM端口停止工作。Stop specified PWM port working.
+ * @details   指定PWM端口停止工作，停止输出PWM波形。Stop specified PWM port. (Stop PWM signal outputs)
+ * @param[in] port PWM端口枚举体。PWM port enumerator.
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+FSCSTATE MPWMn_stop(MPWMPort_Type port){
+    EAXFR_ENABLE();
+    clrBitPWMnCEN(port);
+    EAXFR_DISABLE();
+    return FSC_SUCCESS;
+}
 
 
 #endif
