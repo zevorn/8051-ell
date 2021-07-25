@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : init.c
   - Author        : zeweni
-  - Update date   : 2020.01.11
+  - Update date   : 2021.07.25
   -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -42,6 +42,7 @@ static void STC8x_SYSCLK_Config(void);
 static void STC8x_UART_Config(void);
 static void STC8x_GPIO_Config(void);
 static void STC8x_TIMER_Config(void);
+static void STC8x_MPWM_Config(void);
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
@@ -62,6 +63,7 @@ void STC8x_System_Init(void)
 	STC8x_GPIO_Config();
 	STC8x_UART_Config();
 	STC8x_TIMER_Config();
+	STC8x_MPWM_Config();
 	
 	/*
 		Add hardware driver initialization code here.
@@ -144,6 +146,30 @@ static void STC8x_UART_Config(void)
 	UART_InitStruct.RxEnable = ENABLE;
 	UART1_Init(&UART_InitStruct);
 	NVIC_UART1_Init(NVIC_PR0,ENABLE);
+
+}
+
+/**
+  * @name    STC8x_MPWM_Config
+  * @brief   MCU PWM initialization function
+  * @param   None
+  * @return  None
+***/
+static void STC8x_MPWM_Config(void)
+{
+	GPIO_MODE_OUT_PP(GPIO_P4,Pin_7);
+
+	/* Init PWM port 4 */
+	MPWMn_Port_Init(MPWM_Port_4, MPWM_SCLK_DIV_16, 0x1000);
+
+	/* Init PWM channel P47 */
+	MPWMn_Channel_Init(MPWM_Port_4, MPWM_Channel_7, MPWM_Start_Low_Level, 0x0000, 0x0200, ENABLE);
+
+	/* Run PWM port 4 */
+	MPWMn_run(MPWM_Port_4);
+
+	/* Stop PWM port 4 */
+	// MPWMn_stop(MPWM_Port_4);
 
 }
 

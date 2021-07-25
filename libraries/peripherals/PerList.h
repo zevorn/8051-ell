@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : PerList.h
   - Author        : zeweni
-  - Update date   : 2020.02.06         
+  - Update date   : 2021.07.25         
   -	Copyright(c)  : 2020-2021 zeweni. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -83,7 +83,18 @@
 #if  (PER_LIB_MCU_MUODEL == STC8Ax || PER_LIB_MCU_MUODEL == STC8Gx)
 
     #include "STC8x_PCA.h"
+    
+#endif
+
+#if  (PER_LIB_MCU_MUODEL == STC8Ax)
+
     #include "STC8x_PWM.h"
+    
+#endif
+
+#if  (PER_LIB_MCU_MUODEL == STC8Gx)
+
+    #include "STC8x_MPWM.h"
     
 #endif
 
