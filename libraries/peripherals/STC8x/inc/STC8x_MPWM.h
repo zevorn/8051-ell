@@ -194,7 +194,7 @@
      * @return    FSC_SUCCESS 返回成功。Return to success.
      * @return    FSC_FAIL    返回失败。Return to fail.
     **/
-    FSCSTATE MPWMn_run(MPWMPort_Type port);
+    FSCSTATE MPWMn_Run(MPWMPort_Type port);
 
     /**
      * @brief     指定PWM端口停止工作。Stop specified PWM port working.
@@ -203,11 +203,11 @@
      * @return    FSC_SUCCESS 返回成功。Return to success.
      * @return    FSC_FAIL    返回失败。Return to fail.
     **/
-    FSCSTATE MPWMn_stop(MPWMPort_Type port);
+    FSCSTATE MPWMn_Stop(MPWMPort_Type port);
 
 #endif
-#endif
+
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
+#endif

@@ -166,7 +166,7 @@ static void STC8x_MPWM_Config(void)
 	MPWMn_Channel_Init(MPWM_Port_4, MPWM_Channel_7, MPWM_Start_Low_Level, 0x0000, 0x0200, ENABLE);
 
 	/* Run PWM port 4 */
-	MPWMn_run(MPWM_Port_4);
+	MPWMn_Run(MPWM_Port_4);
 
 	/* Stop PWM port 4 */
 	// MPWMn_stop(MPWM_Port_4);
