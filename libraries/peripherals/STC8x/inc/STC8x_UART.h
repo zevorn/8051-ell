@@ -520,7 +520,7 @@ typedef struct
 		 * @details Serial port busy flag, this is a variable customized 
 		 *          by the ELL library to prevent multiple serial port conflicts.
 		**/
-		extern uint8_t UART_BUSY_FLAG;		
+		extern uint8_t G_Uart_Busy_Flg;		
 
 
 		/**
@@ -530,7 +530,7 @@ typedef struct
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		 * @return  [bit] 忙标志位。Busy flag.
 		**/
-		#define      UART1_GET_BUSY_FLAG()    (UART_BUSY_FLAG & 0x01)
+		#define      UART1_GET_BUSY_FLAG()    (G_Uart_Busy_Flg & 0x01)
 
 
 		/**
@@ -540,7 +540,7 @@ typedef struct
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		 * @return  [bit] 忙标志位。Busy flag.
 		**/
-		#define      UART2_GET_BUSY_FLAG()    (UART_BUSY_FLAG & 0x02)
+		#define      UART2_GET_BUSY_FLAG()    (G_Uart_Busy_Flg & 0x02)
 
 
 		/**
@@ -550,7 +550,7 @@ typedef struct
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		 * @return  [bit] 忙标志位。Busy flag.
 		**/
-		#define      UART3_GET_BUSY_FLAG()    (UART_BUSY_FLAG & 0x04)
+		#define      UART3_GET_BUSY_FLAG()    (G_Uart_Busy_Flg & 0x04)
 
 
 		/**
@@ -560,7 +560,7 @@ typedef struct
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		 * @return  [bit] 忙标志位。Busy flag.
 		**/
-		#define      UART4_GET_BUSY_FLAG()    (UART_BUSY_FLAG & 0x08)
+		#define      UART4_GET_BUSY_FLAG()    (G_Uart_Busy_Flg & 0x08)
 
 		/**
 		 * @brief   串口1设置忙标志位宏函数，
@@ -568,7 +568,7 @@ typedef struct
 		 * @details Serial port 1 sets busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define      UART1_SET_BUSY_FLAG()    do{UART_BUSY_FLAG |= 0x01;}while(0)
+		#define      UART1_SET_BUSY_FLAG()    do{G_Uart_Busy_Flg |= 0x01;}while(0)
 
 
 		/**
@@ -577,7 +577,7 @@ typedef struct
 		 * @details Serial port 2 sets busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define      UART2_SET_BUSY_FLAG()    do{UART_BUSY_FLAG |= 0x02;}while(0)
+		#define      UART2_SET_BUSY_FLAG()    do{G_Uart_Busy_Flg |= 0x02;}while(0)
 
 
 		/**
@@ -586,7 +586,7 @@ typedef struct
 		 * @details Serial port 3 sets busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define      UART3_SET_BUSY_FLAG()    do{UART_BUSY_FLAG |= 0x04;}while(0)
+		#define      UART3_SET_BUSY_FLAG()    do{G_Uart_Busy_Flg |= 0x04;}while(0)
 
 
 		/**
@@ -595,7 +595,7 @@ typedef struct
 		 * @details Serial port 4 sets busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define      UART4_SET_BUSY_FLAG()    do{UART_BUSY_FLAG |= 0x08;}while(0)
+		#define      UART4_SET_BUSY_FLAG()    do{G_Uart_Busy_Flg |= 0x08;}while(0)
 
 
 		/**
@@ -604,7 +604,7 @@ typedef struct
 		 * @details Serial port 1 clears busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define    UART1_CLEAR_BUSY_FLAG()    do{UART_BUSY_FLAG &= 0xFE;}while(0)
+		#define    UART1_CLEAR_BUSY_FLAG()    do{G_Uart_Busy_Flg &= 0xFE;}while(0)
 
 		
 		/**
@@ -613,7 +613,7 @@ typedef struct
 		 * @details Serial port 2 clears busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define    UART2_CLEAR_BUSY_FLAG()    do{UART_BUSY_FLAG &= 0xFD;}while(0)
+		#define    UART2_CLEAR_BUSY_FLAG()    do{G_Uart_Busy_Flg &= 0xFD;}while(0)
 
 
 		/**
@@ -622,7 +622,7 @@ typedef struct
 		 * @details Serial port 3 clears busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define    UART3_CLEAR_BUSY_FLAG()    do{UART_BUSY_FLAG &= 0xFB;}while(0)
+		#define    UART3_CLEAR_BUSY_FLAG()    do{G_Uart_Busy_Flg &= 0xFB;}while(0)
 
 		
 		/**
@@ -631,7 +631,7 @@ typedef struct
 		 * @details Serial port 4 clears busy flag macro function,
 		 *          This is a self-defined flag bit variable of ELL, not a hardware register.
 		**/
-		#define    UART4_CLEAR_BUSY_FLAG()    do{UART_BUSY_FLAG &= 0xF7;}while(0)
+		#define    UART4_CLEAR_BUSY_FLAG()    do{G_Uart_Busy_Flg &= 0xF7;}while(0)
 
 
 		/**

@@ -188,7 +188,7 @@ do{                                                                             
  * @details Serial port busy flag, this is a variable customized 
  *          by the ELL library to prevent multiple serial port conflicts.
 **/
-uint8_t UART_BUSY_FLAG = 0; //Busy flag of receive
+uint8_t G_Uart_Busy_Flg = 0; //Busy flag of receive
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |

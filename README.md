@@ -128,23 +128,112 @@ ELL采用了面向对象的封装思想，但是考虑51的资源和性能，又
 ## 一、代码编写准则
 
 1.宏命名：全部采用字母大写；
+```C
+宏函数：
+
+    #define NVIC_COMP_CTRL(run)    do{CMPCR1 = (CMPCR1 & 0xCF)|(run << 4);}while(0)
+
+普通宏：
+
+    #define PER_LIB_COMP_CTRL 1
+
+
+```
 
 2.变量命名：采用动宾结构，单词过长要缩写（保留三个字母），单词之间用`_`连接全局变量说明：要加前缀'G_'
   局部变量说明：首字母小写
 
+```C
+
+全局变量：
+
+    uint8_t G_Uart_Busy_Flg = 0; //Busy flag of receive
+
+局部变量：
+
+    uint32_t sysClk_FRE;
+```
+
 5.函数命名：名字+动作形式，单词首字母大写，单词之间用`_`连接
   函数传参说明：首字母小写
-  
+
+```C
+
+FSCSTATE MPWMn_Port_Init(MPWMPort_Type port, MPWMCLKSrc_Type clkSrc, uint16_t period)
+{
+    ...
+}
+```
+
 6.代码注释规范：采用Doxygen规范，具体细节可参考库源代码。
+```C
+
+/**
+ * @brief     PWM端口初始化函数。Init PWM port function.
+ * @details   初始化指定端口(0-5)。Init the specified PWM port. (from 0 to 5)
+ * @param[in] port PWM端口枚举体。PWM port enumerator.
+ * @param[in] clkSrc PWM时钟源。PWM clock source.
+ * @param[in] period PWM周期值（计数器重装载值）。PWM period value (counter reload value)
+ * @return    FSC_SUCCESS 返回成功。Return to success.
+ * @return    FSC_FAIL    返回失败。Return to fail.
+**/
+
+```
 
 7.利用代码注释，ELL对C文件和H文件做了区域划分，使得代码管理更加规范。
 
+```C
+
+/*-----------------------------------------------------------------------
+|                            FILE DESCRIPTION                           |
+-----------------------------------------------------------------------*/
+/*----------------------------------------------------------------------
+  - File name     : xxx.c
+  - Author        : zeweni
+  - Update date   : 2020.01.11
+  -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
+-----------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+|                            COPYRIGHT NOTICE                            |
+------------------------------------------------------------------------*/
+/*
+ * Copyright (C) 2021, zeweni (17870070675@163.com)
+
+ * This file is part of 8051 ELL low-layer libraries.
+
+ * 8051 ELL low-layer libraries is free software: you can redistribute 
+ * it and/or modify it under the terms of the Apache-2.0 License.
+
+ * 8051 ELL low-layer libraries is distributed in the hope that it will 
+ * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+ * Apache-2.0 License for more details.
+
+ * You should have received a copy of the Apache-2.0 License.8051 ELL 
+ * low-layer libraries. If not, see <http://www.apache.org/licenses/>.
+**/
+/*-----------------------------------------------------------------------
+|                               INCLUDES                                |
+-----------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------
+|                                 DATA                                  |
+-----------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------
+|                               FUNCTION                                |
+-----------------------------------------------------------------------*/
+
+/*-----------------------------------------------------------------------
+|                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
+-----------------------------------------------------------------------*/
+
+```
 
 
 ## 二、模块开发指导
 
 ELL使用git管理源代码，使用gitee作为主仓库，github作为备份仓库。如果想要成为ELL的开发者，请以gitee仓库为主。
-
 
 
 ### 一、Fork本仓库
@@ -156,7 +245,6 @@ ELL使用git管理源代码，使用gitee作为主仓库，github作为备份仓
 
 
 ### 二、开发代码
-
 
 
 #### 1.寄存器
