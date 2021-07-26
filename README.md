@@ -34,7 +34,7 @@ QQ技术支持群：` 1001220381`
 
 ## 新手如何入门
 
-
+[点击我跳转至B站教学视频](https://www.bilibili.com/video/BV1i54y1J7Ap)
 
 进入 <font color=#0CCDD>[<u>**8051-ELL文档中心**</u>](https://8051-ell-web.vercel.app/#/)</font>  可查看 <font color=#0CCDD>[<u>**入门教程**</u>](https://8051-ell-web.vercel.app/#/zh-cn/start/start)</font> 。
 
