@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\drives;..\..\libraries\drives\KeyScan;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;..\..\libraries\components;..\..\libraries\components\TMT;..\..\libraries\components\PrintfRed;..\..\libraries\components\PreDelay;.\main;.\application</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;.\main;.\application;..\..\examples\STC8Gx\example_adc;..\..\examples\STC8Gx\example_exti</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -522,9 +522,19 @@
           <GroupName>user/example</GroupName>
           <Files>
             <File>
-              <FileName>DrvList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\libraries\drives\DrvList.h</FilePath>
+              <FileName>example_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\examples\STC8Gx\example_adc\example_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>example_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\examples\STC8Gx\example_exti\example_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>example_eeprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\examples\STC8Gx\example_eeprom\example_eeprom.c</FilePath>
             </File>
           </Files>
         </Group>
