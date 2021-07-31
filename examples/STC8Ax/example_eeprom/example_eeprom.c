@@ -43,11 +43,11 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @brief      Íâ²¿ÖĞ¶ÏÍâÉèÊ¾Àı´úÂë³õÊ¼»¯¡£
- * @details    External interrupt peripheral sample code initialization.
+ * @brief      EEPROMå¤–è®¾ç¤ºä¾‹ä»£ç åˆå§‹åŒ–ã€‚
+ * @details    EEPROM peripheral example code initialization.
  * @param      None.
  * @return     None.
- * @note       Ã¿ÖÖÀı³Ì£¬Ö»ÄÜµ÷ÓÃÒ»¸ö³õÊ¼»¯º¯ÊıºÍÔËĞĞº¯Êı£¬¸÷Àı³ÌÖ®¼ä²¢²»¼æÈİ¡£
+ * @note       æ¯ç§ä¾‹ç¨‹ï¼Œåªèƒ½è°ƒç”¨ä¸€ä¸ªåˆå§‹åŒ–å‡½æ•°å’Œè¿è¡Œå‡½æ•°ï¼Œå„ä¾‹ç¨‹ä¹‹é—´å¹¶ä¸å…¼å®¹ã€‚
  *             Each routine can only call an initialization function and a run function, 
  *             and the routines are not compatible with each other.
 **/
@@ -58,7 +58,7 @@ void Example_EEPROM_Init(void)
 
 
 /**
- * @brief      ÔËĞĞEEPROMÍâÉèÊ¾Àı´úÂë¡£
+ * @brief      è¿è¡ŒEEPROMå¤–è®¾ç¤ºä¾‹ä»£ç ã€‚
  * @details    Run the EEPROM peripheral sample code.
  * @param      None.
  * @return     None.

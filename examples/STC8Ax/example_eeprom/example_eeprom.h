@@ -37,20 +37,20 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @brief      EEPROMÍâÉèÊ¾Àı´úÂë³õÊ¼»¯¡£
+ * @brief      EEPROMå¤–è®¾ç¤ºä¾‹ä»£ç åˆå§‹åŒ–ã€‚
  * @details    Example code for ADC peripherals initialized.
  * @param      None.
  * @return     None.
 **/
-void Example_EEPROM_Init(void);
+extern void Example_EEPROM_Init(void);
 
 /**
- * @brief      ÔËĞĞEEPROMÍâÉèÊ¾Àı´úÂë¡£
+ * @brief      è¿è¡ŒEEPROMå¤–è®¾ç¤ºä¾‹ä»£ç ã€‚
  * @details    Run the EEPROM peripheral sample code.
  * @param      None.
  * @return     None.
 **/
-void Example_EEPROM_Run(void);
+extern void Example_EEPROM_Run(void);
 
 #endif
 /*-----------------------------------------------------------------------

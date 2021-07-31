@@ -51,18 +51,7 @@ void UART1_ISRQ_Handler(void)
 	}
 }
 
-/**
-  * @name    EXTI0_ISRQ_Handler
-  * @brief   MCU EXTI0 Interrupt request service function
-  * @param   None
-  * @return  None
-***/
-void EXTI0_ISRQ_Handler(void) 
-{
-  static uint16_t cont=0;
-  printf("Trigger INT0 cont = %d\r\n",(int)cont);
-  cont++;
-}
+
 /*--------------------------------------------------------
 | @Description: Interrupt service function               |
 --------------------------------------------------------*/

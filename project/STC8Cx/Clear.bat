@@ -2,6 +2,7 @@
 
 
 del *.obj /s
+del *.hex /s
 del *.lst /s
 del *.*.htm /s
 del *.lnp /s
@@ -9,9 +10,10 @@ del *.m51 /s
 del *.ixe /s
 del *.__i /s
 del *.iex /s
-del Project_STC8x /s
+del output /s
 del *.map /s
 del *.SBR /s
+del *.ORC /s
 del *.Administrator /s
 
 

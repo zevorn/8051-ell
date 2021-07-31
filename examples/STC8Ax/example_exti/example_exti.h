@@ -37,12 +37,12 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @brief      ADCÍâÉèÊ¾Àı´úÂë³õÊ¼»¯¡£
+ * @brief      ADCå¤–è®¾ç¤ºä¾‹ä»£ç åˆå§‹åŒ–ã€‚
  * @details    Example code for ADC peripherals initialized.
  * @param      None.
  * @return     None.
 **/
-void Example_EXTI_Init(void);
+extern void Example_EXTI_Init(void);
 
 #endif
 /*-----------------------------------------------------------------------

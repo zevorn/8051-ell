@@ -13,13 +13,13 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STC8H8K64U Series</Device>
+          <Device>STC8F2K64S4 Series</Device>
           <Vendor>STC</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0x1FFF) IROM(0-0xFFF8) CLOCK(35000000) MODP2</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0-0x07FF) IROM(0-0xFFF8) CLOCK(35000000) MODP2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>63364</DeviceId>
+          <DeviceId>63032</DeviceId>
           <RegisterFile>STC8.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
@@ -46,7 +46,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\build\</OutputDirectory>
-          <OutputName>output</OutputName>
+          <OutputName>outpu</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -145,11 +145,11 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
+            <RestoreTracepoints>0</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>13</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -283,7 +283,7 @@
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x800</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\libraries;..\..\..\libraries\core;..\..\..\libraries\core\register\STC8x;..\..\..\libraries\core\startup\STC8x;..\..\..\libraries\drives;..\..\..\libraries\drives\KeyScan;..\..\..\libraries\peripherals;..\..\..\libraries\peripherals\STC8x\inc;..\..\..\libraries\peripherals\STC8x\src;..\..\..\libraries\components;..\..\..\libraries\components\TMT;..\..\..\libraries\components\PrintfRed;..\..\..\libraries\components\PreDelay;.\main;.\application</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;.\main;.\application</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -377,9 +377,24 @@
           <GroupName>lib/startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_stc8h.s</FileName>
+              <FileName>startup_stc8f.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\libraries\core\startup\STC8x\startup_stc8h.s</FilePath>
+              <FilePath>..\..\libraries\core\startup\STC8x\startup_stc8f.s</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lib/core</GroupName>
+          <Files>
+            <File>
+              <FileName>ELL_CORE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_CORE.h</FilePath>
+            </File>
+            <File>
+              <FileName>ELL_TYPE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\libraries\core\ELL_TYPE.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -389,117 +404,67 @@
             <File>
               <FileName>PerList.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\..\libraries\peripherals\PerList.h</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_ADC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_ADC.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\PerList.h</FilePath>
             </File>
             <File>
               <FileName>STC8x_COMP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_COMP.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_COMP.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_EEPROM.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_EEPROM.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_EEPROM.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_GPIO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_GPIO.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_GPIO.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_I2C.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_PCA.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_PCA.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_I2C.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_POWER.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_POWER.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_POWER.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_RST.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_RST.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_RST.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_SPI.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_SPI.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_SPI.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_SYSCLK.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_SYSCLK.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_SYSCLK.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_TIMER.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_TIMER.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_TIMER.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_UART.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_UART.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_UART.c</FilePath>
             </File>
             <File>
               <FileName>STC8x_WDT.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_WDT.c</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_WDT.c</FilePath>
             </File>
             <File>
-              <FileName>STC8x_HPWM.c</FileName>
+              <FileName>STC8x_DELAY.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_HPWM.c</FilePath>
-            </File>
-            <File>
-              <FileName>STC8x_MDU16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\peripherals\STC8x\src\STC8x_MDU16.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/components</GroupName>
-          <Files>
-            <File>
-              <FileName>ComList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\libraries\components\ComList.h</FilePath>
-            </File>
-            <File>
-              <FileName>PreDelay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\components\PreDelay\PreDelay.c</FilePath>
-            </File>
-            <File>
-              <FileName>PrintfRed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\components\PrintfRed\PrintfRed.c</FilePath>
-            </File>
-            <File>
-              <FileName>TMT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\libraries\components\TMT\TMT.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lib/drives</GroupName>
-          <Files>
-            <File>
-              <FileName>DrvList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\libraries\drives\DrvList.h</FilePath>
+              <FilePath>..\..\libraries\peripherals\STC8x\src\STC8x_DELAY.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -507,9 +472,9 @@
           <GroupName>user/main</GroupName>
           <Files>
             <File>
-              <FileName>Lib_CFG.h</FileName>
+              <FileName>ELL_CFG.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\main\Lib_CFG.h</FilePath>
+              <FilePath>.\main\ELL_CFG.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -527,6 +492,9 @@
               <FilePath>.\main\isr.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>user/example</GroupName>
         </Group>
         <Group>
           <GroupName>user/app</GroupName>

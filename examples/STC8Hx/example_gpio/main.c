@@ -26,12 +26,14 @@
 ***/
 int main(void)
 {
-
+  uint8_t rDat;
 	STC8x_System_Init();
 
 	for(;;)
 	{
-
+    rDat = P54;
+    printf("P5.4 = %bd \r\n",rDat);
+    delay_ms(500);
 	}
 
 }

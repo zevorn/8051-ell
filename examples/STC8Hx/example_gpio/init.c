@@ -21,7 +21,6 @@
 
 static void STC8x_UART_Config(void);
 static void STC8x_GPIO_Config(void);
-static void STC8x_EXTI_Config(void);
 
 /*-----------------------------------------------------------------------
 |                               FUNCTION                                |
@@ -40,7 +39,6 @@ void STC8x_System_Init(void)
 
 	STC8x_UART_Config();
 	STC8x_GPIO_Config();
-	STC8x_EXTI_Config();
 
 	NVIC_GLOBAL_ENABLE();
 }
@@ -85,18 +83,6 @@ static void STC8x_GPIO_Config(void)
 	GPIO_MODE_WEAK_PULL(GPIO_P4,Pin_All);
 
 	GPIO_MODE_IN_FLOATING(GPIO_P5,Pin_4);
-}
-
-/**
-  * @name    STC8x_Exti_Config
-  * @brief   MCU Exti initialization function
-  * @param   None
-  * @return  None
-***/
-static void STC8x_EXTI_Config(void)
-{
-	GPIO_MODE_IN_FLOATING(GPIO_P3,Pin_3);   
-	NVIC_EXTI0_Init(EXTI_Tri_Falling,NVIC_PR0,ENABLE);
 }
 
 /*-----------------------------------------------------------------------

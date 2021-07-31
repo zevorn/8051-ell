@@ -37,20 +37,20 @@
 -----------------------------------------------------------------------*/
 
 /**
- * @brief      ADCÍâÉèÊ¾Àı´úÂë³õÊ¼»¯¡£
+ * @brief      ADCå¤–è®¾ç¤ºä¾‹ä»£ç åˆå§‹åŒ–ã€‚
  * @details    Example code for ADC peripherals initialized.
  * @param      None.
  * @return     None.
 **/
-void Example_ADC_Init(void);
+extern void Example_ADC_Init(void);
 
 /**
- * @brief      ÔËĞĞADCÍâÉèÊ¾Àı´úÂë¡£
+ * @brief      è¿è¡ŒADCå¤–è®¾ç¤ºä¾‹ä»£ç ã€‚
  * @details    Run the ADC peripheral sample code.
  * @param      None.
  * @return     None.
 **/
-void Example_ADC_Run(void);
+extern void Example_ADC_Run(void);
 
 #endif
 /*-----------------------------------------------------------------------
