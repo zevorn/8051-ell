@@ -404,7 +404,7 @@ typedef struct
          * @details   timer3 working switch control macro function.
          * @param[in] run  使能控制位。Enable control bit.
         **/
-        #define    TIMER3_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0xF7) | (run << 3)}while(0)	
+        #define    TIMER3_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0xF7) | (run << 3); }while(0)	
 		
 		
         /**
@@ -412,7 +412,7 @@ typedef struct
          * @details   timer4 working switch control macro function.
          * @param[in] run  使能控制位。Enable control bit.
         **/
-        #define    TIMER4_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0x7F) | (run << 7)}while(0)		
+        #define    TIMER4_WORK_CTRL(run)     do{ T4T3M = (T4T3M & 0x7F) | (run << 7); }while(0)		
 
         /**
 		 * @brief     定时器0计数器重清零宏函数。

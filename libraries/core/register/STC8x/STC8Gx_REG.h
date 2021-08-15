@@ -1459,7 +1459,7 @@ sfr SPDAT    =   SPDAT_ADDRESS;
 #define SLACKI      0x02
 #define SLACKO      0x01
 
-/* SPI register */
+/* I2C register */
 
 #define I2CCFG      (*(__IO uint8_t xdata *)  I2CCFG_ADDRESS)
 #define I2CMSCR     (*(__IO uint8_t xdata *) I2CMSCR_ADDRESS)
