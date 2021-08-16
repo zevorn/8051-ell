@@ -3,7 +3,7 @@
 
 # 8051-ELL 简介
 
-<font color=#0CCDD>[<u>**8051-ELL文档中心**</u>](https://8051-ell-web-albubxsmf-zewen-i.vercel.app/)</font>     <font color=#0BBEE>[<u>**API在线手册**</u>](https://8051-ell-api.vercel.app/index.html)</font>   
+<font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://open-ell.gitee.io/home/#/)</font>     <font color=#0BBEE>[<u>**API在线手册**</u>](https://8051-ell-api.vercel.app/index.html)</font>   
 
 [![](https://img.shields.io/badge/version-1.1.6-green)](https://github.com/zewen-i/8051-ELL-LIB) <a href='https://gitee.com/zeweni/ELL-8051-LIB/stargazers'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=white' alt='star'></img></a> <a href='https://gitee.com/zeweni/ELL-8051-LIB/members'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=gray' alt='fork'></img></a>
 
