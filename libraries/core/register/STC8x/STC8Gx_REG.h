@@ -866,6 +866,9 @@ sbit CCF0  =  CCON ^ 0;
 #define    PWMCFG23_ADDRESS  0xF7U
 #define    PWMCFG45_ADDRESS  0xFEU
 
+/*** 增强型 PWM 全局配置寄存器(PWMSET) ***/
+sfr PWMSET      =   PWMSET_ADDRESS;
+
 /*  PWM0 control address define */
 #define    PWM0_BASE          0xFF00U
 #define    PWM0C_ADDRESS      (PWM0_BASE + 0x00U)

@@ -30,6 +30,7 @@
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
 #include "main.h"
+#include "example_mpwm.h"
 
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
@@ -48,10 +49,11 @@
 int main(void)
 {
     STC8x_System_Init();
-	
+    Example_MPWM_Init();
+
     for(;;)
     {
-
+      Example_MPWM_Run();
     }
 
 }
