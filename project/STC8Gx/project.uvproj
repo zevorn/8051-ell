@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;.\main;.\application;..\..\examples\STC8Gx\example_adc;..\..\examples\STC8Gx\example_exti</IncludePath>
+              <IncludePath>..\..\libraries;..\..\libraries\core;..\..\libraries\core\register\STC8x;..\..\libraries\core\startup\STC8x;..\..\libraries\peripherals;..\..\libraries\peripherals\STC8x\inc;..\..\libraries\peripherals\STC8x\src;.\main;.\application;..\..\examples\STC8Gx\example_adc;..\..\examples\STC8Gx\example_exti;..\..\examples\STC8Gx\example_mpwm</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -535,6 +535,11 @@
               <FileName>example_eeprom.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\examples\STC8Gx\example_eeprom\example_eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>example_mpwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\examples\STC8Gx\example_mpwm\example_mpwm.c</FilePath>
             </File>
           </Files>
         </Group>
