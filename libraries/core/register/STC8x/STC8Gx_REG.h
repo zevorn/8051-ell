@@ -386,6 +386,9 @@ sbit P41 = P4^1;
 sbit P42 = P4^2;
 sbit P43 = P4^3;
 sbit P44 = P4^4;
+sbit P45 = P4^5;
+sbit P46 = P4^6;
+sbit P47 = P4^7;
 						
 sbit P50 = P5^0;
 sbit P51 = P5^1;
