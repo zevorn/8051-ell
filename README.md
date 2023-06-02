@@ -1,17 +1,13 @@
 
 <img src='doc/image/icon.png' align='left'/>
 
-# 8051-ELL 简介
+# MCS51-ELL 简介
 
-<font color=#0CCDD>[<u>**8051-ELL官网**</u>](https://open-ell.gitee.io/home/#/)</font>     <font color=#0BBEE>[<u>**API在线手册**</u>](https://8051-ell-api.vercel.app/index.html)</font>   
-
-[![](https://img.shields.io/badge/version-1.1.6-green)](https://github.com/zewen-i/8051-ELL-LIB) <a href='https://gitee.com/zeweni/ELL-8051-LIB/stargazers'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/star.svg?theme=white' alt='star'></img></a> <a href='https://gitee.com/zeweni/ELL-8051-LIB/members'><img src='https://gitee.com/zeweni/ELL-8051-LIB/badge/fork.svg?theme=gray' alt='fork'></img></a>
-
-8051-ELL，是根据新一代增强型8051为内核的MCU，基于keil开发的硬件抽象平台。ELL库充分考虑8051的特性，结合硬件条件，提供了大量标准的API函数，供开发者访问底层硬件细节。ELL的大小支持裁剪，在代码密度和执行效率上做到了很好的平衡。
+MCS51-ELL，是根据新一代增强型8051为内核的MCU，基于keil开发的硬件抽象平台。ELL库充分考虑8051的特性，结合硬件条件，提供了大量标准的API函数，供开发者访问底层硬件细节。ELL的大小支持裁剪，在代码密度和执行效率上做到了很好的平衡。
 
 ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HAL库`和`LL库`的编程思想，既保证了通用性又降低了flash的过度占用。可谓是一举两得，高效、简洁、好用！
 
-8051-ELL库支持Keil4和Keil5，支持Vscode协同开发，推荐使用EIDE插件。目前ELL库主要适配了STC公司的单片机型号，以STC8系列为主。后续计划增加STC12、STC15、STC16系列。
+MCS51-ELL库支持Keil4和Keil5，支持Vscode协同开发，推荐使用EIDE插件。目前ELL库主要适配了STC公司的单片机型号，以STC8系列为主。后续计划增加STC12、STC15、STC16系列。
 
 
 函数库遵循 Apache 许可证 2.0 版本，可免费在商业产品中使用，不需要公布应用程序源码，没有潜在商业风险。
@@ -23,7 +19,7 @@ ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HA
 ****
 当前版本为：`1.1.6.0725`
 
-B站账号：泽文i
+B站账号：zevorn
 
 QQ技术支持群：` 1001220381`
 
@@ -35,9 +31,6 @@ QQ技术支持群：` 1001220381`
 ## 新手如何入门
 
 [点击我跳转至B站教学视频](https://www.bilibili.com/video/BV1i54y1J7Ap)
-
-进入 <font color=#0CCDD>[<u>**8051-ELL文档中心**</u>](https://open-ell.gitee.io/home/#/)</font>  可查看 <font color=#0CCDD>[<u>**入门教程**</u>](https://8051-ell-web.vercel.app/#/zh-cn/start/start)</font> 。
-
 
 
 ELL采用了一个裸机框架来组织库文件。框架包括两大部分：`工程文件`和`库文件`。
