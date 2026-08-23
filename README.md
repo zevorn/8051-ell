@@ -1,181 +1,148 @@
-
 <img src='doc/image/icon.png' align='left'/>
 
-# MCS51-ELL 简介
+# MCS51-ELL
 
-MCS51-ELL，是根据新一代增强型8051为内核的MCU，基于keil开发的硬件抽象平台。ELL库充分考虑8051的特性，结合硬件条件，提供了大量标准的API函数，供开发者访问底层硬件细节。ELL的大小支持裁剪，在代码密度和执行效率上做到了很好的平衡。
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-ELL是`efficient low-layer`的缩写，意思是`高效低封装`，结合了`HAL库`和`LL库`的编程思想，既保证了通用性又降低了flash的过度占用。可谓是一举两得，高效、简洁、好用！
+MCS51-ELL is a hardware abstraction platform for MCUs built around enhanced 8051 cores. It is developed for Keil and provides a collection of standard APIs for accessing low-level hardware while keeping code size and execution efficiency balanced. ELL can be configured and trimmed to fit the needs of a project.
 
-MCS51-ELL库支持Keil4和Keil5，支持Vscode协同开发，推荐使用EIDE插件。目前ELL库主要适配了STC公司的单片机型号，以STC8系列为主。后续计划增加STC12、STC15、STC16系列。
+ELL stands for `efficient low-layer`. It combines the ideas of HAL and LL libraries: keeping APIs reusable while avoiding unnecessary flash usage. The result is a library that is efficient, compact, and easy to use.
 
+MCS51-ELL supports Keil 4, Keil 5, and collaborative development with Visual Studio Code. The EIDE extension is recommended. The library currently focuses on STC MCUs, especially the STC8 series, with STC12, STC15, and STC16 planned for future support.
 
-函数库遵循 Apache 许可证 2.0 版本，可免费在商业产品中使用，不需要公布应用程序源码，没有潜在商业风险。
+The library is licensed under the Apache License 2.0. It can be used in commercial products free of charge, without requiring the application source code to be published.
 
+If you find it useful, please give the project a `Star`!
 
-大家觉得好用的话，记得给个`Star`，我想上自荐！！！！
+---
 
+Current version: `1.1.6.0725`
 
-****
-当前版本为：`1.1.6.0725`
+Bilibili: `zevorn`
 
-B站账号：zevorn
+QQ support group: `1001220381`
 
-QQ技术支持群：` 1001220381`
+---
 
+## Getting Started
 
-****
+[Watch the Bilibili tutorial](https://www.bilibili.com/video/BV1i54y1J7Ap)
 
+ELL uses a bare-metal framework to organize its files. The framework consists of two main parts: `project files` and `library files`.
 
+Project files contain Keil projects, Visual Studio Code files, and user code. You can arrange them freely according to your development workflow. The library files are divided into four areas: `core`, `on-chip peripherals`, `components`, and `device drivers`. Components and device drivers are developed separately and are not included in this repository.
 
-## 新手如何入门
+### Repository layout
 
-[点击我跳转至B站教学视频](https://www.bilibili.com/video/BV1i54y1J7Ap)
+| Top-level directory | Subdirectory | Description |
+| :---: | :---: | :--- |
+| `doc` | ... | Documentation and reference material |
+| `examples` | --- | Example code |
+|  | `STC8Ax` | Examples for the STC8A series |
+|  | `STC8Cx` | Examples for the STC8C series |
+|  | `...` | Examples for other MCU families |
+| `libraries` | --- | ELL library files |
+|  | `core` | Registers and startup files |
+|  | `peripherals` | On-chip peripheral libraries |
+| `project` | --- | Template projects |
+|  | `STC8Ax` | Template projects for the STC8A series |
+|  | `STC8Cx` | Template projects for the STC8C series |
+|  | `...` | Template projects for other MCU families |
 
+ELL's framework is illustrated below:
 
-ELL采用了一个裸机框架来组织库文件。框架包括两大部分：`工程文件`和`库文件`。
+![ELL framework](doc/image/8051-ELL-FrameWork.png)
 
-工程文件主要存放`Keil工程`、`Vscode文件`、`用户代码`。这里可以根据你的编程习惯进行安排，非常的自由！库文件才是我们的重头戏，它主要分为四个部分：`核心文件夹`、`片内外设库`、`组件库`、`设备驱动库`。其中`组件库`和`设备驱动库`单独发展，不放在本仓库内。
+The library also makes use of Keil features such as the LX51 extended linker/locator, which improves on BL51 and can produce smaller target files.
 
-### ELL仓库目录结构
+# Source Code Guide
 
+## 1. Basic Architecture
 
-| 一级目录  |  二级目录   |        描述         |
-| :-------: | :---------: | :-----------------: |
-|    doc    |     ...     |    一些文档资料     |
-| examples  |     ---     |      示例代码       |
-|           |   STC8Ax    | STC8A系列的示例代码 |
-|           |   STC8Cx    | STC8C系列的示例代码 |
-|           |     ...     |      其他型号       |
-| libraries |     ---     |      ELL库文件      |
-|           |    core     |  寄存器和启动文件   |
-|           | peripherals |  芯片的片内外设库   |
-|  project  |     ---     |      模板工程       |
-|           |   STC8Ax    | STC8A系列的模板工程 |
-|           |   STC8Cx    | STC8C系列的模板工程 |
-|           |     ...     |      其他型号       |
+At the architectural level, ELL consists of three parts: the on-chip peripheral library, the component library, and the device driver library. The on-chip peripheral library is the core of ELL and contains drivers for MCU peripherals. Components and device drivers are open for developers to implement their own drivers or port software packages.
 
+The repository is organized into the `libraries` and `project` directories.
 
+The `libraries` directory contains `startup`, `core`, and `peripherals`. `startup` contains assembly startup code. `core` contains MCU register definitions and ELL core data types, and also manages MCU interrupts such as interrupt numbers. The remaining library directories follow the architecture described above.
 
-下面是ELL库的框架图:
+The `project` directory contains Keil C51 projects. IAR and SDCC support may be added later. A project generally contains `main`, `application`, and `build` directories: `main` stores system initialization and interrupt service routines, `application` stores application code, and `build` stores generated binaries and assembly files.
 
-![img](doc/image/8051-ELL-FrameWork.png)
+## 2. Data Structures
 
-整个固件库，充分利用了keil的一些特性，比如使用LX51扩展链接器/定位器，优化了BL51的功能，可以生成更小的目标文件等。
+ELL uses object-oriented encapsulation ideas while making adjustments for the resource and performance constraints of 8051 MCUs. For peripherals with multiple related operating modes, it uses structures and enumerations. For individual or more abstract peripherals, it uses function parameters, with parameters still represented by enumerations or consistently defined macros.
 
+In structure-and-enumeration based interfaces, an enumeration member usually configures one feature or parameter, while the structure containing those members represents the complete state of a peripheral.
 
+ELL also makes extensive use of macros, including function-like macros, control macros, and configurable macro parameters. Function-like macros encapsulate register operations to improve readability without sacrificing execution efficiency. Control macros trim ELL features and provide configuration options.
 
-# 源代码阅读指导
+# Supported MCUs and Peripherals
 
+> `√` means supported, a blank cell means the MCU does not have the peripheral, and `X` means the peripheral has not been adapted yet.
 
+### STC8 series
 
-## 一、基本架构
+Some details may vary between models. Refer to the official datasheets for the exact capabilities of each MCU.
 
-设计框架上，ELL分为三个组成部分，分别是片内外设库、组件库、设备驱动库。片内外外设库是核心库，包含MCU的片内外设驱动，是ELL的核心组成；组件库和设备驱动库，开放给开发者，可以编写自己的驱动和移植软件包。
+| MCU | Timers | GPIO | Interrupts | System clock | PCA | PWM | MPWM | HPWM | EEPROM | ADC | MDU16 | Comparator | USB | LED | RTC | TKEY |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| STC8A series | √ | √ | √ | √ | √ | √ | X | X | √ | √ |  | √ |  |  |  |  |
+| STC8C series | √ | √ | √ | √ |  |  |  |  | √ |  | √ | √ |  |  |  |  |
+| STC8F series | √ | √ | √ | √ |  |  |  |  | √ |  |  | √ |  |  |  |  |
+| STC8G series | √ | √ | √ | √ | √ |  | √ |  | √ | √ | √ | √ | X | X |  |  |
+| STC8H series | √ | √ | √ | √ |  |  |  | X | √ | √ | √ | √ | X | X | X | X |
 
-文件细节上，ELL有lib文件夹和project文件夹组成。
+# Contributing
 
-lib文件夹包含startup文件夹、core文件夹、peripherals文件夹。startup文件夹存放启动代码，是汇编语言；core文件夹存放MCU的寄存器文件和ELL核心数据类型文件，同时它还负责管理MCU的中断（比如定义中断号）；其他文件夹和设计框架一一对应。
+## 1. Coding Conventions
 
-project文件夹，存放Keil-C51工程，后续会支持IAR和SDCC。具体包含main文件夹、application文件夹、build文件夹。main文件夹存放系统的初始化文件和中断服务函数文件；application文件夹存放开发者自己的代码；build文件夹存放编译的烧录文件和汇编文件。
+1. Macro names use uppercase letters throughout.
 
+```c
+// Function-like macro:
+#define NVIC_COMP_CTRL(run) do { CMPCR1 = (CMPCR1 & 0xCF) | (run << 4); } while (0)
 
-
-## 二、数据结构
-
-ELL采用了面向对象的封装思想，但是考虑51的资源和性能，又做了一些调整和取舍。对于同类外设，且工作模式的外设，采用结构体+枚举体的方式封装；对于单个外设，且比较抽象的，采用函数传参完成封装，但是传参的参数，仍然采用枚举体或者格式统一的宏来封装。
-
-
-结构体+枚举体的封装里，枚举体作为结构体成员，主要是负责某一个功能或参数的设置，而包含这些枚举体成员的结构体，往往代表一个外设的全部信息。
-
-
-除此之外，ELL灵活运用了宏的特性，具体有宏函数、控制宏、宏传参。宏函数是对寄存器操作进行封装，以保证执行效率的同时，提高可读性；控制宏用来裁剪ELL的功能和做一些配置工作。
-
-
-
-# 支持的型号及外设
-
-> `√`代表已经支持、`空`代表MCU没有这个外设、 ` X`代表还没有适配
-
-
-
-### STC8系列
-
-部分型号可能有所差异，详情可查看官方数据手册。
-
-| 型号      | 定时器 | IO   | 中断 | 系统时钟 | PCA  | PWM  | MPWM | HPWM | EEPROM | ADC  | MDU16 | 比较器 | USB  | LED | RTC | TKEY |
-| --------- | ----- | ---- | ---- | -------- | ---- | ---- | ---- | ------ | ---- | ----- | ------ | ---- | ---- | ---- | ---- | ---- |
-| STC8A系列 | √      | √    | √    | √       | √    | √    | X    | X   | √      | √    |       | √      |      |      |      |      |
-| STC8C系列 | √      | √    | √    | √       |      |      |      |      | √      |      | √     | √      |      |      |      |      |
-| STC8F系列 | √      | √    | √    | √       |    |      |      |      | √      |      |       | √      |      |      |      |      |
-| STC8G系列 | √      | √    | √    | √       | √    |   | √ |      | √      | √    | √     | √      | X | X |      |      |
-| STC8H系列 | √      | √    | √    | √       |     |      |  | X | √      | √    | √     | √      | X | X | X | X |
-
-
-
-# 联合开发
-
-## 一、代码编写准则
-
-1.宏命名：全部采用字母大写；
-```C
-宏函数：
-
-    #define NVIC_COMP_CTRL(run)    do{CMPCR1 = (CMPCR1 & 0xCF)|(run << 4);}while(0)
-
-普通宏：
-
-    #define PER_LIB_COMP_CTRL 1
-
-
+// Regular macro:
+#define PER_LIB_COMP_CTRL 1
 ```
 
-2.变量命名：采用动宾结构，单词过长要缩写（保留三个字母），单词之间用`_`连接;
+2. Variable names use verb-object order. Long words should be abbreviated to three letters, and words are separated with `_`.
 
-全局变量说明：要加前缀'G_';
-局部变量说明：首字母小写;
+Global variables use the `G_` prefix. Local variables start with a lowercase letter.
 
-```C
+```c
+// Global variable:
+uint8_t G_Uart_Busy_Flg = 0; // Busy flag of receive
 
-全局变量：
-
-    uint8_t G_Uart_Busy_Flg = 0; //Busy flag of receive
-
-局部变量：
-
-    uint32_t sysClk_FRE;
+// Local variable:
+uint32_t sysClk_FRE;
 ```
 
-5.函数命名：名字+动作形式，单词首字母大写，单词之间用`_`连接;
-函数传参说明：首字母小写;
+3. Function names use a name-plus-action form. The first letter of each word is uppercase and words are separated with `_`. Function parameters start with a lowercase letter.
 
-```C
-
+```c
 FSCSTATE MPWMn_Port_Init(MPWMPort_Type port, MPWMCLKSrc_Type clkSrc, uint16_t period)
 {
     ...
 }
 ```
 
-6.代码注释规范：采用Doxygen规范，具体细节可参考库源代码。
-```C
+4. Use the Doxygen format for code comments. See the library source code for more details.
 
+```c
 /**
- * @brief     PWM端口初始化函数。Init PWM port function.
- * @details   初始化指定端口(0-5)。Init the specified PWM port. (from 0 to 5)
- * @param[in] port PWM端口枚举体。PWM port enumerator.
- * @param[in] clkSrc PWM时钟源。PWM clock source.
- * @param[in] period PWM周期值（计数器重装载值）。PWM period value (counter reload value)
- * @return    FSC_SUCCESS 返回成功。Return to success.
- * @return    FSC_FAIL    返回失败。Return to fail.
-**/
-
+ * @brief     Initialize a PWM port.
+ * @details   Initialize the specified PWM port (0 to 5).
+ * @param[in] port PWM port enumerator.
+ * @param[in] clkSrc PWM clock source.
+ * @param[in] period PWM period value (counter reload value).
+ * @return    FSC_SUCCESS on success.
+ * @return    FSC_FAIL on failure.
+ */
 ```
 
-7.利用代码注释，ELL对C文件和H文件做了区域划分，使得代码管理更加规范。
+5. ELL uses code comments to divide C and H files into standard regions, making source management more consistent.
 
-```C
-
+```c
 /*-----------------------------------------------------------------------
 |                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
@@ -183,27 +150,19 @@ FSCSTATE MPWMn_Port_Init(MPWMPort_Type port, MPWMCLKSrc_Type clkSrc, uint16_t pe
   - File name     : xxx.c
   - Author        : zeweni
   - Update date   : 2020.01.11
-  -	Copyright(C)  : 2020-2021 zeweni. All rights reserved.
------------------------------------------------------------------------*/
+  - Copyright(C)  : 2020-2021 zeweni. All rights reserved.
+----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
 |                            COPYRIGHT NOTICE                            |
 ------------------------------------------------------------------------*/
 /*
  * Copyright (C) 2021, zeweni (17870070675@163.com)
-
+ *
  * This file is part of 8051 ELL low-layer libraries.
-
- * 8051 ELL low-layer libraries is free software: you can redistribute 
+ *
+ * 8051 ELL low-layer libraries is free software: you can redistribute
  * it and/or modify it under the terms of the Apache-2.0 License.
-
- * 8051 ELL low-layer libraries is distributed in the hope that it will 
- * be useful,but WITHOUT ANY WARRANTY; without even the implied warranty 
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
- * Apache-2.0 License for more details.
-
- * You should have received a copy of the Apache-2.0 License.8051 ELL 
- * low-layer libraries. If not, see <http://www.apache.org/licenses/>.
-**/
+ */
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
@@ -217,56 +176,38 @@ FSCSTATE MPWMn_Port_Init(MPWMPort_Type port, MPWMCLKSrc_Type clkSrc, uint16_t pe
 -----------------------------------------------------------------------*/
 
 /*-----------------------------------------------------------------------
-|                   END OF FLIE.  (C) COPYRIGHT zeweni                  |
+|                   END OF FILE. (C) COPYRIGHT zeweni                  |
 -----------------------------------------------------------------------*/
-
 ```
 
+## 2. Module Development Guide
 
-## 二、模块开发指导
+ELL uses Git for source control, with Gitee as the primary repository and GitHub as a backup mirror. If you want to become an ELL contributor, use the Gitee repository as the primary development repository.
 
-ELL使用git管理源代码，使用gitee作为主仓库，github作为备份仓库。如果想要成为ELL的开发者，请以gitee仓库为主。
+### 1. Fork the repository
 
+Fork this repository to your own account and develop on top of your fork.
 
-### 一、Fork本仓库
+### 2. Develop your code
 
+#### Registers
 
+To keep a consistent style while retaining maximum flexibility, ELL development can go down to the register level. Register header files continue to use the official naming conventions for compatibility, while their implementation is organized by module. Register headers are stored under `libraries/core/register/<series>`.
 
-首先fork本仓库当你的账户下，然后在此基础上做开发。
+#### Data structures
 
+Refer to the source code guide above. The core approach is to combine structures, enumerations, and macros, with register operations encapsulated by macros.
 
+#### API functions
 
-### 二、开发代码
+Use any existing module as a reference when designing a new API.
 
+### 3. Submit a pull request or issue
 
-#### 1.寄存器
+After completing your changes, open a pull request to request a merge and explain the change in detail in the issue tracker. After the administrator reviews the code, the pull request can be merged into the main repository.
 
-为了保持统一的风格，以及最大程度的灵活性，ELL的开发会细致到寄存器的开发。但是寄存器头文件仍然是沿用官方给出的命名规则，以保证兼容性，但是寄存器的编写和安排，以模块化放置。寄存器头文件存放的位置在libraries/core/register/xxx型号。
+# Community
 
+You are welcome to join the group for help with learning and using the ELL library.
 
-
-#### 2.数据结构
-
-可以参考上文的源代码阅读指导，核心内容就是结构体+枚举体+宏的形式，特点是对宏的封装。
-
-
-
-#### 3.API函数
-
-可以参考任意一个模块来设计。
-
-
-
-### 三、提交PR和Issue
-
-
-
-再完成代码开发以后，你可以发布PR请求合并，同时在Issue里面做详细解释。管理员再审核过你的代码后，会将你的PR合并到主仓库。
-
-
-
-# 技术交流群
-
-欢迎加群，在这里可以帮你解决学习ELL库遇到的问题。
-
- > <img src="doc/image/QQ交流群.png" style="zoom:30%;" />
+> <img src="doc/image/QQ交流群.png" style="zoom:30%;" />
